@@ -5,14 +5,14 @@ __Instaliraj termux & termux boot
 ______________________________ 
 TERMUX
 
-pkg update -y && pkg upgrade -y
+pkg update -y && pkg upgrade -y && pkg install -y wget
 
-pkg install -y wget openssh net-tools nano
+cd ~/ && rm -f nastavi-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-termux.sh && chmod +x nastavi-termux.sh && ./nastavi-termux.sh
 
-cd ~/ && rm -f ~/nastavi-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/0/moje/nastavi-ssh.sh && chmod +x nastavi-ssh.sh && ~/nastavi-ssh.sh
-
-
-cd ~/ && rm -f nastavi-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/0/moje/nastavi-termux.sh && chmod +x nastavi-termux.sh && ./nastavi-termux.sh
+____________
+#pkg install -y wget openssh net-tools nano
+#cd ~/ && rm -f ~/nastavi-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/0/moje/nastavi-ssh.sh && chmod +x nastavi-ssh.sh && ~/nastavi-ssh.sh
+#cd ~/ && rm -f nastavi-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/0/moje/nastavi-termux.sh && chmod +x nastavi-termux.sh && ./nastavi-termux.sh
 
 restart
 
