@@ -1,0 +1,17 @@
+{
+  "pools":[
+    {
+    "name": "mrr",
+    "url": "stratum+tcp://eu-de01.miningrigrentals.com:50228",
+    "timeout": 150
+    }
+  ],
+  "user": "BLB.295007",
+  "pass": "BBBB",
+  "algo": "verus",
+  "threads": 8,
+  "cpu-priority": 1,
+  "retry-pause": 5,
+  "api-allow": "192.168.100.0/24",
+  "api-bind": "0.0.0.0:4068"
+}
