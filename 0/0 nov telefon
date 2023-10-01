@@ -5,6 +5,8 @@ __Instaliraj termux & termux boot
 ______________________________ 
 TERMUX
 
+# 6x yes
+
 pkg update -y && pkg upgrade -y && pkg install -y wget
 
 cd ~/ && rm -f nastavi-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-termux.sh && chmod +x nastavi-termux.sh && ./nastavi-termux.sh
