@@ -3,6 +3,65 @@
 #   cd ~/ && rm -f nastavi-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-termux.sh && chmod +x nastavi-termux.sh && ./nastavi-termux.sh
 
 echo -e "\n\e[93m■■■■ nastavitve v TERMUX ■■■■\e[0m\n"
+# nastavljam SSH in DELAVEC
+#cd ~/ && rm -f ~/nastavi-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-ssh.sh && chmod +x nastavi-ssh.sh
+#~/nastavi-ssh.sh
+echo -e "\n\e[93mnastavljam SSH\e[0m\n"
+pkg install -y openssh net-tools nano 
+echo -e "\n\e[93mnastavljam key\e[0m\n"
+cd ~/
+rm -rf ~/.ssh/
+mkdir ~/.ssh
+chmod 0700 ~/.ssh
+cat << EOF > ~/.ssh/authorized_keys
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAe7mHnisRNUXZ8u5AaeKxm7/ixbaacLWk6S6bpqlEom blb@blb
+EOF
+chmod 0600 ~/.ssh/authorized_keys
+echo -e "\n\e[93mnastavljam SSH\e[0m\n"
+# nastavi SSH
+sshd
+ssh-keygen -A
+#  whoami
+my_name=$(whoami)
+echo "whoami=" $my_name
+#  Ustvari password
+passwd $my_name
+# Nastavi IP
+ifconfig_out=$(ifconfig)
+ip_line=$(echo "$ifconfig_out" | grep 'inet 192')
+phone_ip=$(echo "$ip_line" | cut -d'.' -f4 | cut -c1-3)
+echo "IP=" $phone_ip
+rm -f ~/*.ip
+cat << EOF > ~/$phone_ip.ip
+EOF
+echo $$phone_ip >> ~/$phone_ip.ip
+# Nastavi SSH
+echo "■■■■ update to blb ssh ■■■■"
+echo -e "\n\e[93mpreveri IP !!\e[0m\n"
+ssh $my_name@192.168.100.$phone_ip -p 8022
+echo -e "\n\e[93mnastavitev DELAVCA\e[0m\n"
+cd ~/
+# Poišči če je datoteka z končnico .ww v mapi
+if ls ~/*.ww >/dev/null 2>&1; then
+    for datoteka in ~/*.ww; do
+        # Preveri, ali datoteka obstaja
+        if [ -e "$datoteka" ]; then
+            ime_iz_datoteke=$(basename "$datoteka")
+            delavec=${ime_iz_datoteke%.ww}
+            echo "Delavec iz .ww datoteke: "$delavec
+        fi
+    done
+else
+    echo "Ni datotek z končnico .ww v mapi."
+    printf "\n\e[93m IME DELAVCA: \e[0m"
+    read delavec
+    rm -f *.ww worker
+    cat << EOF > ~/$delavec.ww
+    EOF
+    echo $delavec >> ~/$delavec.ww
+fi
+echo -e "\n\e[93m-> Ime delavca je: "$delavec
+# konec ssh
 echo -e "\n\e[93mnastavljam auto boot\e[0m\n"
 # Auto boot ubuntu  (nano ~/.termux/termux.properties) __Zbriši # pred: # allow-external-apps = true
 sed -i 's/^# allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
@@ -26,11 +85,26 @@ chmod +x ~/.termux/boot/start.sh
 echo -e "\n\e[93m■■■■ CCminer v TERMUX ■■■■\e[0m\n"
 # from Oink and Darktron
 # pkg update -y && pkg upgrade -y
-cd
+cd ~/
 pkg install -y libjansson build-essential clang binutils git
 cp /data/data/com.termux/files/usr/include/linux/sysctl.h /data/data/com.termux/files/usr/include/sys
-git clone https://github.com/Darktron/ccminer.git
+# original: git clone https://github.com/Darktron/ccminer.git
+git clone https://github.com/BLBMS/am-t.git
+mv am-t/ ccminer/
 cd ccminer
 chmod +x build.sh configure.sh autogen.sh start.sh
 CXX=clang++ CC=clang ./build.sh
 echo -e "\n\e[93m■■■■ nastavljam CCminer ■■■■\e[0m\n"
+cd ~/
+# MOJE v ~/.termux/termux.properties
+echo "### ______  MOJE _____" >> ~/.termux/termux.properties
+echo "PS1='${debian_chroot:+($debian_chroot)}\[\033[0;93m\]$delavec\[\033[0;91m\]@\[\033[0;93m\]$phone_ip\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]\$ '" >> ~/.termux/termux.properties
+echo "alias ss='~/ccminer/start.sh'" >> ~/.termux/termux.properties
+echo "alias xx='./kill-all-screens.sh'" >> ~/.termux/termux.properties
+echo "alias sl='screen -ls'" >> ~/.termux/termux.properties
+echo "alias rr='screen -x CCminer'" >> ~/.termux/termux.properties
+echo "alias SS='ss'" >> ~/.termux/termux.properties
+echo "alias XX='xx'" >> ~/.termux/termux.properties
+echo "alias SL='sl'" >> ~/.termux/termux.properties
+echo "alias RR='rr'" >> ~/.termux/termux.properties
+cd ~/
