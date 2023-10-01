@@ -2,15 +2,15 @@
 
 #  copy v TERMUX !!!  - 6x YES
 
-#->  pkg update -y && pkg upgrade -y
-#->  pkg install -y wget openssh net-tools nano 
+#->  pkg update -y && pkg upgrade -y && pkg install -y wget
 
-#->  cd ~/ && rm -f ~/nastavi-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/0/moje/nastavi-ssh.sh && chmod +x nastavi-ssh.sh && ~/nastavi-ssh.sh
+#->  cd ~/ && rm -f ~/nastavi-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-ssh.sh && chmod +x nastavi-ssh.sh && ~/nastavi-ssh.sh
 
 # se izvaja samo
-#echo -e "\n\e[93mupdate TERMUX\e[0m\n"
-#pkg update -y && pkg upgrade -y && pkg install openssh -y && pkg install net-tools -y && pkg install nano -y 
+echo -e "\n\e[93mnastavljam TERMUX\e[0m\n"
+pkg install -y openssh net-tools nano 
 echo -e "\n\e[93mnastavljam key\e[0m\n"
+echo -e "\n\e[93mpreveri IP !!\e[0m\n"
 cd ~/
 rm -rf ~/.ssh/
 mkdir ~/.ssh
@@ -43,4 +43,3 @@ echo $$phone_ip >> ~/$phone_ip.ip
 echo "■■■■ update to blb ssh ■■■■"
 ssh $my_name@192.168.100.$phone_ip -p 8022
 echo "■■■■ done ■■■■"
-rm -f ~/installssh.sh
