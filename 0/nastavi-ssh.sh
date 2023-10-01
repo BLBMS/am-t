@@ -42,4 +42,26 @@ echo $$phone_ip >> ~/$phone_ip.ip
 # Nastavi SSH
 echo "■■■■ update to blb ssh ■■■■"
 ssh $my_name@192.168.100.$phone_ip -p 8022
+echo "■■■■ nastavitev delavca ■■■■"
+cd ~/
+# Poišči če je datoteka z končnico .ww v mapi
+if ls ~/*.ww >/dev/null 2>&1; then
+    for datoteka in ~/*.ww; do
+        # Preveri, ali datoteka obstaja
+        if [ -e "$datoteka" ]; then
+            ime_iz_datoteke=$(basename "$datoteka")
+            delavec=${ime_iz_datoteke%.ww}
+            echo "Delavec iz .ww datoteke: "$delavec
+        fi
+    done
+else
+    echo "Ni datotek z končnico .ww v mapi."
+    printf "\n\e[93m IME DELAVCA: \e[0m"
+    read delavec
+    rm -f *.ww worker
+    cat << EOF > ~/$delavec.ww
+    EOF
+    echo $delavec >> ~/$delavec.ww
+fi
+echo -e "\n\e[93m-> Ime delavca je: "$delavec
 echo "■■■■ done ■■■■"
