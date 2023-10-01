@@ -3,7 +3,8 @@
     {
     "name": "mrr",
     "url": "stratum+tcp://eu-de01.miningrigrentals.com:50228",
-    "timeout": 180
+    "timeout": 180,
+    "disabled": 0
     }
   ],
   "user": "BLB.295007",
