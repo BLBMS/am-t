@@ -114,6 +114,12 @@ echo "alias RR='rr'" >> ~/.termux/termux.properties
 #EOF
 mv ~/ccminer/0/kill-all-screens.sh ~/
 chmod +x ~/kill-all-screens.sh
+# zamenja delavca v vseh json
+for file in config*.json; do
+    if [ -e "$file" ]; then
+        sed -i "s/DELAVEC/$delavec/g" "$file"
+    fi
+done
 # nastavi POOL
 while true; do
     echo -e "\n\e[93m■■ kateri POOL ■■ \e[0m\n"
@@ -131,22 +137,28 @@ while true; do
             echo "vnesi 1|2|3|4" ;;
     esac
 done
-# Uporabite izbrano možnost
+# briše obst. če obstaja
+if [ -e "config.json" ]; then
+    rm "config.json"
+fi
+# izvede izbiro
 case $choice in
     1)
         echo "-> MRR"
-        # Tukaj nadaljujte s kodo za prvo možnost
+        cp ~/ccminer/config-mrr.json ~/ccminer/config.json 
         ;;
     2)
         echo "-> pool.verus.io"
-        # Tukaj nadaljujte s kodo za drugo možnost
+        cp ~/ccminer/config-verus.json ~/ccminer/config.json 
         ;;
     3)
         echo "-> eu.luckpool.net"
-        # Tukaj nadaljujte s kodo za tretjo možnost
+        cp ~/ccminer/config-luck.json ~/ccminer/config.json 
         ;;
     4)
         echo "-> de.vipor.net"
-        # Tukaj nadaljujte s kodo za četrto možnost
+        cp ~/ccminer/config-vipor.json ~/ccminer/config.json 
         ;;
 esac
+# uveljavljam nastavitve
+source ~/.termux/termux.properties
