@@ -55,8 +55,12 @@ echo -e "\n\e[93m-> Ime delavca je: $delavec"
 # konec ssh
 echo -e "\n\e[93mnastavljam auto boot\e[0m\n"
 # Auto boot ubuntu  (nano ~/.termux/termux.properties) __Zbriši # pred: # allow-external-apps = true
-sed -i 's/^# allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
-sed -i 's/^#allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
+
+# tau neven zakoj ne dela !!!
+#sed -i 's/^# allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
+#sed -i 's/^#allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
+
+
 rm -rf ~/.termux/boot
 mkdir -p ~/.termux/boot
 # nastavi ~/.termux/boot/start.sh
@@ -70,6 +74,7 @@ am startservice --user 0 -n com.termux/com.termux.app.RunCommandService \
 --es com.termux.RUN_COMMAND_WORKDIR '/data/data/com.termux/files/home' \
 --ez com.termux.RUN_COMMAND_BACKGROUND 'false' \
 --es com.termux.RUN_COMMAND_SESSION_ACTION '0'
+source ~/.termux/termux.properties
 EOF
 chmod +x ~/.termux/boot/start.sh
 # ____ novo ____
@@ -81,7 +86,7 @@ cp /data/data/com.termux/files/usr/include/linux/sysctl.h /data/data/com.termux/
 # original: git clone https://github.com/Darktron/ccminer.git
 git clone https://github.com/BLBMS/am-t.git
 mv am-t/ ccminer/
-cd ccminer
+cd ~/ccminer
 chmod +x build.sh configure.sh autogen.sh start.sh
 CXX=clang++ CC=clang ./build.sh
 echo -e "\n\e[93m■■■■ nastavljam CCminer ■■■■\e[0m\n"
@@ -106,6 +111,7 @@ echo "alias RR='rr'" >> ~/.termux/termux.properties
 mv ~/ccminer/0/kill-all-screens.sh ~/
 chmod +x ~/kill-all-screens.sh
 # zamenja delavca v vseh json
+cd ~/ccminer
 for file in config*.json; do
     if [ -e "$file" ]; then
         sed -i "s/DELAVEC/$delavec/g" "$file"
@@ -129,8 +135,8 @@ while true; do
     esac
 done
 # briše obst. če obstaja
-if [ -e "config.json" ]; then
-    rm "config.json"
+if [ -e "~/ccminer/config.json" ]; then
+    rm "~/ccminer/config.json"
 fi
 # izvede izbiro
 case $choice in
