@@ -3,7 +3,8 @@
     {
     "name": "pool.verus.io",
     "url": "stratum+tcp://pool.verus.io:9998",
-    "timeout": 180
+    "timeout": 180,
+    "disabled": 0
     }
   ],
   "user": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC",
