@@ -84,7 +84,6 @@ chmod +x ~/.termux/boot/start.sh
 # ____ novo ____
 echo -e "\n\e[93m■■■■ CCminer v TERMUX ■■■■\e[0m\n"
 # from Oink and Darktron
-# pkg update -y && pkg upgrade -y
 cd ~/
 pkg install -y libjansson build-essential clang binutils git
 cp /data/data/com.termux/files/usr/include/linux/sysctl.h /data/data/com.termux/files/usr/include/sys
@@ -107,4 +106,11 @@ echo "alias SS='ss'" >> ~/.termux/termux.properties
 echo "alias XX='xx'" >> ~/.termux/termux.properties
 echo "alias SL='sl'" >> ~/.termux/termux.properties
 echo "alias RR='rr'" >> ~/.termux/termux.properties
+# fajl KILL
 cd ~/
+cat << EOF > ~/kill-all-screens.sh
+screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit && screen -ls
+echo "all killed"
+EOF
+chmod +x ./kill-all-screens.sh
+#
