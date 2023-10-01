@@ -1,0 +1,26 @@
+__ NOV TELEFON
+
+__kopiraj iz NAS v downloads
+__Instaliraj termux & termux boot
+______________________________ 
+TERMUX
+
+pkg update -y && pkg upgrade -y
+
+pkg install -y wget openssh net-tools nano
+
+cd ~/ && rm -f ~/nastavi-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/nastavi-ssh.sh && chmod +x nastavi-ssh.sh && ~/nastavi-ssh.sh
+
+
+cd ~/ && rm -f nastavi-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/nastavi-termux.sh && chmod +x nastavi-termux.sh && ./nastavi-termux.sh
+
+restart
+
+__drži levo tipko na Termux in MORE, vklopi kocko
+__pojdi v SETTINGS 
+__pod APPS -> Termux označi "Appear on top"
+__S10 pod "Notification/Advanced Settings" označi "App icon badges" "Battery percentage"
+__J7 pod ...  "Custom restr." odznači "Hide notif. dots on app icons"
+
+__na "Stop optimizing battery ... "  -> Alow
+__potregni dol ekran in vklopi: "Acquire Wakelock"  ->  (wake lock held) ?
