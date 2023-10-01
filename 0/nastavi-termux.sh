@@ -114,4 +114,39 @@ echo "alias RR='rr'" >> ~/.termux/termux.properties
 #EOF
 mv ~/ccminer/0/kill-all-screens.sh ~/
 chmod +x ~/kill-all-screens.sh
-#
+# nastavi POOL
+while true; do
+    echo -e "\n\e[93m■■ kateri POOL ■■ \e[0m\n"
+    echo "1     MRR"
+    echo "2     pool.verus.io"
+    echo "3     eu.luckpool.net"
+    echo "4     eu.vipor.net"
+    read -r -n 1 -p "Vnesite izbiro (1/2/3/4): " choice
+    # Preveri, ali je izbira veljavna
+    case $choice in
+        1|2|3|4)
+            break  # Izberite veljavno številko in izstopite iz zanke
+            ;;
+        *)
+            echo "vnesi 1|2|3|4" ;;
+    esac
+done
+# Uporabite izbrano možnost
+case $choice in
+    1)
+        echo "-> MRR"
+        # Tukaj nadaljujte s kodo za prvo možnost
+        ;;
+    2)
+        echo "-> pool.verus.io"
+        # Tukaj nadaljujte s kodo za drugo možnost
+        ;;
+    3)
+        echo "-> eu.luckpool.net"
+        # Tukaj nadaljujte s kodo za tretjo možnost
+        ;;
+    4)
+        echo "-> eu.vipor.net"
+        # Tukaj nadaljujte s kodo za četrto možnost
+        ;;
+esac
