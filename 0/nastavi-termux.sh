@@ -162,3 +162,9 @@ case $choice in
 esac
 # uveljavljam nastavitve
 source ~/.termux/termux.properties
+echo -e "\n\e[93m■■■■ KONEC ■■■■\e[0m\n"
+echo "ss = start ccminer"
+echo "xx = kill screen"
+echo "sl = list screen"
+echo "rr = show screen"
+echo "exit: CTRL-a + d"
