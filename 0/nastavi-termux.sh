@@ -107,10 +107,11 @@ echo "alias XX='xx'" >> ~/.termux/termux.properties
 echo "alias SL='sl'" >> ~/.termux/termux.properties
 echo "alias RR='rr'" >> ~/.termux/termux.properties
 # fajl KILL
-cd ~/
-cat << EOF > ~/kill-all-screens.sh
-screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit && screen -ls
-echo "all killed"
-EOF
-chmod +x ./kill-all-screens.sh
+#cd ~/
+#cat << EOF > ~/kill-all-screens.sh
+#screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit && screen -ls
+#echo "all killed"
+#EOF
+mv ~/ccminer/0/kill-all-screens.sh ~/
+chmod +x ~/kill-all-screens.sh
 #
