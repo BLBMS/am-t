@@ -3,11 +3,11 @@
     {
     "name": "mrr",
     "url": "stratum+tcp://eu-de01.miningrigrentals.com:50228",
-    "timeout": 150
+    "timeout": 180
     }
   ],
   "user": "BLB.295007",
-  "pass": "BBBB",
+  "pass": "DELAVEC",
   "algo": "verus",
   "threads": 8,
   "cpu-priority": 1,
