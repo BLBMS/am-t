@@ -16,23 +16,42 @@ cd ~/
 # Poišči če je datoteka z končnico .ww v mapi
 if ls ~/*.ww >/dev/null 2>&1; then
     for datoteka in ~/*.ww; do
-        # Preveri, ali datoteka obstaja
         if [ -e "$datoteka" ]; then
             ime_iz_datoteke=$(basename "$datoteka")
-            delavec=${ime_iz_datoteke%.ww}
-            echo "Delavec iz .ww datoteke: "$delavec
+            delavec="${ime_iz_datoteke%.ww}"
+            echo "Delavec iz .ww datoteke: $delavec"
         fi
     done
 else
     echo "Ni datotek z končnico .ww v mapi."
-    printf "\n\e[93m IME DELAVCA: \e[0m"
+    printf "\n\e[93mIME DELAVCA: \e[0m"
     read delavec
-    rm -f *.ww worker
-    cat << EOF > ~/$delavec.ww
-    EOF
-    echo $delavec >> ~/$delavec.ww
+    rm -f ~/*.ww worker
+    # Ustvari novo .ww datoteko z imenom delavca
+    echo "$delavec" > ~/"$delavec.ww"
 fi
-echo -e "\n\e[93m-> Ime delavca je: "$delavec
+
+#if ls ~/*.ww >/dev/null 2>&1; then
+#    for datoteka in ~/*.ww; do
+#        # Preveri, ali datoteka obstaja
+#        if [ -e "$datoteka" ]; then
+#            ime_iz_datoteke=$(basename "$datoteka")
+#            delavec=${ime_iz_datoteke%.ww}
+#            echo "Delavec iz .ww datoteke: "$delavec
+#       fi
+#    done
+#else
+#    echo "Ni datotek z končnico .ww v mapi."
+#    printf "\n\e[93m IME DELAVCA: \e[0m"
+#    read delavec
+#    rm -f *.ww worker
+#    cat << EOF > ~/$delavec.ww
+#    EOF
+#    echo $delavec >> ~/$delavec.ww
+#fi
+
+
+echo -e "\n\e[93m-> Ime delavca je: $delavec"
 # konec ssh
 echo -e "\n\e[93mnastavljam auto boot\e[0m\n"
 # Auto boot ubuntu  (nano ~/.termux/termux.properties) __Zbriši # pred: # allow-external-apps = true
