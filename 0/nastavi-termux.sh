@@ -120,7 +120,7 @@ while true; do
     echo "1     MRR"
     echo "2     pool.verus.io"
     echo "3     eu.luckpool.net"
-    echo "4     eu.vipor.net"
+    echo "4     de.vipor.net"
     read -r -n 1 -p "Vnesite izbiro (1/2/3/4): " choice
     # Preveri, ali je izbira veljavna
     case $choice in
@@ -146,7 +146,7 @@ case $choice in
         # Tukaj nadaljujte s kodo za tretjo možnost
         ;;
     4)
-        echo "-> eu.vipor.net"
+        echo "-> de.vipor.net"
         # Tukaj nadaljujte s kodo za četrto možnost
         ;;
 esac
