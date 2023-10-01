@@ -5,7 +5,7 @@
 #->  pkg update -y && pkg upgrade -y
 #->  pkg install -y wget openssh net-tools nano 
 
-#->  cd ~/ && rm -f ~/nastavi-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am/moje/nastavi-ssh.sh && chmod +x nastavi-ssh.sh && ~/nastavi-ssh.sh
+#->  cd ~/ && rm -f ~/nastavi-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/0/moje/nastavi-ssh.sh && chmod +x nastavi-ssh.sh && ~/nastavi-ssh.sh
 
 # se izvaja samo
 #echo -e "\n\e[93mupdate TERMUX\e[0m\n"
