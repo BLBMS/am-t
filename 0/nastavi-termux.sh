@@ -2,6 +2,22 @@
 
 #   cd ~/ && rm -f nastavi-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-termux.sh && chmod +x nastavi-termux.sh && ./nastavi-termux.sh
 
+
+echo -e "\n\e[93m■■■■ premik ubuntu ■■■■\e[0m\n"
+cd ~/
+if [ -d ~/ubuntu-fs ]; then
+    mkdir ~/UBUNTU
+    mv ~/ubuntu-fs ~/UBUNTU/ubuntu-fs
+    if [ -d ~/ubuntu-binds ]; then
+        mv ~/ubuntu-binds ~/UBUNTU/ubuntu-binds
+    fi
+    if [ -f ~/*.sh ]; then
+        mv ~/*.sh ~/UBUNTU/*.sh
+    fi
+    if [ -f ~/*.list ]; then
+        mv ~/*.list ~/UBUNTU/*.list
+    fi
+fi
 echo -e "\n\e[93m■■■■ nastavitve v TERMUX ■■■■\e[0m\n"
 # nastavljam SSH in DELAVEC
 #cd ~/ && rm -f ~/nastavi-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-ssh.sh && chmod +x nastavi-ssh.sh
