@@ -14,9 +14,11 @@ if [ -d ~/ubuntu-fs ]; then
         mv ~/ubuntu-binds ~/UBUNTU/
     fi
     if [ -f ~/*.sh ]; then
-        shopt -s extglob
-        mv ~/*.sh!(nastavi-cc-termux.sh) /UBUNTU/
-        shopt -u extglob
+#        shopt -s extglob
+#        mv ~/*.sh!(nastavi-cc-termux.sh) /UBUNTU/
+#        shopt -u extglob
+        mv ~/*.sh ~/UBUNTU/
+        mv ~/UBUNTU/nastavi-cc-termux.sh ~/
     fi
     if [ -f ~/*.list ]; then
         mv ~/*.list ~/UBUNTU/
