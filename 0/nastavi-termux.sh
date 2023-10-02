@@ -9,15 +9,15 @@ if [ -d ~/ubuntu-fs ]; then
     if [ ! -d ~/UBUNTU ]; then
         mkdir ~/UBUNTU
     fi
-    mv ~/ubuntu-fs ~/UBUNTU/ubuntu-fs
+    mv ~/ubuntu-fs ~/UBUNTU/
     if [ -d ~/ubuntu-binds ]; then
-        mv ~/ubuntu-binds ~/UBUNTU/ubuntu-binds
+        mv ~/ubuntu-binds ~/UBUNTU/
     fi
     if [ -f ~/*.sh ]; then
-        mv ~/*.sh ~/UBUNTU/*.sh
+        mv ~/*.sh ~/UBUNTU/
     fi
     if [ -f ~/*.list ]; then
-        mv ~/*.list ~/UBUNTU/*.list
+        mv ~/*.list ~/UBUNTU/
     fi
 #    mv install-in-termux.sh ~/UBUNTU/install-in-termux.sh
 #    mv nastavi-termux.sh ~/UBUNTU/nastavi-termux.sh
