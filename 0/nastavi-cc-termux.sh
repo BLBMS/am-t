@@ -16,6 +16,7 @@ if [ -d ~/ubuntu-fs ]; then
     if [ -f ~/*.sh ]; then
         shopt -s extglob
         mv ~/!([n]astavi-cc-termux).sh /UBUNTU/
+        
         #mv ~/*.sh!(nastavi-cc-termux.sh) /UBUNTU/
         shopt -u extglob
     fi
