@@ -6,7 +6,9 @@
 echo -e "\n\e[93m■■■■ premik ubuntu ■■■■\e[0m\n"
 cd ~/
 if [ -d ~/ubuntu-fs ]; then
-    mkdir ~/UBUNTU
+    if [ ! -d ~/UBUNTU ]; then
+        mkdir ~/UBUNTU
+    fi
     mv ~/ubuntu-fs ~/UBUNTU/ubuntu-fs
     if [ -d ~/ubuntu-binds ]; then
         mv ~/ubuntu-binds ~/UBUNTU/ubuntu-binds
@@ -17,11 +19,23 @@ if [ -d ~/ubuntu-fs ]; then
     if [ -f ~/*.list ]; then
         mv ~/*.list ~/UBUNTU/*.list
     fi
+#    mv install-in-termux.sh ~/UBUNTU/install-in-termux.sh
+#    mv nastavi-termux.sh ~/UBUNTU/nastavi-termux.sh
+#    mv pool-verus-ter.sh ~/UBUNTU/
+#    mv start-ubuntu.sh ~/UBUNTU/
+#    mv installssh.sh ~/UBUNTU/
+#    mv nastavi-ubuntu-ter.sh ~/UBUNTU/
+#    mv posodobi-ter.sh ~/UBUNTU/
+#    mv active-ip.sh ~/UBUNTU/
+#    mv nastavi-ssh.sh ~/UBUNTU/
+#    mv pool-luck-ter.sh ~/UBUNTU/
+#    mv restart-miner-ter.sh ~/UBUNTU/
 fi
 echo -e "\n\e[93m■■■■ nastavitve v TERMUX ■■■■\e[0m\n"
 # nastavljam SSH in DELAVEC
-#cd ~/ && rm -f ~/nastavi-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-ssh.sh && chmod +x nastavi-ssh.sh
-#~/nastavi-ssh.sh mora biti izveden !!!!
+cd ~/ && rm -f ~/nastavi-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-ssh.sh && chmod +x nastavi-ssh.sh
+~/nastavi-ssh.sh 1>/dev/null 2>&1
+#mora biti izveden !!!!
 # Nastavi IP
 ifconfig_out=$(ifconfig)
 ip_line=$(echo "$ifconfig_out" | grep 'inet 192')
