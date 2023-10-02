@@ -36,8 +36,8 @@ if [ -d ~/ubuntu-fs ]; then
 fi
 echo -e "\n\e[93m■■■■ nastavitve v TERMUX ■■■■\e[0m\n"
 # nastavljam SSH in DELAVEC
-cd ~/ && rm -f ~/nastavi-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-ssh.sh && chmod +x nastavi-ssh.sh
-~/nastavi-ssh.sh 1>/dev/null 2>&1
+cd ~/ && rm -f ~/nastavi-cc-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh && chmod +x nastavi-cc-ssh.sh
+~/nastavi-cc-ssh.sh 1>/dev/null 2>&1
 #mora biti izveden !!!!
 # Nastavi IP
 ifconfig_out=$(ifconfig)
