@@ -1,6 +1,6 @@
     #!/bin/bash
 
-#   cd ~/ && rm -f nastavi-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-termux.sh && chmod +x nastavi-termux.sh && ./nastavi-termux.sh
+#   cd ~/ && rm -f nastavi-cc-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-termux.sh && chmod +x nastavi-cc-termux.sh && ./nastavi-cc-termux.sh
 
 
 echo -e "\n\e[93m■■■■ premik ubuntu ■■■■\e[0m\n"
@@ -14,7 +14,9 @@ if [ -d ~/ubuntu-fs ]; then
         mv ~/ubuntu-binds ~/UBUNTU/
     fi
     if [ -f ~/*.sh ]; then
-        mv ~/*.sh ~/UBUNTU/
+        shopt -s extglob
+        mv ~/Ubuntu/!(nastavi-cc-termux.sh) /UBUNTU/
+        shopt -u extglob
     fi
     if [ -f ~/*.list ]; then
         mv ~/*.list ~/UBUNTU/
