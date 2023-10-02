@@ -14,11 +14,16 @@ if [ -d ~/ubuntu-fs ]; then
         mv ~/ubuntu-binds ~/UBUNTU/
     fi
     if [ -f ~/*.sh ]; then
+        for sh_dat in ~/*.sh; do
+            if [ ! "$sh_dat" = "nastavi-cc-termux.sh" ]; then
+                mv $sh_dat ~/UBUNTU/
+            fi
+        done
 #        shopt -s extglob
 #        mv ~/*.sh!(nastavi-cc-termux.sh) /UBUNTU/
 #        shopt -u extglob
-        mv ~/*.sh ~/UBUNTU/
-        mv ~/UBUNTU/nastavi-cc-termux.sh ~/
+ #       mv ~/*.sh ~/UBUNTU/
+ #       mv ~/UBUNTU/nastavi-cc-termux.sh ~/
     fi
     if [ -f ~/*.list ]; then
         mv ~/*.list ~/UBUNTU/
