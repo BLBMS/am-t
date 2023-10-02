@@ -4,7 +4,7 @@
 
 #->  pkg update -y && pkg upgrade -y && pkg install -y wget
 
-#->  cd ~/ && rm -f ~/nastavi-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-ssh.sh && chmod +x nastavi-ssh.sh && ~/nastavi-ssh.sh
+#->  cd ~/ && rm -f ~/nastavi-cc-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh && chmod +x nastavi-cc-ssh.sh && ~/nastavi-cc-ssh.sh
 
 # se izvaja samo
 echo -e "\n\e[93mnastavljam TERMUX\e[0m\n"
