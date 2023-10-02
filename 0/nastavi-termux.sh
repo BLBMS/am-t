@@ -1,4 +1,4 @@
-#!/bin/bash
+    #!/bin/bash
 
 #   cd ~/ && rm -f nastavi-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-termux.sh && chmod +x nastavi-termux.sh && ./nastavi-termux.sh
 
@@ -55,12 +55,6 @@ echo -e "\n\e[93m-> Ime delavca je: $delavec"
 # konec ssh
 echo -e "\n\e[93mnastavljam auto boot\e[0m\n"
 # Auto boot ubuntu  (nano ~/.termux/termux.properties) __Zbriši # pred: # allow-external-apps = true
-
-# tau neven zakoj ne dela !!!
-#sed -i 's/^# allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
-#sed -i 's/^#allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
-
-
 rm -rf ~/.termux/boot
 mkdir -p ~/.termux/boot
 # nastavi ~/.termux/boot/start.sh
@@ -78,8 +72,11 @@ EOF
 chmod +x ~/.termux/boot/start.sh
 # ____ novo ____
 echo -e "\n\e[93m■■■■ CCminer v TERMUX ■■■■\e[0m\n"
-# from Oink and Darktron
 cd ~/
+if [ -d ~/ccminer ]; then
+    mv ~/ccminer ~/ccminer.old
+fi
+# from Oink and Darktron
 pkg install -y libjansson build-essential clang binutils git
 cp /data/data/com.termux/files/usr/include/linux/sysctl.h /data/data/com.termux/files/usr/include/sys
 # original: git clone https://github.com/Darktron/ccminer.git
@@ -90,13 +87,14 @@ chmod +x build.sh configure.sh autogen.sh start.sh
 CXX=clang++ CC=clang ./build.sh
 echo -e "\n\e[93m■■■■ nastavljam CCminer ■■■■\e[0m\n"
 cd ~/
-# MOJE v NOV ~/.bashrc
+# MOJE v NOV ~/.bashrc, če obstaja pa doda na koncu
 cat << EOF > ~/.bashrc
 ### .bashrc NOVO ustvarjen
 ### ______  MOJE _____
 PS1='${debian_chroot:+($debian_chroot)}\[\033[0;93m\]$delavec\[\033[0;91m\]@\[\033[0;93m\]$phone_ip\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]\$ '
 alias ss='~/ccminer/start.sh'
 alias xx='./kill-all-screens.sh'
+alias xxx='screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit && screen -ls'
 alias sl='screen -ls'
 alias rr='screen -x CCminer'
 alias SS='ss'
@@ -104,7 +102,7 @@ alias XX='xx'
 alias SL='sl'
 alias RR='rr'
 EOF
-# fajl KILL
+# fajl KILL - ga prenesem
 #cd ~/
 #cat << EOF > ~/kill-all-screens.sh
 #screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit && screen -ls
@@ -117,6 +115,7 @@ cd ~/ccminer
 for file in config*.json; do
     if [ -e "$file" ]; then
         sed -i "s/DELAVEC/$delavec/g" "$file"
+        echo "zamenjan DELAVEC v : $file"
     fi
 done
 # nastavi POOL
@@ -126,14 +125,14 @@ while true; do
     echo "2     pool.verus.io"
     echo "3     eu.luckpool.net"
     echo "4     de.vipor.net"
-    read -r -n 1 -p "Vnesite izbiro (1/2/3/4): " choice
+    read -r -n 1 -p "Vnesite izbiro: 1 2 3 4: " choice
     # Preveri, ali je izbira veljavna
     case $choice in
         1|2|3|4)
             break  # Izberite veljavno številko in izstopite iz zanke
             ;;
         *)
-            echo "vnesi 1|2|3|4" ;;
+            echo "vnesi: 1 2 3 4" ;;
     esac
 done
 # briše obst. če obstaja
@@ -160,7 +159,7 @@ case $choice in
         ;;
 esac
 # uveljavljam nastavitve
-source ~/.termux/termux.properties
+source ~/.bashrc
 echo -e "\n\e[93m■■■■ KONEC ■■■■\e[0m\n"
 echo "ss = start ccminer"
 echo "xx = kill screen"
