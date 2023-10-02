@@ -23,7 +23,7 @@ if ls ~/*.ww >/dev/null 2>&1; then
         fi
     done
 else
-    echo "Ni datotek z končnico .ww v mapi."
+    echo "Ni datotek s končnico .ww v mapi."
     printf "\n\e[93mIME DELAVCA: \e[0m"
     read delavec
     rm -f ~/*.ww worker
@@ -74,7 +74,6 @@ am startservice --user 0 -n com.termux/com.termux.app.RunCommandService \
 --es com.termux.RUN_COMMAND_WORKDIR '/data/data/com.termux/files/home' \
 --ez com.termux.RUN_COMMAND_BACKGROUND 'false' \
 --es com.termux.RUN_COMMAND_SESSION_ACTION '0'
-source ~/.termux/termux.properties
 EOF
 chmod +x ~/.termux/boot/start.sh
 # ____ novo ____
@@ -91,17 +90,20 @@ chmod +x build.sh configure.sh autogen.sh start.sh
 CXX=clang++ CC=clang ./build.sh
 echo -e "\n\e[93m■■■■ nastavljam CCminer ■■■■\e[0m\n"
 cd ~/
-# MOJE v ~/.termux/termux.properties
-echo "### ______  MOJE _____" >> ~/.termux/termux.properties
-echo "PS1='${debian_chroot:+($debian_chroot)}\[\033[0;93m\]$delavec\[\033[0;91m\]@\[\033[0;93m\]$phone_ip\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]\$ '" >> ~/.termux/termux.properties
-echo "alias ss='~/ccminer/start.sh'" >> ~/.termux/termux.properties
-echo "alias xx='./kill-all-screens.sh'" >> ~/.termux/termux.properties
-echo "alias sl='screen -ls'" >> ~/.termux/termux.properties
-echo "alias rr='screen -x CCminer'" >> ~/.termux/termux.properties
-echo "alias SS='ss'" >> ~/.termux/termux.properties
-echo "alias XX='xx'" >> ~/.termux/termux.properties
-echo "alias SL='sl'" >> ~/.termux/termux.properties
-echo "alias RR='rr'" >> ~/.termux/termux.properties
+# MOJE v NOV ~/.bashrc
+cat << EOF > ~/.bashrc
+### .bashrc NOVO ustvarjen
+### ______  MOJE _____
+PS1='${debian_chroot:+($debian_chroot)}\[\033[0;93m\]$delavec\[\033[0;91m\]@\[\033[0;93m\]$phone_ip\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]\$ '
+alias ss='~/ccminer/start.sh'
+alias xx='./kill-all-screens.sh'
+alias sl='screen -ls'
+alias rr='screen -x CCminer'
+alias SS='ss'
+alias XX='xx'
+alias SL='sl'
+alias RR='rr'
+EOF
 # fajl KILL
 #cd ~/
 #cat << EOF > ~/kill-all-screens.sh
