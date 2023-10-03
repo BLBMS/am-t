@@ -13,18 +13,22 @@ if [ -d ~/ubuntu-fs ]; then
         mkdir ~/UBUNTU
     fi
     mv ~/ubuntu-fs ~/UBUNTU/
+    printf "■"
     if [ -d ~/ubuntu-binds ]; then
         mv ~/ubuntu-binds ~/UBUNTU/
+        printf "■"
     fi
     for sh_dat in ~/*.sh; do
         if [ "$sh_dat" = "/data/data/com.termux/files/home/nastavi-cc-termux.sh" ] || [ "$sh_dat" = "/data/data/com.termux/files/home/nastavi-cc-ssh.sh" ]; then
             echo ""
         else
             mv $sh_dat ~/UBUNTU/
+            printf "■"
         fi
     done
     if [ -f ~/*.list ]; then
         mv ~/*.list ~/UBUNTU/
+        printf "■\n"
     fi
 fi
 echo -e "\n\e[93m■■■■ nastavitve v TERMUX ■■■■\e[0m\n"
@@ -112,6 +116,8 @@ cd ~/ccminer
 for file in config*.json; do
     if [ -e "$file" ]; then
         sed -i "s/DELAVEC/$delavec/g" "$file"
+        sed -i "s/  /  /g" "$file"
+        sed -i "s/  /  /g" "$file"
         echo "zamenjan DELAVEC v : $file"
     fi
 done
