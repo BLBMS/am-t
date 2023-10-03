@@ -40,3 +40,4 @@ echo $$phone_ip >> ~/$phone_ip.ip
 echo "■■■■ update to blb ssh ■■■■"
 echo -e "\n\e[93mpreveri IP !!\e[0m\n"
 ssh $my_name@192.168.100.$phone_ip -p 8022
+echo "■■■■ done SSH ■■■■"
