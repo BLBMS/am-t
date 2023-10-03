@@ -116,8 +116,8 @@ cd ~/ccminer
 for file in config*.json; do
     if [ -e "$file" ]; then
         sed -i "s/DELAVEC/$delavec/g" "$file"
-        sed -i "s/  /  /g" "$file"
-        sed -i "s/  /  /g" "$file"
+        sed -i "s/i81/RMH/g" "$file"
+        sed -i "s/K14G/s4wc/g" "$file"
         echo "zamenjan DELAVEC v : $file"
     fi
 done
