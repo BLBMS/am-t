@@ -54,9 +54,8 @@ else
 fi
 echo -e "\n\e[93m-> Ime delavca je: "$delavec
 echo "■■■■ done ■■■■"
-# konec ssh
+# auto boot
 echo -e "\n\e[93mnastavljam auto boot\e[0m\n"
-# Auto boot ubuntu  (nano ~/.termux/termux.properties) __Zbriši # pred: # allow-external-apps = true
 rm -rf ~/.termux/boot
 mkdir -p ~/.termux/boot
 # nastavi ~/.termux/boot/start.sh
@@ -72,6 +71,12 @@ am startservice --user 0 -n com.termux/com.termux.app.RunCommandService \
 --es com.termux.RUN_COMMAND_SESSION_ACTION '0'
 EOF
 chmod +x ~/.termux/boot/start.sh
+
+
+# Auto boot ubuntu  (nano ~/.termux/termux.properties) __Zbriši # pred: # allow-external-apps = true
+
+
+
 # ____ novo ____
 echo -e "\n\e[93m■■■■ CCminer v TERMUX ■■■■\e[0m\n"
 cd ~/
