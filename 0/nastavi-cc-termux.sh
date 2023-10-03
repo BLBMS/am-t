@@ -6,7 +6,6 @@ if ! [ -d ~/.ssh/authorized_keys ]; then
     echo -e "\n\e[93m■■■■ SSH manjka ■■■■\e[0m\n"
     exit 0
 fi
-
 echo -e "\n\e[93m■■■■ premik ubuntu - če obstaja ■■■■\e[0m\n"
 cd ~/
 if [ -d ~/ubuntu-fs ]; then
@@ -36,6 +35,35 @@ phone_ip=$(echo "$ip_line" | cut -d'.' -f4 | cut -c1-3)
 #echo "IP=" $phone_ip
 echo -e "\n\e[93mnastavitev DELAVCA\e[0m\n"
 cd ~/
+
+
+
+echo -e "\n\e[93m■■■■ nastavitev delavca ■■■■\e[0m\n"
+cd ~/
+# Poišči če je datoteka z končnico .ww v mapi
+if ls ~/*.ww >/dev/null 2>&1; then
+    for datoteka in ~/*.ww; do
+        # Preveri, ali datoteka obstaja
+        if [ -e "$datoteka" ]; then
+            ime_iz_datoteke=$(basename "$datoteka")
+            delavec=${ime_iz_datoteke%.ww}
+            echo "Delavec iz .ww datoteke: "$delavec
+        fi
+    done
+else
+    echo "Ni datotek z končnico .ww v mapi."
+    printf "\n\e[93m IME DELAVCA: \e[0m"
+    read delavec
+    rm -f *.ww worker
+    cat << EOF > ~/$delavec.ww
+    EOF
+    echo $delavec >> ~/$delavec.ww
+fi
+echo -e "\n\e[93m-> Ime delavca je: "$delavec
+echo "■■■■ done ■■■■"
+
+
+
 # Poišči če je datoteka z končnico .ww v mapi
 if ls ~/*.ww >/dev/null 2>&1; then
     for datoteka in ~/*.ww; do
