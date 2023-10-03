@@ -125,6 +125,9 @@ cd ~/
 cat << EOF > ~/.bashrc
 ### .bashrc NOVO ustvarjen
 ### ______  MOJE _____
+# obvezno! ali tu ali v ~/.termux/termux.properties
+allow-external-apps=true
+#
 PS1='${debian_chroot:+($debian_chroot)}\[\033[0;93m\]$delavec\[\033[0;91m\]@\[\033[0;93m\]$phone_ip\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]\$ '
 alias ss='~/ccminer/start.sh'
 alias xx='./kill-all-screens.sh'
@@ -135,6 +138,14 @@ alias SS='ss'
 alias XX='xx'
 alias SL='sl'
 alias RR='rr'
+EOF
+# MOJE v OBSTOJEČ ~/.bashrc
+cat << EOF > ~/.termux/termux.properties
+#
+### ______  MOJE _____
+# obvezno! ali tu ali v ~/.bashrc
+allow-external-apps=true
+#
 EOF
 # fajl KILL - ga prenesem
 #cd ~/
