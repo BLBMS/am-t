@@ -6,31 +6,6 @@
 
 #->  cd ~/ && rm -f ~/nastavi-cc-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh && chmod +x nastavi-cc-ssh.sh && ~/nastavi-cc-ssh.sh
 
-# se izvaja samo
-pkg install -y openssh net-tools nano screen
-echo -e "\n\e[93m■■■■ nastavitev delavca ■■■■\e[0m\n"
-cd ~/
-# Poišči če je datoteka z končnico .ww v mapi
-if ls ~/*.ww >/dev/null 2>&1; then
-    for datoteka in ~/*.ww; do
-        # Preveri, ali datoteka obstaja
-        if [ -e "$datoteka" ]; then
-            ime_iz_datoteke=$(basename "$datoteka")
-            delavec=${ime_iz_datoteke%.ww}
-            echo "Delavec iz .ww datoteke: "$delavec
-        fi
-    done
-else
-    echo "Ni datotek z končnico .ww v mapi."
-    printf "\n\e[93m IME DELAVCA: \e[0m"
-    read delavec
-    rm -f *.ww worker
-    cat << EOF > ~/$delavec.ww
-    EOF
-    echo $delavec >> ~/$delavec.ww
-fi
-echo -e "\n\e[93m-> Ime delavca je: "$delavec
-echo "■■■■ done ■■■■"
 echo -e "\n\e[93mnastavljam SSH\e[0m\n"
 cd ~/
 rm -rf ~/.ssh/
