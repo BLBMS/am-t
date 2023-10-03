@@ -12,24 +12,24 @@ if [ -d ~/ubuntu-fs ]; then
     if [ ! -d ~/UBUNTU ]; then
         mkdir ~/UBUNTU
     fi
-    mv ~/ubuntu-fs ~/UBUNTU/
+    mv -f ~/ubuntu-fs ~/UBUNTU/
     printf "■"
     if [ -d ~/ubuntu-binds ]; then
-        mv ~/ubuntu-binds ~/UBUNTU/
+        mv -f ~/ubuntu-binds ~/UBUNTU/
         printf "■"
     fi
     for sh_dat in ~/*.sh; do
-        if [ "$sh_dat" = "/data/data/com.termux/files/home/nastavi-cc-termux.sh" ] || [ "$sh_dat" = "/data/data/com.termux/files/home/nastavi-cc-ssh.sh" ]; then
-            echo ""
-        else
-            mv $sh_dat ~/UBUNTU/
+        pth="/data/data/com.termux/files/home/"
+        if [ "$sh_dat" != "$pth""nastavi-cc-termux.sh" ] && [ "$sh_dat" != "$pth""nastavi-cc-ssh.sh" ]; then
+            mv -f "$sh_dat" ~/UBUNTU/
             printf "■"
         fi
     done
     if [ -f ~/*.list ]; then
-        mv ~/*.list ~/UBUNTU/
-        printf "■\n"
+        mv -f ~/*.list ~/UBUNTU/
+        printf "■"
     fi
+    printf "\n"
 fi
 echo -e "\n\e[93m■■■■ nastavitve v TERMUX ■■■■\e[0m\n"
 # Nastavi IP
@@ -111,13 +111,14 @@ alias XX='xx'
 alias SL='sl'
 alias RR='rr'
 EOF
-# zamenja delavca v vseh json
-cd ~/ccminer
-for file in config*.json; do
+cd ~/
+# kopira in zamenja delavca v vseh json
+if [ -f ~/ccminer/0/*.json ]; then
+    mv -f ~/ccminer/0/*.json ~/
+fi
+for file in *.json; do
     if [ -e "$file" ]; then
-        sed -i "s/DELAVEC/$delavec/g" "$file"
-        sed -i "s/i81/RMH/g" "$file"
-        sed -i "s/K14G/s4wc/g" "$file"
+        sed -i -e "s/DELAVEC/$delavec/g" -e "s/i81/RMH/g" -e "s/K14g/s4wc/g" "$file"
         echo "zamenjan DELAVEC v : $file"
     fi
 done
