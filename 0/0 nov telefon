@@ -9,7 +9,9 @@ TERMUX
 
 pkg update -y && pkg upgrade -y && pkg install -y wget
 
-cd ~/ && rm -f nastavi-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-termux.sh && chmod +x nastavi-termux.sh && ./nastavi-termux.sh
+cd ~/ && rm -f ~/nastavi-cc-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh && chmod +x nastavi-cc-ssh.sh && ~/nastavi-cc-ssh.sh
+
+
 
 ____________
 #pkg install -y wget openssh net-tools nano
