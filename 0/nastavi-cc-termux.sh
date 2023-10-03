@@ -71,13 +71,10 @@ am startservice --user 0 -n com.termux/com.termux.app.RunCommandService \
 --es com.termux.RUN_COMMAND_SESSION_ACTION '0'
 EOF
 chmod +x ~/.termux/boot/start.sh
-
-
 # Auto boot ubuntu  (nano ~/.termux/termux.properties) __Zbriši # pred: # allow-external-apps = true
-
-
-
-# ____ novo ____
+sed -i 's/^# allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
+sed -i 's/^#allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
+# ____ novo - ccminer v termux ____
 echo -e "\n\e[93m■■■■ CCminer v TERMUX ■■■■\e[0m\n"
 cd ~/
 if [ -d ~/ccminer ]; then
@@ -87,6 +84,7 @@ fi
 pkg install -y libjansson build-essential clang binutils git
 cp /data/data/com.termux/files/usr/include/linux/sysctl.h /data/data/com.termux/files/usr/include/sys
 # original: git clone https://github.com/Darktron/ccminer.git
+# git z mojega repo
 git clone https://github.com/BLBMS/am-t.git
 mv am-t/ ccminer/
 cd ~/ccminer
@@ -98,13 +96,10 @@ cd ~/
 cat << EOF > ~/.bashrc
 ### .bashrc NOVO ustvarjen
 ### ______  MOJE _____
-# obvezno! ali tu ali v ~/.termux/termux.properties
-allow-external-apps=true
-#
+###
 PS1='${debian_chroot:+($debian_chroot)}\[\033[0;93m\]$delavec\[\033[0;91m\]@\[\033[0;93m\]$phone_ip\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]\$ '
 alias ss='~/ccminer/start.sh'
-alias xx='./kill-all-screens.sh'
-alias xxx='screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit && screen -ls'
+alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit && screen -ls'
 alias sl='screen -ls'
 alias rr='screen -x CCminer'
 alias SS='ss'
@@ -112,22 +107,6 @@ alias XX='xx'
 alias SL='sl'
 alias RR='rr'
 EOF
-# MOJE v OBSTOJEČ ~/.bashrc
-cat << EOF > ~/.termux/termux.properties
-#
-### ______  MOJE _____
-# obvezno! ali tu ali v ~/.bashrc
-allow-external-apps=true
-#
-EOF
-# fajl KILL - ga prenesem
-#cd ~/
-#cat << EOF > ~/kill-all-screens.sh
-#screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit && screen -ls
-#echo "all killed"
-#EOF
-mv ~/ccminer/0/kill-all-screens.sh ~/
-chmod +x ~/kill-all-screens.sh
 # zamenja delavca v vseh json
 cd ~/ccminer
 for file in config*.json; do
@@ -155,7 +134,7 @@ while true; do
 done
 # briše obst. če obstaja
 if [ -e "~/ccminer/config.json" ]; then
-    rm "~/ccminer/config.json"
+    rm -f ~/ccminer/config.json
 fi
 # izvede izbiro
 case $choice in
@@ -178,6 +157,7 @@ case $choice in
 esac
 # uveljavljam nastavitve
 source ~/.bashrc
+source ~/.termux/termux.properties
 echo -e "\n\e[93m■■■■ KONEC ■■■■\e[0m\n"
 echo "ss = start ccminer"
 echo "xx = kill screen"
