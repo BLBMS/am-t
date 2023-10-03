@@ -82,7 +82,7 @@ sed -i 's/^#allow-external-apps = true*/allow-external-apps = true/' ~/.termux/t
 echo -e "\n\e[93m■■■■ CCminer v TERMUX ■■■■\e[0m\n"
 cd ~/
 if [ -d ~/ccminer ]; then
-    mv ~/ccminer ~/ccminer.old
+    mv -f ~/ccminer ~/ccminer.old
 fi
 # from Oink and Darktron
 pkg install -y libjansson build-essential clang binutils git
@@ -98,11 +98,9 @@ echo -e "\n\e[93m■■■■ nastavljam CCminer ■■■■\e[0m\n"
 cd ~/
 # MOJE v NOV ~/.bashrc, če obstaja pa doda na koncu
 cat << EOF > ~/.bashrc
-### .bashrc NOVO ustvarjen
-### ______  MOJE _____
-###
+### ______  MOJE _____ .bashrc NOVO ustvarjen
 PS1='${debian_chroot:+($debian_chroot)}\[\033[0;93m\]$delavec\[\033[0;91m\]@\[\033[0;93m\]$phone_ip\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]\$ '
-alias ss='~/ccminer/start.sh'
+alias ss='~/start.sh'
 alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit && screen -ls'
 alias sl='screen -ls'
 alias rr='screen -x CCminer'
@@ -110,6 +108,11 @@ alias SS='ss'
 alias XX='xx'
 alias SL='sl'
 alias RR='rr'
+echo "ss = start ccminer"
+echo "xx = kill screen"
+echo "sl = list screen"
+echo "rr = show screen"
+echo "exit: CTRL-a + d"
 EOF
 cd ~/
 # kopira in zamenja delavca v vseh json
@@ -147,19 +150,19 @@ fi
 case $choice in
     1)
         echo "-> MRR"
-        cp ~/ccminer/config-mrr.json ~/ccminer/config.json 
+        cp ~/config-mrr.json ~/config.json 
         ;;
     2)
         echo "-> pool.verus.io"
-        cp ~/ccminer/config-verus.json ~/ccminer/config.json 
+        cp ~/config-verus.json ~/config.json 
         ;;
     3)
         echo "-> eu.luckpool.net"
-        cp ~/ccminer/config-luck.json ~/ccminer/config.json 
+        cp ~/config-luck.json ~/config.json 
         ;;
     4)
         echo "-> de.vipor.net"
-        cp ~/ccminer/config-vipor.json ~/ccminer/config.json 
+        cp ~/config-vipor.json ~/config.json 
         ;;
 esac
 # uveljavljam nastavitve
