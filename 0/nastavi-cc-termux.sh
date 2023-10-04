@@ -4,7 +4,7 @@
 
 if ! [ -f ~/.ssh/authorized_keys ]; then
     echo -e "\n\e[93m■■■■ SSH manjka ■■■■\e[0m\n"
-    exit 0
+    exit 1
 else
     echo -e "\n\e[93m■■■■ SSH nastavljen ■■■■\e[0m\n"
 fi
