@@ -13,9 +13,10 @@ cd ~/
 rm -rf ~/.ssh/
 mkdir ~/.ssh
 chmod 0700 ~/.ssh
-cat << EOF > ~/.ssh/authorized_keys
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAe7mHnisRNUXZ8u5AaeKxm7/ixbaacLWk6S6bpqlEom blb@blb
-EOF
+#cat << EOF > ~/.ssh/authorized_keys
+#ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAe7mHnisRNUXZ8u5AaeKxm7/ixbaacLWk6S6bpqlEom blb@blb
+#EOF
+echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAe7mHnisRNUXZ8u5AaeKxm7/ixbaacLWk6S6bpqlEom blb@blb" > ~/.ssh/authorized_keys
 chmod 0600 ~/.ssh/authorized_keys
 # nastavi SSH
 sshd
@@ -32,10 +33,11 @@ ifconfig_out=$(ifconfig)
 ip_line=$(echo "$ifconfig_out" | grep 'inet 192')
 phone_ip=$(echo "$ip_line" | cut -d'.' -f4 | cut -c1-3)
 echo "IP=" $phone_ip
-rm -f ~/*.ip
-cat << EOF > ~/$phone_ip.ip
-EOF
-echo $$phone_ip >> ~/$phone_ip.ip
+#rm -f ~/*.ip
+#cat << EOF > ~/$phone_ip.ip
+#EOF
+#echo $$phone_ip >> ~/$phone_ip.ip
+echo $phone_ip > ~/$phone_ip.ip
 # Nastavi SSH
 echo "■■■■ update to blb ssh ■■■■"
 echo -e "\n\e[93mpreveri IP !!\e[0m\n"
