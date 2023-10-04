@@ -53,10 +53,7 @@ else
     echo "Ni datotek z končnico .ww v mapi."
     printf "\n\e[93m IME DELAVCA: \e[0m"
     read delavec
-    rm -f *.ww worker
-    cat << EOF > ~/$delavec.ww
-    EOF
-    echo $delavec >> ~/$delavec.ww
+    echo $delavec > ~/$delavec.ww
 fi
 echo -e "\n\e[93m-> Ime delavca je: "$delavec
 echo "■■■■ done ■■■■"
