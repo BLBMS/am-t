@@ -2,6 +2,7 @@
 
 #   cd ~/ && rm -f nastavi-cc-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-termux.sh && chmod +x nastavi-cc-termux.sh && ./nastavi-cc-termux.sh
 
+exit
 if ! [ -f ~/.ssh/authorized_keys ]; then
     echo -e "\n\e[93m■■■■ SSH manjka ■■■■\e[0m\n"
     exit 1
