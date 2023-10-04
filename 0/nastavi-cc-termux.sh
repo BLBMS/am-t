@@ -107,6 +107,7 @@ alias SS='ss'
 alias XX='xx'
 alias SL='sl'
 alias RR='rr'
+echo "__________________"
 echo "ss = start ccminer"
 echo "xx = kill screen"
 echo "sl = list screen"
@@ -115,13 +116,11 @@ echo "exit: CTRL-a + d"
 EOF
 cd ~/
 # kopira in zamenja delavca v vseh json
-if [ -f ~/ccminer/0/*.json ]; then
-    mv -f ~/ccminer/0/*.json ~/
-fi
-for file in *.json; do
-    if [ -e "$file" ]; then
+for file in ~/ccminer/0/*.json; do
+    if [ -f "$file" ]; then
         sed -i -e "s/DELAVEC/$delavec/g" -e "s/i81/RMH/g" -e "s/K14g/s4wc/g" "$file"
         echo "zamenjan DELAVEC v : $file"
+        mv -f "$file" ~/
     fi
 done
 # nastavi POOL
