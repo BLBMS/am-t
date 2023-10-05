@@ -164,29 +164,30 @@ echo "product.manufacturer :"$(getprop ro.product.manufacturer)
 echo "product.model        :"$(getprop ro.product.model)
 echo "product.cpu.abilist64:"$(getprop ro.product.cpu.abilist64)
 echo "arm64.variant        :"$(getprop dalvik.vm.isa.arm64.variant)
-MODEL=$(getprop ro.product.model)
+$ MODEL=$(getprop ro.product.model)
 
 # Funkcija za preverjanje ujemanja
 check_match() {
     local cpu_var="CPU$1"
-    local arch_var="ARCH8$1"
     local cpu_value="${!cpu_var}"
 
-    for value in ${!arch_var}; do
-        if [ "$cpu_value" = "$value" ]; then
-            echo "Vrednost $cpu_var: $cpu_value ustreza vrednosti v $arch_var: $value"
-            return
-        fi
+    for j in {0..3}; do
+        local arch_var="ARCH8$j"
+        for value in ${!arch_var}; do
+            if [ "$cpu_value" = "$value" ]; then
+                echo -e "\e[0;92mVrednost $cpu_var: $cpu_value ustreza vrednosti v $arch_var\e[0m"
+            fi
+        done
     done
-
-    echo "Vrednost $cpu_var: $cpu_value ne ustreza nobeni vrednosti v $arch_var"
 }
-
 # Preverite vsak CPU(i)
 for i in {0..3}; do
     check_match $i
 done
-    
+
+
+
+
 
 read -n 1 -p "Are CPU's OK (y - yes)? " yn
 echo
