@@ -104,7 +104,8 @@ sed -i 's/^#allow-external-apps = true*/allow-external-apps = true/' ~/.termux/t
 echo -e "\n\e[93m■■■■ CCminer v TERMUX ■■■■\e[0m\n"
 cd ~/
 if [ -d ~/ccminer ]; then
-    mv -f ~/ccminer ~/ccminer.old
+#    mv -f ~/ccminer ~/ccminer.old
+    rm -rf ~/ccminer/
 fi
 # from Oink and Darktron
 pkg install -y libjansson build-essential clang binutils git screen
