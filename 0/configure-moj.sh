@@ -17,6 +17,28 @@
 # armv8.2-a+crypto
 # armv8.3-a+crypto
 
+# This is what I figured out
+# for the a53
+# -march=armv8-a: This specifies the ARMv8-A architecture.
+# -mfpu=neon-fp-armv8: Similar to Cortex-A53, this enables Neon and VFPv3 instructions.
+# -mfloat-abi=hard: Utilizing the hardware floating-point unit.
+# -march=armv8-a+crypto: Enable cryptographic extensions for AES, SHA-1, and SHA-256.
+# for the a72
+# -march=armv8-a: This specifies the ARMv8-A architecture.
+# -mfpu=neon-fp-armv8: Similar to Cortex-A53, this enables Neon and VFPv3 instructions.
+# -mfloat-abi=hard: Utilizing the hardware floating-point unit.
+# -march=armv8-a+crypto: Enable cryptographic extensions for AES, SHA-1, and SHA-256.
+# for the a73
+# -march=armv8.2-a: This specifies the ARMv8.2-A architecture, enabling relevant extensions.
+# -mfpu=neon-fp-armv8: Again, enabling Neon and VFPv3 instructions.
+# -mfloat-abi=hard: Making use of the hardware floating-point unit.
+# -march=armv8.2-a+crypto: Enable cryptographic extensions for AES, SHA-1, SHA-256, and more introduced in ARMv8.2-A.
+# for the a75
+# -march=armv8.2-a: This specifies the ARMv8.2-A architecture, enabling relevant extensions.
+# -mfpu=neon-fp-armv8: Enabling the Advanced SIMD (Neon) v1 and the VFPv3 floating-point instructions.
+# -mfloat-abi=hard: Utilizing the hardware floating-point unit.
+# -march=armv8.2-a+crypto: Enable cryptographic extensions for AES, SHA-1, SHA-256, and more introduced in ARMv8.2-A.
+
 
 MTUNE=" a64fx ampere1 ampere1a apple-a10 apple-a11 apple-a12 apple-a13 apple-a14 apple-a15 apple-a16 apple-a7 apple-a8 apple-a9 apple-latest apple-m1 apple-m2 \
 apple-s4 apple-s5 carmel cortex-a34 cortex-a35 cortex-a510 cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 cortex-a73 \
