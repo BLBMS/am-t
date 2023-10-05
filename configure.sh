@@ -2,7 +2,8 @@
 
 
 # original: ARCH="-march=armv8.3-a+crypto"
-ARCH="-march=armv8-a+crypto"
+# ARCH="-march=armv8-a+crypto"
+ARCH="-march=AAAAAAAAAA-a+crypto"
 
 # CORE="-mtune=cortex-a76 -mtune=cortex-a55"
 CORE="CCCCCCCCCC"
