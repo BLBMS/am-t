@@ -113,6 +113,7 @@ cp /data/data/com.termux/files/usr/include/linux/sysctl.h /data/data/com.termux/
 # original: git clone https://github.com/Darktron/ccminer.git
 # git z mojega repo
 git clone https://github.com/BLBMS/am-t.git
+echo -e "\n\e[93m■■■■ git skopiran ■■■■\e[0m\n"
 mv am-t/ ccminer/
 cd ~/ccminer
 chmod +x build.sh configure.sh autogen.sh
