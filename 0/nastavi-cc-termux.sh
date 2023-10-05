@@ -226,62 +226,122 @@ esac
 
 MODEL=$(getprop ro.product.model)
 
+
+echo "Are CPU's OK (y - yes)?"
+echo "Or use from model (m - model)?"
+read -n 1 yn
+echo
+
+# if [ "$yn" != "y" ] && [ "$yn" != "Y" ]; then
+# fi
+
+case $yn in
+    "y")
+        echo
+        ;;
+    "Y")
+        echo
+        ;;
+    "m")
 echo -e "\n\e[0;93mPredlog po modelu telefona:"
 case $MODEL in
     "SM-G950F")
-        echo "Samsung Galaxy S8"
+        echo $MODEL "Samsung Galaxy S8"
         CORE="-mtune=cortex-a53"
         ARMV="armv8"
         echo "CORE=$CORE"
         echo "ARMV=$ARMV"
         ;;
     "SM-G955F")
-        echo "Samsung Galaxy S8+"
+        echo $MODEL "Samsung Galaxy S8+"
         CORE="-mtune=cortex-a53"
         ARMV="armv8"
         echo "CORE=$CORE"
         echo "ARMV=$ARMV"
         ;;
     "SM-G960F")
-        echo "Samsung Galaxy S9"
+        echo $MODEL "Samsung Galaxy S9"
         CORE="-mtune=cortex-a55"
         ARMV="armv8"
         echo "CORE=$CORE"
         echo "ARMV=$ARMV"
         ;;
     "SM-G965F")
-        echo "Samsung Galaxy S9+"
+        echo $MODEL "Samsung Galaxy S9+"
         CORE="-mtune=cortex-a55"
         ARMV="armv8"
         echo "CORE=$CORE"
         echo "ARMV=$ARMV"
-        ;;"SM-G973F")
-        echo "Samsung Galaxy S10"
+        ;;
+    "SM-G973F")
+        echo $MODEL "Samsung Galaxy S10"
         CORE="-mtune=cortex-a75.cortex-a55"
         ARMV="armv8.2"
         echo "CORE=$CORE"
         echo "ARMV=$ARMV"
         ;;
     "SM-G970F")
-        echo "Samsung Galaxy S10e"
+        echo $MODEL "Samsung Galaxy S10e"
         CORE="-mtune=cortex-a75.cortex-a55"
         ARMV="armv8.2"
         echo "CORE=$CORE"
         echo "ARMV=$ARMV"
         ;;
+     "M")
+echo -e "\n\e[0;93mPredlog po modelu telefona:"
+case $MODEL in
+    "SM-G950F")
+        echo $MODEL "Samsung Galaxy S8"
+        CORE="-mtune=cortex-a53"
+        ARMV="armv8"
+        echo "CORE=$CORE"
+        echo "ARMV=$ARMV"
+        ;;
+    "SM-G955F")
+        echo $MODEL "Samsung Galaxy S8+"
+        CORE="-mtune=cortex-a53"
+        ARMV="armv8"
+        echo "CORE=$CORE"
+        echo "ARMV=$ARMV"
+        ;;
+    "SM-G960F")
+        echo $MODEL "Samsung Galaxy S9"
+        CORE="-mtune=cortex-a55"
+        ARMV="armv8"
+        echo "CORE=$CORE"
+        echo "ARMV=$ARMV"
+        ;;
+    "SM-G965F")
+        echo $MODEL "Samsung Galaxy S9+"
+        CORE="-mtune=cortex-a55"
+        ARMV="armv8"
+        echo "CORE=$CORE"
+        echo "ARMV=$ARMV"
+        ;;
+    "SM-G973F")
+        echo $MODEL "Samsung Galaxy S10"
+        CORE="-mtune=cortex-a75.cortex-a55"
+        ARMV="armv8.2"
+        echo "CORE=$CORE"
+        echo "ARMV=$ARMV"
+        ;;
+    "SM-G970F")
+        echo $MODEL "Samsung Galaxy S10e"
+        CORE="-mtune=cortex-a75.cortex-a55"
+        ARMV="armv8.2"
+        echo "CORE=$CORE"
+        echo "ARMV=$ARMV"
+        ;;   
     *)
         echo "Neznan model telefona: $MODEL"
         ;;
 esac
-
-
-
-read -n 1 -p "Are CPU's OK (y - yes)? " yn
-echo
-if [ "$yn" != "y" ] && [ "$yn" != "Y" ]; then
-    echo "__exit"
-    exit
-fi
+        ;;
+    *)
+        echo "__exit"
+        exit    
+        ;;
+esac
 
 # zamenjam ARMV in CORE v configure.sh
 sed -i "s/AAAAAAAAAA/$ARMV/g" ~/ccminer/configure.sh
