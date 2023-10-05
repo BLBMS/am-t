@@ -115,7 +115,8 @@ git clone https://github.com/BLBMS/am-t.git
 mv am-t/ ccminer/
 cd ~/ccminer
 chmod +x build.sh configure.sh autogen.sh
-rm -f start.sh
+rm -f ~/ccminer/start.sh
+rm -f ~/ccminer/config.json
 echo -e "\n\e[93m■■■■ nastavljam CPUje za kompajler ■■■■\e[0m\n"
 MTUNE=" a64fx ampere1 ampere1a apple-a10 apple-a11 apple-a12 apple-a13 apple-a14 apple-a15 apple-a16 apple-a7 apple-a8 apple-a9 apple-latest apple-m1 apple-m2 \
 apple-s4 apple-s5 carmel cortex-a34 cortex-a35 cortex-a510 cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 cortex-a73 \
@@ -182,6 +183,8 @@ for file in ~/ccminer/0/*.json; do
         mv -f "$file" ~/
     fi
 done
+mv -f ~/ccminer/0/start.sh ~/
+# rm -rf ~/ccminer/0/
 # nastavi POOL
 while true; do
     echo -e "\n\e[93m■■ kateri POOL ■■ \e[0m\n"
@@ -200,8 +203,8 @@ while true; do
     esac
 done
 # briše obst. če obstaja
-if [ -e "~/ccminer/config.json" ]; then
-    rm -f ~/ccminer/config.json
+if [ -e "~/config.json" ]; then
+    rm -f ~/config.json
 fi
 # izvede izbiro
 case $choice in
@@ -224,7 +227,7 @@ case $choice in
 esac
 # uveljavljam nastavitve
 source ~/.bashrc
-source ~/.termux/termux.properties
+sleep 2
 echo -e "\n\e[93m■■■■ KONEC ■■■■\e[0m\n"
 echo "ss = start ccminer"
 echo "xx = kill screen"
