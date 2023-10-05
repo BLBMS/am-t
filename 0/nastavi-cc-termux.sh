@@ -183,7 +183,7 @@ for file in ~/ccminer/0/*.json; do
         mv -f "$file" ~/
     fi
 done
-mv -f ~/ccminer/start.sh ~/
+mv -f ~/ccminer/0/start.sh ~/
 # rm -rf ~/ccminer/0/
 # nastavi POOL
 while true; do
