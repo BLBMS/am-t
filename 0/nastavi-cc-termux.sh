@@ -2,13 +2,41 @@
 
 #   cd ~/ && rm -f nastavi-cc-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-termux.sh && chmod +x nastavi-cc-termux.sh && ./nastavi-cc-termux.sh
 
-exit
-if ! [ -f ~/.ssh/authorized_keys ]; then
-    echo -e "\n\e[93m■■■■ SSH manjka ■■■■\e[0m\n"
-    exit 1
+
+authorized_keys_file="$HOME/.ssh/authorized_keys"
+compare_string="blb@blb"
+
+if [ -f "$authorized_keys_file" ]; then
+    last_chars=$(tail -c ${#compare_string} "$authorized_keys_file")
+    if [ "$last_chars" == "$compare_string" ]; then
+        echo "Zadnji znaki v datoteki $authorized_keys_file so enaki \"$compare_string\"."
+    else
+        echo "Zadnji znaki v datoteki $authorized_keys_file niso enaki \"$compare_string\"."
+    fi
 else
-    echo -e "\n\e[93m■■■■ SSH nastavljen ■■■■\e[0m\n"
+    echo "Datoteka $authorized_keys_file ne obstaja."
 fi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#exit
+#if ! [ -f ~/.ssh/authorized_keys ]; then
+#    echo -e "\n\e[93m■■■■ SSH manjka ■■■■\e[0m\n"
+#    exit 1
+#else
+#    echo -e "\n\e[93m■■■■ SSH nastavljen ■■■■\e[0m\n"
+#fi
 echo -e "\n\e[93m■■■■ premik ubuntu - če obstaja ■■■■\e[0m\n"
 cd ~/
 if [ -d ~/ubuntu-fs ]; then
