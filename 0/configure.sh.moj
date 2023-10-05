@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# izpiše vse cpuje
+#   lscpu | grep "Model name:" | awk -F ': ' '{print $2}'
+
 # Izvedi ukaz lscpu, poišči "Model name:" in odstrani presledke iz odgovorov
 output=$(lscpu | grep "Model name:" | awk -F ': ' '{print $2}' | tr -d ' ')
 
