@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 output=$(lscpu | grep "Model name:" | awk -F ': ' '{print $2}' | tr -d ' ')
 IFS=$'\n' read -rd '' -a cpus <<< "$output"
