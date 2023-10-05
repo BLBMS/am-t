@@ -155,7 +155,6 @@ check_match() {
     for j in {0..3}; do
         local armv_var="ARMV8$j"
         for value in ${!armv_var}; do
-            echo "value=$value"
             if [ "$cpu_value" = "$value" ]; then
                 echo -e "\e[0;92mVrednost $cpu_var: $cpu_value ustreza vrednosti v $armv_var\e[0m"
             fi
@@ -165,7 +164,6 @@ check_match() {
 # Preverite vsak CPU(i)
 for i in $(seq 0 $((num_cpus - 1))); do
     check_match $i
-    echo "Preverjam CPU$i"
 done
 
 # sem sem dal
