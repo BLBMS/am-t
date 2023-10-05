@@ -216,47 +216,47 @@ read -n 1 yn
 echo
 
 if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
-    echo "ndaljujem"
-elseif  [ "$yn" = "m" ] || [ "$yn" = "M" ]; then
+    echo "Nadaljujem"
+elif [ "$yn" = "m" ] || [ "$yn" = "M" ]; then
     echo -e "\n\e[0;93mPredlog po modelu telefona:"
     case $MODEL in
     "SM-G950F")
-        echo $MODEL "Samsung Galaxy S8"
+        echo "$MODEL Samsung Galaxy S8"
         CORE="-mtune=cortex-a53"
         ARMV="armv8"
         echo "CORE=$CORE"
         echo "ARMV=$ARMV"
         ;;
     "SM-G955F")
-        echo $MODEL "Samsung Galaxy S8+"
+        echo "$MODEL Samsung Galaxy S8+"
         CORE="-mtune=cortex-a53"
         ARMV="armv8"
         echo "CORE=$CORE"
         echo "ARMV=$ARMV"
         ;;
     "SM-G960F")
-        echo $MODEL "Samsung Galaxy S9"
+        echo "$MODEL Samsung Galaxy S9"
         CORE="-mtune=cortex-a55"
         ARMV="armv8"
         echo "CORE=$CORE"
         echo "ARMV=$ARMV"
         ;;
     "SM-G965F")
-        echo $MODEL "Samsung Galaxy S9+"
+        echo "$MODEL Samsung Galaxy S9+"
         CORE="-mtune=cortex-a55"
         ARMV="armv8"
         echo "CORE=$CORE"
         echo "ARMV=$ARMV"
         ;;
     "SM-G973F")
-        echo $MODEL "Samsung Galaxy S10"
+        echo "$MODEL Samsung Galaxy S10"
         CORE="-mtune=cortex-a75.cortex-a55"
         ARMV="armv8.2"
         echo "CORE=$CORE"
         echo "ARMV=$ARMV"
         ;;
     "SM-G970F")
-        echo $MODEL "Samsung Galaxy S10e"
+        echo "$MODEL Samsung Galaxy S10e"
         CORE="-mtune=cortex-a75.cortex-a55"
         ARMV="armv8.2"
         echo "CORE=$CORE"
@@ -268,7 +268,7 @@ elseif  [ "$yn" = "m" ] || [ "$yn" = "M" ]; then
     esac
 else
     exit
-fi    
+fi   
 
 
 # zamenjam ARMV in CORE v configure.sh
