@@ -165,11 +165,10 @@ ARMV83=" "
 # cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 cortex-a73
 # cortex-a75 cortex-a76 cortex-a76ae cortex-a77 cortex-a78 cortex-a78c cortex-r82
 
-echo "product.manufacturer :"$(getprop ro.product.manufacturer)
-echo "product.model        :"$(getprop ro.product.model)
-echo "product.cpu.abilist64:"$(getprop ro.product.cpu.abilist64)
-echo "arm64.variant        :"$(getprop dalvik.vm.isa.arm64.variant)
-$ MODEL=$(getprop ro.product.model)
+echo -e "\nproduct.manufacturer : \e[0;93m$(getprop ro.product.manufacturer)\e[0m"
+echo -e "product.model        : \e[0;93m$(getprop ro.product.model)\e[0m"
+echo -e "product.cpu.abilist64: \e[0;93m$(getprop ro.product.cpu.abilist64)\e[0m"
+echo -e "arm64.variant        : \e[0;93m$(getprop dalvik.vm.isa.arm64.variant)\e[0m"
 
 # Funkcija za preverjanje ujemanja
 check_match() {
@@ -186,10 +185,9 @@ check_match() {
     done
 }
 # Preverite vsak CPU(i)
-for i in {0..num_cpus}; do
+for i in $(seq 0 $((num_cpus - 1))); do
     check_match $i
 done
-
 while true; do
     echo -e "\n\e[93m■■ kateri armv? ■■ \e[0m\n"
     echo "0     armv8"
@@ -225,6 +223,52 @@ case $choice in
         ARMV="armv8.3"
         ;;
 esac
+
+MODEL=$(getprop ro.product.model)
+
+echo -e "\n\e[0;93mPredlog po modelu telefona:"
+case $MODEL in
+    "SM-G950F")
+        echo "Samsung Galaxy S8"
+        CORE="-mtune=cortex-a53"
+        ARMV="armv8"
+        echo "CORE=$CORE"
+        echo "ARMV=$ARMV"
+        ;;
+    "SM-G955F")
+        echo "Samsung Galaxy S8+"
+        CORE="-mtune=cortex-a53"
+        ARMV="armv8"
+        echo "CORE=$CORE"
+        echo "ARMV=$ARMV"
+        ;;
+    "SM-G960F")
+        echo "Samsung Galaxy S9"
+        CORE="-mtune=cortex-a75.cortex-a55"
+        ARMV="armv8.2"
+        echo "CORE=$CORE"
+        echo "ARMV=$ARMV"
+        ;;
+    "SM-G973F")
+        echo "Samsung Galaxy S10"
+        CORE="-mtune=cortex-a75.cortex-a55"
+        ARMV="armv8.2"
+        echo "CORE=$CORE"
+        echo "ARMV=$ARMV"
+        ;;
+    "SM-G973F")
+        echo "Samsung Galaxy S10"
+        CORE="-mtune=cortex-a75.cortex-a55"
+        ARMV="armv8.2"
+        echo "CORE=$CORE"
+        echo "ARMV=$ARMV"
+        ;;
+    *)
+        echo "Neznan model telefona: $MODEL"
+        ;;
+esac
+
+
 
 read -n 1 -p "Are CPU's OK (y - yes)? " yn
 echo
