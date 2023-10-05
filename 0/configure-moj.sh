@@ -1,11 +1,10 @@
 #!/bin/bash
 
-#->     cd ~/ && rm -f ~/configure.sh.moj && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/configure.sh.moj && chmod +x configure.sh.moj && ~/configure.sh.moj
+#->     cd ~/ && rm -f ~/configure-moj.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/configure-moj.sh && chmod +x configure-moj.sh && ~/configure-moj.sh
 
 
 # izpiše vse cpuje
 #   lscpu | grep "Model name:" | awk -F ': ' '{print $2}'
-
 
 # Izvedi ukaz lscpu, poišči "Model name:" in odstrani presledke iz odgovorov
 output=$(lscpu | grep "Model name:" | awk -F ': ' '{print $2}' | tr -d ' ')
