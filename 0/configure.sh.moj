@@ -6,35 +6,26 @@
 # izpiše vse cpuje
 #   lscpu | grep "Model name:" | awk -F ': ' '{print $2}'
 
+
 # Izvedi ukaz lscpu, poišči "Model name:" in odstrani presledke iz odgovorov
 output=$(lscpu | grep "Model name:" | awk -F ': ' '{print $2}' | tr -d ' ')
 
-# Razdeli rezultat na dve spremenljivki, eno za MYCPU1 in drugo za MYCPU2
+# Razdeli rezultat na spremenljivke, glede na število CPU-jev
 IFS=$'\n' read -rd '' -a cpus <<< "$output"
 
-MYCPU1="${cpus[0]}"
-MYCPU2="${cpus[1]}"
-MYCPU2="${cpus[2]}"
-MYCPU2="${cpus[3]}"
+# Število CPU-jev
+num_cpus="${#cpus[@]}"
 
-echo "MYCPU1: $MYCPU1"
-echo "MYCPU2: $MYCPU2"
-echo "MYCPU3: $MYCPU3"
-echo "MYCPU3: $MYCPU4"
+CORE=""
 
-# V male črke
-MYCPU1=$(echo "$MYCPU1" | tr '[:upper:]' '[:lower:]')
-MYCPU2=$(echo "$MYCPU2" | tr '[:upper:]' '[:lower:]')
-MYCPU3=$(echo "$MYCPU3" | tr '[:upper:]' '[:lower:]')
-MYCPU4=$(echo "$MYCPU4" | tr '[:upper:]' '[:lower:]')
+# Izpiši vrednosti za vsak CPU
+for ((i = 0; i < num_cpus; i++)); do
+    echo "CPU$((i + 1)): ${cpus[i]}"
+    COREx="-mtune=${cpus[i]}"
+    CORE="$CORE $COREx"
+done
 
-# Izpiši vrednosti
-echo "MYCPU1: $MYCPU1"
-echo "MYCPU2: $MYCPU2"
-echo "MYCPU3: $MYCPU3"
-echo "MYCPU3: $MYCPU4"
-
-
+echo "CORE  ->$CORE<-"
 
 read -n 1 -p "Are CPU's OK (y/n)? " yn
 echo
