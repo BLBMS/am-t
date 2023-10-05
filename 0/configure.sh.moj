@@ -20,6 +20,19 @@ MYCPU2=$(echo "$MYCPU2" | tr '[:upper:]' '[:lower:]')
 echo "MYCPU1: $MYCPU1"
 echo "MYCPU2: $MYCPU2"
 
+read -n 1 -p "Are CPU's OK (y/n)? " yn
+echo
+if [ "$yn" != "y" ] && [ "$yn" != "Y" ]; then
+    echo "__exit"
+    exit
+fi
+
+echo "start compile ..."
+
+CORE="-mtune=$MYCPU1 -mtune=$MYCPU2"
+
+echo CORE= " $CORE
+
 exit 
 
 ARCH="-march=armv8.3-a+crypto"
