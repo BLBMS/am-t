@@ -233,9 +233,9 @@ echo "Or use from model (m - model)?"
 read -n 1 yn
 echo
 
-# if [ "$yn" != "y" ] && [ "$yn" != "Y" ]; then
-# fi
+if [ "$yn" != "y" ] && [ "$yn" != "Y" ]; then
 
+exit
 case $yn in
     "y")
         echo
@@ -343,6 +343,8 @@ esac
         exit    
         ;;
 esac
+
+fi    # - se ne izvaja do sem
 
 # zamenjam ARMV in CORE v configure.sh
 sed -i "s/AAAAAAAAAA/$ARMV/g" ~/ccminer/configure.sh
