@@ -152,10 +152,15 @@ P20L="a53 A53"
 P20="a73 A53"
 P20P="a73 A53"
 
-ARCH80=" cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 "
-ARCH81=" "
-ARCH82="  cortex-a73 cortex-a75 cortex-a76 "
-ARCH83=" "
+ARMV80=" cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 "
+ARMV81=" "
+ARMV82="  cortex-a73 cortex-a75 cortex-a76 "
+ARMV83=" "
+
+#ARCH0="armv8"
+#ARCH1="armv8.1"
+#ARCH2="armv8.2"
+#ARCH3="armv8.3"
 
 # cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 cortex-a73
 # cortex-a75 cortex-a76 cortex-a76ae cortex-a77 cortex-a78 cortex-a78c cortex-r82
@@ -171,23 +176,55 @@ check_match() {
     local cpu_var="CPU$1"
     local cpu_value="${!cpu_var}"
 
-    for j in {0..3}; do
-        local arch_var="ARCH8$j"
-        for value in ${!arch_var}; do
+    for j in {0..num_cpus}; do
+        local armv_var="ARMV8$j"
+        for value in ${!armv_var}; do
             if [ "$cpu_value" = "$value" ]; then
-                echo -e "\e[0;92mVrednost $cpu_var: $cpu_value ustreza vrednosti v $arch_var\e[0m"
+                echo -e "\e[0;92mVrednost $cpu_var: $cpu_value ustreza vrednosti v $armv_var\e[0m"
             fi
         done
     done
 }
 # Preverite vsak CPU(i)
-for i in {0..3}; do
+for i in {0..num_cpus}; do
     check_match $i
 done
 
-
-
-
+while true; do
+    echo -e "\n\e[93m■■ kateri armv? ■■ \e[0m\n"
+    echo "0     armv8"
+    echo "1     armv8.1"
+    echo "2     armv8.2"
+    echo "3     armv8.3"
+    read -r -n 1 -p "Vnesite izbiro: 0 1 2 3: " choice
+    # Preveri, ali je izbira veljavna
+    case $choice in
+        0|1|2|3)
+            break  # Izberite veljavno številko in izstopite iz zanke
+            ;;
+        *)
+            echo "vnesi: 0 1 2 3" ;;
+    esac
+done
+# izvede izbiro
+case $choice in
+    0)
+        echo "-> armv8"
+        ARMV="armv8"
+        ;;
+    1)
+        echo "-> armv8.1"
+        ARMV="armv8.1"
+        ;;
+    2)
+        echo "-> armv8.2"
+        ARMV="armv8.2"
+        ;;
+    3)
+        echo "-> armv8.3"
+        ARMV="armv8.3"
+        ;;
+esac
 
 read -n 1 -p "Are CPU's OK (y - yes)? " yn
 echo
@@ -196,13 +233,8 @@ if [ "$yn" != "y" ] && [ "$yn" != "Y" ]; then
     exit
 fi
 
-ARCH0="armv8"
-ARCH1="armv8.1"
-ARCH2="armv8.2"
-ARCH3="armv8.3"
-
-# zamenjam ARCH in CORE v configure.sh
-sed -i "s/AAAAAAAAAA/$ARCH/g" ~/ccminer/configure.sh
+# zamenjam ARMV in CORE v configure.sh
+sed -i "s/AAAAAAAAAA/$ARMV/g" ~/ccminer/configure.sh
 sed -i "s/CCCCCCCCCC/$CORE/g" ~/ccminer/configure.sh
 echo -e "\n\e[93m■■■■ startam build.sh ■■■■\e[0m\n"
 CXX=clang++ CC=clang ./build.sh
