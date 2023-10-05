@@ -1,7 +1,4 @@
 #!/bin/sh
-
-#  ~/ccminer/ccminer -c ~/config.json
-
 #wipe any existing (dead) screens from last session
 screen -wipe 1>/dev/null 2>&1
 #check if ccminer is allready running
@@ -25,3 +22,4 @@ echo "xx = kill screen"
 echo "sl = list screen"
 echo "rr = show screen"
 echo -e "exit: CTRL-a + d\e[0m"
+screen -ls | grep --color=always "CCminer"
