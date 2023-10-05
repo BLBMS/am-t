@@ -307,6 +307,7 @@ for file in ~/ccminer/0/*.json; do
     fi
 done
 mv -f ~/ccminer/0/start.sh ~/
+chmod +x ~/start.sh
 # rm -rf ~/ccminer/0/
 # nastavi POOL
 while true; do
