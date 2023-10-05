@@ -141,8 +141,12 @@ for ((i = 0; i < num_cpus; i++)); do
         echo -e "\e[0;91mCORE \"$COREy\" NOT in the MTUNE database\e[0m"
     fi
 done
-echo "CORE=$CORE"
-#  sem daj spodnje
+echo -s "\nCORE=$CORE"
+echo -e "\nproduct.manufacturer : \e[0;93m$(getprop ro.product.manufacturer)\e[0m"
+echo -e "product.model        : \e[0;93m$(getprop ro.product.model)\e[0m"
+echo -e "product.cpu.abilist64: \e[0;93m$(getprop ro.product.cpu.abilist64)\e[0m"
+echo -e "arm64.variant        : \e[0;93m$(getprop dalvik.vm.isa.arm64.variant)\e[0m"
+
 # Funkcija za preverjanje ujemanja
 ARMV80=" cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 "
 ARMV81=" karkoli "
@@ -165,35 +169,6 @@ check_match() {
 for i in $(seq 0 $((num_cpus - 1))); do
     check_match $i
 done
-
-# sem sem dal
-#echo "-$C1-$C2-$C3-"
-
-echo -e "\nproduct.manufacturer : \e[0;93m$(getprop ro.product.manufacturer)\e[0m"
-echo -e "product.model        : \e[0;93m$(getprop ro.product.model)\e[0m"
-echo -e "product.cpu.abilist64: \e[0;93m$(getprop ro.product.cpu.abilist64)\e[0m"
-echo -e "arm64.variant        : \e[0;93m$(getprop dalvik.vm.isa.arm64.variant)\e[0m"
-
-# J5="a53"
-# J7="a53"
-# S8="M2 a53"
-# S9="M3 a55"
-# S10="M4 a75 A55"
-
-# P20L="a53 A53"
-# P20="a73 A53"
-# P20P="a73 A53"
-
-# ARCH0="armv8"
-# ARCH1="armv8.1"
-# ARCH2="armv8.2"
-# ARCH3="armv8.3"
-
-# cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 cortex-a73
-# cortex-a75 cortex-a76 cortex-a76ae cortex-a77 cortex-a78 cortex-a78c cortex-r82
-
-# do sem
-
 
 while true; do
     echo -e "\n\e[93m■■ kateri armv? ■■ \e[0m\n"
@@ -234,24 +209,17 @@ esac
 MODEL=$(getprop ro.product.model)
 
 
-echo "Are CPU's OK      (y - yes)?"
+echo "Are CPU/ARMV   OK (y - yes)?"
 echo "Or use from model (m - model)?"
+echo "Or EXIT?"
 read -n 1 yn
 echo
 
-if [ "$yn" != "y" ] && [ "$yn" != "Y" ]; then
-
-exit
-case $yn in
-    "y")
-        echo
-        ;;
-    "Y")
-        echo
-        ;;
-    "m")
-echo -e "\n\e[0;93mPredlog po modelu telefona:"
-case $MODEL in
+if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
+    echo "ndaljujem"
+elseif  [ "$yn" = "m" ] || [ "$yn" = "M" ]; then
+    echo -e "\n\e[0;93mPredlog po modelu telefona:"
+    case $MODEL in
     "SM-G950F")
         echo $MODEL "Samsung Galaxy S8"
         CORE="-mtune=cortex-a53"
@@ -294,64 +262,14 @@ case $MODEL in
         echo "CORE=$CORE"
         echo "ARMV=$ARMV"
         ;;
-     "M")
-echo -e "\n\e[0;93mPredlog po modelu telefona:"
-case $MODEL in
-    "SM-G950F")
-        echo $MODEL "Samsung Galaxy S8"
-        CORE="-mtune=cortex-a53"
-        ARMV="armv8"
-        echo "CORE=$CORE"
-        echo "ARMV=$ARMV"
-        ;;
-    "SM-G955F")
-        echo $MODEL "Samsung Galaxy S8+"
-        CORE="-mtune=cortex-a53"
-        ARMV="armv8"
-        echo "CORE=$CORE"
-        echo "ARMV=$ARMV"
-        ;;
-    "SM-G960F")
-        echo $MODEL "Samsung Galaxy S9"
-        CORE="-mtune=cortex-a55"
-        ARMV="armv8"
-        echo "CORE=$CORE"
-        echo "ARMV=$ARMV"
-        ;;
-    "SM-G965F")
-        echo $MODEL "Samsung Galaxy S9+"
-        CORE="-mtune=cortex-a55"
-        ARMV="armv8"
-        echo "CORE=$CORE"
-        echo "ARMV=$ARMV"
-        ;;
-    "SM-G973F")
-        echo $MODEL "Samsung Galaxy S10"
-        CORE="-mtune=cortex-a75.cortex-a55"
-        ARMV="armv8.2"
-        echo "CORE=$CORE"
-        echo "ARMV=$ARMV"
-        ;;
-    "SM-G970F")
-        echo $MODEL "Samsung Galaxy S10e"
-        CORE="-mtune=cortex-a75.cortex-a55"
-        ARMV="armv8.2"
-        echo "CORE=$CORE"
-        echo "ARMV=$ARMV"
-        ;;   
     *)
         echo "Neznan model telefona: $MODEL"
         ;;
-esac
-        ;;
-    *)
-        echo "__exit"
-        exit    
-        ;;
-esac
-
+    esac
+else
+    exit
 fi    
-# - se ne izvaja do sem
+
 
 # zamenjam ARMV in CORE v configure.sh
 sed -i "s/AAAAAAAAAA/$ARMV/g" ~/ccminer/configure.sh
@@ -435,3 +353,31 @@ sleep 1
 source ~/.bashrc
 sleep 3
 echo -e "\n\e[93m■■■■ KONEC ■■■■\e[0m\n"
+exit 0
+
+# __________________________
+
+# sem sem dal
+#echo "-$C1-$C2-$C3-"
+
+# J5="a53"
+# J7="a53"
+# S8="M2 a53"
+# S9="M3 a55"
+# S10="M4 a75 A55"
+
+# P20L="a53 A53"
+# P20="a73 A53"
+# P20P="a73 A53"
+
+# ARCH0="armv8"
+# ARCH1="armv8.1"
+# ARCH2="armv8.2"
+# ARCH3="armv8.3"
+
+# cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 cortex-a73
+# cortex-a75 cortex-a76 cortex-a76ae cortex-a77 cortex-a78 cortex-a78c cortex-r82
+
+# do sem
+
+
