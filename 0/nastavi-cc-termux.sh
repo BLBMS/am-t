@@ -244,20 +244,26 @@ case $MODEL in
         ;;
     "SM-G960F")
         echo "Samsung Galaxy S9"
-        CORE="-mtune=cortex-a75.cortex-a55"
-        ARMV="armv8.2"
+        CORE="-mtune=cortex-a55"
+        ARMV="armv8"
         echo "CORE=$CORE"
         echo "ARMV=$ARMV"
         ;;
-    "SM-G973F")
+    "SM-G965F")
+        echo "Samsung Galaxy S9+"
+        CORE="-mtune=cortex-a55"
+        ARMV="armv8"
+        echo "CORE=$CORE"
+        echo "ARMV=$ARMV"
+        ;;"SM-G973F")
         echo "Samsung Galaxy S10"
         CORE="-mtune=cortex-a75.cortex-a55"
         ARMV="armv8.2"
         echo "CORE=$CORE"
         echo "ARMV=$ARMV"
         ;;
-    "SM-G973F")
-        echo "Samsung Galaxy S10"
+    "SM-G970F")
+        echo "Samsung Galaxy S10e"
         CORE="-mtune=cortex-a75.cortex-a55"
         ARMV="armv8.2"
         echo "CORE=$CORE"
