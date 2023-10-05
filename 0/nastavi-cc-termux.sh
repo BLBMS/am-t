@@ -161,7 +161,7 @@ cat << EOF >> ~/.bashrc
 PS1='${debian_chroot:+($debian_chroot)}\[\033[0;93m\]$delavec\[\033[0;91m\]@\[\033[0;93m\]$phone_ip\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]\$ '
 alias ss='~/start.sh'
 alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit && screen -ls'
-alias sl='screen -ls'
+alias sl='screen -ls | grep --color=always "CCminer"'
 alias rr='screen -x CCminer'
 alias SS='ss'
 alias XX='xx'
