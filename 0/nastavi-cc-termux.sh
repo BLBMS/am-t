@@ -131,7 +131,7 @@ CORE=""
 # Izpiši vrednosti za vsak CPU
 for ((i = 0; i < num_cpus; i++)); do
     COREy="${cpus[i]}"
-    eval "C$((i + 1))=\"${cpus[i]}\""
+    eval "CPU$((i + 1))=\"${cpus[i]}\""
     if [[ " $MTUNE " =~ " $COREy " ]]; then
         echo -e "\e[0;92mCORE \"$COREy\" IS in the MTUNE database\e[0m"
         COREx="-mtune=${cpus[i]} "
@@ -141,44 +141,20 @@ for ((i = 0; i < num_cpus; i++)); do
     fi
 done
 echo "CORE=$CORE"
-#echo "-$C1-$C2-$C3-"
-
-J5="a53"
-J7="a53"
-S8="M2 a53"
-S9="M3 a55"
-S10="M4 a75 A55"
-
-P20L="a53 A53"
-P20="a73 A53"
-P20P="a73 A53"
-
-ARMV80=" cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 "
-ARMV81=" "
-ARMV82="  cortex-a73 cortex-a75 cortex-a76 "
-ARMV83=" "
-
-#ARCH0="armv8"
-#ARCH1="armv8.1"
-#ARCH2="armv8.2"
-#ARCH3="armv8.3"
-
-# cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 cortex-a73
-# cortex-a75 cortex-a76 cortex-a76ae cortex-a77 cortex-a78 cortex-a78c cortex-r82
-
-echo -e "\nproduct.manufacturer : \e[0;93m$(getprop ro.product.manufacturer)\e[0m"
-echo -e "product.model        : \e[0;93m$(getprop ro.product.model)\e[0m"
-echo -e "product.cpu.abilist64: \e[0;93m$(getprop ro.product.cpu.abilist64)\e[0m"
-echo -e "arm64.variant        : \e[0;93m$(getprop dalvik.vm.isa.arm64.variant)\e[0m"
-
+#  sem daj spodnje
 # Funkcija za preverjanje ujemanja
+ARMV80=" cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 "
+ARMV81=" karkoli "
+ARMV82="  cortex-a73 cortex-a75 cortex-a76 "
+ARMV83=" karkoli2 "
+
 check_match() {
     local cpu_var="CPU$1"
     local cpu_value="${!cpu_var}"
-
     for j in {0..3}; do
         local armv_var="ARMV8$j"
         for value in ${!armv_var}; do
+            echo "value=$value"
             if [ "$cpu_value" = "$value" ]; then
                 echo -e "\e[0;92mVrednost $cpu_var: $cpu_value ustreza vrednosti v $armv_var\e[0m"
             fi
@@ -188,7 +164,38 @@ check_match() {
 # Preverite vsak CPU(i)
 for i in $(seq 0 $((num_cpus - 1))); do
     check_match $i
+    echo "Preverjam CPU$i"
 done
+
+# sem sem dal
+#echo "-$C1-$C2-$C3-"
+
+echo -e "\nproduct.manufacturer : \e[0;93m$(getprop ro.product.manufacturer)\e[0m"
+echo -e "product.model        : \e[0;93m$(getprop ro.product.model)\e[0m"
+echo -e "product.cpu.abilist64: \e[0;93m$(getprop ro.product.cpu.abilist64)\e[0m"
+echo -e "arm64.variant        : \e[0;93m$(getprop dalvik.vm.isa.arm64.variant)\e[0m"
+
+# J5="a53"
+# J7="a53"
+# S8="M2 a53"
+# S9="M3 a55"
+# S10="M4 a75 A55"
+
+# P20L="a53 A53"
+# P20="a73 A53"
+# P20P="a73 A53"
+
+# ARCH0="armv8"
+# ARCH1="armv8.1"
+# ARCH2="armv8.2"
+# ARCH3="armv8.3"
+
+# cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 cortex-a73
+# cortex-a75 cortex-a76 cortex-a76ae cortex-a77 cortex-a78 cortex-a78c cortex-r82
+
+# do sem
+
+
 while true; do
     echo -e "\n\e[93m■■ kateri armv? ■■ \e[0m\n"
     echo "0     armv8"
