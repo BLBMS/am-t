@@ -3,11 +3,11 @@
 # Izvedi ukaz lscpu, poišči "Model name:" in odstrani presledke iz odgovorov
 output=$(lscpu | grep "Model name:" | awk -F ': ' '{print $2}' | tr -d ' ')
 
-# Razdeli rezultat na dve spremenljivki, eno za CPU1 in drugo za CPU2
+# Razdeli rezultat na dve spremenljivki, eno za MYCPU1 in drugo za MYCPU2
 IFS=$'\n' read -rd '' -a cpus <<< "$output"
-CPU1="${cpus[0]}"
-CPU2="${cpus[1]}"
+MYCPU1="${cpus[0]}"
+MYCPU2="${cpus[1]}"
 
 # Izpiši vrednosti
-echo "CPU1: $CPU1"
-echo "CPU2: $CPU2"
+echo "MYCPU1: $MYCPU1"
+echo "MYCPU2: $MYCPU2"
