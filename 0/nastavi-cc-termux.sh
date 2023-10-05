@@ -142,23 +142,20 @@ done
 #CORE=$(echo "$CORE" | tr '[:upper:]' '[:lower:]')
 echo "CORE=$CORE"
 
-read -n 1 -p "Are CPU's OK (y/n)? " yn
+read -n 1 -p "Are CPU's OK (y - yes)? " yn
 echo
 if [ "$yn" != "y" ] && [ "$yn" != "Y" ]; then
     echo "__exit"
     exit
 fi
 # zamenjam CORE v configure.sh
-
-
-
-
-
+sed -i "s/CCCCCCCCCC/$CORE/g" ~/ccminer/configure.sh
+echo -e "\n\e[93m■■■■ startam build.sh ■■■■\e[0m\n"
 CXX=clang++ CC=clang ./build.sh
 echo -e "\n\e[93m■■■■ nastavljam CCminer ■■■■\e[0m\n"
 cd ~/
-# MOJE v NOV ~/.bashrc, če obstaja pa doda na koncu
-cat << EOF > ~/.bashrc
+# MOJE v ~/.bashrc, če obstaja pa doda na koncu
+cat << EOF >> ~/.bashrc
 ### ______  MOJE _____ .bashrc NOVO ustvarjen
 PS1='${debian_chroot:+($debian_chroot)}\[\033[0;93m\]$delavec\[\033[0;91m\]@\[\033[0;93m\]$phone_ip\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]\$ '
 alias ss='~/start.sh'
