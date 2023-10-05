@@ -9,10 +9,20 @@ if [ -f "$ah_file" ]; then
     if [[ "$f_content" == *"$comp_str" ]]; then
         echo "SSH je nastavljen"
     else
-        echo "SSH ni nastavljen"
+        echo "SSH ni pravilen"
+        rm -f ~/nastavi-cc-ssh.sh
+        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
+        chmod +x nastavi-cc-ssh.sh
+        ~/nastavi-cc-ssh.sh
+        exit 0
     fi
 else
-    echo "SSH ni nastavljen"
+    echo "SSH manjka"
+    rm -f ~/nastavi-cc-ssh.sh
+    wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
+    chmod +x nastavi-cc-ssh.sh
+    ~/nastavi-cc-ssh.sh
+    exit 0
 fi
 
 echo -e "\n\e[93m■■■■ premik ubuntu - če obstaja ■■■■\e[0m\n"
