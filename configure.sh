@@ -1,8 +1,8 @@
 #!/bin/bash
 
 
-# ARCH="-march=armv8.3-a+crypto"
-ARCH="-march=aarch64-a+crypto"
+ARCH="-march=armv8.3-a+crypto"
+# ARCH="-march=aarch64-a+crypto"
 
 # CORE="-mtune=cortex-a76 -mtune=cortex-a55"
 CORE="CCCCCCCCCC"
