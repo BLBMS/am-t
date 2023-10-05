@@ -21,8 +21,9 @@ CORE=""
 # Izpiši vrednosti za vsak CPU
 for ((i = 0; i < num_cpus; i++)); do
     echo "CPU$((i + 1)): ${cpus[i]}"
-    COREx="-mtune=${cpus[i]}"
-    CORE="$CORE $COREx"
+    COREx="-mtune=${cpus[i]} "
+    COREx=$(echo "$COREx" | tr '[:upper:]' '[:lower:]')
+    CORE="$CORE$COREx"
 done
 
 echo "CORE  ->$CORE<-"
