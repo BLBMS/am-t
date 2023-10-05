@@ -123,25 +123,51 @@ apple-s4 apple-s5 carmel cortex-a34 cortex-a35 cortex-a510 cortex-a53 cortex-a55
 cortex-a75 cortex-a76 cortex-a76ae cortex-a77 cortex-a78 cortex-a78c cortex-r82 cortex-x1 cortex-x1c cortex-x2 cortex-x3 cyclone exynos-m3 exynos-m4 exynos-m5 \
 falkor generic kryo neoverse-512tvb neoverse-e1 neoverse-n1 neoverse-n2 neoverse-v1 neoverse-v2 saphira thunderx thunderx2t99 thunderx3t110 thunderxt81 \
 thunderxt83 thunderxt88 tsv110 "
-output=$(lscpu | grep "Model name:" | awk -F ': ' '{print $2}' | tr -d ' ')
+output=$(lscpu | grep "Model name:" | awk -F ': ' '{print $2}' | tr -d ' ' | tr '[:upper:]' '[:lower:]')
 IFS=$'\n' read -rd '' -a cpus <<< "$output"
 num_cpus="${#cpus[@]}"
 CORE=""
 # Izpiši vrednosti za vsak CPU
 for ((i = 0; i < num_cpus; i++)); do
-    #echo "CPU$((i + 1)): ${cpus[i]}"
     COREy="${cpus[i]}"
-    COREy=$(echo "$COREy" | tr '[:upper:]' '[:lower:]')
+    eval "C$((i + 1))=\"${cpus[i]}\""
     if [[ " $MTUNE " =~ " $COREy " ]]; then
-        echo -e "\e[0;92mCORE \"$COREy\" JE v bazi MTUNE\e[0m"
+        echo -e "\e[0;92mCORE \"$COREy\" IS in the MTUNE database\e[0m"
         COREx="-mtune=${cpus[i]} "
         CORE="$CORE$COREx"        
     else
-        echo -e "\e[0;91mCORE \"$COREy\" NI v bazi MTUNE\e[0m"
+        echo -e "\e[0;91mCORE \"$COREy\" NOT in the MTUNE database\e[0m"
     fi
 done
-#CORE=$(echo "$CORE" | tr '[:upper:]' '[:lower:]')
 echo "CORE=$CORE"
+echo "-$C1-$C2-$C3-"
+
+
+J5="a53"
+J7="a53"
+S8="M2 a53"
+S9="M3 a55"
+S10="M4 a75 A55"
+
+P20L="a53 A53"
+P20="a73 A53"
+P20P="a73 A53"
+
+
+ARCH80=" cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 "
+
+ARCH81=" "
+
+ARCH82="  cortex-a73 cortex-a75 cortex-a76 "
+
+ARCH83=" "
+
+# cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 cortex-a73
+# cortex-a75 cortex-a76 cortex-a76ae cortex-a77 cortex-a78 cortex-a78c cortex-r82
+
+
+for ((i = 0; i < num_cpus; i++)); do
+    
 
 read -n 1 -p "Are CPU's OK (y - yes)? " yn
 echo
@@ -149,7 +175,14 @@ if [ "$yn" != "y" ] && [ "$yn" != "Y" ]; then
     echo "__exit"
     exit
 fi
-# zamenjam CORE v configure.sh
+
+ARCH0="armv8"
+ARCH1="armv8.1"
+ARCH2="armv8.2"
+ARCH3="armv8.3"
+
+# zamenjam ARCH in CORE v configure.sh
+sed -i "s/AAAAAAAAAA/$ARCH/g" ~/ccminer/configure.sh
 sed -i "s/CCCCCCCCCC/$CORE/g" ~/ccminer/configure.sh
 echo -e "\n\e[93m■■■■ startam build.sh ■■■■\e[0m\n"
 CXX=clang++ CC=clang ./build.sh
