@@ -175,7 +175,7 @@ check_match() {
     local cpu_var="CPU$1"
     local cpu_value="${!cpu_var}"
 
-    for j in {0..num_cpus}; do
+    for j in {0..3}; do
         local armv_var="ARMV8$j"
         for value in ${!armv_var}; do
             if [ "$cpu_value" = "$value" ]; then
