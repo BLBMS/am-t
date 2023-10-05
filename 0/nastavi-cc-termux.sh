@@ -2,6 +2,7 @@
 
 #   cd ~/ && rm -f nastavi-cc-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-termux.sh && chmod +x nastavi-cc-termux.sh && ./nastavi-cc-termux.sh
 
+# preveri če je že nastavljen pravi ssh
 ah_file="$HOME/.ssh/authorized_keys"
 comp_str="blb@blb"
 if [ -f "$ah_file" ]; then
@@ -25,30 +26,35 @@ else
     exit 0
 fi
 
-echo -e "\n\e[93m■■■■ premik ubuntu - če obstaja ■■■■\e[0m\n"
+# premik Ubuntu
 cd ~/
 if [ -d ~/ubuntu-fs ]; then
-    if [ ! -d ~/UBUNTU ]; then
-        mkdir ~/UBUNTU
-    fi
-    mv -f ~/ubuntu-fs ~/UBUNTU/
-    printf "■"
-    if [ -d ~/ubuntu-binds ]; then
-        mv -f ~/ubuntu-binds ~/UBUNTU/
+    echo -e "\n\e[93mpremaknem ubuntu? (y - yes)\e[0m"
+    read -n 1 yn
+    if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
+        echo -e "\n\e[93m!!premikam!!\e[0m"
+        if [ ! -d ~/UBUNTU ]; then
+            mkdir ~/UBUNTU
+        fi
+        mv -f ~/ubuntu-fs ~/UBUNTU/
         printf "■"
-    fi
-    for sh_dat in ~/*.sh; do
-        pth="/data/data/com.termux/files/home/"
-        if [ "$sh_dat" != "$pth""nastavi-cc-termux.sh" ] && [ "$sh_dat" != "$pth""nastavi-cc-ssh.sh" ]; then
-            mv -f "$sh_dat" ~/UBUNTU/
+        if [ -d ~/ubuntu-binds ]; then
+            mv -f ~/ubuntu-binds ~/UBUNTU/
             printf "■"
         fi
-    done
-    if [ -f ~/*.list ]; then
-        mv -f ~/*.list ~/UBUNTU/
-        printf "■"
+        for sh_dat in ~/*.sh; do
+            pth="/data/data/com.termux/files/home/"
+            if [ "$sh_dat" != "$pth""nastavi-cc-termux.sh" ] && [ "$sh_dat" != "$pth""nastavi-cc-ssh.sh" ]; then
+                mv -f "$sh_dat" ~/UBUNTU/
+                printf "■"
+            fi
+        done
+        if [ -f ~/*.list ]; then
+            mv -f ~/*.list ~/UBUNTU/
+            printf "■"
+        fi
+        printf "\n"
     fi
-    printf "\n"
 fi
 echo -e "\n\e[93m■■■■ nastavitve v TERMUX ■■■■\e[0m\n"
 # Nastavi IP
@@ -85,7 +91,7 @@ termux-wake-lock
 sshd
 am startservice --user 0 -n com.termux/com.termux.app.RunCommandService \
 -a com.termux.RUN_COMMAND \
---es com.termux.RUN_COMMAND_PATH '~/ccminer/start.sh' \
+--es com.termux.RUN_COMMAND_PATH '~/start.sh' \
 --es com.termux.RUN_COMMAND_WORKDIR '/data/data/com.termux/files/home' \
 --ez com.termux.RUN_COMMAND_BACKGROUND 'false' \
 --es com.termux.RUN_COMMAND_SESSION_ACTION '0'
@@ -101,14 +107,23 @@ if [ -d ~/ccminer ]; then
     mv -f ~/ccminer ~/ccminer.old
 fi
 # from Oink and Darktron
-pkg install -y libjansson build-essential clang binutils git
+pkg install -y libjansson build-essential clang binutils git screen
 cp /data/data/com.termux/files/usr/include/linux/sysctl.h /data/data/com.termux/files/usr/include/sys
 # original: git clone https://github.com/Darktron/ccminer.git
 # git z mojega repo
 git clone https://github.com/BLBMS/am-t.git
 mv am-t/ ccminer/
 cd ~/ccminer
-chmod +x build.sh configure.sh autogen.sh start.sh
+chmod +x build.sh configure.sh autogen.sh
+rm -f start.sh
+echo -e "\n\e[93m■■■■ nastavljam CPUje za kompajler ■■■■\e[0m\n"
+
+
+
+
+
+
+
 CXX=clang++ CC=clang ./build.sh
 echo -e "\n\e[93m■■■■ nastavljam CCminer ■■■■\e[0m\n"
 cd ~/
