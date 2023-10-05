@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#->     cd ~/ && rm -f ~/configure.sh.moj && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/configure.sh.moj && chmod +x configure.sh.moj && ~/configure.sh.moj
+
+
 # izpiše vse cpuje
 #   lscpu | grep "Model name:" | awk -F ': ' '{print $2}'
 
