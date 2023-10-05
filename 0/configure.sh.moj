@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Izvedi ukaz lscpu, poišči "Model name:" in odstrani presledke iz odgovorov
+output=$(lscpu | grep "Model name:" | awk -F ': ' '{print $2}' | tr -d ' ')
+
+# Razdeli rezultat na dve spremenljivki, eno za MYCPU1 in drugo za MYCPU2
+IFS=$'\n' read -rd '' -a cpus <<< "$output"
+MYCPU1="${cpus[0]}"
+MYCPU2="${cpus[1]}"
+
 ARCH="-march=armv8.3-a+crypto"
 CORE="-mtune=cortex-a76 -mtune=cortex-a55"
 OPTI="-Ofast -pthread -flto -fstrict-aliasing -ftree-vectorize -funroll-loops -ffinite-loops -finline-functions -fno-stack-protector -fomit-frame-pointer -fpic -falign-functions=64 -D_REENTRANT -mllvm -enable-loop-distribute"
