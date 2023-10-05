@@ -6,7 +6,6 @@
 
 #->  cd ~/ && rm -f ~/nastavi-cc-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh && chmod +x nastavi-cc-ssh.sh && ~/nastavi-cc-ssh.sh
 
-exit
 # install vse potrebne
 pkg install -y openssh net-tools nano screen
 echo -e "\n\e[93mnastavljam SSH\e[0m\n"
