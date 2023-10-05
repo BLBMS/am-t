@@ -22,6 +22,7 @@ for ((i = 0; i < num_cpus; i++)); do
     echo "CPU$((i + 1)): ${cpus[i]}"
     COREx="-mtune=${cpus[i]} "
     COREx=$(echo "$COREx" | tr '[:upper:]' '[:lower:]')
+    echo "COREx=$COREx"
     CORE="$CORE$COREx"
 done
 
@@ -34,13 +35,9 @@ if [ "$yn" != "y" ] && [ "$yn" != "Y" ]; then
     exit
 fi
 
+
+exit 
 echo "start compile ..."
-
-CORE="-mtune=$MYCPU1 -mtune=$MYCPU2"
-
-echo "CORE=$CORE"
-
-#exit 
 
 ARCH="-march=armv8.3-a+crypto"
 
