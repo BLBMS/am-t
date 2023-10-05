@@ -2,6 +2,9 @@
 
 #  from @simeononsecurity
 
+#->  cd ~/ && rm -f ~/cpu-info.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/cpu-info.sh && chmod +x cpu-info.sh && ~/cpu-info.sh
+
+
 # Get CPU information
 arch=$(lscpu | awk '/Architecture:/ { print $2 }')
 model_name=$(lscpu | awk -F ': +' '/Model name:/ { print $2 }')
