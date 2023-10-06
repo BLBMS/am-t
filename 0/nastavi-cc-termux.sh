@@ -116,6 +116,8 @@ if [ -d ~/ccminer ]; then
 #    mv -f ~/ccminer ~/ccminer.old
     rm -rf ~/ccminer/
 fi
+# UNDO file: back-cc.sh
+cd ~/ && rm -f back-cc.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/back-cc.sh && chmod +x back-cc.sh && ./back-cc.sh
 # from Oink and Darktron
 pkg install -y libjansson build-essential clang binutils git screen
 cp /data/data/com.termux/files/usr/include/linux/sysctl.h /data/data/com.termux/files/usr/include/sys
