@@ -327,6 +327,27 @@ sed -i "s/CCCCCCCCCC/$CORE/g" ~/ccminer/configure.sh
 
 echo -e "\n\e[93m start: build.sh \e[0m\n"
 CXX=clang++ CC=clang ./build.sh
+
+# kontrola CLANG
+echo -e "\n\e[93m Control CLANG for CORE's \e[0m\n"
+
+CL_MTUNE=$(clang -mtune=? 2>&1)
+CL_MTUNE="${CL_MTUNE#*target:}"
+CL_MTUNE="${CL_MTUNE%%Use -mcpu*}"
+
+output=$(lscpu | grep "Model name:" | awk -F ': ' '{print $2}' | tr -d ' ' | tr '[:upper:]' '[:lower:]')
+IFS=$'\n' read -rd '' -a cpus <<< "$output"
+num_cpus="${#cpus[@]}"
+for ((i = 0; i < num_cpus; i++)); do
+    COREy="${cpus[i]}"
+    eval "CPU$((i))=\"${cpus[i]}\""
+    if [[ " $CL_MTUNE " =~ " $COREy " ]]; then
+        echo -e "\e[0;92mCL_CORE: CPU$((i)): \"$COREy\" IS in the CLANG MTUNE database\e[0m"
+    else
+        echo -e "\e[0;91mCLANG CORE: CPU$((i)): \"$COREy\" NOT in the CLANG MTUNE database\e[0m"
+    fi
+done
+
 echo -e "\n\e[93m set CCminer \e[0m\n"
 cd ~/
 # MOJE v ~/.bashrc, če obstaja pa doda na koncu
