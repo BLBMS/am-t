@@ -1,4 +1,4 @@
-#!/bin/bash
+    #!/bin/bash
 
 #   cd ~/ && rm -f nastavi-cc-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-termux.sh && chmod +x nastavi-cc-termux.sh && ./nastavi-cc-termux.sh
 
@@ -9,9 +9,9 @@ comp_str="blb@blb"
 if [ -f "$ah_file" ]; then
     f_content=$(cat "$ah_file")
     if [[ "$f_content" == *"$comp_str" ]]; then
-        echo " SSH is correct"
+        echo -e "\n\e[92m SSH is correct\e[0m"
     else
-        echo " SSH is not correct"
+        echo -e "\n\e[91m SSH is not correct\e[0m"
         rm -f ~/nastavi-cc-ssh.sh
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
         chmod +x nastavi-cc-ssh.sh
@@ -19,7 +19,7 @@ if [ -f "$ah_file" ]; then
         exit 0
     fi
 else
-    echo " SSH is missing"
+    echo -e "\n\e[91m SSH is missing\e[0m"
     rm -f ~/nastavi-cc-ssh.sh
     wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
     chmod +x nastavi-cc-ssh.sh
@@ -56,6 +56,7 @@ if [ -d ~/ubuntu-fs ]; then
         fi
         echo -e "\n\e[93m ... done\e[0m"
     fi
+    echo -e "\n\e[93m all stay\e[0m"
 fi
 echo -e "\n\e[93m Setting TERMUX \e[0m\n"
 # Nastavi IP
@@ -70,17 +71,17 @@ if ls ~/*.ww >/dev/null 2>&1; then
         if [ -e "$datoteka" ]; then
             ime_iz_datoteke=$(basename "$datoteka")
             delavec=${ime_iz_datoteke%.ww}
-            echo " Worker from .ww file: "$delavec
+            echo -e "\e[92m  Worker from .ww file: $delavec\e[0m"
         fi
     done
 else
-    echo "No .ww files in directory"
+    echo -e "\e[91m No .ww files in directory\e[0m"
     printf "\n\e[93m Worker name: \e[0m"
     read delavec
     echo $delavec > ~/$delavec.ww
 fi
-    echo -e "\n\e[93m-> Worker's name is: "$delavec
-echo " done "
+    echo -e "\n\e[92m-> Worker's name is: $delavec\e[0m"
+echo -e "\ndone"
 # auto boot
 echo -e "\n\e[93m Setting auto boot\e[0m\n"
 rm -rf ~/.termux/boot
@@ -101,6 +102,7 @@ chmod +x ~/.termux/boot/start.sh
 # Auto boot ubuntu  (nano ~/.termux/termux.properties) __Zbriši # pred: # allow-external-apps = true
 sed -i 's/^# allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
 sed -i 's/^#allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
+echo -e "\ndone"
 # ____ novo - ccminer v termux ____
 echo -e "\n\e[93m CCminer v TERMUX \e[0m\n"
 cd ~/
@@ -181,18 +183,19 @@ while true; do
     echo -e "\n\e[93m Want to change armv8? (or exit) ■■ \e[0m\n"
     echo "0     armv8"
     echo "1     armv8.1"
-    echo "2 .. 3 .. 4"
+    echo "2     armv8.2"
+    echo "3     armv8.3"
+    echo "4     armv8.4"
     echo "5     armv8.5"
     echo "9     armv8.9"
-    read -r -n 1 -p "Choice: 0 1 2 3 4 5 9: " choice
+    read -r -n 1 -p "Choice: 0 1 2 3 4 5 9 (exit): " choice
     # Preveri, ali je izbira veljavna
     case $choice in
         0|1|2|3|4|5|9)
             break  # Izberite veljavno številko in izstopite iz zanke
             ;;
         *)
-            echo -e "\nno change: ARCH=$ARCH\n"
-            # echo "enter: 0 1 2 3 4 5 9"
+            echo -e "\nno changes: ARCH=$ARCH\n"
             break   # katerakoli druga je izstop
             ;;
     esac
@@ -231,6 +234,7 @@ esac
 
 MODEL=$(getprop ro.product.model)
 echo -e "\n\e[0;93m Checking by device model: $MODEL\e[0m"
+echo -e "\e[0;93m"
 case $MODEL in
     "SM-G950F")
         echo "$MODEL Samsung Galaxy S8"
@@ -280,8 +284,9 @@ case $MODEL in
         ARCHM=$ARCH
         ;;
 esac
+echo -e "\e[0m"
 
-echo "\n\e[0;93m Use from model (y - yes)?\e[0m"
+echo -e "\n\e[0;93m Use from model (y - yes)?\e[0m"
 read -n 1 yn
 if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
     CORE=$COREM
