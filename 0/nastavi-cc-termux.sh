@@ -357,7 +357,7 @@ echo -e "\n\e[93m set CCminer \e[0m\n"
 cd ~/
 # MOJE v ~/.bashrc, če obstaja pa doda na koncu
 cat << EOF >> ~/.bashrc
-### ______  MOJE _____ .bashrc NOVO ustvarjen
+### ______  MOJE _____
 PS1='${debian_chroot:+($debian_chroot)}\[\033[0;93m\]$delavec\[\033[0;91m\]@\[\033[0;93m\]$phone_ip\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]\$ '
 alias ss='~/start.sh'
 alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit && screen -ls'
@@ -374,7 +374,7 @@ echo "sl = list screen"
 echo "rr = show screen"
 echo "exit: CTRL-a + d"
 echo "__________________"
-sl
+screen -ls | grep --color=always "CCminer"
 EOF
 cd ~/
 # kopira in zamenja delavca v vseh json
