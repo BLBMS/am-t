@@ -12,3 +12,4 @@ rm -f ~/start.sh
 rm -f ~/nastavi-cc-*.sh
 rm -f ~/back-cc.sh
 echo -e "\e[0;92m POBRISANO\e[0m"
+ls
