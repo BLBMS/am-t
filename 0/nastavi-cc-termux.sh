@@ -3,7 +3,7 @@
 #   cd ~/ && rm -f nastavi-cc-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-termux.sh && chmod +x nastavi-cc-termux.sh && ./nastavi-cc-termux.sh
 
 # preveri če je že nastavljen pravi ssh
-echo -e "\n\e[92m Update & Upgrade (y -yes)\e[0m"
+echo -e "\n\e[93m Update & Upgrade (y -yes)\e[0m"
 read -s -N 1 yn
 if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
     pkg update -y && pkg upgrade -y
@@ -298,6 +298,7 @@ if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
     CORE=$COREM
     ARCH=$ARCHM
 fi
+echo -e "\n\e[0;93m Set from model!\e[0m"
 
 echo -e "\n\e[0;93m Manual set CORE? (y - yes)?\e[0m"
 read -s -N 1 -p "" yn
