@@ -245,60 +245,50 @@ echo -e "\n\e[0;93m Checking by device model: $MODEL\e[0m"
 echo -e "\e[0;93m"
 case $MODEL in
     "SM-G950F")
-        echo "$MODEL Samsung Galaxy S8"
-        COREM="-mtune=cortex-a53"
+        echo " $MODEL Samsung Galaxy S8"
+        COREM="-mtune=cortex-a53 -mtune=exynos-m1"
         ARCHM="armv8"
-        echo "CORE=$COREM"
-        echo "ARCH=$ARCHM"
         ;;
     "SM-G955F")
         echo "$MODEL Samsung Galaxy S8+"
         COREM="-mtune=cortex-a53"
         ARCHM="armv8"
-        echo "CORE=$COREM"
-        echo "ARCH=$ARCHM"
         ;;
     "SM-G960F")
         echo "$MODEL Samsung Galaxy S9"
         COREM="-mtune=cortex-a55 -mtune=exynos-m3"
         ARCHM="armv8"
-        echo "CORE=$COREM"
-        echo "ARCH=$ARCHM"
         ;;
     "SM-G965F")
         echo "$MODEL Samsung Galaxy S9+"
         COREM="-mtune=cortex-a55 -mtune=exynos-m3"
         ARCHM="armv8"
-        echo "CORE=$COREM"
-        echo "ARCH=$ARCHM"
         ;;
     "SM-G973F")
         echo "$MODEL Samsung Galaxy S10"
         COREM="-mtune=cortex-a75 -mtune=cortex-a55"
         ARCHM="armv8.2"
-        echo "CORE=$COREM"
-        echo "ARCH=$ARCHM"
         ;;
     "SM-G970F")
         echo "$MODEL Samsung Galaxy S10e"
         COREM="-mtune=cortex-a75-mtune=cortex-a55"
         ARCHM="armv8.2"
-        echo "CORE=$COREM"
-        echo "ARCH=$ARCHM"
         ;;
     *)
         echo "Unknown model: $MODEL"
-        COREM=$CORE
-        ARCHM=$ARCH
+        COREM="$CORE"
+        ARCHM="$ARCH"
         ;;
 esac
+echo -e "CORE=\e[0;92m$COREM\e[0m"
+echo -e "ARCH=\e[0;92m$ARCHM\e[0m"
 echo -e "\e[0m"
 
-echo -e "\n\e[0;93m Use from model (y - yes)?\e[0m"
+echo -e "\n\e[0;93m Use settings from model (y - yes)?\e[0m"
 read -s -N 1 yn
 if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
-    CORE=$COREM
-    ARCH=$ARCHM
+    CORE="$COREM"
+    ARCH="$ARCHM"
 fi
 echo -e "\n\e[0;93m Set from model!\e[0m"
 
