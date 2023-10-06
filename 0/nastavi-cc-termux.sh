@@ -147,7 +147,7 @@ for ((i = 0; i < num_cpus; i++)); do
         echo -e "\e[0;91mCORE: CPU$i: \"$COREy\" NOT in the MTUNE database\e[0m"
     fi
 done
-echo -e "\n\e[0;97mCORE=$CORE\e[0m\n"
+echo -e "\n\e[0;97m     CORE=$CORE\e[0m\n"
 # Funkcija za preverjanje ujemanja
 ARMV80=" cortex-a34 cortex-a35 cortex-a53 cortex-a57 cortex-a72 cortex-a73 exynos-m1 exynos-m2 "
 ARMV81=" thunder-x2 "
@@ -160,11 +160,12 @@ check_match() {
     local cpu_var="CPU$1"
     local cpu_value="${!cpu_var}"
     for j in {0..5} 9; do
-        local armv_var_p="ARMv8.$j"
+        local armv_var_p="armv8.$j"
         local armv_var="ARMV8$j"
         for value in ${!armv_var}; do
             if [ "$cpu_value" = "$value" ]; then
                 echo -e "\e[0;92m$cpu_var: $cpu_value is part of ARM family: $armv_var_p\e[0m"
+            ARCH=$armv_var_p   
             fi
         done
     done
@@ -173,10 +174,11 @@ check_match() {
 for i in $(seq 0 $((num_cpus - 1))); do
     check_match $i
 done
+echo -e "\e[0;91m     ARCH=-march=$ARCH-a+crypto\e[0m"
 
 # izberem na podlagi rezultata
 while true; do
-    echo -e "\n\e[93m■■ kateri armv? ■■ \e[0m\n"
+    echo -e "\n\e[93m■■ želiš drugi armv8? (or exit) ■■ \e[0m\n"
     echo "0     armv8.0"
     echo "1     armv8.1"
     echo "2 3 4"
@@ -189,59 +191,61 @@ while true; do
             break  # Izberite veljavno številko in izstopite iz zanke
             ;;
         *)
-            echo "vnesi: 0 1 2 3 4 5 9" ;;
+            echo -e "\nbrez spremembe: ARCH=$ARCH\n"
+            # echo "vnesi: 0 1 2 3 4 5 9"
+            break   # katerakoli druga je izstop
+            ;;
     esac
 done
 # izvede izbiro
 case $choice in
     0)
         echo "-> armv8"
-        ARMV="armv8"
+        ARCH="armv8"
         ;;
     1)
         echo "-> armv8.1"
-        ARMV="armv8.1"
+        ARCH="armv8.1"
         ;;
     2)
         echo "-> armv8.2"
-        ARMV="armv8.2"
+        ARCH="armv8.2"
         ;;
     3)
         echo "-> armv8.3"
-        ARMV="armv8.3"
+        ARCH="armv8.3"
         ;;
     4)
         echo "-> armv8.4"
-        ARMV="armv8.4"
+        ARCH="armv8.4"
         ;;
     5)
         echo "-> armv8.5"
-        ARMV="armv8.5"
+        ARCH="armv8.5"
         ;;
     9)
         echo "-> armv8.9"
-        ARMV="armv8.9"
+        ARCH="armv8.9"
         ;;
 esac
 
-MODEL=$(getprop ro.product.model)
-
-
-echo "Are CPU/ARMV   OK (y - yes)?"
+echo "Are CPU/ARCH   OK (* - yes)?"
 echo "Or use from model (m - model)?"
-echo "Or EXIT?"
+echo "Or EXIT?          (x - exit)"
 read -n 1 yn
 echo
 
-if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
-    echo "Nadaljujem"
+if [ "$yn" = "x" ] || [ "$yn" = "X" ]; then
+    echo "-> EXIT <-"
+    exit
 elif [ "$yn" = "m" ] || [ "$yn" = "M" ]; then
     echo -e "\n\e[0;93mPredlog po modelu telefona:"
+    MODEL=$(getprop ro.product.model)
     case $MODEL in
     "SM-G950F")
         echo "$MODEL Samsung Galaxy S8"
-        CORE="-mtune=cortex-a53"
-        ARMV="armv8"
+        COREM="-mtune=cortex-a53"
+        ARCHM="armv8"
         echo "CORE=$CORE"
         echo "ARMV=$ARMV"
         ;;
@@ -287,7 +291,6 @@ elif [ "$yn" = "m" ] || [ "$yn" = "M" ]; then
 else
     exit
 fi   
-
 
 # zamenjam ARMV in CORE v configure.sh
 sed -i "s/AAAAAAAAAA/$ARMV/g" ~/ccminer/configure.sh
