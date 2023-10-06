@@ -57,13 +57,13 @@ if [ -d ~/ubuntu-fs ]; then
         printf "\n"
     fi
 fi
-echo -e "\n\e[93m■■■■ nastavitve v TERMUX ■■■■\e[0m\n"
+echo -e "\n\e[93m nastavitve v TERMUX \e[0m\n"
 # Nastavi IP
 ifconfig_out=$(ifconfig)
 ip_line=$(echo "$ifconfig_out" | grep 'inet 192')
 phone_ip=$(echo "$ip_line" | cut -d'.' -f4 | cut -c1-3)
 #echo "IP=" $phone_ip
-echo -e "\n\e[93m■■■■ nastavitev delavca ■■■■\e[0m\n"
+echo -e "\n\e[93m nastavitev delavca \e[0m\n"
 cd ~/
 if ls ~/*.ww >/dev/null 2>&1; then
     for datoteka in ~/*.ww; do
@@ -80,9 +80,9 @@ else
     echo $delavec > ~/$delavec.ww
 fi
 echo -e "\n\e[93m-> Ime delavca je: "$delavec
-echo "■■■■ done ■■■■"
+echo " done "
 # auto boot
-echo -e "\n\e[93mnastavljam auto boot\e[0m\n"
+echo -e "\n\e[93m nastavljam auto boot\e[0m\n"
 rm -rf ~/.termux/boot
 mkdir -p ~/.termux/boot
 # nastavi ~/.termux/boot/start.sh
@@ -102,7 +102,7 @@ chmod +x ~/.termux/boot/start.sh
 sed -i 's/^# allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
 sed -i 's/^#allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
 # ____ novo - ccminer v termux ____
-echo -e "\n\e[93m■■■■ CCminer v TERMUX ■■■■\e[0m\n"
+echo -e "\n\e[93m CCminer v TERMUX \e[0m\n"
 cd ~/
 if [ -d ~/ccminer ]; then
 #    mv -f ~/ccminer ~/ccminer.old
@@ -114,13 +114,13 @@ cp /data/data/com.termux/files/usr/include/linux/sysctl.h /data/data/com.termux/
 # original: git clone https://github.com/Darktron/ccminer.git
 # git z mojega repo
 git clone https://github.com/BLBMS/am-t.git
-echo -e "\n\e[93m■■■■ git skopiran ■■■■\e[0m\n"
+echo -e "\n\e[93m git skopiran \e[0m\n"
 mv am-t/ ccminer/
 cd ~/ccminer
 chmod +x build.sh configure.sh autogen.sh
 rm -f ~/ccminer/start.sh
 rm -f ~/ccminer/config.json
-echo -e "\n\e[93m■■■■ nastavljam CPUje za kompajler ■■■■\e[0m\n"
+echo -e "\n\e[93m nastavljam CPUje za kompajler \e[0m\n"
 echo -e "\nproduct.manufacturer : \e[0;93m$(getprop ro.product.manufacturer)\e[0m"
 echo -e "product.model        : \e[0;93m$(getprop ro.product.model)\e[0m"
 echo -e "product.cpu.abilist64: \e[0;93m$(getprop ro.product.cpu.abilist64)\e[0m"
@@ -174,25 +174,25 @@ check_match() {
 for i in $(seq 0 $((num_cpus - 1))); do
     check_match $i
 done
-echo -e "\e[0;91m     ARCH=-march=$ARCH-a+crypto\e[0m"
+echo -e "\n\e[0;97m     ARCH=-march=$ARCH-a+crypto\e[0m"
 
 # izberem na podlagi rezultata
 while true; do
-    echo -e "\n\e[93m■■ želiš drugi armv8? (or exit) ■■ \e[0m\n"
-    echo "0     armv8.0"
+    echo -e "\n\e[93m change armv8? (or exit) ■■ \e[0m\n"
+    echo "0     armv8"
     echo "1     armv8.1"
-    echo "2 3 4"
+    echo "2 .. 3 .. 4"
     echo "5     armv8.5"
     echo "9     armv8.9"
-    read -r -n 1 -p "Vnesite izbiro: 0 1 2 3 4 5 9: " choice
+    read -r -n 1 -p "Choice: 0 1 2 3 4 5 9: " choice
     # Preveri, ali je izbira veljavna
     case $choice in
         0|1|2|3|4|5|9)
             break  # Izberite veljavno številko in izstopite iz zanke
             ;;
         *)
-            echo -e "\nbrez spremembe: ARCH=$ARCH\n"
-            # echo "vnesi: 0 1 2 3 4 5 9"
+            echo -e "\nno change: ARCH=$ARCH\n"
+            # echo "enter: 0 1 2 3 4 5 9"
             break   # katerakoli druga je izstop
             ;;
     esac
@@ -229,75 +229,106 @@ case $choice in
         ;;
 esac
 
-echo "Are CPU/ARCH   OK (* - yes)?"
-echo "Or use from model (m - model)?"
-echo "Or EXIT?          (x - exit)"
-read -n 1 yn
-echo
-
-if [ "$yn" = "x" ] || [ "$yn" = "X" ]; then
-    echo "-> EXIT <-"
-    exit
-elif [ "$yn" = "m" ] || [ "$yn" = "M" ]; then
-    echo -e "\n\e[0;93mPredlog po modelu telefona:"
-    MODEL=$(getprop ro.product.model)
-    case $MODEL in
+echo -e "\n\e[0;93mChecking by device model:\e[0m"
+MODEL=$(getprop ro.product.model)
+case $MODEL in
     "SM-G950F")
         echo "$MODEL Samsung Galaxy S8"
         COREM="-mtune=cortex-a53"
         ARCHM="armv8"
-        echo "CORE=$CORE"
-        echo "ARMV=$ARMV"
+        echo "CORE=$COREM"
+        echo "ARCH=$ARCHM"
         ;;
     "SM-G955F")
         echo "$MODEL Samsung Galaxy S8+"
-        CORE="-mtune=cortex-a53"
-        ARMV="armv8"
-        echo "CORE=$CORE"
-        echo "ARMV=$ARMV"
+        COREM="-mtune=cortex-a53"
+        ARCHM="armv8"
+        echo "CORE=$COREM"
+        echo "ARCH=$ARCHM"
         ;;
     "SM-G960F")
         echo "$MODEL Samsung Galaxy S9"
-        CORE="-mtune=cortex-a55"
-        ARMV="armv8"
-        echo "CORE=$CORE"
-        echo "ARMV=$ARMV"
+        COREM="-mtune=cortex-a55"
+        ARCHM="armv8"
+        echo "CORE=$COREM"
+        echo "ARCH=$ARCHM"
         ;;
     "SM-G965F")
         echo "$MODEL Samsung Galaxy S9+"
-        CORE="-mtune=cortex-a55"
-        ARMV="armv8"
-        echo "CORE=$CORE"
-        echo "ARMV=$ARMV"
+        COREM="-mtune=cortex-a55"
+        ARCHM="armv8"
+        echo "CORE=$COREM"
+        echo "ARCH=$ARCHM"
         ;;
     "SM-G973F")
         echo "$MODEL Samsung Galaxy S10"
-        CORE="-mtune=cortex-a75.cortex-a55"
-        ARMV="armv8.2"
-        echo "CORE=$CORE"
-        echo "ARMV=$ARMV"
+        COREM="-mtune=cortex-a75.cortex-a55"
+        ARCHM="armv8.2"
+        echo "CORE=$COREM"
+        echo "ARCH=$ARCHM"
         ;;
     "SM-G970F")
         echo "$MODEL Samsung Galaxy S10e"
-        CORE="-mtune=cortex-a75.cortex-a55"
-        ARMV="armv8.2"
-        echo "CORE=$CORE"
-        echo "ARMV=$ARMV"
+        COREM="-mtune=cortex-a75.cortex-a55"
+        ARCHM="armv8.2"
+        echo "CORE=$COREM"
+        echo "ARCH=$ARCHM"
         ;;
     *)
-        echo "Neznan model telefona: $MODEL"
+        echo "Unknown model: $MODEL"
+        COREM=$CORE
+        ARCHM=$ARCH
         ;;
-    esac
-else
-    exit
-fi   
+esac
 
-# zamenjam ARMV in CORE v configure.sh
-sed -i "s/AAAAAAAAAA/$ARMV/g" ~/ccminer/configure.sh
+echo "Use from model (y - yes)?"
+read -n 1 yn
+if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
+    CORE=$COREM
+    ARCH=$ARCHM
+fi
+
+echo -e "\nManual set CORE? (y - yes)?"
+read -n 1 yn
+if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
+    echo -e "     CORE=\e[0;91m$CORE\e[0m\n"
+    echo -e "\e[0;93m set CORE="
+    read $COREM
+    echo -e "\n     CORE=\e[0;92m$COREM\e[0m\n"
+    echo "Is CORE OK? (y - yes)?"
+    read -n 1 yn
+    if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
+        CORE=$COREM
+    fi
+fi
+    
+echo -e "\Manual set ARCH? (y - yes)?"
+read -n 1 yn
+if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
+    echo -e "     ARCH=-march=\e[0;91m$ARCH\e[0m-a+crypto"
+    echo -e "\e[0;93m set ARCH=-march= your input -a+crypto"
+    read $ARCHM
+    echo -e "     ARCH=-march=\e[0;92m$ARCH\e[0m-a+crypto"
+    echo "Is ARCH OK? (y - yes)?"
+    read -n 1 yn
+    if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
+        ARCH=$ARCHM
+    fi
+fi
+
+
+
+
+echo -e "\n\e[0;97Settings used:\e[0m"
+echo -e "\e[0;92m     CORE=$CORE\e[0m"
+echo -e "\e[0;92m     ARCH=-march=$ARCH-a+crypto\e[0m"
+
+# zamenjam ARCH in CORE v configure.sh
+sed -i "s/AAAAAAAAAA/$ARCH/g" ~/ccminer/configure.sh
 sed -i "s/CCCCCCCCCC/$CORE/g" ~/ccminer/configure.sh
-echo -e "\n\e[93m■■■■ startam build.sh ■■■■\e[0m\n"
+echo -e "\n\e[93m start: build.sh \e[0m\n"
 CXX=clang++ CC=clang ./build.sh
-echo -e "\n\e[93m■■■■ nastavljam CCminer ■■■■\e[0m\n"
+echo -e "\n\e[93m set CCminer \e[0m\n"
 cd ~/
 # MOJE v ~/.bashrc, če obstaja pa doda na koncu
 cat << EOF >> ~/.bashrc
@@ -332,19 +363,19 @@ chmod +x ~/start.sh
 # rm -rf ~/ccminer/0/
 # nastavi POOL
 while true; do
-    echo -e "\n\e[93m■■ kateri POOL ■■ \e[0m\n"
+    echo -e "\n\e[93m which POOL \e[0m\n"
     echo "1     MRR"
     echo "2     pool.verus.io"
     echo "3     eu.luckpool.net"
     echo "4     de.vipor.net"
-    read -r -n 1 -p "Vnesite izbiro: 1 2 3 4: " choice
+    read -r -n 1 -p "Choice: 1 2 3 4: " choice
     # Preveri, ali je izbira veljavna
     case $choice in
         1|2|3|4)
             break  # Izberite veljavno številko in izstopite iz zanke
             ;;
         *)
-            echo "vnesi: 1 2 3 4" ;;
+            echo "enter: 1 2 3 4" ;;
     esac
 done
 # briše obst. če obstaja
@@ -374,7 +405,7 @@ esac
 sleep 1
 source ~/.bashrc
 sleep 3
-echo -e "\n\e[93m■■■■ KONEC ■■■■\e[0m\n"
+echo -e "\n\e[93m THE END\e[0m\n"
 exit 0
 
 # __________________________
@@ -397,9 +428,5 @@ exit 0
 # ARCH2="armv8.2"
 # ARCH3="armv8.3"
 
-# cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 cortex-a73
-# cortex-a75 cortex-a76 cortex-a76ae cortex-a77 cortex-a78 cortex-a78c cortex-r82
-
-# do sem
 
 
