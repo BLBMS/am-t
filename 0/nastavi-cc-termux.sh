@@ -184,6 +184,9 @@ check_match() {
 for i in $(seq 0 $((num_cpus - 1))); do
     check_match $i
 done
+if [[ "$ARCH" = "armv8.0" ]]; then
+    ARCH="armv8"
+fi
 echo -e "\n\e[0;97m     ARCH=-march=$ARCH-a+crypto\e[0m"
 
 # izberem na podlagi rezultata
@@ -246,7 +249,7 @@ echo -e "\e[0;93m"
 case $MODEL in
     "SM-G950F")
         echo " $MODEL Samsung Galaxy S8"
-        COREM="-mtune=cortex-a53 -mtune=exynos-m1"
+        COREM="-mtune=cortex-a53"
         ARCHM="armv8"
         ;;
     "SM-G955F")
@@ -280,7 +283,7 @@ case $MODEL in
         ARCHM="$ARCH"
         ;;
 esac
-echo -e "CORE=\e[0;92m$COREM\e[0m"
+echo -e "\e[0mCORE=\e[0;92m$COREM\e[0m"
 echo -e "ARCH=\e[0;92m$ARCHM\e[0m"
 echo -e "\e[0m"
 
@@ -320,8 +323,8 @@ echo -e "\e[0m\n"
 echo -e "\n\e[0;97m________________________________________\e[0m"
 
 echo -e "\n\e[0;93m   Used settings:\e[0m"
-echo -e "\e[0;92m     CORE=$CORE\e[0m"
-echo -e "\e[0;92m     ARCH=-march=$ARCH-a+crypto\e[0m"
+echo -e "\e[0;92m   CORE=$CORE"
+echo -e "   ARCH=-march=$ARCH-a+crypto\e[0m"
 
 # zamenjam ARCH in CORE v configure.sh
 sed -i "s/AAAAAAAAAA/$ARCH/g" ~/ccminer/configure.sh
