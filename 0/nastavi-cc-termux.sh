@@ -4,7 +4,7 @@
 
 # preveri če je že nastavljen pravi ssh
 echo -e "\n\e[92m Update & Upgrade (y -yes)\e[0m"
-read -n 1 yn
+read -s -N 1 yn
 if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
     pkg update -y && pkg upgrade -y
     pkg install -y wget net-tools nano screen
@@ -194,7 +194,7 @@ while true; do
     echo "4     armv8.4"
     echo "5     armv8.5"
     echo "9     armv8.9"
-    read -r -n 1 -p "Choice: 0 1 2 3 4 5 9 (exit): " choice
+    read -r -N 1 -p "Choice: 0 1 2 3 4 5 9 (exit): " choice
     # Preveri, ali je izbira veljavna
     case $choice in
         0|1|2|3|4|5|9)
@@ -293,39 +293,37 @@ esac
 echo -e "\e[0m"
 
 echo -e "\n\e[0;93m Use from model (y - yes)?\e[0m"
-read -n 1 yn
+read -s -N 1 yn
 if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
     CORE=$COREM
     ARCH=$ARCHM
 fi
 
 echo -e "\n\e[0;93m Manual set CORE? (y - yes)?\e[0m"
-read -n 1 yn
+read -s -N 1 -p "" yn
 if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
-    echo -e "     CORE=\e[0;91m$CORE\e[0m\n"
-    echo -e "\e[0;93m set CORE="
-    read $COREM
-    echo -e "\n     CORE=\e[0;92m$COREM\e[0m\n"
-    echo "Is CORE OK? (y - yes)?"
-    read -n 1 yn
+    echo -e "\e[0m     CORE=\e[0;91m$CORE\e[0m\n\e[0;93m"
+    read -p " set new CORE= " COREM
+    echo -e "\n\e[0m     CORE=\e[0;92m$COREM\e[0;93m\n"
+    read -s -N 1 -p "Is CORE OK? (y - yes)?" yn
     if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
-        CORE=$COREM
+        CORE="$COREM"
     fi
 fi
-    
+echo -e "\e[0m\n"
 echo -e "\n\e[0;93m Manual set ARCH? (y - yes)?\e[0m"
-read -n 1 yn
+read -s -N 1 -p "" yn
 if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
-    echo -e "     ARCH=-march=\e[0;91m$ARCH\e[0m-a+crypto"
-    echo -e "\e[0;93m set ARCH=-march= your input -a+crypto"
-    read $ARCHM
-    echo -e "     ARCH=-march=\e[0;92m$ARCH\e[0m-a+crypto"
-    echo "Is ARCH OK? (y - yes)?"
-    read -n 1 yn
+    echo -e "\e[0m     ARCH=-march=\e[0;91m$ARCH\e[0m-a+crypto\e[0m\n\e[0;93m"
+    echo -e "\e[0;93m set ARCH=-march=\e[0;91m your input \e[0;93m-a+crypto"
+    read -p " your input =" ARCHM
+    echo -e "\n\e[0;93m     ARCH=-march=\e[0;92m$ARCHM\e[0;93m-a+crypto\n"
+    read -s -N 1 -p "Is CORE OK? (y - yes)?" yn
     if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
-        ARCH=$ARCHM
+        ARCH="$ARCHM"
     fi
 fi
+echo -e "\e[0m\n"
 echo -e "\n\e[0;97m________________________________________\e[0m"
 
 echo -e "\n\e[0;93m   Used settings:\e[0m"
