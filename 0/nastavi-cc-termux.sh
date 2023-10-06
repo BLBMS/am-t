@@ -9,9 +9,9 @@ comp_str="blb@blb"
 if [ -f "$ah_file" ]; then
     f_content=$(cat "$ah_file")
     if [[ "$f_content" == *"$comp_str" ]]; then
-        echo "SSH je nastavljen"
+        echo " SSH is correct"
     else
-        echo "SSH ni pravilen"
+        echo " SSH is not correct"
         rm -f ~/nastavi-cc-ssh.sh
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
         chmod +x nastavi-cc-ssh.sh
@@ -19,7 +19,7 @@ if [ -f "$ah_file" ]; then
         exit 0
     fi
 else
-    echo "SSH manjka"
+    echo " SSH is missing"
     rm -f ~/nastavi-cc-ssh.sh
     wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
     chmod +x nastavi-cc-ssh.sh
@@ -30,10 +30,10 @@ fi
 # premik Ubuntu
 cd ~/
 if [ -d ~/ubuntu-fs ]; then
-    echo -e "\n\e[93mpremaknem ubuntu? (y - yes)\e[0m"
+    echo -e "\n\e[93m Move Ubuntu? (y - yes)\e[0m"
     read -n 1 yn
     if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
-        echo -e "\n\e[93m!!premikam!!\e[0m"
+        echo -e "\n\e[93m moving ...\e[0m"
         if [ ! -d ~/UBUNTU ]; then
             mkdir ~/UBUNTU
         fi
@@ -54,35 +54,35 @@ if [ -d ~/ubuntu-fs ]; then
             mv -f ~/*.list ~/UBUNTU/
             printf "■"
         fi
-        printf "\n"
+        echo -e "\n\e[93m ... done\e[0m"
     fi
 fi
-echo -e "\n\e[93m nastavitve v TERMUX \e[0m\n"
+echo -e "\n\e[93m Setting TERMUX \e[0m\n"
 # Nastavi IP
 ifconfig_out=$(ifconfig)
 ip_line=$(echo "$ifconfig_out" | grep 'inet 192')
 phone_ip=$(echo "$ip_line" | cut -d'.' -f4 | cut -c1-3)
 #echo "IP=" $phone_ip
-echo -e "\n\e[93m nastavitev delavca \e[0m\n"
+echo -e "\n\e[93m Setting worker \e[0m\n"
 cd ~/
 if ls ~/*.ww >/dev/null 2>&1; then
     for datoteka in ~/*.ww; do
         if [ -e "$datoteka" ]; then
             ime_iz_datoteke=$(basename "$datoteka")
             delavec=${ime_iz_datoteke%.ww}
-            echo "Delavec iz .ww datoteke: "$delavec
+            echo " Worker from .ww file: "$delavec
         fi
     done
 else
-    echo "Ni datotek z končnico .ww v mapi."
-    printf "\n\e[93m IME DELAVCA: \e[0m"
+    echo "No .ww files in directory"
+    printf "\n\e[93m Worker name: \e[0m"
     read delavec
     echo $delavec > ~/$delavec.ww
 fi
-echo -e "\n\e[93m-> Ime delavca je: "$delavec
+    echo -e "\n\e[93m-> Worker's name is: "$delavec
 echo " done "
 # auto boot
-echo -e "\n\e[93m nastavljam auto boot\e[0m\n"
+echo -e "\n\e[93m Setting auto boot\e[0m\n"
 rm -rf ~/.termux/boot
 mkdir -p ~/.termux/boot
 # nastavi ~/.termux/boot/start.sh
@@ -114,17 +114,17 @@ cp /data/data/com.termux/files/usr/include/linux/sysctl.h /data/data/com.termux/
 # original: git clone https://github.com/Darktron/ccminer.git
 # git z mojega repo
 git clone https://github.com/BLBMS/am-t.git
-echo -e "\n\e[93m git skopiran \e[0m\n"
+echo -e "\n\e[93m git copied \e[0m\n"
 mv am-t/ ccminer/
 cd ~/ccminer
 chmod +x build.sh configure.sh autogen.sh
 rm -f ~/ccminer/start.sh
 rm -f ~/ccminer/config.json
-echo -e "\n\e[93m nastavljam CPUje za kompajler \e[0m\n"
-echo -e "\nproduct.manufacturer : \e[0;93m$(getprop ro.product.manufacturer)\e[0m"
-echo -e "product.model        : \e[0;93m$(getprop ro.product.model)\e[0m"
-echo -e "product.cpu.abilist64: \e[0;93m$(getprop ro.product.cpu.abilist64)\e[0m"
-echo -e "arm64.variant        : \e[0;93m$(getprop dalvik.vm.isa.arm64.variant)\e[0m"
+echo -e "\n\e[93m Setting the CPU for the compiler \e[0m\n"
+echo -e "\nproduct.manufacturer : \e[0;92m$(getprop ro.product.manufacturer)\e[0m"
+echo -e "product.model        : \e[0;92m$(getprop ro.product.model)\e[0m"
+echo -e "product.cpu.abilist64: \e[0;92m$(getprop ro.product.cpu.abilist64)\e[0m"
+echo -e "arm64.variant        : \e[0;92m$(getprop dalvik.vm.isa.arm64.variant)\e[0m"
 
 MTUNE=" a64fx ampere1 ampere1a apple-a10 apple-a11 apple-a12 apple-a13 apple-a14 apple-a15 apple-a16 apple-a7 apple-a8 apple-a9 apple-latest apple-m1 apple-m2 \
 apple-s4 apple-s5 carmel cortex-a34 cortex-a35 cortex-a510 cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 cortex-a73 \
@@ -170,7 +170,7 @@ check_match() {
         done
     done
 }
-# Preverite vsak CPU(i)
+# Preverim vsak CPU(i)
 for i in $(seq 0 $((num_cpus - 1))); do
     check_match $i
 done
@@ -178,7 +178,7 @@ echo -e "\n\e[0;97m     ARCH=-march=$ARCH-a+crypto\e[0m"
 
 # izberem na podlagi rezultata
 while true; do
-    echo -e "\n\e[93m change armv8? (or exit) ■■ \e[0m\n"
+    echo -e "\n\e[93m Want to change armv8? (or exit) ■■ \e[0m\n"
     echo "0     armv8"
     echo "1     armv8.1"
     echo "2 .. 3 .. 4"
@@ -229,8 +229,8 @@ case $choice in
         ;;
 esac
 
-echo -e "\n\e[0;93mChecking by device model:\e[0m"
 MODEL=$(getprop ro.product.model)
+echo -e "\n\e[0;93m Checking by device model: $MODEL\e[0m"
 case $MODEL in
     "SM-G950F")
         echo "$MODEL Samsung Galaxy S8"
@@ -248,28 +248,28 @@ case $MODEL in
         ;;
     "SM-G960F")
         echo "$MODEL Samsung Galaxy S9"
-        COREM="-mtune=cortex-a55"
+        COREM="-mtune=cortex-a55 -mtune=exynos-m3"
         ARCHM="armv8"
         echo "CORE=$COREM"
         echo "ARCH=$ARCHM"
         ;;
     "SM-G965F")
         echo "$MODEL Samsung Galaxy S9+"
-        COREM="-mtune=cortex-a55"
+        COREM="-mtune=cortex-a55 -mtune=exynos-m3"
         ARCHM="armv8"
         echo "CORE=$COREM"
         echo "ARCH=$ARCHM"
         ;;
     "SM-G973F")
         echo "$MODEL Samsung Galaxy S10"
-        COREM="-mtune=cortex-a75.cortex-a55"
+        COREM="-mtune=cortex-a75 -mtune=cortex-a55"
         ARCHM="armv8.2"
         echo "CORE=$COREM"
         echo "ARCH=$ARCHM"
         ;;
     "SM-G970F")
         echo "$MODEL Samsung Galaxy S10e"
-        COREM="-mtune=cortex-a75.cortex-a55"
+        COREM="-mtune=cortex-a75-mtune=cortex-a55"
         ARCHM="armv8.2"
         echo "CORE=$COREM"
         echo "ARCH=$ARCHM"
@@ -281,14 +281,14 @@ case $MODEL in
         ;;
 esac
 
-echo "Use from model (y - yes)?"
+echo "\n\e[0;93m Use from model (y - yes)?\e[0m"
 read -n 1 yn
 if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
     CORE=$COREM
     ARCH=$ARCHM
 fi
 
-echo -e "\nManual set CORE? (y - yes)?"
+echo -e "\n\e[0;93m Manual set CORE? (y - yes)?\e[0m"
 read -n 1 yn
 if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
     echo -e "     CORE=\e[0;91m$CORE\e[0m\n"
@@ -302,7 +302,7 @@ if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
     fi
 fi
     
-echo -e "\Manual set ARCH? (y - yes)?"
+echo -e "\n\e[0;93m Manual set ARCH? (y - yes)?\e[0m"
 read -n 1 yn
 if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
     echo -e "     ARCH=-march=\e[0;91m$ARCH\e[0m-a+crypto"
@@ -315,17 +315,16 @@ if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
         ARCH=$ARCHM
     fi
 fi
+echo -e "\n\e[0;97m________________________________________\e[0m"
 
-
-
-
-echo -e "\n\e[0;97Settings used:\e[0m"
+echo -e "\n\e[0;93m   Used settings:\e[0m"
 echo -e "\e[0;92m     CORE=$CORE\e[0m"
 echo -e "\e[0;92m     ARCH=-march=$ARCH-a+crypto\e[0m"
 
 # zamenjam ARCH in CORE v configure.sh
 sed -i "s/AAAAAAAAAA/$ARCH/g" ~/ccminer/configure.sh
 sed -i "s/CCCCCCCCCC/$CORE/g" ~/ccminer/configure.sh
+
 echo -e "\n\e[93m start: build.sh \e[0m\n"
 CXX=clang++ CC=clang ./build.sh
 echo -e "\n\e[93m set CCminer \e[0m\n"
@@ -348,6 +347,8 @@ echo "xx = kill screen"
 echo "sl = list screen"
 echo "rr = show screen"
 echo "exit: CTRL-a + d"
+echo "__________________"
+sl
 EOF
 cd ~/
 # kopira in zamenja delavca v vseh json
@@ -363,7 +364,7 @@ chmod +x ~/start.sh
 # rm -rf ~/ccminer/0/
 # nastavi POOL
 while true; do
-    echo -e "\n\e[93m which POOL \e[0m\n"
+    echo -e "\n\e[93m Which POOL \e[0m\n"
     echo "1     MRR"
     echo "2     pool.verus.io"
     echo "3     eu.luckpool.net"
@@ -427,6 +428,3 @@ exit 0
 # ARCH1="armv8.1"
 # ARCH2="armv8.2"
 # ARCH3="armv8.3"
-
-
-
