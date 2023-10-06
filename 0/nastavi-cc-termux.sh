@@ -3,7 +3,13 @@
 #   cd ~/ && rm -f nastavi-cc-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-termux.sh && chmod +x nastavi-cc-termux.sh && ./nastavi-cc-termux.sh
 
 # preveri če je že nastavljen pravi ssh
-pkg install -y net-tools nano screen
+echo -e "\n\e[92m Update & Upgrade (y -yes)\e[0m"
+read -n 1 yn
+if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
+    pkg update -y && pkg upgrade -y
+    pkg install -y wget net-tools nano screen
+fi
+echo -e "\ndone"
 ah_file="$HOME/.ssh/authorized_keys"
 comp_str="blb@blb"
 if [ -f "$ah_file" ]; then
@@ -26,7 +32,7 @@ else
     ~/nastavi-cc-ssh.sh
     exit 0
 fi
-
+echo -e "\ndone"
 # premik Ubuntu
 cd ~/
 if [ -d ~/ubuntu-fs ]; then
