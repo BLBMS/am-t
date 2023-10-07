@@ -356,6 +356,8 @@ done
 
 echo -e "\n\e[93m set CCminer \e[0m\n"
 cd ~/
+# briše MOJE v ~/.bashrc, vse do konca
+sed -i '/### ______  MOJE _/,$d' ~/.bashrc
 # MOJE v ~/.bashrc, če obstaja pa doda na koncu
 cat << EOF >> ~/.bashrc
 ### ______  MOJE _____
