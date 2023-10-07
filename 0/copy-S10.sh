@@ -14,4 +14,9 @@ rm -f ~/nastavi-cc-*.sh
 rm -f ~/back-cc.sh
 echo -e "\e[0;92m POBRISANO\e[0m"
 ls
+echo -e "\e[0;93m prenašam\e[0m"
 cd ~/ && rm -f ccminer_S10h.tar.gz && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminer_S10h.tar.gz
+echo -e "\e[0;93m razpakiram\e[0m"
+tar -xzvf ccminer_S10h.tar.gz
+echo -e "\e[0;93m END\e[0m"
+ls
