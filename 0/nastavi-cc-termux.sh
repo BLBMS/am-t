@@ -247,7 +247,7 @@ esac
 MODEL=$(getprop ro.product.model)
 ANDROID=$(getprop ro.build.version.release)
 echo -e "\n\e[0;93m Checking by device model:\e[0m"
-echo -e "\e[0;95m Android release: $ANDROID"\e[0m"
+echo -e "\e[0;95m Android release: $ANDROID\e[0m"
 echo -e "\e[0;93m"
 case $MODEL in
     "SM-G950F")
