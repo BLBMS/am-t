@@ -2,7 +2,7 @@
 
 #   cd ~/ && rm -f nastavi-cc-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-termux.sh && chmod +x nastavi-cc-termux.sh && ./nastavi-cc-termux.sh
 
-# preveri če je že nastavljen pravi ssh
+# preveri za posodobitev sistema
 echo -e "\n\e[93m Update & Upgrade (y -yes)\e[0m"
 read -s -N 1 yn
 if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
@@ -10,6 +10,7 @@ if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
     pkg install -y wget net-tools nano screen
 fi
 echo -e "\ndone"
+# preveri če je že nastavljen pravi ssh
 ah_file="$HOME/.ssh/authorized_keys"
 comp_str="blb@blb"
 if [ -f "$ah_file" ]; then
