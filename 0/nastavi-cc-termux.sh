@@ -433,28 +433,24 @@ case $choice in
         ;;
 esac
 # uveljavljam nastavitve
-sleep 1
-source ~/.bashrc
-sleep 3
-echo -e "\n\e[93m THE END\e[0m\n"
-exit 0
 
 # __________________________
-
 # sem sem dal
 #echo "-$C1-$C2-$C3-"
-
 # J5="a53"
 # J7="a53"
 # S8="M2 a53"
 # S9="M3 a55"
 # S10="M4 a75 A55"
-
 # P20L="a53 A53"
 # P20="a73 A53"
 # P20P="a73 A53"
-
 # ARCH0="armv8"
 # ARCH1="armv8.1"
 # ARCH2="armv8.2"
 # ARCH3="armv8.3"
+# __________________________
+
+echo -e "\n\e[93m THE END\e[0m\n"
+sleep 3
+source ~/.bashrc
