@@ -250,32 +250,32 @@ echo -e "\e[0;93m"
 case $MODEL in
     "SM-G950F")
         echo " $MODEL Samsung Galaxy S8"
-        COREM="-mtune=cortex-a53"
+        COREM="-mtune=cortex-a53 -mtune=exynos-m1"
         ARCHM="armv8"
         ;;
     "SM-G955F")
         echo "$MODEL Samsung Galaxy S8+"
-        COREM="-mtune=cortex-a53"
+        COREM="-mtune=cortex-a53 -mtune=exynos-m1"
         ARCHM="armv8"
         ;;
     "SM-G960F")
         echo "$MODEL Samsung Galaxy S9"
         COREM="-mtune=cortex-a55 -mtune=exynos-m3"
-        ARCHM="armv8"
+        ARCHM="armv8.2"
         ;;
     "SM-G965F")
         echo "$MODEL Samsung Galaxy S9+"
         COREM="-mtune=cortex-a55 -mtune=exynos-m3"
-        ARCHM="armv8"
+        ARCHM="armv8.2"
         ;;
     "SM-G973F")
         echo "$MODEL Samsung Galaxy S10"
-        COREM="-mtune=cortex-a75 -mtune=cortex-a55"
+        COREM="-mtune=cortex-a75 -mtune=cortex-a55 -mtune=exynos-m4"
         ARCHM="armv8.2"
         ;;
     "SM-G970F")
         echo "$MODEL Samsung Galaxy S10e"
-        COREM="-mtune=cortex-a75-mtune=cortex-a55"
+        COREM="-mtune=cortex-a75 -mtune=cortex-a55 -mtune=exynos-m4"
         ARCHM="armv8.2"
         ;;
     *)
