@@ -245,7 +245,9 @@ case $choice in
 esac
 
 MODEL=$(getprop ro.product.model)
-echo -e "\n\e[0;93m Checking by device model: $MODEL\e[0m"
+ANDROID=$(getprop ro.build.version.release)
+echo -e "\n\e[0;93m Checking by device model:\e[0m"
+echo -e "\e[0;95m Android release: $ANDROID"\e[0m"
 echo -e "\e[0;93m"
 case $MODEL in
     "SM-G950F")
@@ -323,7 +325,7 @@ fi
 echo -e "\e[0m\n"
 echo -e "\n\e[0;97m________________________________________\e[0m"
 
-echo -e "\n\e[0;93m   Used settings:\e[0m"
+echo -e "\n\e[0;93m Used settings:\e[0m"
 echo -e "\e[0;92m   CORE=$CORE"
 echo -e "   ARCH=-march=$ARCH-a+crypto\e[0m"
 
