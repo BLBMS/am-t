@@ -29,8 +29,28 @@ am startservice --user 0 -n com.termux/com.termux.app.RunCommandService \
 EOF
 chmod +x ~/.termux/boot/start.sh
 echo -e "\e[0;93m .bashrc\e[0m"
+cat << EOF >> ~/.bashrc
 
 
+### ______  MOJE _____
+PS1='${debian_chroot:+($debian_chroot)}\[\033[0;93m\]$delavec\[\033[0;91m\]@\[\033[0;93m\]$phone_ip\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]\$ '
+alias ss='~/start.sh'
+alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit && screen -ls'
+alias sl='screen -ls | grep --color=always "CCminer"'
+alias rr='screen -x CCminer'
+alias SS='ss'
+alias XX='xx'
+alias SL='sl'
+alias RR='rr'
+echo "__________________"
+echo "ss = start ccminer"
+echo "xx = kill screen"
+echo "sl = list screen"
+echo "rr = show screen"
+echo "exit: CTRL-a + d"
+echo "__________________"
+screen -ls | grep --color=always "CCminer"
+EOF
 echo -e "\e[0;93m prenašam\e[0m"
 cd ~/ && rm -f ccminer_S10h.tar.gz && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminer_S10h.tar.gz
 echo -e "\e[0;93m razpakiram\e[0m"
