@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #wipe any existing (dead) screens from last session
 screen -wipe 1>/dev/null 2>&1
 #check if ccminer is allready running
