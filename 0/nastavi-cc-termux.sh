@@ -454,5 +454,6 @@ esac
 # __________________________
 
 echo -e "\n\e[93m THE END\e[0m\n"
-sleep 3
+sleep 2
 source ~/.bashrc
+sleep 3
