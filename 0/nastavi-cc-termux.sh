@@ -453,7 +453,6 @@ esac
 # ARCH3="armv8.3"
 # __________________________
 
+echo "source ~/.bashrc"
+
 echo -e "\n\e[93m THE END\e[0m\n"
-sleep 2
-source ~/.bashrc
-sleep 3
