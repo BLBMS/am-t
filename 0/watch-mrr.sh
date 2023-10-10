@@ -2,7 +2,7 @@
 
 #->   cd ~/ && rm -f ./watch-mrr.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/watch-mrr.sh && chmod +x watch-mrr.sh && ./watch-mrr.sh
 
-if ! [ -f ~/spisek-mrr.list ] then
+if ! [ -f ~/spisek-mrr.list ]; then
     rm -f ./spisek-mrr.list
     wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/spisek-mrr.list
 fi
