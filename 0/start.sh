@@ -4,7 +4,7 @@ screen -wipe 1>/dev/null 2>&1
 #check if ccminer is allready running
 if screen -ls | grep -i ccminer;
 then
-  printf "\n\e[93m■■■ CCminer is already running! ■■■\e[0m\n"
+  printf "\n\e[91m■■■ CCminer is already running! ■■■\e[0m\n"
 else
   printf "\n\e[93m■■■ Starting CCminer! ■■■\e[0m\n"
   #exit existing screens - ALL
