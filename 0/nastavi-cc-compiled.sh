@@ -230,6 +230,7 @@ cd ~/
 
 # kopira in zamenja delavca v vseh json
 rm -f *.json
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-cloudiko.json
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-luck.json
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-mrr.json
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-verus.json
