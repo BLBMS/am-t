@@ -29,8 +29,8 @@ if [ -f "$ah_file" ]; then
     if [[ "$f_content" == *"$comp_str" ]]; then
         echo -e "\n\e[92m SSH is correct\e[0m"
     else
-        echo -e "\n\e[91m SSH is not correct\e[0m"
-        echo " After install start program again"
+        echo -e "\n\e[91m SSH is not correct"
+        echo -e "\n\e[92m After install start program again\e[0m"
         cd
         rm -f ~/nastavi-cc-ssh.sh
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
@@ -39,8 +39,8 @@ if [ -f "$ah_file" ]; then
         # exit 0
     fi
 else
-    echo -e "\n\e[91m SSH is missing\e[0m"
-    echo " After install start program again"
+    echo -e "\n\e[91m SSH is missing"
+    echo -e "\n\e[92m After install start program again\e[0m"
     cd
     rm -f ~/nastavi-cc-ssh.sh
     wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
@@ -148,7 +148,7 @@ fi
 
 MODEL=$(getprop ro.product.model)
 ANDROID=$(getprop ro.build.version.release)
-echo -e "\n\n\e[93m Phone info: \e[0m"
+echo -e "\n\n\e[93m Phone info: \e[0m\n"
 echo -e "product.manufacturer : \e[0;92m$(getprop ro.product.manufacturer)\e[0m"
 echo -e "product.model        : \e[0;92m$(getprop ro.product.model)\e[0m"
 echo -e "product.cpu.abilist64: \e[0;92m$(getprop ro.product.cpu.abilist64)\e[0m"
@@ -166,7 +166,7 @@ done
 echo -e "Android release      : \e[0;92m$ANDROID\e[0m"
 
 cd ~/
-echo -e "\e[0;93m"
+echo -e "\e[0;92m"
 rm -f ccminer*.compiled
 case $MODEL in
     "SM-G950F")
@@ -205,7 +205,7 @@ case $MODEL in
 esac
 mv ccminer*.compiled ccminer
 chmod +x ccminer
-echo -e "\e[93m set CCminer \e[0m"
+echo -e "\n\e[93m set CCminer \e[0m"
 cd ~/
 # briše MOJE v ~/.bashrc, vse do konca
 sed -i '/### ______  MOJE _/,$d' ~/.bashrc
@@ -287,6 +287,6 @@ case $choice in
         cp ~/config-vipor.json ~/config.json 
         ;;
 esac
-echo -e "\necho -e "\e[0m"don't forget: \e[95msource ~/.bashrc"
-
+echo -e "\e[0m"don't forget: \e[96msource ~/.bashrc"
+source ~/.bashrc
 echo -e "\n\e[93m THE END\e[0m\n"
