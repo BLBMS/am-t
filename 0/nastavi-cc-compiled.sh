@@ -7,14 +7,14 @@ if ! command -v screen &> /dev/null; then
     pkg update -y && pkg upgrade -y
     pkg install -y wget net-tools nano screen
 else
-    echo -e "\n\e[93m Update & Upgrade (y -yes)\e[0m"
+    echo -e "\n\e[93m Update & Upgrade (y -yes)\e[0m" # -----------------------------------------------
     read -s -N 1 yn
     if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
         pkg update -y && pkg upgrade -y
         pkg install -y wget net-tools nano screen
     fi
 fi
-echo -e "\ndone"
+echo "done"
 
 # preveri če je že nastavljen pravi ssh
 if ! [ -f ~/nastavi-cc-ssh.sh ]; then
@@ -48,12 +48,11 @@ else
     source ~/nastavi-cc-ssh.sh
     # exit 0
 fi
-#echo -e "\ndone"
-printf " -> done"
+echo "done"
 # premik Ubuntu
 cd ~/
 if [ -d ~/ubuntu-fs ]; then
-    echo -e "\n\e[93m Move Ubuntu? (y - yes)\e[0m"
+    echo -e "\n\e[93m Move Ubuntu? (y - yes)\e[0m" # -----------------------------------------------
     read -n 1 yn
     if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
         echo -e "\n\e[93m moving ...\e[0m"
@@ -89,16 +88,16 @@ if [ -f ~/ccminer/configure.sh ]; then
             mkdir ~/ccminer-old
     fi
     mv -f ~/ccminer ~/ccminer-old/
-    echo -e "\ndone"
 fi
-
-echo -e "\n\e[93m Setting TERMUX \e[0m\n"
+echo "done"
+echo -e "\n\e[93m Setting TERMUX \e[0m\n" # -----------------------------------------------
 # Nastavi IP
 ifconfig_out=$(ifconfig)
 ip_line=$(echo "$ifconfig_out" | grep 'inet 192')
 phone_ip=$(echo "$ip_line" | cut -d'.' -f4 | cut -c1-3)
 #echo "IP=" $phone_ip
-echo -e "\n\e[93m Setting worker \e[0m"
+echo "done"
+echo -e "\n\e[93m Setting worker \e[0m" # -----------------------------------------------
 cd ~/
 if ls ~/*.ww >/dev/null 2>&1; then
     for datoteka in ~/*.ww; do
@@ -115,10 +114,9 @@ else
     echo $delavec > ~/$delavec.ww
 fi
     echo -e "\n\e[92m-> Worker's name is: $delavec\e[0m"
-#echo -e "\ndone"
-printf " -> done"
+echo "done"
 # auto boot
-echo -e "\n\e[93m Setting auto boot\e[0m"
+echo -e "\n\e[93m Setting auto boot\e[0m" # -----------------------------------------------
 rm -rf ~/.termux/boot
 mkdir -p ~/.termux/boot
 # nastavi ~/.termux/boot/start.sh
@@ -137,19 +135,16 @@ chmod +x ~/.termux/boot/start.sh
 # Auto boot ubuntu  (nano ~/.termux/termux.properties) __Zbriši # pred: # allow-external-apps = true
 sed -i 's/^# allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
 sed -i 's/^#allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
-#echo -e "\ndone"
-printf " -> done"
-# ____ novo - ccminer v termux ____
-echo -e "\n\e[93m CCminer v TERMUX \e[0m"
+echo "done"
 cd ~/
 if screen -ls | grep -i ccminer; then
   printf "\n\e[91m CCminer is running -> STOP! \e[0m"
   screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit
   screen -wipe 1>/dev/null 2>&1
 fi
+echo -e "\n\n\e[93m Phone info: \e[0m\n" # -----------------------------------------------
 MODEL=$(getprop ro.product.model)
 ANDROID=$(getprop ro.build.version.release)
-echo -e "\n\n\e[93m Phone info: \e[0m\n"
 echo -e "product.manufacturer : \e[0;93m$(getprop ro.product.manufacturer)\e[0m"
 echo -e "product.model        : \e[0;93m$(getprop ro.product.model)\e[0m"
 echo -e "product.cpu.abilist64: \e[0;93m$(getprop ro.product.cpu.abilist64)\e[0m"
@@ -203,9 +198,8 @@ case $MODEL in
 esac
 mv ccminer*.compiled ccminer
 chmod +x ccminer
-#echo -e "\ndone"
-printf " -> done"
-echo -e "\n\e[93m Set CCminer \e[0m"
+echo "done"
+echo -e "\n\e[93m Set CCminer \e[0m" # -----------------------------------------------
 cd ~/
 # briše MOJE v ~    /.bashrc, vse do konca
 sed -i '/### ______  MOJE _/,$d' ~/.bashrc
@@ -250,10 +244,10 @@ rm -f start.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/start.sh
 chmod +x ~/start.sh
 sed -i 's#~/ccminer/ccminer#~/ccminer#' ~/start.sh
-echo -e "\ndone"
+echo "done"
 # nastavi POOL
 while true; do
-    echo -e "\n\e[93m Which POOL \e[0m\n"
+    echo -e "\n\e[93m Which POOL \e[0m\n" # -----------------------------------------------
     echo "1     MRR"
     echo "2     pool.verus.io"
     echo "3     eu.luckpool.net"
@@ -289,8 +283,7 @@ case $choice in
         ;;
 esac
 echo -e "\e[0m"
-#echo -e "\ndone"
-printf " -> done"
+echo "done"
 echo -e "\n\e[0m don't forget:   \e[92msource ~/.bashrc\e[0m"
 source ~/.bashrc
 echo -e "\n\e[93m THE END\e[0m\n"
