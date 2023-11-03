@@ -1,1 +1,17 @@
-
+{
+  "pools":[
+    {
+    "name": "eu.cloudiko.io",
+    "url": "stratum+tcp://eu.cloudiko.io:9999",
+    "timeout": 180,
+    "disabled": 0
+    }
+  ],
+  "user": "i81Y5CQBAMRhtirgwtsxv6GZT512SYK14g.DELAVEC",
+  "algo": "verus",
+  "threads": 8,
+  "cpu-priority": 1,
+  "retry-pause": 5,
+  "api-allow": "192.168.100.0/24",
+  "api-bind": "0.0.0.0:4068"
+}
