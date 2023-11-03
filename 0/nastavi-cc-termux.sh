@@ -314,36 +314,43 @@ echo -e "\n\e[0;93m Manual set CORE? (y - yes)?\e[0m"
 read -s -N 1 -p "" yn
 if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
     echo -e "\e[0m     CORE=\e[0;91m$CORE\e[0m\n\e[0;93m"
-    read -p " set new CORE= " COREM
-    echo -e "\n\e[0m     CORE=\e[0;92m$COREM\e[0;93m\n"
+    read -p " set new CORE= " CORES
+    echo -e "\n\e[0m     CORE=\e[0;92m$CORES\e[0;93m\n"
     read -s -N 1 -p "Is CORE OK? (y - yes)?" yn
     if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
-        CORE="$COREM"
+        CORE="$CORES"
     fi
 fi
-echo -e "\e[0m\n"
+echo -e "\e[0m"
 echo -e "\n\e[0;93m Manual set ARCH? (y - yes)?\e[0m"
 read -s -N 1 -p "" yn
 if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
     echo -e "\e[0m     ARCH=-march=\e[0;91m$ARCH\e[0m-a+crypto\e[0m\n\e[0;93m"
     echo -e "\e[0;93m set ARCH=-march=\e[0;91m your input \e[0;93m-a+crypto"
-    read -p " your input =" ARCHM
-    echo -e "\n\e[0;93m     ARCH=-march=\e[0;92m$ARCHM\e[0;93m-a+crypto\n"
+    read -p " your input =" ARCHS
+    echo -e "\n\e[0;93m     ARCH=-march=\e[0;92m$ARCHS\e[0;93m-a+crypto\n"
     read -s -N 1 -p "Is CORE OK? (y - yes)?" yn
     if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
-        ARCH="$ARCHM"
+        ARCH="$ARCHS"
     fi
 fi
-echo -e "\e[0m\n"
+echo -e "\e[0m"
 echo -e "\n\e[0;97m________________________________________\e[0m"
-
 echo -e "\n\e[0;93m Used settings:\e[0m"
 echo -e "\e[0;92m   CORE=$CORE"
 echo -e "   ARCH=-march=$ARCH-a+crypto\e[0m"
+echo -e "\n\e[0;97m________________________________________\e[0m"
 
 # zamenjam ARCH in CORE v configure.sh
 sed -i "s/AAAAAAAAAA/$ARCH/g" ~/ccminer/configure.sh
 sed -i "s/CCCCCCCCCC/$CORE/g" ~/ccminer/configure.sh
+
+if screen -ls | grep -i ccminer;
+then
+  printf "\n\e[91m CCminer is running -> STOP! \e[0m\n"
+  screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit
+  screen -wipe 1>/dev/null 2>&1
+fi
 
 echo -e "\n\e[93m start: build.sh \e[0m\n"
 CXX=clang++ CC=clang ./build.sh
