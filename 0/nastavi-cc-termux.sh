@@ -19,19 +19,21 @@ if [ -f "$ah_file" ]; then
         echo -e "\n\e[92m SSH is correct\e[0m"
     else
         echo -e "\n\e[91m SSH is not correct\e[0m"
+        cd
         rm -f ~/nastavi-cc-ssh.sh
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
         chmod +x nastavi-cc-ssh.sh
-        ~/nastavi-cc-ssh.sh
-        exit 0
+        source ~/nastavi-cc-ssh.sh
+        # exit 0
     fi
 else
     echo -e "\n\e[91m SSH is missing\e[0m"
+    cd
     rm -f ~/nastavi-cc-ssh.sh
     wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
     chmod +x nastavi-cc-ssh.sh
-    ~/nastavi-cc-ssh.sh
-    exit 0
+    source ~/nastavi-cc-ssh.sh
+    # exit 0
 fi
 echo -e "\ndone"
 # premik Ubuntu
@@ -453,10 +455,10 @@ esac
 # J7="a53"
 # S8="M2 a53"
 # S9="M3 a55"
-# S10="M4 a75 A55"
-# P20L="a53 A53"
-# P20="a73 A53"
-# P20P="a73 A53"
+# S10="M4 a75 a55"
+# P20L="a53 a53"
+# P20="a73 a53"
+# P20P="a73 a53"
 # ARCH0="armv8"
 # ARCH1="armv8.1"
 # ARCH2="armv8.2"
