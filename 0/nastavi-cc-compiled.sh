@@ -3,13 +3,19 @@
 #   cd ~/ && rm -f nastavi-cc-compiled.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-compiled.sh && chmod +x nastavi-cc-compiled.sh && ./nastavi-cc-compiled.sh
 
 # preveri za posodobitev sistema
-echo -e "\n\e[93m Update & Upgrade (y -yes)\e[0m"
-read -s -N 1 yn
-if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
+if ! command -v screen &> /dev/null; then
     pkg update -y && pkg upgrade -y
     pkg install -y wget net-tools nano screen
+else
+    echo -e "\n\e[93m Update & Upgrade (y -yes)\e[0m"
+    read -s -N 1 yn
+    if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
+        pkg update -y && pkg upgrade -y
+        pkg install -y wget net-tools nano screen
+    fi
 fi
 echo -e "\ndone"
+
 # preveri če je že nastavljen pravi ssh
 ah_file="$HOME/.ssh/authorized_keys"
 comp_str="blb@blb"
@@ -19,6 +25,7 @@ if [ -f "$ah_file" ]; then
         echo -e "\n\e[92m SSH is correct\e[0m"
     else
         echo -e "\n\e[91m SSH is not correct\e[0m"
+        echo "After install start program again"
         cd
         rm -f ~/nastavi-cc-ssh.sh
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
@@ -28,6 +35,7 @@ if [ -f "$ah_file" ]; then
     fi
 else
     echo -e "\n\e[91m SSH is missing\e[0m"
+    echo "After install start program again"
     cd
     rm -f ~/nastavi-cc-ssh.sh
     wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
