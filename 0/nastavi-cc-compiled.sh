@@ -134,9 +134,6 @@ echo -e "\ndone"
 # ____ novo - ccminer v termux ____
 echo -e "\n\e[93m CCminer v TERMUX \e[0m\n"
 cd ~/
-if ! [ -d ~/ccminer ]; then
-    mkdir ~/ccminer/
-fi
 
 if screen -ls | grep -i ccminer; then
   printf "\n\e[91m CCminer is running -> STOP! \e[0m"
@@ -163,9 +160,8 @@ done
 
 echo -e "Android release      : \e[0;92m$ANDROID\e[0m"
 
+cd ~/
 echo -e "\e[0;93m"
-cd ~/ccminer/
-
 case $MODEL in
     "SM-G950F")
         echo " $MODEL Samsung Galaxy S8"
@@ -254,6 +250,7 @@ for file in ~/*.json; do
 done
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/start.sh
 chmod +x ~/start.sh
+sed -i 's#~/ccminer/ccminer#~/ccminer#' ~/start.sh
 # nastavi POOL
 while true; do
     echo -e "\n\e[93m Which POOL \e[0m\n"
