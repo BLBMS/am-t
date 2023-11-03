@@ -137,7 +137,7 @@ sed -i 's/^# allow-external-apps = true*/allow-external-apps = true/' ~/.termux/
 sed -i 's/^#allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
 echo -e "\ndone"
 # ____ novo - ccminer v termux ____
-echo -e "\n    \e[93m CCminer v TERMUX \e[0m"
+echo -e "\n\e[93m CCminer v TERMUX \e[0m"
 cd ~/
 if screen -ls | grep -i ccminer; then
   printf "\n\e[91m CCminer is running -> STOP! \e[0m"
@@ -200,9 +200,10 @@ case $MODEL in
 esac
 mv ccminer*.compiled ccminer
 chmod +x ccminer
-echo -e "\n\e[93m set CCminer \e[0m"
+echo -e "\ndone"
+echo -e "\n\e[93m Set CCminer \e[0m"
 cd ~/
-# briše MOJE v ~/.bashrc, vse do konca
+# briše MOJE v ~    /.bashrc, vse do konca
 sed -i '/### ______  MOJE _/,$d' ~/.bashrc
 # MOJE v ~/.bashrc, če obstaja pa doda na koncu
 cat << EOF >> ~/.bashrc
@@ -245,6 +246,7 @@ rm -f start.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/start.sh
 chmod +x ~/start.sh
 sed -i 's#~/ccminer/ccminer#~/ccminer#' ~/start.sh
+echo -e "\ndone"
 # nastavi POOL
 while true; do
     echo -e "\n\e[93m Which POOL \e[0m\n"
@@ -282,6 +284,7 @@ case $choice in
         cp ~/config-vipor.json ~/config.json 
         ;;
 esac
-echo -e "\e[0m"don't forget: \e[96msource ~/.bashrc"
+echo -e "\ndone"
+echo -e "\n\e[0m don't forget:   \e[92msource ~/.bashrc"
 source ~/.bashrc
 echo -e "\n\e[93m THE END\e[0m\n"
