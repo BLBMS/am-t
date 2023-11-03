@@ -198,7 +198,6 @@ case $MODEL in
 esac
 mv ccminer*.compiled ccminer
 chmod +x ccminer
-echo "done"
 echo -e "\n\e[93m Set CCminer \e[0m" # -----------------------------------------------
 cd ~/
 # briše MOJE v ~    /.bashrc, vse do konca
