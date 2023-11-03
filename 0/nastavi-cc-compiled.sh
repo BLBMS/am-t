@@ -251,15 +251,16 @@ while true; do
     echo "1     MRR"
     echo "2     pool.verus.io"
     echo "3     eu.luckpool.net"
-    echo "4     de.vipor.net\e[93m"
-    read -r -n 1 -p "Choice: 1 2 3 4: " choice
+    echo "4     de.vipor.net"
+    echo "5     eu.coudiko.io\e[93m"
+    read -r -n 1 -p "Choice: 1 2 3 4 5: " choice
     # Preveri, ali je izbira veljavna
     case $choice in
-        1|2|3|4)
+        1|2|3|4|5)
             break  # Izberite veljavno številko in izstopite iz zanke
             ;;
         *)
-            echo "enter: 1 2 3 4" ;;
+            echo "enter: 1 2 3 4 5" ;;
     esac
 done
 # izvede izbiro
