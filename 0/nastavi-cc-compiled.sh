@@ -159,7 +159,7 @@ num_cpus="${#cpus[@]}"
 for ((i = 0; i < num_cpus; i++)); do
     CORE="${cpus[i]}"
     eval "CPU$((i))=\"${cpus[i]}\""
-    echo -e "\e[0;92mCORE: CPU$i       : \"$CORE\"\e[0m"
+    echo -e "CORE:          \e[0;93mCPU$i  \e[0m: \e[0;93m$CORE\e[0m"
 done
 
 echo -e "Android release      : \e[0;92m$ANDROID\e[0m"
@@ -248,7 +248,7 @@ wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-vipor.json
 for file in ~/*.json; do
     if [ -f "$file" ]; then
         sed -i -e "s/DELAVEC/$delavec/g" -e "s/i81/RMH/g" -e "s/K14g/s4wc/g" "$file"
-        echo "zamenjan DELAVEC v : $file"
+#        echo "zamenjan DELAVEC v : $file"
         mv -f "$file" ~/
     fi
 done
@@ -274,22 +274,22 @@ done
 # izvede izbiro
 case $choice in
     1)
-        echo "-> MRR"
+        echo "  -> MRR"
         cp ~/config-mrr.json ~/config.json 
         ;;
     2)
-        echo "-> pool.verus.io"
+        echo "  -> pool.verus.io"
         cp ~/config-verus.json ~/config.json 
         ;;
     3)
-        echo "-> eu.luckpool.net"
+        echo "  -> eu.luckpool.net"
         cp ~/config-luck.json ~/config.json 
         ;;
     4)
-        echo "-> de.vipor.net"
+        echo "  -> de.vipor.net"
         cp ~/config-vipor.json ~/config.json 
         ;;
 esac
-echo "don't forget: source ~/.bashrc"
+echo -e "\ndon't forget: source ~/.bashrc"
 
 echo -e "\n\e[93m THE END\e[0m\n"
