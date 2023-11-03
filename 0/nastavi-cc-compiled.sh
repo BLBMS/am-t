@@ -92,18 +92,18 @@ ifconfig_out=$(ifconfig)
 ip_line=$(echo "$ifconfig_out" | grep 'inet 192')
 phone_ip=$(echo "$ip_line" | cut -d'.' -f4 | cut -c1-3)
 #echo "IP=" $phone_ip
-echo -e "\n\e[93m Setting worker \e[0m\n"
+echo -e "\n\e[93m Setting worker \e[0m"
 cd ~/
 if ls ~/*.ww >/dev/null 2>&1; then
     for datoteka in ~/*.ww; do
         if [ -e "$datoteka" ]; then
             ime_iz_datoteke=$(basename "$datoteka")
             delavec=${ime_iz_datoteke%.ww}
-            echo -e "\e[92m  Worker from .ww file: $delavec\e[0m"
+            echo -e "\n\e[92m  Worker from .ww file: $delavec\e[0m"
         fi
     done
 else
-    echo -e "\e[91m No .ww files in directory\e[0m"
+    echo -e "\n\e[91m No .ww files in directory\e[0m"
     printf "\n\e[93m Worker name: \e[0m"
     read delavec
     echo $delavec > ~/$delavec.ww
@@ -111,7 +111,7 @@ fi
     echo -e "\n\e[92m-> Worker's name is: $delavec\e[0m"
 echo -e "\ndone"
 # auto boot
-echo -e "\n\e[93m Setting auto boot\e[0m\n"
+echo -e "\n\e[93m Setting auto boot\e[0m"
 rm -rf ~/.termux/boot
 mkdir -p ~/.termux/boot
 # nastavi ~/.termux/boot/start.sh
@@ -145,15 +145,25 @@ then
   screen -wipe 1>/dev/null 2>&1
 fi
 
-echo -e "\n\e[93m Phone info: \e[0m\n"
-echo -e "\nproduct.manufacturer : \e[0;92m$(getprop ro.product.manufacturer)\e[0m"
+MODEL=$(getprop ro.product.model)
+ANDROID=$(getprop ro.build.version.release)
+echo -e "\n\e[93m Phone info: \e[0m"
+echo -e "product.manufacturer : \e[0;92m$(getprop ro.product.manufacturer)\e[0m"
 echo -e "product.model        : \e[0;92m$(getprop ro.product.model)\e[0m"
 echo -e "product.cpu.abilist64: \e[0;92m$(getprop ro.product.cpu.abilist64)\e[0m"
 echo -e "arm64.variant        : \e[0;92m$(getprop dalvik.vm.isa.arm64.variant)\e[0m"
 
-MODEL=$(getprop ro.product.model)
-ANDROID=$(getprop ro.build.version.release)
-echo -e "\e[0;95m Android release: $ANDROID\e[0m"
+output=$(lscpu | grep "Model name:" | awk -F ': ' '{print $2}' | tr -d ' ' | tr '[:upper:]' '[:lower:]')
+IFS=$'\n' read -rd '' -a cpus <<< "$output"
+num_cpus="${#cpus[@]}"
+for ((i = 0; i < num_cpus; i++)); do
+    CORE="${cpus[i]}"
+    eval "CPU$((i))=\"${cpus[i]}\""
+    echo -e "\e[0;92mCORE: CPU$i       : \"$CORE\"\e[0m"
+done
+
+echo -e "Android release      : \e[0;92m$ANDROID\e[0m"
+
 echo -e "\e[0;93m"
 cd ~/ccminer/
 
@@ -230,6 +240,7 @@ EOF
 cd ~/
 
 # kopira in zamenja delavca v vseh json
+rm -f *.json
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-luck.json
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-mrr.json
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-verus.json
@@ -260,10 +271,6 @@ while true; do
             echo "enter: 1 2 3 4" ;;
     esac
 done
-# briše obst. če obstaja
-if [ -e "~/config.json" ]; then
-    rm -f ~/config.json
-fi
 # izvede izbiro
 case $choice in
     1)
