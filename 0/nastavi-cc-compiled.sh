@@ -223,15 +223,18 @@ alias ss='~/start.sh'
 alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit && screen -ls'
 alias sl='screen -ls | grep --color=always "CCminer"'
 alias rr='screen -x CCminer'
+alias hh='echo "ss = start ccminer" && echo "xx = kill screen" && echo "sl = list screen" && echo "rr = show screen" && echo "hh = this help" && echo "exit: CTRL-a + d"'
 alias SS='ss'
 alias XX='xx'
 alias SL='sl'
 alias RR='rr'
+alias HH='hh'
 echo "__________________"
 echo "ss = start ccminer"
 echo "xx = kill screen"
 echo "sl = list screen"
 echo "rr = show screen"
+echo "hh = this help"
 echo "exit: CTRL-a + d"
 echo "__________________"
 screen -ls | grep --color=always "CCminer"
