@@ -32,14 +32,13 @@ passwd $my_name
 ifconfig_out=$(ifconfig)
 ip_line=$(echo "$ifconfig_out" | grep 'inet 192')
 phone_ip=$(echo "$ip_line" | cut -d'.' -f4 | cut -c1-3)
-echo "IP=" $phone_ip
+echo -e "\nIP= \e[92M$phone_ip"
 #rm -f ~/*.ip
 #cat << EOF > ~/$phone_ip.ip
 #EOF
 #echo $$phone_ip >> ~/$phone_ip.ip
 echo $phone_ip > ~/$phone_ip.ip
 # Nastavi SSH
-echo "■■■■ update to blb ssh ■■■■"
 echo -e "\n\e[93m CHECK IP !!\e[0m\n"
 ssh $my_name@192.168.100.$phone_ip -p 8022
 echo -e " done SSH \n"
