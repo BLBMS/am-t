@@ -48,7 +48,8 @@ else
     source ~/nastavi-cc-ssh.sh
     # exit 0
 fi
-echo -e "\ndone"
+#echo -e "\ndone"
+printf " -> done"
 # premik Ubuntu
 cd ~/
 if [ -d ~/ubuntu-fs ]; then
@@ -114,7 +115,8 @@ else
     echo $delavec > ~/$delavec.ww
 fi
     echo -e "\n\e[92m-> Worker's name is: $delavec\e[0m"
-echo -e "\ndone"
+#echo -e "\ndone"
+printf " -> done"
 # auto boot
 echo -e "\n\e[93m Setting auto boot\e[0m"
 rm -rf ~/.termux/boot
@@ -135,7 +137,8 @@ chmod +x ~/.termux/boot/start.sh
 # Auto boot ubuntu  (nano ~/.termux/termux.properties) __Zbriši # pred: # allow-external-apps = true
 sed -i 's/^# allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
 sed -i 's/^#allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
-echo -e "\ndone"
+#echo -e "\ndone"
+printf " -> done"
 # ____ novo - ccminer v termux ____
 echo -e "\n\e[93m CCminer v TERMUX \e[0m"
 cd ~/
@@ -200,7 +203,8 @@ case $MODEL in
 esac
 mv ccminer*.compiled ccminer
 chmod +x ccminer
-echo -e "\ndone"
+#echo -e "\ndone"
+printf " -> done"
 echo -e "\n\e[93m Set CCminer \e[0m"
 cd ~/
 # briše MOJE v ~    /.bashrc, vse do konca
@@ -284,7 +288,9 @@ case $choice in
         cp ~/config-vipor.json ~/config.json 
         ;;
 esac
-echo -e "\ndone"
-echo -e "\n\e[0m don't forget:   \e[92msource ~/.bashrc"
+echo -e "\e[0m"
+#echo -e "\ndone"
+printf " -> done"
+echo -e "\n\e[0m don't forget:   \e[92msource ~/.bashrc\e[0m"
 source ~/.bashrc
 echo -e "\n\e[93m THE END\e[0m\n"
