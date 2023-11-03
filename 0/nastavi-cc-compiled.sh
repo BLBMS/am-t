@@ -25,7 +25,7 @@ if [ -f "$ah_file" ]; then
         echo -e "\n\e[92m SSH is correct\e[0m"
     else
         echo -e "\n\e[91m SSH is not correct\e[0m"
-        echo "After install start program again"
+        echo " After install start program again"
         cd
         rm -f ~/nastavi-cc-ssh.sh
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
@@ -35,7 +35,7 @@ if [ -f "$ah_file" ]; then
     fi
 else
     echo -e "\n\e[91m SSH is missing\e[0m"
-    echo "After install start program again"
+    echo " After install start program again"
     cd
     rm -f ~/nastavi-cc-ssh.sh
     wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
@@ -143,7 +143,7 @@ fi
 
 MODEL=$(getprop ro.product.model)
 ANDROID=$(getprop ro.build.version.release)
-echo -e "\n\e[93m Phone info: \e[0m"
+echo -e "\n\n\e[93m Phone info: \e[0m"
 echo -e "product.manufacturer : \e[0;92m$(getprop ro.product.manufacturer)\e[0m"
 echo -e "product.model        : \e[0;92m$(getprop ro.product.model)\e[0m"
 echo -e "product.cpu.abilist64: \e[0;92m$(getprop ro.product.cpu.abilist64)\e[0m"
@@ -205,9 +205,7 @@ case $MODEL in
         ;;
 esac
 chmod +x ccminer
-echo -e "\e[0m"
-
-echo -e "\n\e[93m set CCminer \e[0m\n"
+echo -e "\e[93m set CCminer \e[0m"
 cd ~/
 # briše MOJE v ~/.bashrc, vse do konca
 sed -i '/### ______  MOJE _/,$d' ~/.bashrc
@@ -248,6 +246,7 @@ for file in ~/*.json; do
         sed -i -e "s/DELAVEC/$delavec/g" -e "s/i81/RMH/g" -e "s/K14g/s4wc/g" "$file"
     fi
 done
+rm -f start.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/start.sh
 chmod +x ~/start.sh
 sed -i 's#~/ccminer/ccminer#~/ccminer#' ~/start.sh
@@ -257,7 +256,7 @@ while true; do
     echo "1     MRR"
     echo "2     pool.verus.io"
     echo "3     eu.luckpool.net"
-    echo "4     de.vipor.net"
+    echo "4     de.vipor.net\e[93m"
     read -r -n 1 -p "Choice: 1 2 3 4: " choice
     # Preveri, ali je izbira veljavna
     case $choice in
@@ -269,6 +268,7 @@ while true; do
     esac
 done
 # izvede izbiro
+echo -e "\e[92m"
 case $choice in
     1)
         echo "  -> MRR"
@@ -287,6 +287,6 @@ case $choice in
         cp ~/config-vipor.json ~/config.json 
         ;;
 esac
-echo -e "\ndon't forget: source ~/.bashrc"
+echo -e "\necho -e "\e[0m"don't forget: \e[95msource ~/.bashrc"
 
 echo -e "\n\e[93m THE END\e[0m\n"
