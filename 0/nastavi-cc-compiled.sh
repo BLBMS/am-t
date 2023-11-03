@@ -137,34 +137,29 @@ sed -i 's/^# allow-external-apps = true*/allow-external-apps = true/' ~/.termux/
 sed -i 's/^#allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
 echo -e "\ndone"
 # ____ novo - ccminer v termux ____
-echo -e "\n\e[93m CCminer v TERMUX \e[0m\n"
+echo -e "\n    \e[93m CCminer v TERMUX \e[0m"
 cd ~/
-
 if screen -ls | grep -i ccminer; then
   printf "\n\e[91m CCminer is running -> STOP! \e[0m"
   screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit
   screen -wipe 1>/dev/null 2>&1
 fi
-
 MODEL=$(getprop ro.product.model)
 ANDROID=$(getprop ro.build.version.release)
 echo -e "\n\n\e[93m Phone info: \e[0m\n"
-echo -e "product.manufacturer : \e[0;92m$(getprop ro.product.manufacturer)\e[0m"
-echo -e "product.model        : \e[0;92m$(getprop ro.product.model)\e[0m"
-echo -e "product.cpu.abilist64: \e[0;92m$(getprop ro.product.cpu.abilist64)\e[0m"
-echo -e "arm64.variant        : \e[0;92m$(getprop dalvik.vm.isa.arm64.variant)\e[0m"
-
+echo -e "product.manufacturer : \e[0;93m$(getprop ro.product.manufacturer)\e[0m"
+echo -e "product.model        : \e[0;93m$(getprop ro.product.model)\e[0m"
+echo -e "product.cpu.abilist64: \e[0;93m$(getprop ro.product.cpu.abilist64)\e[0m"
+echo -e "arm64.variant        : \e[0;93m$(getprop dalvik.vm.isa.arm64.variant)\e[0m"
 output=$(lscpu | grep "Model name:" | awk -F ': ' '{print $2}' | tr -d ' ' | tr '[:upper:]' '[:lower:]')
 IFS=$'\n' read -rd '' -a cpus <<< "$output"
 num_cpus="${#cpus[@]}"
 for ((i = 0; i < num_cpus; i++)); do
     CORE="${cpus[i]}"
     eval "CPU$((i))=\"${cpus[i]}\""
-    echo -e "CORE:          \e[0;93mCPU$i  \e[0m: \e[0;93m$CORE\e[0m"
+    echo -e "CORE:          \e[0;93mCPU$i  \e[0m: \e[0;92m$CORE\e[0m"
 done
-
-echo -e "Android release      : \e[0;92m$ANDROID\e[0m"
-
+echo -e "Android release      : \e[0;93m$ANDROID\e[0m"
 cd ~/
 echo -e "\e[0;92m"
 rm -f ccminer*.compiled
