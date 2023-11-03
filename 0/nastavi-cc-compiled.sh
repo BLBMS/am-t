@@ -138,8 +138,7 @@ if ! [ -d ~/ccminer ]; then
     mkdir ~/ccminer/
 fi
 
-if screen -ls | grep -i ccminer;
-then
+if screen -ls | grep -i ccminer; then
   printf "\n\e[91m CCminer is running -> STOP! \e[0m"
   screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit
   screen -wipe 1>/dev/null 2>&1
@@ -248,8 +247,6 @@ wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-vipor.json
 for file in ~/*.json; do
     if [ -f "$file" ]; then
         sed -i -e "s/DELAVEC/$delavec/g" -e "s/i81/RMH/g" -e "s/K14g/s4wc/g" "$file"
-#        echo "zamenjan DELAVEC v : $file"
-        mv -f "$file" ~/
     fi
 done
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/start.sh
