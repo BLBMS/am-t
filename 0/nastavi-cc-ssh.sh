@@ -40,6 +40,6 @@ echo "IP=" $phone_ip
 echo $phone_ip > ~/$phone_ip.ip
 # Nastavi SSH
 echo "■■■■ update to blb ssh ■■■■"
-echo -e "\n\e[93mpreveri IP !!\e[0m\n"
+echo -e "\n\e[93m CHECK IP !!\e[0m\n"
 ssh $my_name@192.168.100.$phone_ip -p 8022
-echo "■■■■ done SSH ■■■■"
+echo -e " done SSH \n"
