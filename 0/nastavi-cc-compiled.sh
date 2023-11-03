@@ -30,7 +30,7 @@ if [ -f "$ah_file" ]; then
         echo -e "\n\e[92m SSH is correct\e[0m"
     else
         echo -e "\n\e[91m SSH is not correct"
-        echo -e "\n\e[92m After install start program again\e[0m"
+        echo -e "\e[92m After install start program again\e[0m\n"
         cd
         rm -f ~/nastavi-cc-ssh.sh
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
@@ -40,7 +40,7 @@ if [ -f "$ah_file" ]; then
     fi
 else
     echo -e "\n\e[91m SSH is missing"
-    echo -e "\n\e[92m After install start program again\e[0m"
+    echo -e "\e[92m After install start program again\e[93m\n"
     cd
     rm -f ~/nastavi-cc-ssh.sh
     wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
