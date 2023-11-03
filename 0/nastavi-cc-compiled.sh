@@ -62,7 +62,7 @@ if [ -d ~/ubuntu-fs ]; then
         fi
         for sh_dat in ~/*.sh; do
             pth="/data/data/com.termux/files/home/"
-            if [ "$sh_dat" != "$pth""nastavi-cc-termux.sh" ] && [ "$sh_dat" != "$pth""nastavi-cc-ssh.sh" ]; then
+            if [ "$sh_dat" != "$pth""nastavi-cc-compiled.sh" ] && [ "$sh_dat" != "$pth""nastavi-cc-compiled.sh" ]; then
                 mv -f "$sh_dat" ~/UBUNTU/
                 printf "■"
             fi
