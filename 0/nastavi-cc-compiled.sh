@@ -17,6 +17,11 @@ fi
 echo -e "\ndone"
 
 # preveri če je že nastavljen pravi ssh
+if ! [ -f ~/nastavi-cc-ssh.sh ]; then
+    wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
+    chmod +x nastavi-cc-ssh.sh
+fi
+
 ah_file="$HOME/.ssh/authorized_keys"
 comp_str="blb@blb"
 if [ -f "$ah_file" ]; then
@@ -162,48 +167,43 @@ echo -e "Android release      : \e[0;92m$ANDROID\e[0m"
 
 cd ~/
 echo -e "\e[0;93m"
+rm -f ccminer*.compiled
 case $MODEL in
     "SM-G950F")
         echo " $MODEL Samsung Galaxy S8"
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS8.compiled
-        mv ccminerS8.compiled ccminer
         ;;
     "SM-G955F")
         echo "$MODEL Samsung Galaxy S8+"
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS8.compiled
-        mv ccminerS8.compiled ccminer
         ;;
     "SM-G960F")
         echo "$MODEL Samsung Galaxy S9"
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS9.compiled
-        mv ccminerS9.compiled ccminer
         ;;
     "SM-G965F")
         echo "$MODEL Samsung Galaxy S9+"
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS9.compiled
-        mv ccminerS9.compiled ccminer
         ;;
     "SM-G973F")
         echo "$MODEL Samsung Galaxy S10"
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS10.compiled
-        mv ccminerS10.compiled ccminer
         ;;
     "SM-G970F")
         echo "$MODEL Samsung Galaxy S10e"
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS10.compiled
-        mv ccminerS10.compiled ccminer
         ;;
-        "SM-G975F")
+    "SM-G975F")
         echo "$MODEL Samsung Galaxy S10+"
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS10.compiled
-        mv ccminerS10.compiled ccminer
         ;;
+    # ADD NEW MODEL
     *)
         echo "Unknown model: $MODEL"
         exit 0
-        #       ADD NEW MODEL
         ;;
 esac
+mv ccminer*.compiled ccminer
 chmod +x ccminer
 echo -e "\e[93m set CCminer \e[0m"
 cd ~/
