@@ -269,16 +269,16 @@ case $MODEL in
         COREM="-mtune=cortex-a55.exynos-m3"
 #        COREM="-mtune=exynos-m3 -mtune=cortex-a55"
 #        COREM="-mtune=cortex-a55 -mtune=exynos-m3"
-        ARCHM="armv8.2"  # s tem ne dela
-#        ARCHM="armv8"
+#        ARCHM="armv8.2"  # s tem ne dela
+        ARCHM="armv8"
         ;;
     "SM-G965F")
         echo "$MODEL Samsung Galaxy S9+"
         COREM="-mtune=cortex-a55.exynos-m3"
 #        COREM="-mtune=exynos-m3 -mtune=cortex-a55"
 #        COREM="-mtune=cortex-a55 -mtune=exynos-m3"
-        ARCHM="armv8.2"  # s tem ne dela
-#        ARCHM="armv8"
+#        ARCHM="armv8.2"  # s tem ne dela
+        ARCHM="armv8"
         ;;
     "SM-G973F")
         echo "$MODEL Samsung Galaxy S10"
