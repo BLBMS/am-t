@@ -25,6 +25,16 @@ __na "Stop optimizing battery ... "  -> Alow
 __potregni dol ekran in vklopi: "Acquire Wakelock"  ->  (wake lock held) ?
 
 ______________________________ 
+SDCARD
+settings -app ... storage allow
+
+termux-setup-storage    # ponavljaj do y/n
+
+mkdir storage/downloads/ccA40
+cp ccminerA40.compiled ~/storage/downloads/ccA40
+cd storage/downloads/ccA40
+
+______________________________ 
 cd ~/ && rm -f ~/nastavi-cc-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh && chmod +x nastavi-cc-ssh.sh && ~/nastavi-cc-ssh.sh
 cd ~/ && rm -f nastavi-cc-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-termux.sh && chmod +x nastavi-cc-termux.sh && ./nastavi-cc-termux.sh
 ____________
