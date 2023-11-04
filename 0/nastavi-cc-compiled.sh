@@ -4,8 +4,15 @@
 
 # usage: ./nastavi-cc-compiled -u -m -p5 -wName
 #    -u     - update / upgrade
+#    -d     - don't update / upgrade
 #    -m     - move ubuntu
-#    -p#    - which pool - see down
+#    -l     - leave ubuntu
+#    -p#    - which pool:
+#                1     MRR
+#                2     pool.verus.io
+#                3     eu.luckpool.net
+#                4     de.vipor.net
+#                5     eu.coudiko.io
 #    -wName - worker name (if not set in name.ww)
 #    -h     - help
 
@@ -20,8 +27,14 @@ if [ "$#" -ne 0 ]; then
             -u)
                 choice_update=1
                 ;;
+            -d)
+                choice_update=2
+                ;;
             -m)
                 choice_move=1
+                ;;
+            -l)
+                choice_update=2
                 ;;
             -p*)
                 choice_pool="${1#-p}"
@@ -32,8 +45,15 @@ if [ "$#" -ne 0 ]; then
             -h)
                 echo "usage: ./nastavi-cc-compiled -u -m -p5 -wName"
                 echo "    -u     - update / upgrade"
+                echo "    -d     - don't update / upgrade"
                 echo "    -m     - move ubuntu"
-                echo "    -p#    - which pool - see down"
+                echo "    -l     - leave ubuntu"
+                echo "    -p#    - which pool:"
+                echo "                1     MRR"
+                echo "                2     pool.verus.io"
+                echo "                3     eu.luckpool.net"
+                echo "                4     de.vipor.net"
+                echo "                5     eu.coudiko.io"
                 echo "    -wName - worker name (if not set in name.ww)"
                 echo "    -h     - help"
                 exit 0
@@ -52,57 +72,14 @@ echo "choice_move=$choice_move"
 echo "choice_pool=$choice_pool"
 echo "choice_worker=$choice_worker"
 
-exit
-
-    for atr in $#; do
-        atr2="${atr:0:2}"
-        if [ "$atr2" = "-u" ]; then
-            choice_update=1
-        fi
-        if [ "$atr2" = "-m" ]; then
-            choice_move=1
-        fi
-        if [ "$atr2" = "-p" ]; then
-            choice_pool="${atr:2}"
-        fi
-        if [ "$atr2" = "-w" ]; then
-            choice_worker="${atr:2}"
-        fi
-        if [ "$atr2" = "-h" ]; then
-            echo "usage: ./nastavi-cc-compiled -u -m -p5 -wName"
-            echo "    -u     - update / upgrade"
-            echo "    -m     - move ubuntu"
-            echo "    -p#    - which pool - see down"
-            echo "    -wName - worker name (if not set in name.ww)"
-            echo "    -h     - help"
-            exit 0
-        fi
-
-
-if [ $# -eq 1 ]; then
-    choice_update=$1
-fi
-if [ $# -eq 2 ]; then
-    choice_move=$2
-fi
-if [ $# -eq 3 ]; then
-    choice_pool=$3
-fi
-
-echo "choice_update=$1"
-echo "choice_move=$2"
-echo "choice_pool=$3"
-
 choice_update_update=0
-if [ "$choice_update" = "y" ] || [ "$choice_update" = "Y" ] ; then
+if [ "$choice_update" = "1" ]; then
     choice_update_update=1
 else
-    if [ -d ~/ubuntu-fs ]; then
-        echo -e "\n\e[93m Move Ubuntu? (y - yes)\e[0m" # -----------------------------------------------
-        read -n 1 yn
-        if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
-            choice_update_move=1
-        fi
+    echo -e "\n\e[93m Update & Upgrade (y -yes)\e[0m" # -----------------------------------------------
+    read -n 1 yn
+    if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
+        choice_update_update=1
     fi
 fi
 
