@@ -34,7 +34,7 @@ if [ "$#" -ne 0 ]; then
                 choice_move=1
                 ;;
             -l)
-                choice_update=2
+                choice_move=2
                 ;;
             -p*)
                 choice_pool="${1#-p}"
@@ -77,7 +77,7 @@ choice_update_update=0
 if [ "$choice_update" = "1" ]; then
     choice_update_update=1
 else
-    if [ "$choice_update" != "2" ]; then
+    if ! [ "$choice_update" = "2" ]; then
         echo -e "\n\e[93m Update & Upgrade (y -yes)\e[0m" # -----------------------------------------------
         read -n 1 yn
         if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
@@ -138,7 +138,7 @@ choice_move_move=0
 if [ "$choice_move" = "1" ]; then
     choice_move_move=1
 else
-    if [ "$choice_move" != "2" ]; then
+    if ! [ "$choice_move" = "2" ]; then
         echo -e "\n\e[93m Move Ubuntu? (y - yes)\e[0m" # -----------------------------------------------
         read -n 1 yn
         if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
