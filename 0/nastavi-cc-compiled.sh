@@ -275,7 +275,11 @@ case $MODEL in
         echo "$MODEL Samsung Galaxy S10+"
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS10.compiled
         ;;
-    # ADD NEW MODEL
+    "SM-A405FN")
+        echo "$MODEL Samsung Galaxy A40"
+        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerA40.compiled
+        ;;
+# ADD NEW MODEL
     *)
         echo "----------------------------------------------------------"
         echo -e "\e[91m  Unknown model: $MODEL"
