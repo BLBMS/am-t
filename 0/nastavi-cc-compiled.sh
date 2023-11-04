@@ -13,7 +13,7 @@
 #                3     eu.luckpool.net
 #                4     de.vipor.net
 #                5     eu.coudiko.io
-#    -wName - worker name (if not set in name.ww)
+#    -wName - worker name (overwrite file name.ww)
 #    -h     - help
 
 choice_update=0
@@ -54,7 +54,7 @@ if [ "$#" -ne 0 ]; then
                 echo "                3     eu.luckpool.net"
                 echo "                4     de.vipor.net"
                 echo "                5     eu.coudiko.io"
-                echo "    -wName - worker name (if not set in name.ww)"
+                echo "    -wName - worker name (overwrite file name.ww)"
                 echo "    -h     - help"
                 exit 0
                 ;;
@@ -72,30 +72,30 @@ echo "choice_move=$choice_move"
 echo "choice_pool=$choice_pool"
 echo "choice_worker=$choice_worker"
 
+# preveri za posodobitev sistema
 choice_update_update=0
 if [ "$choice_update" = "1" ]; then
     choice_update_update=1
 else
-    echo -e "\n\e[93m Update & Upgrade (y -yes)\e[0m" # -----------------------------------------------
-    read -n 1 yn
-    if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
-        choice_update_update=1
+    if [ "$choice_update" != "2" ]; then
+        echo -e "\n\e[93m Update & Upgrade (y -yes)\e[0m" # -----------------------------------------------
+        read -n 1 yn
+        if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
+            choice_update_update=1
+        fi
     fi
 fi
 
-# preveri za posodobitev sistema
-if ! command -v screen &> /dev/null; then
+#if ! command -v screen &> /dev/null; then
+#    pkg update -y && pkg upgrade -y
+#    pkg install -y wget net-tools nano screen
+#else
+
+if [ "$choice_update_update" = "1" ]; then
     pkg update -y && pkg upgrade -y
     pkg install -y wget net-tools nano screen
-else
-    echo -e "\n\e[93m Update & Upgrade (y -yes)\e[0m" # -----------------------------------------------
-    read -s -N 1 yn
-    if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
-        pkg update -y && pkg upgrade -y
-        pkg install -y wget net-tools nano screen
-    fi
+    echo "done"
 fi
-echo "done"
 
 # preveri če je že nastavljen pravi ssh
 if ! [ -f ~/nastavi-cc-ssh.sh ]; then
@@ -130,14 +130,15 @@ else
     # exit 0
 fi
 echo "done"
+
 # premik Ubuntu
 cd ~/
 
 choice_move_move=0
-if [ "$choice_move" = "y" ] || [ "$choice_move" = "Y" ] ; then
+if [ "$choice_move" = "1" ]; then
     choice_move_move=1
 else
-    if [ -d ~/ubuntu-fs ]; then
+    if [ "$choice_move" != "2" ]; then
         echo -e "\n\e[93m Move Ubuntu? (y - yes)\e[0m" # -----------------------------------------------
         read -n 1 yn
         if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
@@ -191,21 +192,27 @@ phone_ip=$(echo "$ip_line" | cut -d'.' -f4 | cut -c1-3)
 echo "done"
 echo -e "\n\e[93m Setting worker \e[0m" # -----------------------------------------------
 cd ~/
-if ls ~/*.ww >/dev/null 2>&1; then
-    for datoteka in ~/*.ww; do
-        if [ -e "$datoteka" ]; then
-            ime_iz_datoteke=$(basename "$datoteka")
-            delavec=${ime_iz_datoteke%.ww}
-            echo -e "\n\e[92m  Worker from .ww file: $delavec\e[0m"
-        fi
-    done
-else
-    echo -e "\n\e[91m No .ww files in directory\e[0m"
-    printf "\n\e[93m Worker name: \e[0m"
-    read delavec
+if [ "$choice_worker" != "0" ]; then
+    delavec="$choice_worker"
+    rm -f *.ww
     echo $delavec > ~/$delavec.ww
+else
+    if ls ~/*.ww >/dev/null 2>&1; then
+        for datoteka in ~/*.ww; do
+            if [ -e "$datoteka" ]; then
+                ime_iz_datoteke=$(basename "$datoteka")
+                delavec=${ime_iz_datoteke%.ww}
+                echo -e "\n\e[92m  Worker from .ww file: $delavec\e[0m"
+            fi
+        done
+    else
+        echo -e "\n\e[91m No .ww files in directory\e[0m"
+        printf "\n\e[93m Worker name: \e[0m"
+        read delavec
+        echo $delavec > ~/$delavec.ww
+    fi
 fi
-    echo -e "\n\e[92m-> Worker's name is: $delavec\e[0m"
+echo -e "\n\e[92m-> Worker's name is: $delavec\e[0m"
 echo "done"
 # auto boot
 echo -e "\n\e[93m Setting auto boot\e[0m" # -----------------------------------------------
@@ -345,15 +352,20 @@ while true; do
     echo "3     eu.luckpool.net"
     echo "4     de.vipor.net"
     echo "5     eu.coudiko.io\e[93m"
-    read -r -n 1 -p "Choice: 1 2 3 4 5: " choice
-    # Preveri, ali je izbira veljavna
-    case $choice in
-        1|2|3|4|5)
-            break  # Izberite veljavno številko in izstopite iz zanke
-            ;;
-        *)
-            echo "enter: 1 2 3 4 5" ;;
-    esac
+    
+    if [ "$choice_pool" != "0" ]; then
+        choice="$choice_pool"
+    else
+        read -r -n 1 -p "Choice: 1 2 3 4 5: " choice
+        # Preveri, ali je izbira veljavna
+        case $choice in
+            1|2|3|4|5)
+                break  # Izberite veljavno številko in izstopite iz zanke
+                ;;
+            *)
+                echo "enter: 1 2 3 4 5" ;;
+        esac
+    fi
 done
 # izvede izbiro
 echo -e "\e[92m"
@@ -373,6 +385,10 @@ case $choice in
     4)
         echo "  -> de.vipor.net"
         cp ~/config-vipor.json ~/config.json 
+        ;;
+    5)
+        echo "  -> eu.cloudiko.io"
+        cp ~/config-cloudiko.json ~/config.json 
         ;;
 esac
 echo -e "\e[0m"
