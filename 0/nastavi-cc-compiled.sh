@@ -24,40 +24,27 @@ choice_worker=0
 if [ "$#" -ne 0 ]; then
     while [ "$#" -gt 0 ]; do
         case "$1" in
-            -u)
-                choice_update=1
-                ;;
-            -d)
-                choice_update=2
-                ;;
-            -m)
-                choice_move=1
-                ;;
-            -l)
-                choice_move=2
-                ;;
-            -p*)
-                choice_pool="${1#-p}"
-                ;;
-            -w*)
-                choice_worker="${1#-w}"
-                ;;
-            -h)
-                echo "usage: ./nastavi-cc-compiled -u -m -p5 -wName"
-                echo "    -u     - update / upgrade"
-                echo "    -d     - don't update / upgrade"
-                echo "    -m     - move ubuntu"
-                echo "    -l     - leave ubuntu"
-                echo "    -p#    - which pool:"
-                echo "                1     MRR"
-                echo "                2     pool.verus.io"
-                echo "                3     eu.luckpool.net"
-                echo "                4     de.vipor.net"
-                echo "                5     eu.coudiko.io"
-                echo "    -wName - worker name (overwrite file name.ww)"
-                echo "    -h     - help"
-                exit 0
-                ;;
+            -u)     choice_update=1 ;;
+            -d)     choice_update=2 ;;
+            -m)     choice_move=1 ;;
+            -l)     choice_move=2 ;;
+            -p*)    choice_pool="${1#-p}" ;;
+            -w*)    choice_worker="${1#-w}" ;;
+            -h)     echo "usage: ./nastavi-cc-compiled -u -m -p5 -wName"
+                    echo "    -u     - update / upgrade"
+                    echo "    -d     - don't update / upgrade"
+                    echo "    -m     - move ubuntu"
+                    echo "    -l     - leave ubuntu"
+                    echo "    -p#    - which pool:"
+                    echo "                1     MRR"
+                    echo "                2     pool.verus.io"
+                    echo "                3     eu.luckpool.net"
+                    echo "                4     de.vipor.net"
+                    echo "                5     eu.coudiko.io"
+                    echo "    -wName - worker name (overwrite file name.ww)"
+                    echo "    -h     - help"
+                    exit 0
+                    ;;
             *)
                 echo "Unknown parameter: $1"
                 exit 0
@@ -66,11 +53,10 @@ if [ "$#" -ne 0 ]; then
         shift
     done
 fi
-
-echo "choice_update=$choice_update"
-echo "choice_move=$choice_move"
-echo "choice_pool=$choice_pool"
-echo "choice_worker=$choice_worker"
+#echo "choice_update=$choice_update"
+#echo "choice_move=$choice_move"
+#echo "choice_pool=$choice_pool"
+#echo "choice_worker=$choice_worker"
 
 # preveri za posodobitev sistema
 choice_update_update=0
