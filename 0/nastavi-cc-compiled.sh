@@ -14,44 +14,43 @@ choice_move=0
 choice_pool=0
 choice_worker=0
 
-
-if ! [ "$#" -eq 0 ]; then
-    atr2="${#:0:2}"
-    case $atr2 in
-        "-u")
-            choice_update=1
-            ;;
-        "-m")
-            choice_move=1
-            ;;
-        "-p")
-            choice_pool="${#:2}"
-            ;;
-        "-w")
-            choice_worker="${#:2}"
-            ;;
-        "-h")
-            echo "usage: ./nastavi-cc-compiled -u -m -p5 -wName"
-            echo "    -u     - update / upgrade"
-            echo "    -m     - move ubuntu"
-            echo "    -p#    - which pool - see down"
-            echo "    -wName - worker name (if not set in name.ww)"
-            echo "    -h     - help"
-            exit 0
-            ;;
-        *)
-            echo "Unknown parameter: $#"
-            exit 0
-            ;;
-    esac
+if [ "$#" -ne 0 ]; then
+    while [ "$#" -gt 0 ]; do
+        case "$1" in
+            -u)
+                choice_update=1
+                ;;
+            -m)
+                choice_move=1
+                ;;
+            -p*)
+                choice_pool="${1#-p}"
+                ;;
+            -w*)
+                choice_worker="${1#-w}"
+                ;;
+            -h)
+                echo "usage: ./nastavi-cc-compiled -u -m -p5 -wName"
+                echo "    -u     - update / upgrade"
+                echo "    -m     - move ubuntu"
+                echo "    -p#    - which pool - see down"
+                echo "    -wName - worker name (if not set in name.ww)"
+                echo "    -h     - help"
+                exit 0
+                ;;
+            *)
+                echo "Unknown parameter: $1"
+                exit 0
+                ;;
+        esac
+        shift
+    done
 fi
 
-
 echo "choice_update=$choice_update"
-echo "choice_move=$choice_move2"
+echo "choice_move=$choice_move"
 echo "choice_pool=$choice_pool"
 echo "choice_worker=$choice_worker"
-
 
 exit
 
