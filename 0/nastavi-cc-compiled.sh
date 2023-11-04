@@ -291,8 +291,10 @@ case $MODEL in
         ;;
     # ADD NEW MODEL
     *)
-        echo "Unknown model: $MODEL"
-        exit 0
+        echo "----------------------------------------------------------"
+        echo -e "\e[91m  Unknown model: $MODEL"
+        echo "----------------------------------------------------------"
+        # exit 0
         ;;
 esac
 mv ccminer*.compiled ccminer
@@ -354,7 +356,7 @@ else
         echo "2     pool.verus.io"
         echo "3     eu.luckpool.net"
         echo "4     de.vipor.net"
-        echo "5     eu.coudiko.io\e[93m"
+        echo -e "5     eu.coudiko.io\e[93m"
         read -r -n 1 -p "Choice: 1 2 3 4 5: " choice
         # Preveri, ali je izbira veljavna
         case $choice in
