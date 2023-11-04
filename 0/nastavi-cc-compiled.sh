@@ -345,17 +345,16 @@ chmod +x ~/start.sh
 sed -i 's#~/ccminer/ccminer#~/ccminer#' ~/start.sh
 echo "done"
 # nastavi POOL
-while true; do
-    echo -e "\n\e[93m Which POOL \e[0m\n" # -----------------------------------------------
-    echo "1     MRR"
-    echo "2     pool.verus.io"
-    echo "3     eu.luckpool.net"
-    echo "4     de.vipor.net"
-    echo "5     eu.coudiko.io\e[93m"
-    
-    if [ "$choice_pool" != "0" ]; then
-        choice="$choice_pool"
-    else
+if [ "$choice_pool" != "0" ]; then
+    choice="$choice_pool"
+else
+    while true; do
+        echo -e "\n\e[93m Which POOL \e[0m\n" # -----------------------------------------------
+        echo "1     MRR"
+        echo "2     pool.verus.io"
+        echo "3     eu.luckpool.net"
+        echo "4     de.vipor.net"
+        echo "5     eu.coudiko.io\e[93m"
         read -r -n 1 -p "Choice: 1 2 3 4 5: " choice
         # Preveri, ali je izbira veljavna
         case $choice in
@@ -365,8 +364,8 @@ while true; do
             *)
                 echo "enter: 1 2 3 4 5" ;;
         esac
-    fi
-done
+    done
+fi
 # izvede izbiro
 echo -e "\e[92m"
 case $choice in
