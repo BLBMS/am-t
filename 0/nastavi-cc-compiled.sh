@@ -2,6 +2,111 @@
 
 #   cd ~/ && rm -f nastavi-cc-compiled.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-compiled.sh && chmod +x nastavi-cc-compiled.sh && ./nastavi-cc-compiled.sh
 
+# usage: ./nastavi-cc-compiled -u -m -p5 -wName
+#    -u     - update / upgrade
+#    -m     - move ubuntu
+#    -p#    - which pool - see down
+#    -wName - worker name (if not set in name.ww)
+#    -h     - help
+
+choice_update=0
+choice_move=0
+choice_pool=0
+choice_worker=0
+
+
+if ! [ "$#" -eq 0 ]; then
+    atr2="${#:0:2}"
+    case $atr2 in
+        "-u")
+            choice_update=1
+            ;;
+        "-m")
+            choice_move=1
+            ;;
+        "-p")
+            choice_pool="${#:2}"
+            ;;
+        "-w")
+            choice_worker="${#:2}"
+            ;;
+        "-h")
+            echo "usage: ./nastavi-cc-compiled -u -m -p5 -wName"
+            echo "    -u     - update / upgrade"
+            echo "    -m     - move ubuntu"
+            echo "    -p#    - which pool - see down"
+            echo "    -wName - worker name (if not set in name.ww)"
+            echo "    -h     - help"
+            exit 0
+            ;;
+        *)
+            echo "Unknown parameter: $#"
+            exit 0
+            ;;
+    esac
+fi
+
+
+echo "choice_update=$choice_update"
+echo "choice_move=$choice_move2"
+echo "choice_pool=$choice_pool"
+echo "choice_worker=$choice_worker"
+
+
+exit
+
+    for atr in $#; do
+        atr2="${atr:0:2}"
+        if [ "$atr2" = "-u" ]; then
+            choice_update=1
+        fi
+        if [ "$atr2" = "-m" ]; then
+            choice_move=1
+        fi
+        if [ "$atr2" = "-p" ]; then
+            choice_pool="${atr:2}"
+        fi
+        if [ "$atr2" = "-w" ]; then
+            choice_worker="${atr:2}"
+        fi
+        if [ "$atr2" = "-h" ]; then
+            echo "usage: ./nastavi-cc-compiled -u -m -p5 -wName"
+            echo "    -u     - update / upgrade"
+            echo "    -m     - move ubuntu"
+            echo "    -p#    - which pool - see down"
+            echo "    -wName - worker name (if not set in name.ww)"
+            echo "    -h     - help"
+            exit 0
+        fi
+
+
+if [ $# -eq 1 ]; then
+    choice_update=$1
+fi
+if [ $# -eq 2 ]; then
+    choice_move=$2
+fi
+if [ $# -eq 3 ]; then
+    choice_pool=$3
+fi
+
+echo "choice_update=$1"
+echo "choice_move=$2"
+echo "choice_pool=$3"
+
+choice_update_update=0
+if [ "$choice_update" = "y" ] || [ "$choice_update" = "Y" ] ; then
+    choice_update_update=1
+else
+    if [ -d ~/ubuntu-fs ]; then
+        echo -e "\n\e[93m Move Ubuntu? (y - yes)\e[0m" # -----------------------------------------------
+        read -n 1 yn
+        if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
+            choice_update_move=1
+        fi
+    fi
+fi
+
 # preveri za posodobitev sistema
 if ! command -v screen &> /dev/null; then
     pkg update -y && pkg upgrade -y
@@ -51,34 +156,45 @@ fi
 echo "done"
 # premik Ubuntu
 cd ~/
-if [ -d ~/ubuntu-fs ]; then
-    echo -e "\n\e[93m Move Ubuntu? (y - yes)\e[0m" # -----------------------------------------------
-    read -n 1 yn
-    if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
+
+choice_move_move=0
+if [ "$choice_move" = "y" ] || [ "$choice_move" = "Y" ] ; then
+    choice_move_move=1
+else
+    if [ -d ~/ubuntu-fs ]; then
+        echo -e "\n\e[93m Move Ubuntu? (y - yes)\e[0m" # -----------------------------------------------
+        read -n 1 yn
+        if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
+            choice_move_move=1
+        fi
+    fi
+fi
+
+if [ "$choice_move_move" = "1" ] ; then
+    if [ -d ~/ubuntu-fs ]; then
         echo -e "\n\e[93m moving ...\e[0m"
         if [ ! -d ~/UBUNTU ]; then
             mkdir ~/UBUNTU
         fi
         mv -f ~/ubuntu-fs ~/UBUNTU/
-        printf "■"
+        printf "■ "
         if [ -d ~/ubuntu-binds ]; then
             mv -f ~/ubuntu-binds ~/UBUNTU/
-            printf "■"
+            printf "■ "
         fi
         for sh_dat in ~/*.sh; do
             pth="/data/data/com.termux/files/home/"
             if [ "$sh_dat" != "$pth""nastavi-cc-compiled.sh" ] && [ "$sh_dat" != "$pth""nastavi-cc-compiled.sh" ]; then
                 mv -f "$sh_dat" ~/UBUNTU/
-                printf "■"
+                printf "■ "
             fi
         done
         if [ -f ~/*.list ]; then
             mv -f ~/*.list ~/UBUNTU/
-            printf "■"
+            printf "■ "
         fi
         echo -e "\n\e[93m ... done\e[0m"
     fi
-    echo -e "\n\e[93m all stay\e[0m"
 fi
 
 # premik starega compilerja
