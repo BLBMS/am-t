@@ -9,7 +9,7 @@ else
   screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit
   screen -wipe 1>/dev/null 2>&1
   screen -dmS CCminer 1>/dev/null 2>&1
-  screen -S CCminer -X stuff "~/ccminer/ccminer -c ~/config.json\n" 1>/dev/null 2>&1
+  screen -S CCminer -X stuff "~/ccminer -c ~/config.json\n" 1>/dev/null 2>&1
 fi
 echo -e "\n\e[93mss = start ccminer"
 echo "xx = kill screen"
