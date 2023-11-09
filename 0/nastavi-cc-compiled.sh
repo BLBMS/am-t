@@ -71,7 +71,10 @@ else
         fi
     fi
 fi
-
+if [ $(pkg list-installed | grep -c libjansson) -eq 0 ]; then
+    # Če ni nameščena, jo namesti
+    pkg install -y libjansson
+fi
 #if ! command -v screen &> /dev/null; then
 #    pkg update -y && pkg upgrade -y
 #    pkg install -y wget net-tools nano screen
