@@ -1,4 +1,5 @@
 #!/bin/bash
+sshd
 screen -wipe 1>/dev/null 2>&1
 if screen -ls | grep -i ccminer;
 then
