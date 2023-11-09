@@ -45,8 +45,8 @@ if [ "$#" -ne 0 ]; then
                         echo "    -h     - help"
                         exit 0 ;;
             *)
-                echo "Unknown parameter: $1"
-                exit 0 ;;
+                        echo "Unknown parameter: $1"
+                        exit 0 ;;
         esac
         shift
     done
