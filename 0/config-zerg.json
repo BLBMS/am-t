@@ -1,1 +1,18 @@
-# -a verushash -o stratum+tcp://verushash.eu.mine.zergpool.com:3300 -u <WALLET_ADDRESS> --timeout 120 -p c=VRSC,mc=VRSC,m=solo,ID=S9a
+{
+  "pools":[
+    {
+    "name": "zerg-solo",
+    "url": "stratum+tcp://verushash.eu.mine.zergpool.com:3300",
+    "timeout": 120,
+    "disabled": 0
+    }
+  ],
+  "user": "i81Y5CQBAMRhtirgwtsxv6GZT512SYK14g",
+  "pass": "c=VRSC,mc=VRSC,m=solo,ID=DELAVEC",
+  "algo": "verus",
+  "threads": 8,
+  "cpu-priority": 1,
+  "retry-pause": 5,
+  "api-allow": "192.168.100.0/23",
+  "api-bind": "0.0.0.0:4068"
+}
