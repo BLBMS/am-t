@@ -327,6 +327,7 @@ wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-luck.json
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-mrr.json
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-verus.json
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-vipor.json
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-zerg.json
 for file in ~/*.json; do
     if [ -f "$file" ]; then
         sed -i -e "s/DELAVEC/$delavec/g" -e "s/i81/RMH/g" -e "s/K14g/s4wc/g" "$file"
@@ -343,18 +344,19 @@ echo "1     MRR"
 echo "2     pool.verus.io"
 echo "3     eu.luckpool.net"
 echo "4     de.vipor.net"
-echo -e "5     eu.coudiko.io\e[93m"
+echo "5     eu.coudiko.io"
+echo -e "6     eu zergpool SOLO\e[93m"
 if [ "$choice_pool" != "0" ]; then
     choice="$choice_pool"
 else
     while true; do
-        read -r -n 1 -p "Choice: 1 2 3 4 5: " choice
+        read -r -n 1 -p "Choice: 1 2 3 4 5 6: " choice
         case $choice in
-            1|2|3|4|5)
+            1|2|3|4|5|6)
                 break  # Izberite veljavno številko in izstopite iz zanke
                 ;;
             *)
-                echo "enter: 1 2 3 4 5" ;;
+                echo "enter: 1 2 3 4 5 6" ;;
         esac
     done
 fi
@@ -380,6 +382,10 @@ case $choice in
     5)
         echo "  -> eu.cloudiko.io"
         cp ~/config-cloudiko.json ~/config.json 
+        ;;
+    6)
+        echo "  -> eu zergpool SOLO"
+        cp ~/config-zerg.json ~/config.json 
         ;;
 esac
 echo -e "\e[0m"
