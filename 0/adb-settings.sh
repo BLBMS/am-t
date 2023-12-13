@@ -1,3 +1,5 @@
+#-> wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/adb-settings.sh && chmod +x adb-settings.sh
+
 # For all android devices
 adb shell settings put global sem_enhanced_cpu_responsiveness 1 #(More responsive CPU Default=0)
 adb shell settings put global system_capabilities 100 #(Allows 100% resources usage Default=99)
