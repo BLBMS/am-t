@@ -256,7 +256,7 @@ case $MODEL in
         echo " $MODEL Samsung Galaxy Note 10+"
 #        COREM="-mtune=exynos-m4.cortex-a75.cortex-a55"
         COREM="-mtune=exynos-m4 -mtune=cortex-a75 -mtune=cortex-a55"
-        ARCHM="armv8.2"  # s tem ne dela - trbej spobati prle
+        ARCHM="armv8.2"
 #        ARCHM="armv8"
         ;;
     "SM-G950F")
@@ -299,6 +299,18 @@ case $MODEL in
         COREM="-mtune=exynos-m4 -mtune=cortex-a75 -mtune=cortex-a55"
         ARCHM="armv8.2"
         ;;
+    "SM-A530F")
+        echo "$MODEL Samsung Galaxy A8 2018"
+#        COREM="-mtune=cortex-a73.cortex-a55"
+        COREM="-mtune=cortex-a73 -mtune=cortex-a55"
+        ARCHM="armv8"
+        ;;
+     "SM-A520F")
+        echo "$MODEL Samsung Galaxy A5 2017"
+#        COREM="-mtune=cortex-a53"
+        COREM="-mtune=cortex-a53"
+        ARCHM="armv8"
+        ;;       
     *)
         echo "Unknown model: $MODEL"
         COREM="$CORE"
