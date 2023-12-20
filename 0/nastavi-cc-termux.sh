@@ -252,6 +252,12 @@ echo -e "\n\e[0;93m Checking by device model:\e[0m"
 echo -e "\e[0;95m Android release: $ANDROID\e[0m"
 echo -e "\e[0;93m"
 case $MODEL in
+    "SM-N975F")
+        echo " $MODEL Samsung Galaxy Note 10+"
+        COREM="-mtune=exynos-m4.cortex-a75.cortex-a75"
+#        COREM="-mtune=exynos-m4 -mtune=cortex-a75 -mtune=cortex-a75"
+        ARCHM="armv8"
+        ;;
     "SM-G950F")
         echo " $MODEL Samsung Galaxy S8"
         COREM="-mtune=cortex-a53.exynos-m1"
