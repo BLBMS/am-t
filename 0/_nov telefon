@@ -7,13 +7,13 @@ TERMUX
 
 # 6x yes
 
-pkg update -y && pkg upgrade -y && pkg install -y wget
+pkg update -y ; pkg upgrade -y ; pkg install -y wget
 
 A) !!!!!!!!!!!!!!!!!
-cd ~/ && rm -f nastavi-cc-termux.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-termux.sh && chmod +x nastavi-cc-termux.sh && ./nastavi-cc-termux.sh
+cd ~/ && rm -f nastavi-cc-termux.sh && wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-termux.sh && chmod +x nastavi-cc-termux.sh && ./nastavi-cc-termux.sh
 
 B) !!!!!!!!!!!!!!!!!
-#   cd ~/ && rm -f nastavi-cc-compiled.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-compiled.sh && chmod +x nastavi-cc-compiled.sh && ./nastavi-cc-compiled.sh -d -l -p1 -wBLB
+#   cd ~/ && rm -f nastavi-cc-compiled.sh && wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-compiled.sh && chmod +x nastavi-cc-compiled.sh && ./nastavi-cc-compiled.sh -d -l -p4
 
 # usage: ./nastavi-cc-compiled -u -m -p5 -wName
 #    -u     - update / upgrade
