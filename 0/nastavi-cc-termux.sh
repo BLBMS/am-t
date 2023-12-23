@@ -493,4 +493,11 @@ esac
 
 echo "source ~/.bashrc"
 
+mv ccminer/ ccminer_compiled/
+cp ccminer_compiled/ccminer .
+
 echo -e "\n\e[93m THE END\e[0m\n"
+
+source ~/.bashrc
+
+ss
