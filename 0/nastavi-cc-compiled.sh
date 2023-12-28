@@ -283,7 +283,8 @@ case $MODEL in
 # ADD NEW MODEL
     *)
         echo "----------------------------------------------------------"
-        echo -e "\e[91m  Unknown model: $MODEL"
+        echo -e "\e[91m  Unknown model: $MODEL -> a53"
+        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminer-a53.compiled
         echo "----------------------------------------------------------"
         # exit 0
         ;;
