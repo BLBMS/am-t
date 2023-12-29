@@ -318,6 +318,7 @@ echo "hh = this help"
 echo "exit: CTRL-a + d"
 echo "__________________"
 screen -ls | grep --color=always "CCminer"
+ss
 EOF
 cd ~/
 
