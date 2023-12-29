@@ -419,6 +419,7 @@ echo "rr = show screen"
 echo "exit: CTRL-a + d"
 echo "__________________"
 screen -ls | grep --color=always "CCminer"
+ss
 EOF
 cd ~/
 # kopira in zamenja delavca v vseh json
