@@ -1,6 +1,6 @@
 !/bin/bash
 
-#-> wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/adb-settings.sh && chmod +x adb-settings.sh
+#-> wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/adb-samsung.sh && chmod +x adb-samsung.sh
 echo Samsung
 # For all android devices
 echo For all android devices
