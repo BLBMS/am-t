@@ -9,6 +9,8 @@ TERMUX
 
 pkg update -y ; pkg upgrade -y ; pkg install -y wget
 
+rwemux-change-repo
+
 A) !!!!!!!!!!!!!!!!!
 cd ~/ && rm -f nastavi-cc-termux.sh && wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-termux.sh && chmod +x nastavi-cc-termux.sh && ./nastavi-cc-termux.sh
 
@@ -29,7 +31,12 @@ B) !!!!!!!!!!!!!!!!!
 #    -wName - worker name (overwrite file name.ww)
 #    -h     - help
 
-!!!!!!!!!!!!!!!!!
+C) !!!!!!!!!!!!!!!!!
+
+cd ~/ && rm -f ccminerS8.compiled && wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS8.compiled && chmod +x ccminerS8.compiled
+cd ~/ && rm -f ccminerS9.compiled && wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS9.compiled && chmod +x ccminerS9.compiled
+cd ~/ && rm -f ccminerS10.compiled && wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS10.compiled && chmod +x ccminerS10.compiled
+cd ~/ && rm -f ccminer-a53.compiled && wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminer-a53.compiled && chmod +x ccminer-a53.compiled
 
 source .bashrc
 ______________________________
