@@ -99,6 +99,7 @@ if [ -f "$ah_file" ]; then
     else
         echo -e "\n\e[91m SSH is not correct"
         echo -e "\e[92m After install start program again\e[0m\n"
+        pause 1
         cd
         rm -f ~/nastavi-cc-ssh.sh
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
