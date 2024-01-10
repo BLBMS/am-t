@@ -107,11 +107,6 @@ sed -i 's/^# allow-external-apps = true*/allow-external-apps = true/' ~/.termux/
 sed -i 's/^#allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
 echo "done"
 cd ~/
-if screen -ls | grep -i ccminer; then
-  printf "\n\e[91m CCminer is running -> STOP! \e[0m"
-  screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit
-  screen -wipe 1>/dev/null 2>&1
-fi
 echo -e "\n\n\e[93m Phone info: \e[0m\n" # -----------------------------------------------
 MODEL=$(getprop ro.product.model)
 ANDROID=$(getprop ro.build.version.release)
@@ -128,54 +123,6 @@ for ((i = 0; i < num_cpus; i++)); do
     echo -e "CORE:          \e[0;93mCPU$i  \e[0m: \e[0;92m$CORE\e[0m"
 done
 echo -e "Android release      : \e[0;93m$ANDROID\e[0m"
-cd ~/
-echo -e "\e[0;92m"
-rm -f ccminer*.compiled
-case $MODEL in
-    "SM-G950F")
-        echo " $MODEL Samsung Galaxy S8"
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS8.compiled
-        ;;
-    "SM-G955F")
-        echo "$MODEL Samsung Galaxy S8+"
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS8.compiled
-        ;;
-    "SM-G960F")
-        echo "$MODEL Samsung Galaxy S9"
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS9.compiled
-        ;;
-    "SM-G965F")
-        echo "$MODEL Samsung Galaxy S9+"
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS9.compiled
-        ;;
-    "SM-G973F")
-        echo "$MODEL Samsung Galaxy S10"
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS10.compiled
-        ;;
-    "SM-G970F")
-        echo "$MODEL Samsung Galaxy S10e"
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS10.compiled
-        ;;
-    "SM-G975F")
-        echo "$MODEL Samsung Galaxy S10+"
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS10.compiled
-        ;;
-    "SM-A405FN")
-        echo "$MODEL Samsung Galaxy A40"
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerA40.compiled
-        ;;
-# ADD NEW MODEL
-    *)
-        echo "----------------------------------------------------------"
-        echo -e "\e[91m  Unknown model: $MODEL -> a53"
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminer-a53.compiled
-        echo "----------------------------------------------------------"
-        # exit 0
-        ;;
-esac
-mv ccminer*.compiled ccminer
-chmod +x ccminer
-echo -e "\n\e[93m Set CCminer \e[0m" # -----------------------------------------------
 cd ~/
 # briše MOJE v ~    /.bashrc, vse do konca
 sed -i '/### ______  MOJE _/,$d' ~/.bashrc
@@ -205,7 +152,6 @@ screen -ls | grep --color=always "CCminer"
 ss
 EOF
 cd ~/
-
 # kopira in zamenja delavca v vseh json
 rm -f *.json
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-cloudiko.json
@@ -219,6 +165,7 @@ for file in ~/*.json; do
         sed -i -e "s/DELAVEC/$delavec/g" -e "s/i81/RMH/g" -e "s/K14g/s4wc/g" "$file"
     fi
 done
+cd ~/
 rm -f start.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/start.sh
 chmod +x ~/start.sh
