@@ -179,20 +179,16 @@ echo "3     eu.luckpool.net"
 echo "4     de.vipor.net"
 echo "5     eu.coudiko.io"
 echo -e "6     eu zergpool SOLO\e[93m"
-if [ "$choice_pool" != "0" ]; then
-    choice="$choice_pool"
-else
-    while true; do
-        read -r -n 1 -p "Choice: 1 2 3 4 5 6: " choice
-        case $choice in
-            1|2|3|4|5|6)
-                break  # Izberite veljavno številko in izstopite iz zanke
-                ;;
-            *)
-                echo "enter: 1 2 3 4 5 6" ;;
-        esac
-    done
-fi
+while true; do
+    read -r -n 1 -p "Choice: 1 2 3 4 5 6: " choice
+    case $choice in
+        1|2|3|4|5|6)
+            break  # Izberite veljavno številko in izstopite iz zanke
+            ;;
+        *)
+            echo "enter: 1 2 3 4 5 6" ;;
+    esac
+done
 # izvede izbiro
 echo -e "\e[92m"
 case $choice in
