@@ -362,6 +362,7 @@ echo -e "\n\e[0;93m Used settings:\e[0m"
 echo -e "\e[0;92m   CORE=$CORE"
 echo -e "   ARCH=-march=$ARCH-a+crypto\e[0m"
 echo -e "\n\e[0;97m________________________________________\e[0m"
+sleep 1
 
 # zamenjam ARCH in CORE v configure.sh
 sed -i "s/AAAAAAAAAA/$ARCH/g" ~/ccminer/configure.sh
