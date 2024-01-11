@@ -314,6 +314,11 @@ case $MODEL in
         COREM="-mtune=cortex-a53"
         ARCHM="armv8"
         ;;       
+     "LG-H930")
+        echo "$MODEL LG V30"
+        COREM="-mtune=cortex-a73 -mtune=cortex-a53"
+        ARCHM="armv8"
+        ;;       
     *)
         echo "Unknown model: $MODEL"
         COREM="$CORE"
