@@ -315,7 +315,7 @@ case $MODEL in
         ARCHM="armv8"
         ;;       
      "LG-H930")
-        echo "$MODEL LG V30"
+        echo "$MODEL LG V30 ThinQ"
         COREM="-mtune=cortex-a73 -mtune=cortex-a53"
         ARCHM="armv8"
         ;;       
