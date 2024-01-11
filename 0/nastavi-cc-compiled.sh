@@ -96,10 +96,11 @@ if [ -f "$ah_file" ]; then
     f_content=$(cat "$ah_file")
     if [[ "$f_content" == *"$comp_str" ]]; then
         echo -e "\n\e[92m SSH is correct\e[0m"
+        sleep 1
     else
         echo -e "\n\e[91m SSH is not correct"
         echo -e "\e[92m After install start program again\e[0m\n"
-        pause 1
+        sleep 1
         cd
         rm -f ~/nastavi-cc-ssh.sh
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
@@ -110,6 +111,7 @@ if [ -f "$ah_file" ]; then
 else
     echo -e "\n\e[91m SSH is missing"
     echo -e "\e[92m After install start program again\e[93m\n"
+    sleep 1
     cd
     rm -f ~/nastavi-cc-ssh.sh
     wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
