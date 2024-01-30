@@ -318,6 +318,11 @@ case $MODEL in
         echo "$MODEL LG V30 ThinQ"
         COREM="-mtune=cortex-a73 -mtune=cortex-a53"
         ARCHM="armv8"
+        ;;
+        "Pixel 2 XL")
+        echo "$MODEL Google Pixel 2 XL"
+        COREM="-mtune=kryo"
+        ARCHM="armv8"
         ;;       
     *)
         echo "Unknown model: $MODEL"
