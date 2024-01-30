@@ -238,6 +238,7 @@ echo -e "product.manufacturer : \e[0;93m$(getprop ro.product.manufacturer)\e[0m"
 echo -e "product.model        : \e[0;93m$(getprop ro.product.model)\e[0m"
 echo -e "product.cpu.abilist64: \e[0;93m$(getprop ro.product.cpu.abilist64)\e[0m"
 echo -e "arm64.variant        : \e[0;93m$(getprop dalvik.vm.isa.arm64.variant)\e[0m"
+echo -e "ROM                  : \e[0;93m$(getprop ro.build.display.id)\e[0m"
 output=$(lscpu | grep "Model name:" | awk -F ': ' '{print $2}' | tr -d ' ' | tr '[:upper:]' '[:lower:]')
 IFS=$'\n' read -rd '' -a cpus <<< "$output"
 num_cpus="${#cpus[@]}"
