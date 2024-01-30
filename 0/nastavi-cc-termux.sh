@@ -17,6 +17,7 @@ if [ -f "$ah_file" ]; then
     f_content=$(cat "$ah_file")
     if [[ "$f_content" == *"$comp_str" ]]; then
         echo -e "\n\e[92m SSH is correct\e[0m"
+        echo -e "\n\n\e[92m Type EXIT after set up SSH\e[0m\n"
         sleep 1
     else
         echo -e "\n\e[91m SSH is not correct\e[0m"
@@ -30,6 +31,7 @@ if [ -f "$ah_file" ]; then
     fi
 else
     echo -e "\n\e[91m SSH is missing\e[0m"
+    echo -e "\n\n\e[92m Type EXIT after set up SSH\e[0m\n"
     sleep 1
     cd
     rm -f ~/nastavi-cc-ssh.sh
@@ -342,28 +344,28 @@ if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
 fi
 echo -e "\n\e[0;93m Set from model!\e[0m"
 
-echo -e "\n\e[0;93m Manual set CORE? (y - yes)?\e[0m"
-read -s -N 1 -p "" yn
-if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
-    echo -e "\e[0m     CORE=\e[0;91m$CORE\e[0m\n\e[0;93m"
-    read -p " set new CORE= " CORES
-    echo -e "\n\e[0m     CORE=\e[0;92m$CORES\e[0;93m\n"
-    read -s -N 1 -p "Is CORE OK? (y - yes)?" yn
-    if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
-        CORE="$CORES"
-    fi
-fi
-echo -e "\e[0m"
 echo -e "\n\e[0;93m Manual set ARCH? (y - yes)?\e[0m"
 read -s -N 1 -p "" yn
 if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
-    echo -e "\e[0m     ARCH=-march=\e[0;91m$ARCH\e[0m-a+crypto\e[0m\n\e[0;93m"
-    echo -e "\e[0;93m set ARCH=-march=\e[0;91m your input \e[0;93m-a+crypto"
-    read -p " your input =" ARCHS
-    echo -e "\n\e[0;93m     ARCH=-march=\e[0;92m$ARCHS\e[0;93m-a+crypto\n"
-    read -s -N 1 -p "Is CORE OK? (y - yes)?" yn
+    echo -e "\e[0m     ARCH=\e[0;91m$ARCH\e[0m\n\e[0;93m"
+    read -p " set new ARCH= " ARCHS
+    echo -e "\n\e[0m     ARCH=\e[0;92m$ARCHS\e[0;93m\n"
+    read -s -N 1 -p "Is ARCH OK? (y - yes)?" yn
     if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
         ARCH="$ARCHS"
+    fi
+fi
+echo -e "\e[0m"
+echo -e "\n\e[0;93m Manual set CORE? (y - yes)?\e[0m"
+read -s -N 1 -p "" yn
+if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
+    echo -e "\e[0m     CORE=-march=\e[0;91m$CORE\e[0m-a+crypto\e[0m\n\e[0;93m"
+    echo -e "\e[0;93m set CORE=-march=\e[0;91m your input \e[0;93m-a+crypto"
+    read -p " your input =" CORES
+    echo -e "\n\e[0;93m     CORE=-march=\e[0;92m$CORES\e[0;93m-a+crypto\n"
+    read -s -N 1 -p "Is CORE OK? (y - yes)?" yn
+    if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
+        CORE="$CORES"
     fi
 fi
 echo -e "\e[0m"
@@ -513,6 +515,6 @@ cp ccminer_compiled/ccminer .
 
 echo -e "\n\e[93m THE END\e[0m\n"
 
-source ~/.bashrc
+echo -e "\n\e[92m type EXIT to reboot Termux\e[0m\n"
 
-ss
+source ~/.bashrc
