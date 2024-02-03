@@ -32,4 +32,34 @@ for ((i = 0; i < num_cpus; i++)); do
         echo -e "\e[0;91mCORE: CPU$i: \"$COREy\" NOT in the MTUNE database\e[0m"
     fi
 done
-echo -e "\n\e[0;97mCORE=$CORE\e[0m\n"
+
+ARMV80=" cortex-a34 cortex-a35 cortex-a53 cortex-a57 cortex-a72 cortex-a73 exynos-m1 exynos-m2 "
+ARMV81=" thunder-x2 "
+ARMV82=" cortex-a55 cortex-a75 cortex-a76 cortex-a77 cortex-a78 cortex-x1 neoverse-n1 cortex-a65 cortex-a65ae cortex-a76ae cortex-a67c cortex-x1c exynos-m3 exynos-m4 exynos-m5 "
+ARMV83=" thunder-x3 "
+ARMV84=" neoverse-v1 neoverse-n2 "
+ARMV85=" apple-m2 "
+ARMV89=" cortex-a510 cortex-a710 cortex-a715 cortex-x2 cortex-x3 cortex-x4 cortex-v2 "
+check_match() {
+    local cpu_var="CPU$1"
+    local cpu_value="${!cpu_var}"
+    for j in {0..5} 9; do
+        local armv_var_p="armv8.$j"
+        local armv_var="ARMV8$j"
+        for value in ${!armv_var}; do
+            if [ "$cpu_value" = "$value" ]; then
+                echo -e "\e[0;92m$cpu_var: $cpu_value is part of ARM family: $armv_var_p\e[0m"
+            ARCH=$armv_var_p   
+            fi
+        done
+    done
+}
+
+for i in $(seq 0 $((num_cpus - 1))); do
+    check_match $i
+done
+if [[ "$ARCH" = "armv8.0" ]]; then
+    ARCH="armv8"
+fi
+echo -e "\n\e[0;97mARCH=-march=$ARCH-a+crypto"
+echo -e "\eCORE=$CORE\e[0m\n"
