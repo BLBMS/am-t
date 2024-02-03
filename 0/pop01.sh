@@ -24,7 +24,6 @@ else
     fi
     
     cat << EOF >> ~/start.sh
-    
     POOL=$(sed -n '0,/.*"name": "\(.*\)".*/s//\1/p' config.json | awk '{print $1}')
     if [ $(echo $POOL | tr -cd '.' | wc -c) -eq 2 ]; then
         # Obstajata dve pike, vzemimo srednji del
