@@ -62,4 +62,4 @@ if [[ "$ARCH" = "armv8.0" ]]; then
     ARCH="armv8"
 fi
 echo -e "\n\e[0;97mARCH=-march=$ARCH-a+crypto"
-echo -e "\eCORE=$CORE\e[0m\n"
+echo -e "CORE=$CORE\e[0m\n"
