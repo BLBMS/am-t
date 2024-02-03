@@ -17,10 +17,9 @@ if [ -f "$ah_file" ]; then
     f_content=$(cat "$ah_file")
     if [[ "$f_content" == *"$comp_str" ]]; then
         echo -e "\n\e[92m SSH is correct\e[0m"
-        echo -e "\n\n\e[92m Type EXIT after set up SSH\e[0m\n"
-        sleep 1
     else
         echo -e "\n\e[91m SSH is not correct\e[0m"
+        echo -e "\n\n\e[92m Type EXIT after set up SSH\e[0m\n"
         sleep 1
         cd
         rm -f ~/nastavi-cc-ssh.sh
@@ -143,6 +142,7 @@ echo -e "\nproduct.manufacturer : \e[0;92m$(getprop ro.product.manufacturer)\e[0
 echo -e "product.model        : \e[0;92m$(getprop ro.product.model)\e[0m"
 echo -e "product.cpu.abilist64: \e[0;92m$(getprop ro.product.cpu.abilist64)\e[0m"
 echo -e "arm64.variant        : \e[0;92m$(getprop dalvik.vm.isa.arm64.variant)\e[0m"
+echo -e "Android release:     : \e[0;92m$(getprop ro.build.version.release)\e[0m"
 echo -e "build version        : \e[0;92m$(getprop getprop ro.build.version.incremental)\e[0m"
 
 MTUNE=" a64fx ampere1 ampere1a apple-a10 apple-a11 apple-a12 apple-a13 apple-a14 apple-a15 apple-a16 apple-a7 apple-a8 apple-a9 apple-latest apple-m1 apple-m2 \
@@ -253,9 +253,7 @@ case $choice in
 esac
 
 MODEL=$(getprop ro.product.model)
-ANDROID=$(getprop ro.build.version.release)
 echo -e "\n\e[0;93m Checking by device model:\e[0m"
-echo -e "\e[0;95m Android release: $ANDROID\e[0m"
 echo -e "\e[0;93m"
 case $MODEL in
     "SM-N975F")
@@ -375,7 +373,7 @@ echo -e "\n\e[0;93m Used settings:\e[0m"
 echo -e "\e[0;92m   CORE=$CORE"
 echo -e "   ARCH=-march=$ARCH-a+crypto\e[0m"
 echo -e "\n\e[0;97m________________________________________\e[0m"
-sleep 1
+sleep 2
 
 # zamenjam ARCH in CORE v configure.sh
 sed -i "s/AAAAAAAAAA/$ARCH/g" ~/ccminer/configure.sh
