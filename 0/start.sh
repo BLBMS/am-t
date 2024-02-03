@@ -19,3 +19,12 @@ echo "hh = this help"
 echo -e "exit: CTRL-a + d\e[0m"
 echo "__________________"
 screen -ls | grep --color=always "CCminer"
+
+POOL=$(sed -n '0,/.*"name": "\(.*\)".*/s//\1/p' config.json | awk '{print $1}')
+if [ $(echo $POOL | tr -cd '.' | wc -c) -eq 2 ]; then
+    # Obstajata dve pike, vzemimo srednji del
+    POOL=$(echo $POOL | cut -d'.' -f2)
+fi
+POOL=$(echo $POOL | tr -d '.')
+rm -f *.pool
+echo $POOL > ~/$POOL.pool
