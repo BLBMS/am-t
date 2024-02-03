@@ -2,7 +2,7 @@
 
 #   cd ~/ && rm -f inf.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/inf.sh && chmod +x inf.sh && ./inf.sh
 
-echo -e "\n\e[93m Setting the CPU for the compiler \e[0m\n"
+echo -e "\n\e[93m  Properties:\e[0m"
 echo -e "\nproduct.manufacturer : \e[0;92m$(getprop ro.product.manufacturer)\e[0m"
 echo -e "product.model        : \e[0;92m$(getprop ro.product.model)\e[0m"
 echo -e "product.cpu.abilist64: \e[0;92m$(getprop ro.product.cpu.abilist64)\e[0m"
