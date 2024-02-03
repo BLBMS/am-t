@@ -22,16 +22,18 @@ else
     else
         echo "Datoteka .bashrc ne obstaja."
     fi
-    
-    cat << EOF >> ~/start.sh
-    POOL=$(sed -n '0,/.*"name": "\(.*\)".*/s//\1/p' config.json | awk '{print $1}')
-    if [ $(echo $POOL | tr -cd '.' | wc -c) -eq 2 ]; then
-        # Obstajata dve pike, vzemimo srednji del
-        POOL=$(echo $POOL | cut -d'.' -f2)
-    fi
-    POOL=$(echo $POOL | tr -d '.')
-    rm -f *.pool
-    echo $POOL > ~/$POOL.pool
-    EOF
+
+    cat << 'ENDHERE' >> ~/start.sh
+
+POOL=$(sed -n '0,/.*"name": "\(.*\)".*/s//\1/p' config.json | awk '{print $1}')
+if [ $(echo $POOL | tr -cd '.' | wc -c) -eq 2 ]; then
+    POOL=$(echo $POOL | cut -d'.' -f2)
+fi
+POOL=$(echo $POOL | tr -d '.')
+rm -f *.pool
+echo $POOL > ~/$POOL.pool
+
+echo -e "\n\e[92m$POOL\e[0m"
+ENDHERE
     ./start.sh
 fi
