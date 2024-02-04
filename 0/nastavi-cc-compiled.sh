@@ -313,6 +313,7 @@ alias XX='xx'
 alias SL='sl'
 alias RR='rr'
 alias HH='hh'
+alias inf='~/inf.sh'
 echo "__________________"
 echo "ss = start ccminer"
 echo "xx = kill screen"
@@ -399,8 +400,8 @@ case $choice in
 esac
 echo -e "\e[0m"
 echo "done"
-echo -e "\n\e[0m don't forget:   \e[92msource ~/.bashrc\e[0m"
-source ~/.bashrc
+#echo -e "\n\e[0m don't forget:   \e[92msource ~/.bashrc\e[0m"
+#source ~/.bashrc
 bash ./inf.sh
 echo -e "\e[93m THE END\e[0m"
 echo -e "\e[92m Type EXIT to restart TERMUX\e[0m\n"
