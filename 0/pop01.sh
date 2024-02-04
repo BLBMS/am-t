@@ -21,6 +21,7 @@ else
         fi
     else
         echo "Datoteka .bashrc ne obstaja."
+        exit
     fi
 
     cat << 'ENDHERE' >> ~/start.sh
