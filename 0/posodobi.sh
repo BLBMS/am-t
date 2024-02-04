@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#    FAJL="posodobi";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
+#    POP="01";FAJL="posodobi";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh $POP
 
 if [ $# -eq 1 ]; then
     POP=$1
