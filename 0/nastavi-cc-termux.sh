@@ -422,15 +422,19 @@ alias ss='~/start.sh'
 alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit && screen -ls'
 alias sl='screen -ls | grep --color=always "CCminer"'
 alias rr='screen -x CCminer'
+alias hh='echo -e "\e[0;93mss = start ccminer" && echo "xx = kill screen" && echo "sl = list screen" && echo "rr = show screen" && echo "hh = this help" && echo -e "exit: CTRL-a + d\e[0m"'
 alias SS='ss'
 alias XX='xx'
 alias SL='sl'
 alias RR='rr'
+alias HH='hh'
+alias inf='~/inf.sh'
 echo "__________________"
 echo "ss = start ccminer"
 echo "xx = kill screen"
 echo "sl = list screen"
 echo "rr = show screen"
+echo "hh = this help"
 echo "exit: CTRL-a + d"
 echo "__________________"
 screen -ls | grep --color=always "CCminer"
@@ -445,75 +449,67 @@ for file in ~/ccminer/0/*.json; do
         mv -f "$file" ~/
     fi
 done
+rm -f inf.sh
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/inf.sh
+chmod +x inf.sh
 mv -f ~/ccminer/0/start.sh ~/
 chmod +x ~/start.sh
 # rm -rf ~/ccminer/0/
 # nastavi POOL
-while true; do
-    echo -e "\n\e[93m Which POOL \e[0m\n"
-    echo "1     MRR"
-    echo "2     pool.verus.io"
-    echo "3     eu.luckpool.net"
-    echo "4     de.vipor.net"
-    read -r -n 1 -p "Choice: 1 2 3 4: " choice
-    # Preveri, ali je izbira veljavna
-    case $choice in
-        1|2|3|4)
-            break  # Izberite veljavno številko in izstopite iz zanke
-            ;;
-        *)
-            echo "enter: 1 2 3 4" ;;
-    esac
-done
-# briše obst. če obstaja
-if [ -e "~/config.json" ]; then
-    rm -f ~/config.json
+echo -e "\n\e[93m Which POOL \e[0m\n" # -----------------------------------------------
+echo "1     MRR"
+echo "2     pool.verus.io"
+echo "3     eu.luckpool.net"
+echo "4     de.vipor.net"
+echo "5     eu.coudiko.io"
+echo -e "6     eu zergpool SOLO\e[93m"
+if [ "$choice_pool" != "0" ]; then
+    choice="$choice_pool"
+else
+    while true; do
+        read -r -n 1 -p "Choice: 1 2 3 4 5 6: " choice
+        case $choice in
+            1|2|3|4|5|6)
+                break  # Izberite veljavno številko in izstopite iz zanke
+                ;;
+            *)
+                echo "enter: 1 2 3 4 5 6" ;;
+        esac
+    done
 fi
 # izvede izbiro
+echo -e "\e[92m"
 case $choice in
     1)
-        echo "-> MRR"
+        echo "  -> MRR"
         cp ~/config-mrr.json ~/config.json 
         ;;
     2)
-        echo "-> pool.verus.io"
+        echo "  -> pool.verus.io"
         cp ~/config-verus.json ~/config.json 
         ;;
     3)
-        echo "-> eu.luckpool.net"
+        echo "  -> eu.luckpool.net"
         cp ~/config-luck.json ~/config.json 
         ;;
     4)
-        echo "-> de.vipor.net"
+        echo "  -> de.vipor.net"
         cp ~/config-vipor.json ~/config.json 
         ;;
+    5)
+        echo "  -> eu.cloudiko.io"
+        cp ~/config-cloudiko.json ~/config.json 
+        ;;
+    6)
+        echo "  -> eu zergpool SOLO"
+        cp ~/config-zerg.json ~/config.json 
+        ;;
 esac
-# uveljavljam nastavitve
-
-# __________________________
-# sem sem dal
-#echo "-$C1-$C2-$C3-"
-# J5="a53"
-# J7="a53"
-# S8="M2 a53"
-# S9="M3 a55"
-# S10="M4 a75 a55"
-# P20L="a53 a53"
-# P20="a73 a53"
-# P20P="a73 a53"
-# ARCH0="armv8"
-# ARCH1="armv8.1"
-# ARCH2="armv8.2"
-# ARCH3="armv8.3"
-# __________________________
-
-echo "source ~/.bashrc"
+echo -e "\e[0m"
+echo "done"
 
 mv ccminer/ ccminer_compiled/
 cp ccminer_compiled/ccminer .
-
+bash ./inf.sh
 echo -e "\n\e[93m THE END\e[0m\n"
-
 echo -e "\n\e[92m type EXIT to reboot Termux\e[0m\n"
-
-source ~/.bashrc
