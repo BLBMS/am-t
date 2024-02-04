@@ -14,7 +14,7 @@ else
 fi
 echo -e "\n\e[92mPopravek $POP\e[0m\n"
 
-FAJL="POP$POP"
+FAJL="pop$POP"
 cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 source .bashrc
 
