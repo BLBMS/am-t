@@ -99,7 +99,7 @@ if [ -f "$ah_file" ]; then
         sleep 1
     else
         echo -e "\n\e[91m SSH is not correct"
-        echo -e "\e[92m After install start program again\e[0m\n"
+        echo -e "\n\n\e[92m Type EXIT after set up SSH\e[0m\n"
         sleep 1
         cd
         rm -f ~/nastavi-cc-ssh.sh
@@ -110,7 +110,7 @@ if [ -f "$ah_file" ]; then
     fi
 else
     echo -e "\n\e[91m SSH is missing"
-    echo -e "\e[92m After install start program again\e[93m\n"
+    echo -e "\n\n\e[92m Type EXIT after set up SSH\e[0m\n"
     sleep 1
     cd
     rm -f ~/nastavi-cc-ssh.sh
@@ -339,6 +339,9 @@ for file in ~/*.json; do
         sed -i -e "s/DELAVEC/$delavec/g" -e "s/i81/RMH/g" -e "s/K14g/s4wc/g" "$file"
     fi
 done
+rm -f inf.sh
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/inf.sh
+chmod +x inf.sh
 rm -f start.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/start.sh
 chmod +x ~/start.sh
@@ -398,4 +401,6 @@ echo -e "\e[0m"
 echo "done"
 echo -e "\n\e[0m don't forget:   \e[92msource ~/.bashrc\e[0m"
 source ~/.bashrc
-echo -e "\n\e[93m THE END\e[0m\n"
+bash ./inf.sh
+echo -e "\e[93m THE END\e[0m"
+echo -e "\e[92m Type EXIT to restart TERMUX\e[0m\n"
