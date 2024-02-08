@@ -2,7 +2,7 @@
 
 #   POP="02";cd ~/;rm -f pop$POP.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/pop$POP.sh;chmod +x pop$POP.sh;./pop$POP.sh
 
-if [ -f ~/pop02.sh ]; then
+if [ -f ~/changepool.sh ]; then
     echo "Pop 02 že izveden."
     exit 0
 else
