@@ -7,35 +7,25 @@ if [ -f ~/pop02.sh ]; then
     exit 0
 else
     cd ~/ 
-    
+    FAJL="changepool";rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh
     
     # Preverimo, ali datoteka .bashrc obstaja
     if [ -f ~/.bashrc ]; then
         # Preverimo, ali že obstaja zapis za alias
-        if grep -q "alias inf='~/inf.sh'" ~/.bashrc; then
-            echo "Alias 'inf' že obstaja v .bashrc."
+        if grep -q "alias pool='~/changepool.sh'" ~/.bashrc; then
+            echo "Alias 'pool' že obstaja v .bashrc."
         else
             # Poiščemo zadnjo vrstico z besedo "alias" in dodamo novo vrstico za njo
             last_alias_line=$(grep -n "alias" ~/.bashrc | tail -n 1 | cut -d: -f1)
-            sed -i "${last_alias_line}a alias inf='~/inf.sh'" ~/.bashrc
-            echo "Alias 'inf' dodan v .bashrc."
+            sed -i "${last_alias_line}a alias pool='~/changepool.sh'" ~/.bashrc
+            echo "Alias 'pool' dodan v .bashrc."
         fi
     else
         echo "Datoteka .bashrc ne obstaja."
         exit
     fi
 
-    cat << 'ENDHERE' >> ~/start.sh
+    sed -i 's/echo -e "\\n\\e\[92m\$POOL\\e\[0m"/echo -e "\\e\[94mPool: \\e\[92m\$POOL\\e\[0m"/g' ~/start.sh
 
-POOL=$(sed -n '0,/.*"name": "\(.*\)".*/s//\1/p' config.json | awk '{print $1}')
-if [ $(echo $POOL | tr -cd '.' | wc -c) -eq 2 ]; then
-    POOL=$(echo $POOL | cut -d'.' -f2)
-fi
-POOL=$(echo $POOL | tr -d '.')
-rm -f *.pool
-echo $POOL > ~/$POOL.pool
-
-echo -e "\n\e[92m$POOL\e[0m"
-ENDHERE
     ./start.sh
 fi
