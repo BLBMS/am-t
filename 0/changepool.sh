@@ -1,4 +1,7 @@
 #!/bin/bash
+
+#    FAJL="changepool";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh
+
 HELP="Set pool as attribut\n \
   1  mrr          MRR\n \
   2  verus        pool.verus.io\n \
