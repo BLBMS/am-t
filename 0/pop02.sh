@@ -7,7 +7,7 @@ if [ -f ~/changepool.sh ]; then
     exit 0
 else
     cd ~/ 
-    FAJL="changepool";rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh
+    FAJL="changepool";rm -f $FAJL.sh;wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh
     
     # Preverimo, ali datoteka .bashrc obstaja
     if [ -f ~/.bashrc ]; then
