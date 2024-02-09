@@ -15,7 +15,7 @@ fi
 echo -e "\n\e[92mPopravek pop$POP\e[0m\n"
 
 FAJL="pop$POP"
-cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
+cd ~/;rm -f $FAJL.sh;wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 source .bashrc
 
 echo -e "\n\e[92mPopravek pop$POP končan\e[0m\n"
