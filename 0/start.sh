@@ -28,4 +28,4 @@ POOL=$(echo $POOL | tr -d '.')
 rm -f *.pool
 echo $POOL > ~/$POOL.pool
 
-echo -e "\n\e[92m$POOL\e[0m"
+echo -e "\e[94mPool: \e[92m$POOL\e[0m"
