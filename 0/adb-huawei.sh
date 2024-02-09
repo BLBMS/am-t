@@ -1,4 +1,3 @@
-  GNU nano 7.2                                                                                                    adb-huawei.sh                                                                                                             
 #!/bin/bash
 
 #-> cd && rm -f adb-huawei.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/adb-huawei.sh && chmod +x adb-huawei.sh
