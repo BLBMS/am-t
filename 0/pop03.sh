@@ -11,20 +11,15 @@ else
     # Preverimo, ali datoteka .bashrc obstaja
     if [ -f ~/.bashrc ]; then
         # Preverimo, ali že obstaja zapis za alias
-        if grep -q "alias pool='~/changepool.sh'" ~/.bashrc; then
-            echo "Alias 'pool' že obstaja v .bashrc."
+        if grep -q 'echo -e "\e[94mPool: \e[92m$(basename *.pool .pool)\e[0m"' ~/.bashrc; then
+            echo "pool=xxxx že obstaja v .bashrc."
         else
             # Poiščemo zadnjo vrstico z besedo "alias" in dodamo novo vrstico za njo
-            last_alias_line=$(grep -n "alias" ~/.bashrc | tail -n 1 | cut -d: -f1)
-            sed -i "${last_alias_line}a alias pool='~/changepool.sh'" ~/.bashrc
-            echo "Alias 'pool' dodan v .bashrc."
+            sed -i '/^ss$/,$d' ~/.bashrc
+            echo 'echo -e "\e[94mPool: \e[92m"$(basename *.pool .pool)"\e[0m"'  >> ~/.bashrc
         fi
     else
         echo "Datoteka .bashrc ne obstaja."
         exit
     fi
-
-    sed -i 's/echo -e "\\n\\e\[92m\$POOL\\e\[0m"/echo -e "\\e\[94mPool: \\e\[92m\$POOL\\e\[0m"/g' ~/start.sh
-
-    ./start.sh
 fi
