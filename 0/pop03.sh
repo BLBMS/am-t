@@ -4,6 +4,8 @@
 
 cd ~/ 
 
+#   NE DELAAAAAAAAAAAAA
+
 # Preverimo, ali datoteka .bashrc obstaja
 if [ -f ~/.bashrc ]; then
     # Preverimo, ali že obstaja nov zapis
@@ -18,3 +20,5 @@ else
     echo "Datoteka .bashrc ne obstaja."
     exit
 fi
+
+# echo 'echo -e "\e[94mPool: \e[92m"$(basename *.pool .pool)"\e[0m"'  >> ~/.bashrc
