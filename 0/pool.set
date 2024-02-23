@@ -1,2 +1,7 @@
-NAME="
-POOL="
+#!/bin/bash
+
+#NAME="DE vipor"
+#POOL="de.vipor.net:5040"
+
+NAME="FR vipor"
+POOL="fr.vipor.net:5040"
