@@ -10,6 +10,22 @@ if [ -e "auto.1" ]; then
 
   echo "NAME="$NAME
   echo "POOL="$POOL
+
+  if ls ~/*.ww >/dev/null 2>&1; then
+      for datoteka in ~/*.ww; do
+          if [ -e "$datoteka" ]; then
+              ime_iz_datoteke=$(basename "$datoteka")
+              delavec=${ime_iz_datoteke%.ww}
+              echo -e "\n\e[92m  Worker from .ww file: $delavec\e[0m"
+          fi
+      done
+  else
+      echo -e "\n\e[91m No .ww file\e[0m"
+      printf "\n\e[93m Worker name: \e[0m"
+      read delavec
+      echo $delavec > ~/$delavec.ww
+  fi
+
   
 
 
