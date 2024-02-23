@@ -6,4 +6,6 @@
 NAME="FR_vipor";POOL="fr.vipor.net:5040"
 #NAME="FI_vipor";POOL="fi.vipor.net:5040"
 #NAME="PL_vipor";POOL="pl.vipor.net:5040"
-#NAME="verus";POOL="pool.verus.io:"
+#NAME="verus";POOL="pool.verus.io:9998"
+#NAME="luckpool";POOL="eu.luckpool.net:3956"
+#NAME="cloudiko";POOL="eu.cloudiko.io:9999"
