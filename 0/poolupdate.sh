@@ -11,7 +11,7 @@ if [ -e "auto.1" ]; then
   chmod +x $FAJL.sh
   source ./$FAJL.sh
   echo -e "\e[93m  NAME:\e[92m $NAME \e[0m"
-  echo -e "\e[93m  POOL:\e[92m $POOL \e[0m"  
+  echo -e "\e[93m  POOL:\e[92m $POOL \e[0m"
   ime_iz_ww=$(basename ~/*.ww)
   delavec=${ime_iz_ww%.ww}
   echo -e "\e[93m  Worker from .ww file:\e[92m $delavec\e[0m"
@@ -19,7 +19,7 @@ if [ -e "auto.1" ]; then
   ime_iz_pool=$(basename ~/*.pool)
   obst_pool=${ime_iz_pool%.pool}
   
-  if ! [ "$NAME" = "$ime_iz_pool" ]; then
+  if [ "$NAME" = "$obst_pool" ]; then
     echo -e "\e[93m  Same pool:\e[92m $NAME = $ime_iz_pool\e[0m"
   else
     cd ~/
