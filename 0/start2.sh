@@ -17,7 +17,7 @@ if [ -e "auto.1" ]; then
           if [ -e "$datoteka" ]; then
               ime_iz_datoteke=$(basename "$datoteka")
               delavec=${ime_iz_datoteke%.ww}
-              echo -e "\e[93m  Worker from .ww file:\e[93m $delavec\e[0m"
+              echo -e "\e[93m  Worker from .ww file:\e[92m $delavec\e[0m"
           fi
       done
   else
