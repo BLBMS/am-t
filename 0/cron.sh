@@ -4,7 +4,9 @@
 
 # Nastavitev cron da preveri vsako uro pool
 if [ -e "auto.1" ]; then
-  (crontab -l ; echo "0 * * * * /pot/do/poolupdate.sh") | crontab -
+  echo -e "\e[92m  CRON started \e[0m"
+#  (crontab -l ; echo "0 * * * * /pot/do/poolupdate.sh") | crontab -  # vsako polno uro
+  (crontab -l ; echo "0 * * * * /pot/do/poolupdate.sh") | crontab -  # vsakih 10 minut
 else
-  echo
+  echo -e "\e[91m  CRON NOT started / NO auto\e[0m"
 fi
