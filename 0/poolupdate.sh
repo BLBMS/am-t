@@ -18,7 +18,7 @@ if [ -e "auto.1" ]; then
 
   ime_iz_pool=$(basename ~/*.pool)
   obst_pool=${ime_iz_pool%.pool}
-  
+
   if [ "$NAME" = "$obst_pool" ]; then
     echo -e "\e[93m  Same pool:\e[92m $NAME = $ime_iz_pool\e[0m"
   else
