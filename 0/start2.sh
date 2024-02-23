@@ -6,6 +6,7 @@ sshd
 screen -wipe 1>/dev/null 2>&1
 
 JSONFILE="~/config.json"
+FAJL="config_blank.json";cd ~/;rm -f $FAJL;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL
 
 if [ -e "auto.1" ]; then
   FAJL="pool";cd ~/;rm -f $FAJL.sh
@@ -31,6 +32,9 @@ if [ -e "auto.1" ]; then
       echo $delavec > ~/$delavec.ww
   fi
 
+  cd ~/
+  rm -f config.json
+  cp config_blank.json config.json
   
 
 
