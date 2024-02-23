@@ -1,1 +1,17 @@
-
+{
+  "pools":[
+    {
+    "name": "NAME",
+    "url": "stratum+tcp://POOL",
+    "timeout": 180,
+    "disabled": 0
+    }
+  ],
+  "user": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC",
+  "algo": "verus",
+  "threads": 8,
+  "cpu-priority": 1,
+  "retry-pause": 5,
+  "api-allow": "192.168.100.0/23",
+  "api-bind": "0.0.0.0:4068"
+}
