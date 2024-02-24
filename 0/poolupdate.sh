@@ -34,5 +34,5 @@ if [ -e "auto.1" ]; then
     rm -f *.pool
     echo $NAME > ~/$NAME.pool
     echo -e "\e[93m New Pool: \e[92m$NAME \e[96m$POOL\e[0m"
-  fi
+    fi
 fi
