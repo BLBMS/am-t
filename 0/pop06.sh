@@ -16,8 +16,16 @@ alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen
 alias sl='screen -ls | grep --color=always "CCminer"'
 alias rr='screen -r CCminer'
 alias ru='screen -r Update'
-alias hh='echo -e "\e[0;93mss = start ccminer" && echo "xx = kill screen" && echo "sl = list screen" \
-&& echo "rr = show CCminer" && echo "ru = show Update" && echo >alias SS='ss'
+alias hh='echo -e "\e[0;93m\
+__________________\n\
+ss = start CCminer/Update\n\
+xx = kill all screens\n\
+sl = list screens\n\
+rr = show CCminer\n\
+ru = show Update\n\
+hh = this help\n\
+exit: CTRL-a + d\n\
+__________________"'
 alias XX='xx'
 alias SL='sl'
 alias RR='rr'
