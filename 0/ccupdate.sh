@@ -48,5 +48,6 @@ while true; do
     fi
 
     # Počakajte 1 minuto, preden preverite znova
-    sleep 3480 # počaka 58 minut
+    sleep 60 # počaka 1 minut - TEST
+    #sleep 3480 # počaka 58 minut
 done
