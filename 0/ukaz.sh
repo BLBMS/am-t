@@ -2,14 +2,14 @@
 
 
 
-HELP="Send SCRIPT to miners, script in 1st attribut\n \
-and IP or range or all as 2nd attribut\n \
-  \".ukaz.sh\"    script in \n \
-  h  help         this help\n \
-  i###            only this IP\n \
-  f###            from IP\n \
-  t###            to IP in LIST\n \
-  a  all          all IP in LIST"
+HELP='Send SCRIPT to miners, script in 1st attribut\n\
+and IP or range or all as 2nd attribut\n\
+  \".ukaz.sh\"    script in \n\
+  h  help         this help\n\
+  i###            only this IP\n\
+  f###            from IP\n\
+  t###            to IP in LIST\n\
+  a  all          all IP in LIST'
 
 echo $HELP
 exit
