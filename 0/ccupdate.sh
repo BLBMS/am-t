@@ -8,7 +8,7 @@ iter=1
 while true; do
   echo -n -e "\e[96m== $(date) == ($iter)         \r"
   # Preverite, ali je trenutna minuta 00 (polna ura)  # sekunda +%S minuta +%M)
-  if [[ "$(date +%M)" = "00" ]]; then
+  if [[ "$(date +%M)" < "03" ]]; then
     # se izvesde ob polni uri
     echo -n -e "\r\e[96m== $(date) == ($iter)         \r"
     cd ~/
