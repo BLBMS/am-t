@@ -36,3 +36,5 @@ echo "__________________"
 screen -ls | grep --color=always "CCminer"
 echo -e "Pool: \e[92m"$(basename *.pool .pool)"\e[0m"
 EOF
+
+fi
