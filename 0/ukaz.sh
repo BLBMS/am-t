@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+#   
 
 HELP='Send SCRIPT to miners, script in 1st attribut\n\
 and IP or range or all as 2nd attribut\n\
