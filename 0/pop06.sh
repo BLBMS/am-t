@@ -41,7 +41,8 @@ hh
 sl
 EOF
 echo 'echo -e "\e[94mPool: \e[92m$(basename *.pool .pool)\e[0m"'  >> ~/.bashrc
-
 fi
-xx
-ss
+screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit && screen -ls
+source .bashrc
+echo "  done"
+source ./start.sh
