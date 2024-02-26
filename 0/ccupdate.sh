@@ -20,6 +20,7 @@ while true; do
           # pool je pravi
           #echo -e "\e[93m  Same pool:\e[92m $NAME = $obst_pool\e[0m"
           #sl
+          echo
         else
           # zamenja pool
           cd ~/
