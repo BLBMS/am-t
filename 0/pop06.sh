@@ -10,7 +10,7 @@ if [ -f ~/.bashrc ]; then
   # zbriše vse za PS1='\[\033[0;93m\]S9a\[\033[0;91m\]@\[\033[0;93m\]110\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]$ '
   awk '!f; /PS1=/ {f=1}' ~/.bashrc > ~/.bashrc.tmp && mv ~/.bashrc.tmp ~/.bashrc
 
-
+cat << EOF >> ~/.bashrc
 alias ss='~/start.sh'
 alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit && screen -ls'
 alias sl='screen -ls | grep --color=always "CCminer"'
@@ -35,3 +35,4 @@ echo "exit: CTRL-a + d"
 echo "__________________"
 screen -ls | grep --color=always "CCminer"
 echo -e "Pool: \e[92m"$(basename *.pool .pool)"\e[0m"
+EOF
