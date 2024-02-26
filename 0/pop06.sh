@@ -18,7 +18,7 @@ if [ -f ~/.bashrc ]; then
 cat << EOF >> ~/.bashrc
 alias ss='~/start.sh'
 alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit && screen -ls'
-alias sl='screen -ls | grep --color=always "CCminer\|Update"'
+alias sl='screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1'
 alias rr='screen -r CCminer'
 alias ru='screen -r Update'
 alias hh='echo -e "\e[0;93m\
@@ -43,6 +43,8 @@ sl
 EOF
 echo 'echo -e "\e[94mPool: \e[92m$(basename *.pool .pool)\e[0m"'  >> ~/.bashrc
 fi
+screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
+echo "  brišem"
 screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit && screen -ls
 source .bashrc
 echo "  done"
