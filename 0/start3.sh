@@ -23,11 +23,16 @@ echo -e "\e[0m  WORKER:\e[96m $delavec\e[0m"
 ime_iz_pool=$(basename ~/*.pool)
 obst_pool=${ime_iz_pool%.pool}
 echo -e "\e[0m  CRpool:\e[96m $obst_pool\e[0m"
-
-if [ "$NAME" = "$obst_pool" ]; then
+if screen -list | grep -q "CCminer" && [ "$NAME" = "$obst_pool" ]; then
   echo -e "\e[93m  Same pool:\e[92m $NAME = $obst_pool\e[0m"
+  sl
 else
   pause 1
+
+
+
+
+
 fi
 
 
