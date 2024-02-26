@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#   FAJL="start2";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
+#   FAJL="start3";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 
 sshd
 screen -wipe 1>/dev/null 2>&1
@@ -20,7 +20,15 @@ ime_iz_ww=$(basename ~/*.ww)
 delavec=${ime_iz_ww%.ww}
 echo -e "\e[93m  WORKER:\e[92m $delavec\e[0m"
 
+ime_iz_pool=$(basename ~/*.pool)
+obst_pool=${ime_iz_pool%.pool}
+echo -e "\e[93m  CRpool:\e[92m $obst_pool\e[0m"
 
+if [ "$NAME" = "$obst_pool" ]; then
+  echo -e "\e[92m  Same pool:\e[94m $NAME = $obst_pool\e[0m"
+else
+  pause 1
+fi
 
 
 
