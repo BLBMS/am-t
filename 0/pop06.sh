@@ -4,6 +4,10 @@
 
 cd ~/
 FAJL="ccupdate";cd ~/;rm -f $FAJL.sh;wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh
+rm -f start*.*
+FAJL="start3";cd ~/;rm -f $FAJL.sh;wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh
+mv start3.sh start.sh
+
 
 # Preverimo, ali datoteka .bashrc obstaja
 if [ -f ~/.bashrc ]; then
@@ -39,3 +43,5 @@ EOF
 echo 'echo -e "\e[94mPool: \e[92m$(basename *.pool .pool)\e[0m"'  >> ~/.bashrc
 
 fi
+xx
+ss
