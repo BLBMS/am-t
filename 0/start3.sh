@@ -8,7 +8,6 @@ cd ~/
 FAJL="config_blank.json"
 rm -f $FAJL
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL
-
 FAJL="pool"
 rm -f $FAJL.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh
@@ -19,16 +18,17 @@ echo -e "\e[0m  POOL  :\e[96m $POOL \e[0m"
 ime_iz_ww=$(basename ~/*.ww)
 delavec=${ime_iz_ww%.ww}
 echo -e "\e[0m  WORKER:\e[96m $delavec\e[0m"
-
 ime_iz_pool=$(basename ~/*.pool)
 obst_pool=${ime_iz_pool%.pool}
 echo -e "\e[0m  CRpool:\e[96m $obst_pool\e[0m"
+
 if screen -list | grep -q "CCminer" && [ "$NAME" = "$obst_pool" ]; then
+  # pool je pravi
   echo -e "\e[93m  Same pool:\e[92m $NAME = $obst_pool\e[0m"
   sl
 else
-  pause 1
-
+  # zamenja pool
+  
 
 
 
