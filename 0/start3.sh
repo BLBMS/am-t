@@ -4,28 +4,41 @@
 
 sshd
 screen -wipe 1>/dev/null 2>&1
-FAJL="config_blank.json";cd ~/;rm -f $FAJL;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL
-if [ -e "auto.1" ]; then
-  FAJL="pool";cd ~/;rm -f $FAJL.sh
-  wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh
-  chmod +x $FAJL.sh
-  source ./$FAJL.sh
-  echo -e "\e[93m  NAME:\e[92m $NAME \e[0m"
-  echo -e "\e[93m  POOL:\e[92m $POOL \e[0m"  
-  if ls ~/*.ww >/dev/null 2>&1; then
-      for datoteka in ~/*.ww; do
-          if [ -e "$datoteka" ]; then
-              ime_iz_datoteke=$(basename "$datoteka")
-              delavec=${ime_iz_datoteke%.ww}
-              echo -e "\e[93m  Worker from .ww file:\e[92m $delavec\e[0m"
-          fi
-      done
-  else
-      echo -e "\e[91m  No .ww file\e[0m"
-      printf "\n\e[93m  Worker name: \e[0m"
-      read delavec
-      echo $delavec > ~/$delavec.ww
-  fi
+cd ~/
+FAJL="config_blank.json"
+rm -f $FAJL
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL
+
+FAJL="pool"
+rm -f $FAJL.sh
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh
+chmod +x $FAJL.sh
+source ./$FAJL.sh
+echo -e "\e[93m  NAME  :\e[92m $NAME \e[0m"
+echo -e "\e[93m  POOL  :\e[92m $POOL \e[0m"  
+if ls ~/*.ww >/dev/null 2>&1; then
+    for datoteka in ~/*.ww; do
+        if [ -e "$datoteka" ]; then
+            ime_iz_datoteke=$(basename "$datoteka")
+            delavec=${ime_iz_datoteke%.ww}
+            echo -e "\e[93m  WORKER:\e[92m $delavec\e[0m"
+        fi
+    done
+else
+    echo -e "\e[91m  No .ww file\e[0m"
+    printf "\n\e[93m  Worker name: \e[0m"
+    read delavec
+    echo $delavec > ~/$delavec.ww
+fi
+
+
+
+
+
+
+exit
+#---------------------------------------
+
   cd ~/
   rm -f config.json
   cp config_blank.json config.json
