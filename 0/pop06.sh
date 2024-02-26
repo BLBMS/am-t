@@ -33,17 +33,10 @@ alias RU='ru'
 alias HH='hh'
 alias inf='~/inf.sh'
 alias pool='~/changepool.sh'
-echo "__________________"
-echo "ss = start ccminer"
-echo "xx = kill all screens"
-echo "sl = list screens"
-echo "rr = show CCminer"
-echo "ru = show Update"
-echo "hh = this help"
-echo "exit: CTRL-a + d"
-echo "__________________"
+hh
 screen -ls | grep --color=always "CCminer"
 EOF
-echo 'echo -e '"'"'\\e[94mPool: \\e[92m$(basename *.pool .pool)\\e[0m'"'"''  >> ~/.bashrc
+echo 'echo -e "\e[94mPool: \e[92m$(basename *.pool .pool)\e[0m"'  >> ~/.bashrc
+#echo 'echo -e '"'"'\\e[94mPool: \\e[92m$(basename *.pool .pool)\\e[0m'"'"''  >> ~/.bashrc
 
 fi
