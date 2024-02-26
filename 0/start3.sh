@@ -16,20 +16,9 @@ chmod +x $FAJL.sh
 source ./$FAJL.sh
 echo -e "\e[93m  NAME  :\e[92m $NAME \e[0m"
 echo -e "\e[93m  POOL  :\e[92m $POOL \e[0m"  
-if ls ~/*.ww >/dev/null 2>&1; then
-    for datoteka in ~/*.ww; do
-        if [ -e "$datoteka" ]; then
-            ime_iz_datoteke=$(basename "$datoteka")
-            delavec=${ime_iz_datoteke%.ww}
-            echo -e "\e[93m  WORKER:\e[92m $delavec\e[0m"
-        fi
-    done
-else
-    echo -e "\e[91m  No .ww file\e[0m"
-    printf "\n\e[93m  Worker name: \e[0m"
-    read delavec
-    echo $delavec > ~/$delavec.ww
-fi
+ime_iz_ww=$(basename ~/*.ww)
+delavec=${ime_iz_ww%.ww}
+echo -e "\e[93m  WORKER:\e[92m $delavec\e[0m"
 
 
 
