@@ -2,40 +2,30 @@
 
 #   FAJL="ukaz";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh
 
-HELP='Send SCRIPT to miners, script in 1st attribut\n\
-and IP or range or all as 2nd attribut\n\
-  \".ukaz.sh\"    script in \n\
-  h  help         this help\n\
-  i###            only this IP\n\
-  f###            from IP\n\
-  t###            to IP in LIST\n\
-  a  all          all IP in LIST'
+HELP="Send SCRIPT to miners, script in 1st attribut\n\
+and IP or range or all as 2nd attribut\n \
+  './ukaz.sh'     script\n \
+  h  help         this help\n \
+  i###            only this IP\n \
+  f###            from IP\n \
+  t###            to IP in LIST\n \
+  all             all IP in LIST"
 
-echo $HELP
-exit
+echo -e "$HELP"
 
 IPMASK="192.168.100."
 USER="blb"
 SSHID="~/.ssh/id_blb"
 PORT="8022"
-
-if ! [[ $1 =~ ^[0-9]+$ && $1 -ge 1 && $1 -le 99 ]]; then
-    echo "\e[91mPopravek ni številka med 01 in 99.\e[0m"
-    echo -e "\n$HELP"
-    exit 0
-fi
-
-FAJL="pop$1"
-POP=$1
-# echo -e "\n\e[92mPošiljam popravek $POP\e[0m\n"
-
-#script="cd ~/;rm -f "$FAJL".sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/"$FAJL".sh;chmod +x "$FAJL".sh;./"$FAJL".sh "$POP
-script="cd ~/;rm -f "$FAJL".sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/"$FAJL".sh;chmod +x "$FAJL".sh;./"$FAJL".sh "
-
-echo -e "\e[93mPošiljam $FAJL.sh $POP\e[0m"
+script=$1
+echo -e "\n\e[93mPošiljam script:\e[92m $script \e[0m"
+#echo -e "\e[93m Att 2:\e[92m $2 \e[0m"
+#echo -e "\e[93m Att 3:\e[92m $3 \e[0m"
+#echo -e "\e[93m Att 4:\e[92m $4 \e[0m"
+#echo -e "\e[93m Att 5:\e[92m $5 \e[0m"
+# VZOREC script="cd ~/;rm -f "$FAJL".sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/"$FAJL".sh;chmod +x "$FAJL".sh;./"$FAJL".sh "$P>#script="cd ~/;rm -f "$FAJL".sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/"$FAJL".sh;chmod +x "$FAJL".sh;./"$FAJL".sh "
 
 ipatt=${2:0:1}
-
 start_time=$(date +%s%3N)
 
 #----------------- only 1 IP is set ----------------------------------------------
