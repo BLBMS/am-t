@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#   
+#   FAJL="ukaz";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh
 
 HELP='Send SCRIPT to miners, script in 1st attribut\n\
 and IP or range or all as 2nd attribut\n\
