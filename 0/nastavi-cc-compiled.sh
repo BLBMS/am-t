@@ -13,6 +13,8 @@
 #                3     eu.luckpool.net
 #                4     de.vipor.net
 #                5     eu.coudiko.io
+#                6     zergpool solo
+#                7     de.vipor.net_SOLO
 #    -wName - worker name (overwrite file name.ww)
 #    -h     - help
 
@@ -41,6 +43,8 @@ if [ "$#" -ne 0 ]; then
                         echo "                3     eu.luckpool.net"
                         echo "                4     de.vipor.net"
                         echo "                5     eu.coudiko.io"
+                        echo "                6     zergpool solo"
+                        echo "                7     de.vipor.net_SOLO"
                         echo "    -wName - worker name (overwrite file name.ww)"
                         echo "    -h     - help"
                         exit 0 ;;
@@ -284,6 +288,10 @@ case $MODEL in
         echo "$MODEL Samsung Galaxy A40"
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerA40.compiled
         ;;
+    "SM-J730")
+        echo "$MODEL Samsung Galaxy J7"
+        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminer-a53.compiled
+        ;;        
 # ADD NEW MODEL
     *)
         echo "----------------------------------------------------------"
@@ -304,27 +312,31 @@ cat << EOF >> ~/.bashrc
 ### ______  MOJE _____
 PS1='${debian_chroot:+($debian_chroot)}\[\033[0;93m\]$delavec\[\033[0;91m\]@\[\033[0;93m\]$phone_ip\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]\$ '
 alias ss='~/start.sh'
-alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit && screen -ls'
-alias sl='screen -ls | grep --color=always "CCminer"'
-alias rr='screen -x CCminer'
-alias hh='echo -e "\e[0;93mss = start ccminer" && echo "xx = kill screen" && echo "sl = list screen" && echo "rr = show screen" && echo "hh = this help" && echo -e "exit: CTRL-a + d\e[0m"'
-alias SS='ss'
+alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit && screen -ls'
+alias sl='screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1'
+alias rr='screen -r CCminer'
+alias ru='screen -r Update'
+alias hh='echo -e "\e[0;93m\
+__________________\n\
+ss = start CCminer/Update\n\
+xx = kill all screens\n\
+sl = list screens\n\
+rr = show CCminer\n\
+ru = show Update\n\
+hh = this help\n\
+exit: CTRL-a + d\n\
+__________________"'
 alias XX='xx'
 alias SL='sl'
 alias RR='rr'
+alias RU='ru'
 alias HH='hh'
 alias inf='~/inf.sh'
-echo "__________________"
-echo "ss = start ccminer"
-echo "xx = kill screen"
-echo "sl = list screen"
-echo "rr = show screen"
-echo "hh = this help"
-echo "exit: CTRL-a + d"
-echo "__________________"
-screen -ls | grep --color=always "CCminer"
-ss
+alias pool='~/changepool.sh'
+hh
+sl
 EOF
+echo 'echo -e "\e[94mPool: \e[92m$(basename *.pool .pool)\e[0m"'  >> ~/.bashrc
 cd ~/
 
 # kopira in zamenja delavca v vseh json
@@ -334,6 +346,7 @@ wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-luck.json
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-mrr.json
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-verus.json
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-vipor.json
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-viporDES.json
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-zerg.json
 for file in ~/*.json; do
     if [ -f "$file" ]; then
@@ -355,18 +368,19 @@ echo "2     pool.verus.io"
 echo "3     eu.luckpool.net"
 echo "4     de.vipor.net"
 echo "5     eu.coudiko.io"
-echo -e "6     eu zergpool SOLO\e[93m"
+echo "6     eu zergpool SOLO"
+echo -e "7     de.vipor.net_SOLO\e[93m"
 if [ "$choice_pool" != "0" ]; then
     choice="$choice_pool"
 else
     while true; do
-        read -r -n 1 -p "Choice: 1 2 3 4 5 6: " choice
+        read -r -n 1 -p "Choice: 1 2 3 4 5 6 7: " choice
         case $choice in
-            1|2|3|4|5|6)
+            1|2|3|4|5|6|7)
                 break  # Izberite veljavno številko in izstopite iz zanke
                 ;;
             *)
-                echo "enter: 1 2 3 4 5 6" ;;
+                echo "enter: 1 2 3 4 5 6 7" ;;
         esac
     done
 fi
@@ -397,6 +411,10 @@ case $choice in
         echo "  -> eu zergpool SOLO"
         cp ~/config-zerg.json ~/config.json 
         ;;
+    7)
+        echo "  -> de.vipor.net_SOLO"
+        cp ~/config-viporDES.json ~/config.json 
+        ;;
 esac
 echo -e "\e[0m"
 echo "done"
@@ -405,3 +423,13 @@ echo "done"
 bash ./inf.sh
 echo -e "\e[93m THE END\e[0m"
 echo -e "\e[92m Type EXIT to restart TERMUX\e[0m\n"
+
+cd ~/
+POP="01";echo -e "\e[93m POP $POP\e[0m";rm -f pop$POP.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/pop$POP.sh;chmod +x pop$POP.sh;./pop$POP.sh
+POP="02";echo -e "\e[93m POP $POP\e[0m";rm -f pop$POP.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/pop$POP.sh;chmod +x pop$POP.sh;./pop$POP.sh
+POP="03";echo -e "\e[93m POP $POP\e[0m";rm -f pop$POP.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/pop$POP.sh;chmod +x pop$POP.sh;./pop$POP.sh
+POP="04";echo -e "\e[93m POP $POP\e[0m";rm -f pop$POP.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/pop$POP.sh;chmod +x pop$POP.sh;./pop$POP.sh
+POP="05";echo -e "\e[93m POP $POP\e[0m";rm -f pop$POP.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/pop$POP.sh;chmod +x pop$POP.sh;./pop$POP.sh
+POP="06";echo -e "\e[93m POP $POP\e[0m";rm -f pop$POP.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/pop$POP.sh;chmod +x pop$POP.sh;./pop$POP.sh
+
+echo -e "\e[93m THE END\e[0m"
