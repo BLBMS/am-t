@@ -288,7 +288,7 @@ case $MODEL in
         echo "$MODEL Samsung Galaxy A40"
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerA40.compiled
         ;;
-    "SM-J730")
+    "SM-J730F")
         echo "$MODEL Samsung Galaxy J7"
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminer-a53.compiled
         ;;        
