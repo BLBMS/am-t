@@ -1,0 +1,17 @@
+{
+  "pools":[
+    {
+    "name": "de.vipor.net_SOLO",
+    "url": "stratum+tcp://de.vipor.net:5045",
+    "timeout": 180,
+    "disabled": 0
+    }
+  ],
+  "user": "i81Y5CQBAMRhtirgwtsxv6GZT512SYK14g.DELAVEC",
+  "algo": "verus",
+  "threads": 8,
+  "cpu-priority": 1,
+  "retry-pause": 5,
+  "api-allow": "192.168.100.0/23",
+  "api-bind": "0.0.0.0:4068"
+}
