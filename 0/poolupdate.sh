@@ -5,7 +5,10 @@ sshd
 screen -wipe 1>/dev/null 2>&1
 #FAJL="config_blank.json";cd ~/;rm -f $FAJL;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL
 if [ -e "auto.1" ]; then
-  FAJL="pool";cd ~/;rm -f $FAJL.sh
+  cd ~/
+  FAJL="pool"
+  rm -f $FAJL.sh
+  rm -f $FAJL.sh.*
   wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh
   chmod +x $FAJL.sh
   source ./$FAJL.sh
