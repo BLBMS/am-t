@@ -8,6 +8,8 @@ rm -f start*.*
 rm -f *.pool.*
 FAJL="start3";cd ~/;rm -f $FAJL.sh;wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh
 mv start3.sh start.sh
+FAJL="pool";cd ~/;rm -f $FAJL.sh;wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh
+
 
 
 # Preverimo, ali datoteka .bashrc obstaja
