@@ -10,6 +10,8 @@ FAJL="start3";cd ~/;rm -f $FAJL.sh;wget -q https://raw.githubusercontent.com/BLB
 mv start3.sh start.sh
 FAJL="pool";cd ~/;rm -f $FAJL.sh;wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh
 
+FAJL="config_blank.json";cd ~/;rm -f $FAJL;wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL
+#FAJL="poolupdate";cd ~/;rm -f $FAJL.sh;wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh
 
 
 # Preverimo, ali datoteka .bashrc obstaja
