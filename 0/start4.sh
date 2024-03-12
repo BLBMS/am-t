@@ -35,7 +35,7 @@ else
   cp config_blank.json config.json
   sed -i "s/NAME/$NAME/g; s/POOL/$POOL/g; s/USER/$USER/g; s/PASS/$PASS/g; s/DELAVEC/$delavec/g" config.json
   echo -e "\n\e[91m Starting CCminer on NEW POOL \e[0m\n"
-  screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit
+  screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit && screen -ls
   screen -wipe 1>/dev/null 2>&1
   screen -dmS CCminer 1>/dev/null 2>&1
   screen -S CCminer -X stuff "~/ccminer -c ~/config.json\n" 1>/dev/null 2>&1
