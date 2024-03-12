@@ -11,4 +11,4 @@
 #NAME="verus";POOL="pool.verus.io:9998";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASW=""
 #NAME="luckpool";POOL="eu.luckpool.net:3956";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASW=""
 #NAME="cloudiko";POOL="eu.cloudiko.io:9999";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASW=""
-NAME="MRR";POOL="stratum+tcp://eu-de01.miningrigrentals.com:54157";USER="BLB.295007";PASW="DELAVEC"
+NAME="MRR";POOL="eu-de01.miningrigrentals.com:54157";USER="BLB.295007";PASW="DELAVEC"
