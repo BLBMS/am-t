@@ -8,7 +8,7 @@
     }
   ],
   "user": "USER",
-  "pass": "PASW",
+  "pass": "PASS",
   "algo": "verus",
   "threads": 8,
   "cpu-priority": 1,
