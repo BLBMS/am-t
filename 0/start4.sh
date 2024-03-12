@@ -27,7 +27,7 @@ echo -e "\e[0m  CRpool:\e[96m $obst_pool\e[0m"
 if screen -list | grep -q "CCminer" && [ "$NAME" = "$obst_pool" ]; then
   # pool je pravi
   echo -e "\e[93m  Same pool:\e[92m $NAME = $obst_pool\e[0m"
-  sl
+  screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 else
   # zamenja pool
   cd ~/
