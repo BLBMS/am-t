@@ -7,7 +7,8 @@
     "disabled": 0
     }
   ],
-  "user": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC",
+  "user": "USER",
+  "pass": "PASS";
   "algo": "verus",
   "threads": 8,
   "cpu-priority": 1,
