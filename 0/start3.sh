@@ -15,8 +15,6 @@ chmod +x $FAJL.sh
 source ./$FAJL.sh
 echo -e "\e[0m  NAME  :\e[96m $NAME \e[0m"
 echo -e "\e[0m  POOL  :\e[96m $POOL \e[0m"
-echo -e "\e[0m  USER  :\e[96m $USER \e[0m"
-echo -e "\e[0m  PASS  :\e[96m $PASS \e[0m"
 ime_iz_ww=$(basename ~/*.ww)
 delavec=${ime_iz_ww%.ww}
 echo -e "\e[0m  WORKER:\e[96m $delavec\e[0m"
