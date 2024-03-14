@@ -45,7 +45,7 @@ alias OO='oo'
 alias HH='hh'
 alias inf='~/inf.sh'
 alias pool='~/changepool.sh'
- 
+alias posodobi='~/posodobi.sh' 
 screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 EOF
 echo 'echo -e "\e[94mPool: \e[92m$(basename *.pool .pool)\e[0m"'  >> ~/.bashrc
