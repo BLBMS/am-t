@@ -54,6 +54,13 @@ sed -i 's/OOOOOO/echo -e "\\e[94mPool: \\e[92m$(basename *.pool .pool)\\e[0m"/g'
 #screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 #echo "  brišem"
 #screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit && screen -ls
+
+rm -f cron.sh
+rm -f dodaj-zerg.sh
+mkdir jsons
+mv config-*.json jsons/
+poolupdate.sh
+
 sleep 1
 source .bashrc
 echo "  done"
