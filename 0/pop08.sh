@@ -22,6 +22,7 @@ alias sl='screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\
 alias rr='screen -r CCminer'
 alias ru='screen -r Update'
 alias oo='OOOOOO'
+alias sb='source .bashrc'
 alias hh='echo -e "\e[0;93m\
 __________________\n\
 ss = start CCminer/Update\n\
@@ -36,6 +37,7 @@ exit: CTRL-a + d\n\
 __________________\n\
 posodobi ## = sistem iz github\n\
 pool = posodobi pool.sh iz github\n\
+sb = source .bashrc\n\
 __________________"'
 alias XX='xx'
 alias SL='sl'
@@ -63,5 +65,6 @@ rm -f poolupdate.sh
 
 sleep 1
 source .bashrc
+sb
 echo "  done"
 #source ./start.sh
