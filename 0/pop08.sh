@@ -59,7 +59,7 @@ rm -f cron.sh
 rm -f dodaj-zerg.sh
 mkdir jsons
 mv config-*.json jsons/
-poolupdate.sh
+rm -f poolupdate.sh
 
 sleep 1
 source .bashrc
