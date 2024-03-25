@@ -10,6 +10,6 @@
 #NAME="FI_vipor";POOL="fi.vipor.net:5040";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""e
 #NAME="PL_vipor";POOL="pl.vipor.net:5040";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
 #NAME="verus";POOL="pool.verus.io:9998";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
-NAME="luckpool";POOL="eu.luckpool.net:3956";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
-#NAME="cloudiko";POOL="eu.cloudiko.io:9999";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
+#NAME="luckpool";POOL="eu.luckpool.net:3956";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
+NAME="cloudiko";POOL="eu.cloudiko.io:9999";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS="x"
 #NAME="MRR";POOL="eu-de01.miningrigrentals.com:54157";USER="BLB.295007";PASS="DELAVEC"
