@@ -1,5 +1,8 @@
 #!/usr/bin/perl
 # sample script to query ccminer API
+
+#   FAJL="api.pl";cd ~/;rm -f $FAJL;wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL;chmod +x $FAJL
+
 use strict;
 use warnings;
 use Getopt::Long qw(GetOptions);
