@@ -30,7 +30,7 @@ rm -f config.sh
 wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/config.sh
 chmod +x config.sh
 echo " "  >> ~/.bashrc
-
+echo "###    MOJE"  >> ~/.bashrc
 # zbriše vse za MOJE
 awk '!f; /MOJE/ {f=1}' ~/.bashrc > ~/.bashrc.tmp && mv ~/.bashrc.tmp ~/.bashrc
 
