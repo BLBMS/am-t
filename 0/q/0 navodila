@@ -1,9 +1,23 @@
 #!/bin/bash
 
+# in termux
+
+pkg update
+pkg upgrade -y
+pkg install proot-distro -y
+proot-distro install ubuntu
+proot-distro login ubuntu
+
+# in ubuntu
+
 cat /etc/os-release
 apt update
 apt upgrade -y
-apt install wget
+apt install wget -y
 wget https://github.com/Qubic-Solutions/rqiner-builds/releases/download/v0.4.1/rqiner-aarch64-mobile
 chmod u+x rqiner-aarch64-mobile
-./rqiner-aarch64-mobile -t8 -i NFCEVVPMJVQAFBRWIWQJTIICADPAUTJSCGNYWGBOCFWPPSBSCZQRGVQGLKHI -l S9a
+cat << EOF > ~/qs
+./rqiner-aarch64-mobile -t8 -i NFCEVVPMJVQAFBRWIWQJTIICADPAUTJSCGNYWGBOCFWPPSBSCZQRGVQGLKHI -l DELAVEC
+EOF
+chmod +x qs
+alias 
