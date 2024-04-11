@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#   FAJL="";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
+
 # in termux
 
 ime_iz_ww=$(basename ~/*.ww)
@@ -14,15 +16,30 @@ proot-distro login ubuntu
 
 # in ubuntu
 
+cd ~/
+rm -f *.ww
+echo $delavec > ~/$delavec.ww
 cat /etc/os-release
+sleep 2
 apt update
 apt upgrade -y
 apt install wget -y
 wget https://github.com/Qubic-Solutions/rqiner-builds/releases/download/v0.4.1/rqiner-aarch64-mobile
 chmod u+x rqiner-aarch64-mobile
-cat << EOF > ~/config.sh
-./rqiner-aarch64-mobile -t8 -i NFCEVVPMJVQAFBRWIWQJTIICADPAUTJSCGNYWGBOCFWPPSBSCZQRGVQGLKHI -l DELAVEC
-EOF
+rm -f config.sh
+wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/config.sh
 chmod +x config.sh
-echo "###    MOJE"  >> ~/.bashrc
-echo "alias ss='~/qstart.sh'"  >> ~/.bashrc
+echo " "  >> ~/.bashrc
+
+# zbriše vse za MOJE
+awk '!f; /MOJE/ {f=1}' ~/.bashrc > ~/.bashrc.tmp && mv ~/.bashrc.tmp ~/.bashrc
+
+#echo "###    MOJE"  >> ~/.bashrc
+
+cat << EOF >> ~/.bashrc
+alias ss='~/qstart.sh'
+alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit && screen -ls'
+alias sl='screen -ls | sed -E "s/RQiner/\x1b[32m&\x1b[0m/g" | tail -n +2 | head -n -1'
+alias sll='screen -ls'
+alias rr='screen -r RQiner'
+EOF
