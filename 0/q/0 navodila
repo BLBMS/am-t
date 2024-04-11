@@ -17,8 +17,8 @@ proot-distro login ubuntu
 # in ubuntu
 
 cd ~/
-rm -f *.ww
-echo $delavec > ~/$delavec.ww
+#rm -f *.ww
+#echo $delavec > ~/$delavec.ww
 cat /etc/os-release
 sleep 2
 apt update
@@ -29,6 +29,9 @@ chmod u+x rqiner-aarch64-mobile
 rm -f config.sh
 wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/config.sh
 chmod +x config.sh
+sed -i "s#DELAVEC#$delavec#g" config.sh
+
+
 echo " "  >> ~/.bashrc
 echo "###    MOJE"  >> ~/.bashrc
 # zbriše vse za MOJE
