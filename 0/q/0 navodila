@@ -20,4 +20,5 @@ cat << EOF > ~/qs
 ./rqiner-aarch64-mobile -t8 -i NFCEVVPMJVQAFBRWIWQJTIICADPAUTJSCGNYWGBOCFWPPSBSCZQRGVQGLKHI -l DELAVEC
 EOF
 chmod +x qs
-alias 
+echo "###    MOJE"  >> ~/.bashrc
+echo "alias qs='~/qs'"  >> ~/.bashrc
