@@ -25,4 +25,4 @@ cat << EOF > ~/qs
 EOF
 chmod +x qs
 echo "###    MOJE"  >> ~/.bashrc
-echo "alias qs='~/qs'"  >> ~/.bashrc
+echo "alias ss='~/qstart.sh'"  >> ~/.bashrc
