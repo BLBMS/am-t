@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#   FAJL="qstart";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
+#   FAJL="qstart";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 
 if [ screen -list | grep -q "RQiner" ]; then
    # pool je pravi
