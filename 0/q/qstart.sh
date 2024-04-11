@@ -11,7 +11,7 @@ else
   screen -ls
   screen -wipe 1>/dev/null 2>&1
   screen -dmS RQiner 1>/dev/null 2>&1
-  screen -S RQiner -X stuff "~/qs\n" 1>/dev/null 2>&1
+  screen -S RQiner -X stuff "~/qstart.sh\n" 1>/dev/null 2>&1
 fi
 
 #   ./rqiner-aarch64-mobile -t8 -i NFCEVVPMJVQAFBRWIWQJTIICADPAUTJSCGNYWGBOCFWPPSBSCZQRGVQGLKHI -l S9a
