@@ -20,9 +20,9 @@ apt upgrade -y
 apt install wget -y
 wget https://github.com/Qubic-Solutions/rqiner-builds/releases/download/v0.4.1/rqiner-aarch64-mobile
 chmod u+x rqiner-aarch64-mobile
-cat << EOF > ~/qs
+cat << EOF > ~/config.sh
 ./rqiner-aarch64-mobile -t8 -i NFCEVVPMJVQAFBRWIWQJTIICADPAUTJSCGNYWGBOCFWPPSBSCZQRGVQGLKHI -l DELAVEC
 EOF
-chmod +x qs
+chmod +x config.sh
 echo "###    MOJE"  >> ~/.bashrc
 echo "alias ss='~/qstart.sh'"  >> ~/.bashrc
