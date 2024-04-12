@@ -46,3 +46,8 @@ alias sl='screen -ls | sed -E "s/RQiner/\x1b[32m&\x1b[0m/g" | tail -n +2 | head 
 alias sll='screen -ls'
 alias rr='screen -r RQiner'
 EOF
+
+
+#    cron
+
+#  if screen -ls | grep -q "Dead"; then echo "Mrtev"; else echo "Živi"; fi
