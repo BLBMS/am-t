@@ -49,5 +49,5 @@ BUILD=$BUILD"{\"PHONE\":\"active=\",\"HOST\":\"$act\",\"POOL\":\"inactive=\",\"K
 BUILD=$BUILD"{\"PHONE\":\"VRSC_24h=\",\"HOST\":\"$my_reward2\",\"POOL\":\"USDT_24h=\",\"KHS\":\"$my_reward_USDT2\"},"
 BUILD=$BUILD"{\"PHONE\":\"time=\",\"HOST\":\"$cur_time\",\"POOL\":\"iteration=\",\"KHS\":\"$iteration\"},"
 JSON=$(echo $BUILD | tr -d '\r\n' | sed "s/.\{0,2\}$//; /^$/d"; printf "}]")
+# echo $JSON | jq '[.[] | {PHONE,HOST,POOL,USER,KHS,DIFF,ACC,REJ,WAIT,UPTIME,TS,POOL}]' | less -N  # for testing
 echo $JSON
-#echo $JSON | jq '[.[] | {PHONE,HOST,POOL,USER,KHS,DIFF,ACC,REJ,WAIT,UPTIME,TS,POOL}]'
