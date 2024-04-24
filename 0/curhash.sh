@@ -8,4 +8,4 @@ podatki=$(curl -s $url)
 curhash=$(echo "$podatki" | grep -o '"hashrateString":"[^"]*' | cut -d'"' -f4)
 
 # Izpis rezultata
-echo "Trenutni hashrate za delavca $delavec: $curhash"
+echo "Current hashrate $delavec: $curhash"
