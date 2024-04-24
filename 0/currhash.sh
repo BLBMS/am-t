@@ -8,4 +8,4 @@ podatki=$(curl -s $url)
 curhash=$(echo "$podatki" | grep -o '"hashrateString":"[^"]*' | cut -d'"' -f4)
 
 # Izpis rezultata
-echo "Current hash $delavec: $curhash"
+echo -e "Current hash (luckpool) \n $delavec: $curhash"
