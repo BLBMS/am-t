@@ -5,8 +5,15 @@
 ifconfig_out=$(ifconfig)
 ip_line=$(echo "$ifconfig_out" | grep 'inet 192')
 phone_ip=$(echo "$ip_line" | cut -d'.' -f4 | cut -c1-3)
-echo "IP=" $phone_ip
+echo -e "\e[93mIP= $phone_ip\e[0m"
 
+for datoteka in ~/*.ww; do
+    if [ -e "$datoteka" ]; then
+        ime_iz_datoteke=$(basename "$datoteka")
+        delavec=${ime_iz_datoteke%.ww}
+        echo -e "\e[92mWorker= $delavec\e[0m"
+    fi
+done
 
 echo -e "\e[93m  Properties:[0m"
 echo -e "\nproduct.manufacturer : \e[0;92m$(getprop ro.product.manufacturer)\e[0m"
