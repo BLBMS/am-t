@@ -291,7 +291,37 @@ case $MODEL in
     "SM-J730F")
         echo "$MODEL Samsung Galaxy J7"
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminer-a53.compiled
-        ;;        
+        ;;
+    "SM-A307F")
+        echo "$MODEL Samsung Galaxy A30s"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
+        mv ccminer ccminer-darktron.compiled
+        ;;
+    "SM-A")
+        echo "$MODEL Samsung Galaxy A30s"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
+        mv ccminer ccminer-darktron.compiled
+        ;;
+    "SM-A")
+        echo "$MODEL Samsung Galaxy A30s"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
+        mv ccminer ccminer-darktron.compiled
+        ;;
+    "SM-A")
+        echo "$MODEL Samsung Galaxy A30s"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
+        mv ccminer ccminer-darktron.compiled
+        ;;
+    "SM-A")
+        echo "$MODEL Samsung Galaxy A30s"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
+        mv ccminer ccminer-darktron.compiled
+        ;;
+    "SM-A")
+        echo "$MODEL Samsung Galaxy A30s"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
+        mv ccminer ccminer-darktron.compiled
+        ;;
 # ADD NEW MODEL
     *)
         echo "----------------------------------------------------------"
