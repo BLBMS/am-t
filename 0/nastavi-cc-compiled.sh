@@ -243,13 +243,14 @@ echo -e "product.model        : \e[0;93m$(getprop ro.product.model)\e[0m"
 echo -e "product.cpu.abilist64: \e[0;93m$(getprop ro.product.cpu.abilist64)\e[0m"
 echo -e "arm64.variant        : \e[0;93m$(getprop dalvik.vm.isa.arm64.variant)\e[0m"
 echo -e "ROM                  : \e[0;93m$(getprop ro.build.display.id)\e[0m"
+echo -e "number of cores      : \e[0;93m$(lscpu | grep 'CPU(s):' | awk '{print $2}')\e[0m"
 output=$(lscpu | grep "Model name:" | awk -F ': ' '{print $2}' | tr -d ' ' | tr '[:upper:]' '[:lower:]')
 IFS=$'\n' read -rd '' -a cpus <<< "$output"
 num_cpus="${#cpus[@]}"
 for ((i = 0; i < num_cpus; i++)); do
     CORE="${cpus[i]}"
     eval "CPU$((i))=\"${cpus[i]}\""
-    echo -e "CORE:          \e[0;93mCPU$i  \e[0m: \e[0;92m$CORE\e[0m"
+    echo -e "CORE :           \e[0;93mCPU$i  \e[0m: \e[0;92m$CORE\e[0m"
 done
 echo -e "Android release      : \e[0;93m$ANDROID\e[0m"
 cd ~/
@@ -294,22 +295,24 @@ case $MODEL in
         ;;
     "SM-A307F")
         echo "$MODEL Samsung Galaxy A30s"
-        wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a53/ccminer
         mv ccminer ccminer-darktron.compiled
         ;;
-    "SM-A")
-        echo "$MODEL Samsung Galaxy A30s"
-        wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
+    "SM-A505F")
+        echo "$MODEL Samsung Galaxy A50"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a55/ccminer
         mv ccminer ccminer-darktron.compiled
         ;;
-    "SM-A")
-        echo "$MODEL Samsung Galaxy A30s"
-        wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
+    "SM-A705F")
+        echo "$MODEL Samsung Galaxy A70"
+        echo " compile KYRO"
+        exit 0   # *******************************************************************************************
+        # wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer  KYRO
         mv ccminer ccminer-darktron.compiled
         ;;
-    "SM-A")
-        echo "$MODEL Samsung Galaxy A30s"
-        wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
+    "SM-A127F")
+        echo "$MODEL Samsung Galaxy A12s Nacho"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a55/ccminer
         mv ccminer ccminer-darktron.compiled
         ;;
     "SM-A")
@@ -333,7 +336,7 @@ case $MODEL in
 esac
 mv ccminer*.compiled ccminer
 chmod +x ccminer
-echo -e "\n\e[93m Set CCminer \e[0m" # -----------------------------------------------
+echo -e "\n\e[93m CCminer copyd \e[0m" # -----------------------------------------------
 cd ~/
 # briše MOJE v ~    /.bashrc, vse do konca
 sed -i '/### ______  MOJE _/,$d' ~/.bashrc
@@ -346,120 +349,47 @@ alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen
 alias sl='screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1'
 alias rr='screen -r CCminer'
 alias ru='screen -r Update'
+alias oo='OOOOOO'
+alias sb='source .bashrc'
 alias hh='echo -e "\e[0;93m\
+alias XX='xx'
+alias SL='sl'
+alias RR='rr'
+alias RU='ru'
+alias OO='oo'
+alias HH='hh'
+alias inf='~/inf.sh'
+alias posodobi='~/posodobi.sh' 
 __________________\n\
 ss = start CCminer/Update\n\
 xx = kill all screens\n\
 sl = list screens\n\
 rr = show CCminer\n\
 ru = show Update\n\
+oo = current pool\n\
+inf = show phone info\n\
 hh = this help\n\
 exit: CTRL-a + d\n\
+__________________\n\
+posodobi ## = sistem iz github\n\
+pool = posodobi pool.sh iz github\n\
+sb = source .bashrc\n\
 __________________"'
-alias XX='xx'
-alias SL='sl'
-alias RR='rr'
-alias RU='ru'
-alias HH='hh'
-alias inf='~/inf.sh'
-alias pool='~/changepool.sh'
-hh
-sl
+screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 EOF
 echo 'echo -e "\e[94mPool: \e[92m$(basename *.pool .pool)\e[0m"'  >> ~/.bashrc
+sed -i 's/OOOOOO/echo -e "\\e[94mPool: \\e[92m$(basename *.pool .pool)\\e[0m"/g' ~/.bashrc
 cd ~/
-
-# kopira in zamenja delavca v vseh json
-rm -f *.json
-wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-cloudiko.json
-wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-luck.json
-wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-mrr.json
-wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-verus.json
-wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-vipor.json
-wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-viporDES.json
-wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/config-zerg.json
-for file in ~/*.json; do
-    if [ -f "$file" ]; then
-        sed -i -e "s/DELAVEC/$delavec/g" -e "s/i81/RMH/g" -e "s/K14g/s4wc/g" "$file"
-    fi
-done
 rm -f inf.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/inf.sh
 chmod +x inf.sh
+rm -f curr_hash.sh
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/curr_hash.sh
+chmod +x curr_hash.sh
 rm -f start.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/start.sh
 chmod +x ~/start.sh
-sed -i 's#~/ccminer/ccminer#~/ccminer#' ~/start.sh
+    #sed -i 's#~/ccminer/ccminer#~/ccminer#' ~/start.sh
 echo "done"
-# nastavi POOL
-echo -e "\n\e[93m Which POOL \e[0m\n" # -----------------------------------------------
-echo "1     MRR"
-echo "2     pool.verus.io"
-echo "3     eu.luckpool.net"
-echo "4     de.vipor.net"
-echo "5     eu.coudiko.io"
-echo "6     eu zergpool SOLO"
-echo -e "7     de.vipor.net_SOLO\e[93m"
-if [ "$choice_pool" != "0" ]; then
-    choice="$choice_pool"
-else
-    while true; do
-        read -r -n 1 -p "Choice: 1 2 3 4 5 6 7: " choice
-        case $choice in
-            1|2|3|4|5|6|7)
-                break  # Izberite veljavno številko in izstopite iz zanke
-                ;;
-            *)
-                echo "enter: 1 2 3 4 5 6 7" ;;
-        esac
-    done
-fi
-# izvede izbiro
-echo -e "\e[92m"
-case $choice in
-    1)
-        echo "  -> MRR"
-        cp ~/config-mrr.json ~/config.json 
-        ;;
-    2)
-        echo "  -> pool.verus.io"
-        cp ~/config-verus.json ~/config.json 
-        ;;
-    3)
-        echo "  -> eu.luckpool.net"
-        cp ~/config-luck.json ~/config.json 
-        ;;
-    4)
-        echo "  -> de.vipor.net"
-        cp ~/config-vipor.json ~/config.json 
-        ;;
-    5)
-        echo "  -> eu.cloudiko.io"
-        cp ~/config-cloudiko.json ~/config.json 
-        ;;
-    6)
-        echo "  -> eu zergpool SOLO"
-        cp ~/config-zerg.json ~/config.json 
-        ;;
-    7)
-        echo "  -> de.vipor.net_SOLO"
-        cp ~/config-viporDES.json ~/config.json 
-        ;;
-esac
-echo -e "\e[0m"
-echo "done"
-#echo -e "\n\e[0m don't forget:   \e[92msource ~/.bashrc\e[0m"
-#source ~/.bashrc
 bash ./inf.sh
-echo -e "\e[93m THE END\e[0m"
-echo -e "\e[92m Type EXIT to restart TERMUX\e[0m\n"
-
-cd ~/
-POP="01";echo -e "\e[93m POP $POP\e[0m";rm -f pop$POP.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/pop$POP.sh;chmod +x pop$POP.sh;./pop$POP.sh
-POP="02";echo -e "\e[93m POP $POP\e[0m";rm -f pop$POP.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/pop$POP.sh;chmod +x pop$POP.sh;./pop$POP.sh
-POP="03";echo -e "\e[93m POP $POP\e[0m";rm -f pop$POP.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/pop$POP.sh;chmod +x pop$POP.sh;./pop$POP.sh
-POP="04";echo -e "\e[93m POP $POP\e[0m";rm -f pop$POP.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/pop$POP.sh;chmod +x pop$POP.sh;./pop$POP.sh
-POP="05";echo -e "\e[93m POP $POP\e[0m";rm -f pop$POP.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/pop$POP.sh;chmod +x pop$POP.sh;./pop$POP.sh
-POP="06";echo -e "\e[93m POP $POP\e[0m";rm -f pop$POP.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/pop$POP.sh;chmod +x pop$POP.sh;./pop$POP.sh
-
-echo -e "\e[93m THE END\e[0m"
+echo -e "\n\e[92m Type EXIT to restart TERMUX\e[0m\n"
