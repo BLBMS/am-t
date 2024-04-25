@@ -5,9 +5,13 @@ __Instaliraj termux & termux boot
 ______________________________ 
 TERMUX
 
+https://github.com/termux/termux-app/releases/download/v0.118.0/termux-app_v0.118.0+github-debug_arm64-v8a.apk
+
 # 6x yes
 
 pkg update -y ; pkg upgrade -y ; pkg install -y wget
+
+yes | pkg update ; pkg upgrade ; pkg install -y wget
 
 termux-change-repo
 
