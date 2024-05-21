@@ -7,21 +7,12 @@
 #    -d     - don't update / upgrade
 #    -m     - move ubuntu
 #    -l     - leave ubuntu
-#    -p#    - which pool:
-#                1     MRR
-#                2     pool.verus.io
-#                3     eu.luckpool.net
-#                4     de.vipor.net
-#                5     eu.coudiko.io
-#                6     zergpool solo
-#                7     de.vipor.net_SOLO
 #    -wName - worker name (overwrite file name.ww)
 #    -h     - help
 
 choice_update=0
 choice_move=0
-choice_pool=0
-choice_worker=0
+
 
 if [ "$#" -ne 0 ]; then
     while [ "$#" -gt 0 ]; do
@@ -30,21 +21,11 @@ if [ "$#" -ne 0 ]; then
             -d)         choice_update=2 ;;
             -m)         choice_move=1 ;;
             -l)         choice_move=2 ;;
-            -p*)        choice_pool="${1#-p}" ;;
-            -w*)        choice_worker="${1#-w}" ;;
             -h|--help)  echo "usage: ./nastavi-cc-compiled -u -m -p5 -wName"
                         echo "    -u     - update / upgrade"
                         echo "    -d     - don't update / upgrade"
                         echo "    -m     - move ubuntu"
                         echo "    -l     - leave ubuntu"
-                        echo "    -p#    - which pool:"
-                        echo "                1     MRR"
-                        echo "                2     pool.verus.io"
-                        echo "                3     eu.luckpool.net"
-                        echo "                4     de.vipor.net"
-                        echo "                5     eu.coudiko.io"
-                        echo "                6     zergpool solo"
-                        echo "                7     de.vipor.net_SOLO"
                         echo "    -wName - worker name (overwrite file name.ww)"
                         echo "    -h     - help"
                         exit 0 ;;
@@ -83,13 +64,15 @@ fi
 #else
 
 if [ "$choice_update_update" = "1" ]; then
-    pkg update -y && pkg upgrade -y
+    yes | pkg update
+    yes | pkg upgrade
     pkg install -y wget net-tools nano screen
     echo "done"
 fi
 
 # preveri če je že nastavljen pravi ssh
 if ! [ -f ~/nastavi-cc-ssh.sh ]; then
+    cd
     wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
     chmod +x nastavi-cc-ssh.sh
 fi
@@ -343,6 +326,7 @@ sed -i '/### ______  MOJE _/,$d' ~/.bashrc
 # MOJE v ~/.bashrc, če obstaja pa doda na koncu
 cat << EOF >> ~/.bashrc
 ### ______  MOJE _____
+sshd
 PS1='${debian_chroot:+($debian_chroot)}\[\033[0;93m\]$delavec\[\033[0;91m\]@\[\033[0;93m\]$phone_ip\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]\$ '
 if [[ ! -z "$WINDOW" ]]; then PS1="\[\e[01;31m\][${PS1}\e[01;31m\]]\[\e[0m\]"; fi
 alias ss='~/start.sh'
