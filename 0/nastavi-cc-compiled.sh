@@ -12,7 +12,7 @@
 
 choice_update=0
 choice_move=0
-
+choice_worker=0
 
 if [ "$#" -ne 0 ]; then
     while [ "$#" -gt 0 ]; do
@@ -171,22 +171,26 @@ echo -e "\n\e[93m Setting worker \e[0m" # --------------------------------------
 cd ~/
 if [ "$choice_worker" != "0" ]; then
     delavec="$choice_worker"
-    rm -f *.ww
-    echo $delavec > ~/$delavec.ww
+    rm -f ~/*.ww
+    echo "$delavec" > ~/"$delavec".ww
 else
+    ww_files_found=false
     if ls ~/*.ww >/dev/null 2>&1; then
         for datoteka in ~/*.ww; do
             if [ -e "$datoteka" ]; then
                 ime_iz_datoteke=$(basename "$datoteka")
                 delavec=${ime_iz_datoteke%.ww}
                 echo -e "\n\e[92m  Worker from .ww file: $delavec\e[0m"
+                ww_files_found=true
             fi
         done
-    else
+    fi
+
+    if ! $ww_files_found; then
         echo -e "\n\e[91m No .ww files in directory\e[0m"
         printf "\n\e[93m Worker name: \e[0m"
         read delavec
-        echo $delavec > ~/$delavec.ww
+        echo "$delavec" > ~/"$delavec".ww
     fi
 fi
 echo -e "\n\e[92m-> Worker's name is: $delavec\e[0m"
