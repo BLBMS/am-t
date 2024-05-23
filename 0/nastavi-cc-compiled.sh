@@ -299,12 +299,12 @@ case $MODEL in
         mv ccminer ccminer-darktron.compiled
         ;;
     "SM-A")
-        echo "$MODEL Samsung Galaxy A30s"
+        echo "$MODEL Samsung Galaxy A"
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
         mv ccminer ccminer-darktron.compiled
         ;;
     "SM-A")
-        echo "$MODEL Samsung Galaxy A30s"
+        echo "$MODEL Samsung Galaxy A"
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
         mv ccminer ccminer-darktron.compiled
         ;;
