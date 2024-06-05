@@ -17,6 +17,18 @@ stop_miner() {
     screen -X -S CCminer quit
 }
 
+# Function to handle script exit
+cleanup_and_exit() {
+    echo "Quitting the script and the miner.. sad to see you go!"
+    stop_miner
+    screen -ls | grep Detached | awk '{print $1}' | xargs -I {} screen -X -S {} quit
+    screen -ls | grep Dead | awk '{print $1}' | xargs -I {} screen -wipe {}
+    exit 0
+}
+
+# Trap SIGINT (CTRL+C) to run the cleanup_and_exit function
+trap cleanup_and_exit SIGINT
+
 # Infinite loop to run the miner in cycles
 while true; do
     start_miner
