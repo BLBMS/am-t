@@ -66,6 +66,6 @@ rm -f poolupdate.sh
 
 sleep 1
 source .bashrc
-sb
+
 echo "  done"
 #source ./start.sh
