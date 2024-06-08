@@ -417,31 +417,60 @@ sed -i '/### ______  MOJE _/,$d' ~/.bashrc
 # MOJE v ~/.bashrc, če obstaja pa doda na koncu
 cat << EOF >> ~/.bashrc
 ### ______  MOJE _____
+sshd
 PS1='${debian_chroot:+($debian_chroot)}\[\033[0;93m\]$delavec\[\033[0;91m\]@\[\033[0;93m\]$phone_ip\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]\$ '
 if [[ ! -z "$WINDOW" ]]; then PS1="\[\e[01;31m\][${PS1}\e[01;31m\]]\[\e[0m\]"; fi
 alias ss='~/start.sh'
-alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit && screen -ls'
-alias sl='screen -ls | grep --color=always "CCminer"'
+alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit && screen -ls'
+alias sl='screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1'
 alias rr='screen -d -r CCminer'
 alias ru='screen -d -r Update'
-alias hh='echo -e "\e[0;93mss = start ccminer" && echo "xx = kill screen" && echo "sl = list screen" && echo "rr = show screen" && echo "hh = this help" && echo -e "exit: CTRL-a + d\e[0m"'
-alias SS='ss'
+alias oo='OOOOOO'
+alias sb='source .bashrc'
+alias hh='echo -e "\e[0;93m\
 alias XX='xx'
 alias SL='sl'
 alias RR='rr'
+alias RU='ru'
+alias OO='oo'
 alias HH='hh'
 alias inf='~/inf.sh'
-echo "__________________"
-echo "ss = start ccminer"
-echo "xx = kill screen"
-echo "sl = list screen"
-echo "rr = show screen"
-echo "hh = this help"
-echo "exit: CTRL-a + d"
-echo "__________________"
-screen -ls | grep --color=always "CCminer"
-ss
+alias posodobi='~/posodobi.sh' 
+__________________\n\
+ss = start CCminer/Update\n\
+xx = kill all screens\n\
+sl = list screens\n\
+rr = show CCminer\n\
+ru = show Update\n\
+oo = current pool\n\
+inf = show phone info\n\
+hh = this help\n\
+exit: CTRL-a + d\n\
+__________________\n\
+posodobi ## = sistem iz github\n\
+pool = posodobi pool.sh iz github\n\
+sb = source .bashrc\n\
+__________________"'
+screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 EOF
+echo 'echo -e "\e[94mPool: \e[92m$(basename *.pool .pool)\e[0m"'  >> ~/.bashrc
+sed -i 's/OOOOOO/echo -e "\\e[94mPool: \\e[92m$(basename *.pool .pool)\\e[0m"/g' ~/.bashrc
+cd ~/
+rm -f inf.sh
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/inf.sh
+chmod +x inf.sh
+rm -f curr_hash.sh
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/curr_hash.sh
+chmod +x curr_hash.sh
+rm -f start.sh
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/start.sh
+chmod +x ~/start.sh
+
+
+
+
+
+
 cd ~/
 # kopira in zamenja delavca v vseh json
 for file in ~/ccminer/0/*.json; do
