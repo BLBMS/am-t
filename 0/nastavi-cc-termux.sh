@@ -465,10 +465,14 @@ chmod +x curr_hash.sh
 rm -f start.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/start.sh
 chmod +x ~/start.sh
+echo "done"
+bash ./inf.sh
+echo -e "\n\e[92m Type EXIT to restart TERMUX\e[0m\n"
 
 
+exit
 
-
+staro se ne nüca
 
 
 cd ~/
