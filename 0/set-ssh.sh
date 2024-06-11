@@ -26,14 +26,25 @@ passwd $my_name
 
 
 
-ifconfig_out=$(ifconfig)
-ip_line=$(echo "$ifconfig_out" | grep 'inet 192')
-phone_ip=$(echo "$ip_line" | cut -d'.' -f4 | cut -c1-3)
-echo -e "\nIP= \e[92M$phone_ip"
-rm -f ~/*.ip
-touch ~/$phone_ip.ip
-echo $phone_ip > ~/$phone_ip.ip
+#ifconfig_out=$(ifconfig)
+#ip_line=$(echo "$ifconfig_out" | grep 'inet 192')
+#phone_ip=$(echo "$ip_line" | cut -d'.' -f4 | cut -c1-3)
+#echo -e "\nIP= \e[92M$phone_ip"
+#rm -f ~/*.ip
+#touch ~/$phone_ip.ip
+#echo $phone_ip > ~/$phone_ip.ip
 
+ifconfig_out=$(ifconfig)
+ip_line=$(echo "$ifconfig_out" | grep 'inet 192' | awk '{print $2}')
+zzz=$(echo "$ip_line" | cut -d'.' -f3)
+yyy=$(echo "$ip_line" | cut -d'.' -f4)
+last_digit_zzz=$(echo "$zzz" | rev | cut -c1)
+formatted_ip="${last_digit_zzz}.${yyy}.ip"
+
+echo -e "\nIP= \e[92m$formatted_ip"
+rm -f ~/*.ip
+touch ~/$formatted_ip
+echo $formatted_ip > ~/$formatted_ip
 
 
 
