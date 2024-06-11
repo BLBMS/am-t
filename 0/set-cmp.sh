@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#   cd ~/ && rm -f nastavi-cc-compiled.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-compiled.sh && chmod +x nastavi-cc-compiled.sh && ./nastavi-cc-compiled.sh -u -m -p5
+#   FAJL="set-cmp";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 
 # usage: ./nastavi-cc-compiled -u -m -p5 -wName
 #    -u     - update / upgrade
