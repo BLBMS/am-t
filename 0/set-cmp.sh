@@ -352,6 +352,7 @@ if screen -ls | grep -i 'dead'; then
   screen -wipe 1>/dev/null 2>&1
   ~/start.sh
 fi
+bash ./curr_hash.sh
 EOF
 echo 'echo -e "\e[94mPool: \e[92m$(basename *.pool .pool)\e[0m"'  >> ~/.bashrc
 sed -i 's/OOOOOO/echo -e "\\e[94mPool: \\e[92m$(basename *.pool .pool)\\e[0m"/g' ~/.bashrc
