@@ -2,7 +2,7 @@
 
 #   FAJL="set-cmp";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 
-# usage: ./nastavi-cc-compiled -u -m -p5 -wName
+# usage: ./set-cmp.sh -u -m -p5 -wName
 #    -u     - update / upgrade
 #    -d     - don't update / upgrade
 #    -m     - move ubuntu
@@ -71,10 +71,12 @@ if [ "$choice_update_update" = "1" ]; then
 fi
 
 # preveri če je že nastavljen pravi ssh
-if ! [ -f ~/nastavi-cc-ssh.sh ]; then
+rm -f ~/nastavi-cc-ssh.sh
+if ! [ -f ~/set-ssh.sh ]; then
     cd
-    wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
-    chmod +x nastavi-cc-ssh.sh
+    rm -f set-ssh.sh
+    wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/set-ssh.sh
+    chmod +x set-ssh.sh
 fi
 
 ah_file="$HOME/.ssh/authorized_keys"
@@ -86,70 +88,23 @@ if [ -f "$ah_file" ]; then
         sleep 1
     else
         echo -e "\n\e[91m SSH is not correct"
-        echo -e "\n\n\e[92m Type EXIT after set up SSH\e[0m\n"
-        sleep 1
-        cd
-        rm -f ~/nastavi-cc-ssh.sh
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
-        chmod +x nastavi-cc-ssh.sh
-        source ~/nastavi-cc-ssh.sh
+        echo -e "\n\n\e[92m --------------------------"
+        echo -e " Type EXIT after set up SSH"
+        echo -e " --------------------------\e[0m\n"
+        sleep 2
+        source ~/set-ssh.sh
         # exit 0
     fi
 else
     echo -e "\n\e[91m SSH is missing"
-    echo -e "\n\n\e[92m Type EXIT after set up SSH\e[0m\n"
-    sleep 1
-    cd
-    rm -f ~/nastavi-cc-ssh.sh
-    wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh
-    chmod +x nastavi-cc-ssh.sh
-    source ~/nastavi-cc-ssh.sh
+    echo -e "\n\n\e[92m --------------------------"
+    echo -e " Type EXIT after set up SSH"
+    echo -e " --------------------------\e[0m\n"
+    sleep 2
+    source ~/set-ssh.sh
     # exit 0
 fi
 echo "done"
-
-# premik Ubuntu
-cd ~/
-
-choice_move_move=0
-if [ "$choice_move" = "1" ]; then
-    choice_move_move=1
-else
-    if ! [ "$choice_move" = "2" ]; then
-        echo -e "\n\e[93m Move Ubuntu? (y - yes)\e[0m" # -----------------------------------------------
-        read -n 1 yn
-        if [ "$yn" = "y" ] || [ "$yn" = "Y" ]; then
-            choice_move_move=1
-        fi
-    fi
-fi
-
-if [ "$choice_move_move" = "1" ] ; then
-    if [ -d ~/ubuntu-fs ]; then
-        echo -e "\n\e[93m moving ...\e[0m"
-        if [ ! -d ~/UBUNTU ]; then
-            mkdir ~/UBUNTU
-        fi
-        mv -f ~/ubuntu-fs ~/UBUNTU/
-        printf "■ "
-        if [ -d ~/ubuntu-binds ]; then
-            mv -f ~/ubuntu-binds ~/UBUNTU/
-            printf "■ "
-        fi
-        for sh_dat in ~/*.sh; do
-            pth="/data/data/com.termux/files/home/"
-            if [ "$sh_dat" != "$pth""nastavi-cc-compiled.sh" ] && [ "$sh_dat" != "$pth""nastavi-cc-compiled.sh" ]; then
-                mv -f "$sh_dat" ~/UBUNTU/
-                printf "■ "
-            fi
-        done
-        if [ -f ~/*.list ]; then
-            mv -f ~/*.list ~/UBUNTU/
-            printf "■ "
-        fi
-        echo -e "\n\e[93m ... done\e[0m"
-    fi
-fi
 
 # premik starega compilerja
 if [ -f ~/ccminer/configure.sh ]; then
@@ -160,12 +115,20 @@ if [ -f ~/ccminer/configure.sh ]; then
     mv -f ~/ccminer ~/ccminer-old/
 fi
 echo "done"
+
 echo -e "\n\e[93m Setting TERMUX \e[0m\n" # -----------------------------------------------
+
 # Nastavi IP
-ifconfig_out=$(ifconfig)
-ip_line=$(echo "$ifconfig_out" | grep 'inet 192')
-phone_ip=$(echo "$ip_line" | cut -d'.' -f4 | cut -c1-3)
+#ifconfig_out=$(ifconfig)
+#ip_line=$(echo "$ifconfig_out" | grep 'inet 192')
+#phone_ip=$(echo "$ip_line" | cut -d'.' -f4 | cut -c1-3)
 #echo "IP=" $phone_ip
+
+
+
+
+
+
 echo "done"
 echo -e "\n\e[93m Setting worker \e[0m" # -----------------------------------------------
 cd ~/
