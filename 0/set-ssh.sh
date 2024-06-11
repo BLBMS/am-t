@@ -1,11 +1,5 @@
 #!/bin/bash
 
-#  copy v TERMUX !!!  - 6x YES
-
-#->  pkg update -y && pkg upgrade -y && pkg install -y wget
-
-#->  cd ~/ && rm -f ~/nastavi-cc-ssh.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/nastavi-cc-ssh.sh && chmod +x nastavi-cc-ssh.sh && ~/nastavi-cc-ssh.sh
-
 # install vse potrebne
 cd ~/
 pkg install -y openssh net-tools nano screen
@@ -36,10 +30,8 @@ ifconfig_out=$(ifconfig)
 ip_line=$(echo "$ifconfig_out" | grep 'inet 192')
 phone_ip=$(echo "$ip_line" | cut -d'.' -f4 | cut -c1-3)
 echo -e "\nIP= \e[92M$phone_ip"
-#rm -f ~/*.ip
-#cat << EOF > ~/$phone_ip.ip
-#EOF
-#echo $$phone_ip >> ~/$phone_ip.ip
+rm -f ~/*.ip
+touch ~/$phone_ip.ip
 echo $phone_ip > ~/$phone_ip.ip
 
 
