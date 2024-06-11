@@ -345,6 +345,13 @@ pool = posodobi pool.sh iz github\n\
 sb = source .bashrc\n\
 __________________"'
 screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
+# Preveri, ali obstaja katera koli 'Dead' screen seja
+if screen -ls | grep -i 'dead'; then
+  printf "\n\e[91m There are dead screen sessions -> STOP! \e[0m"
+  screen -ls | grep -o "[0-9]\+\.Dead" | awk '{print $1}' | xargs -I {} screen -X -S {} quit
+  screen -wipe 1>/dev/null 2>&1
+  ~/start.sh
+fi
 EOF
 echo 'echo -e "\e[94mPool: \e[92m$(basename *.pool .pool)\e[0m"'  >> ~/.bashrc
 sed -i 's/OOOOOO/echo -e "\\e[94mPool: \\e[92m$(basename *.pool .pool)\\e[0m"/g' ~/.bashrc
