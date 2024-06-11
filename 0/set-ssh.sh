@@ -22,10 +22,8 @@ my_name=$(whoami)
 echo "whoami=" $my_name
 #  Ustvari password
 passwd $my_name
-# Nastavi IP - za 192.168.XXX.YYY
 
-
-
+# Nastavi IP - za 192.168.100.xxx
 #ifconfig_out=$(ifconfig)
 #ip_line=$(echo "$ifconfig_out" | grep 'inet 192')
 #phone_ip=$(echo "$ip_line" | cut -d'.' -f4 | cut -c1-3)
@@ -34,17 +32,19 @@ passwd $my_name
 #touch ~/$phone_ip.ip
 #echo $phone_ip > ~/$phone_ip.ip
 
+# Nastavi IP - za 192.168.yyy.zzz
+
 ifconfig_out=$(ifconfig)
 ip_line=$(echo "$ifconfig_out" | grep 'inet 192' | awk '{print $2}')
 zzz=$(echo "$ip_line" | cut -d'.' -f3)
 yyy=$(echo "$ip_line" | cut -d'.' -f4)
 last_digit_zzz=$(echo "$zzz" | rev | cut -c1)
-formatted_ip="${last_digit_zzz}.${yyy}.ip"
+phone_ip="${last_digit_zzz}.${yyy}.ip"
 
-echo -e "\nIP= \e[92m$formatted_ip"
+echo -e "\nIP= \e[92m$phone_ip"
 rm -f ~/*.ip
-touch ~/$formatted_ip
-echo $formatted_ip > ~/$formatted_ip
+touch ~/$phone_ip
+echo $phone_ip > ~/$phone_ip
 
 
 
