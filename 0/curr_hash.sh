@@ -9,7 +9,10 @@ url="https://luckpool.net/verus/worker/RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.$delav
 
 # Pridobitev podatkov iz URL-ja in iskanje vrednosti za "hashrateString"
 podatki=$(curl -s $url)
-curhash=$(echo "$podatki" | grep -o '"hashrateString":"[^"]*' | cut -d'"' -f4)
+currhash=$(echo "$podatki" | grep -o '"hashrateString":"[^"]*' | cut -d'"' -f4)
+
+# Preberite vrednost ključa "name" iz config.json in jo shranite v spremenljivko CURRPOOL
+currpool=$(jq -r '.pools[0].name' config.json)
 
 # Izpis rezultata
-echo -e "Current hash \e[0;94m(luckpool)\e[0m: \e[0;93m$delavec\e[0m: \e[0;92m$curhash\e[0m"
+echo -e "Current hash \e[0;94m$currpool\e[0m: \e[0;93m$delavec\e[0m: \e[0;92m$currhash\e[0m"
