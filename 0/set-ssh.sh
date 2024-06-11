@@ -40,9 +40,9 @@ ip_line=$(echo "$ifconfig_out" | grep 'inet 192' | awk '{print $2}')
 zzz=$(echo "$ip_line" | cut -d'.' -f3)
 yyy=$(echo "$ip_line" | cut -d'.' -f4)
 last_digit_zzz=$(echo "$zzz" | rev | cut -c1)
-phone_ip="${last_digit_zzz}.${yyy}.ip"
-echo -e "\nIP   = \e[92m$ip_line"
-echo -e "\nIP ID= \e[92m$phone_ip"
+phone_ip="${last_digit_zzz}.${yyy}"
+echo -e "\nIP   = \e[92m$ip_line\e[0m"
+echo -e "\nIP ID= \e[92m$phone_ip\e[0m"
 rm -f ~/*.ip
 touch ~/$phone_ip.ip
 echo $phone_ip > ~/$phone_ip.ip
