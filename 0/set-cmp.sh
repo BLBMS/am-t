@@ -133,15 +133,8 @@ last_digit_zzz=$(echo "$zzz" | rev | cut -c1)
 phone_ip="${last_digit_zzz}.${yyy}"
 echo -e "\nIP   = \e[92m$ip_line\e[0m"
 echo -e "\nIP ID= \e[92m$phone_ip\e[0m"
-rm -f ~/*.ip
-touch ~/$phone_ip.ip
-echo $phone_ip > ~/$phone_ip.ip
-
-
-
-
-
 echo "done"
+
 echo -e "\n\e[93m Setting worker \e[0m" # -----------------------------------------------
 cd ~/
 if [ "$choice_worker" != "0" ]; then
@@ -160,7 +153,6 @@ else
             fi
         done
     fi
-
     if ! $ww_files_found; then
         echo -e "\n\e[91m No .ww files in directory\e[0m"
         printf "\n\e[93m Worker name: \e[0m"
@@ -170,6 +162,7 @@ else
 fi
 echo -e "\n\e[92m-> Worker's name is: $delavec\e[0m"
 echo "done"
+
 # auto boot
 echo -e "\n\e[93m Setting auto boot\e[0m" # -----------------------------------------------
 rm -rf ~/.termux/boot
@@ -229,63 +222,75 @@ case $MODEL in
         ;;
     "SM-G960F")
         echo "$MODEL Samsung Galaxy S9"
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS9.compiled
+        #wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS9.compiled
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
         ;;
     "SM-G965F")
         echo "$MODEL Samsung Galaxy S9+"
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS9.compiled
+        #wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS9.compiled
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
         ;;
     "SM-G973F")
         echo "$MODEL Samsung Galaxy S10"
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS10.compiled
+        #wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS10.compiled
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/em4-a75-a55/ccminer
         ;;
     "SM-G970F")
         echo "$MODEL Samsung Galaxy S10e"
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS10.compiled
+        #wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS10.compiled
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/em4-a75-a55/ccminer
         ;;
     "SM-G975F")
         echo "$MODEL Samsung Galaxy S10+"
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS10.compiled
+        #wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS10.compiled
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/em4-a75-a55/ccminer
         ;;
     "SM-A405FN")
         echo "$MODEL Samsung Galaxy A40"
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerA40.compiled
+        #wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerA40.compiled
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a53/ccminer
         ;;
     "SM-J730F")
         echo "$MODEL Samsung Galaxy J7"
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminer-a53.compiled
+        #wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminer-a53.compiled
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a53/ccminer
         ;;
     "SM-A307F")
-        echo "$MODEL Samsung Galaxy A30s"
+        echo "$MODEL Samsung Galaxy A30s F"
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a53/ccminer
-        mv ccminer ccminer-darktron.compiled
+        #mv ccminer ccminer-darktron.compiled
+        ;;
+    "SM-A307FN")
+        echo "$MODEL Samsung Galaxy A30s FN"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a53/ccminer
+        #mv ccminer ccminer-darktron.compiled
         ;;
     "SM-A505F")
         echo "$MODEL Samsung Galaxy A50"
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a55/ccminer
-        mv ccminer ccminer-darktron.compiled
+        #mv ccminer ccminer-darktron.compiled
         ;;
     "SM-A705F")
         echo "$MODEL Samsung Galaxy A70"
         echo " compile KYRO"
         exit 0   # *******************************************************************************************
         # wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer  KYRO
-        mv ccminer ccminer-darktron.compiled
+        #mv ccminer ccminer-darktron.compiled
         ;;
     "SM-A127F")
         echo "$MODEL Samsung Galaxy A12s Nacho"
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/a55/ccminer
-        mv ccminer ccminer-darktron.compiled
+        #mv ccminer ccminer-darktron.compiled
         ;;
     "SM-A")
         echo "$MODEL Samsung Galaxy A"
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
-        mv ccminer ccminer-darktron.compiled
+        #mv ccminer ccminer-darktron.compiled
         ;;
     "SM-A")
         echo "$MODEL Samsung Galaxy A"
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
-        mv ccminer ccminer-darktron.compiled
+        #mv ccminer ccminer-darktron.compiled
         ;;
 # ADD NEW MODEL
     *)
