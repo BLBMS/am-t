@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# install vse potrebne
+# install vse potrebno
 cd ~/
 pkg install -y openssh net-tools nano screen
 echo -e "\n\e[93mnastavljam SSH\e[0m\n"
@@ -33,22 +33,19 @@ passwd $my_name
 #echo $phone_ip > ~/$phone_ip.ip
 
 # Nastavi IP - za 192.168.yyy.zzz
-
 ifconfig_out=$(ifconfig)
 ip_line=$(echo "$ifconfig_out" | grep 'inet 192' | awk '{print $2}')
 zzz=$(echo "$ip_line" | cut -d'.' -f3)
 yyy=$(echo "$ip_line" | cut -d'.' -f4)
 last_digit_zzz=$(echo "$zzz" | rev | cut -c1)
 phone_ip="${last_digit_zzz}.${yyy}.ip"
-
-echo -e "\nIP= \e[92m$phone_ip"
+echo -e "\nIP   = \e[92m$ip_line"
+echo -e "\nIP ID= \e[92m$phone_ip"
 rm -f ~/*.ip
-touch ~/$phone_ip
-echo $phone_ip > ~/$phone_ip
-
-
+touch ~/$phone_ip.ip
+echo $phone_ip > ~/$phone_ip.ip
 
 # Nastavi SSH
 echo -e "\n\e[93m CHECK IP !!\e[0m\n"
-ssh $my_name@192.168.100.$phone_ip -p 8022
+ssh $my_name@192.168.$phone_ip -p 8022
 echo -e " done SSH \n"
