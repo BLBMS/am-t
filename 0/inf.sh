@@ -2,10 +2,16 @@
 
 #   cd ~/ && rm -f inf.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/inf.sh && chmod +x inf.sh && ./inf.sh
 
+# Nastavi IP - za 192.168.yyy.zzz
 ifconfig_out=$(ifconfig)
-ip_line=$(echo "$ifconfig_out" | grep 'inet 192')
-phone_ip=$(echo "$ip_line" | cut -d'.' -f4 | cut -c1-3)
-echo -e "\e[93mIP= $phone_ip\e[0m"
+ip_line=$(echo "$ifconfig_out" | grep 'inet 192' | awk '{print $2}')
+zzz=$(echo "$ip_line" | cut -d'.' -f3)
+yyy=$(echo "$ip_line" | cut -d'.' -f4)
+last_digit_zzz=$(echo "$zzz" | rev | cut -c1)
+phone_ip="${last_digit_zzz}.${yyy}"
+echo -e "\nIP   = \e[92m$ip_line\e[0m"
+echo -e "\nIP ID= \e[92m$phone_ip\e[0m"
+echo "done"
 
 for datoteka in ~/*.ww; do
     if [ -e "$datoteka" ]; then
