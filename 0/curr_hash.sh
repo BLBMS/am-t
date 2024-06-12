@@ -15,4 +15,4 @@ currhash=$(echo "$podatki" | grep -o '"hashrateString":"[^"]*' | cut -d'"' -f4)
 currpool=$(jq -r '.pools[0].name' config.json)
 
 # Izpis rezultata
-echo -e "Current hash \e[0;94m$currpool\e[0m: \e[0;93m$delavec\e[0m: \e[0;92m$currhash\e[0m"
+echo -e "Current: \e[0;94m$currpool\e[0m: \e[0;93m$delavec\e[0m: \e[0;92m$currhash\e[0m"
