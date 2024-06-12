@@ -346,7 +346,7 @@ if screen -ls | grep -i 'dead'; then
 fi
 bash ./curr_hash.sh
 EOF
-echo 'echo -e "\e[94mPool: \e[92m$(basename *.pool .pool)\e[0m"'  >> ~/.bashrc
+echo 'echo -e "\e[94mPool: \e[92m$(basename *.pool .pool)\e[0m .pool"'  >> ~/.bashrc
 sed -i 's/OOOOOO/echo -e "\\e[94mPool: \\e[92m$(basename *.pool .pool)\\e[0m"/g' ~/.bashrc
 cd ~/
 rm -f inf.sh
