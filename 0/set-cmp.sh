@@ -5,13 +5,11 @@
 # usage: ./set-cmp.sh -u -m -p5 -wName
 #    -u     - update / upgrade
 #    -d     - don't update / upgrade
-#    -m     - move ubuntu
-#    -l     - leave ubuntu
+
 #    -wName - worker name (overwrite file name.ww)
 #    -h     - help
 
 choice_update=0
-choice_move=0
 choice_worker=0
 
 if [ "$#" -ne 0 ]; then
@@ -19,13 +17,10 @@ if [ "$#" -ne 0 ]; then
         case "$1" in
             -u)         choice_update=1 ;;
             -d)         choice_update=2 ;;
-            -m)         choice_move=1 ;;
-            -l)         choice_move=2 ;;
+
             -h|--help)  echo "usage: ./nastavi-cc-compiled -u -m -p5 -wName"
                         echo "    -u     - update / upgrade"
                         echo "    -d     - don't update / upgrade"
-                        echo "    -m     - move ubuntu"
-                        echo "    -l     - leave ubuntu"
                         echo "    -wName - worker name (overwrite file name.ww)"
                         echo "    -h     - help"
                         exit 0 ;;
@@ -37,8 +32,6 @@ if [ "$#" -ne 0 ]; then
     done
 fi
 #echo "choice_update=$choice_update"
-#echo "choice_move=$choice_move"
-#echo "choice_pool=$choice_pool"
 #echo "choice_worker=$choice_worker"
 
 # preveri za posodobitev sistema
@@ -117,12 +110,6 @@ fi
 echo "done"
 
 echo -e "\n\e[93m Setting TERMUX \e[0m\n" # -----------------------------------------------
-
-# Nastavi IP
-#ifconfig_out=$(ifconfig)
-#ip_line=$(echo "$ifconfig_out" | grep 'inet 192')
-#phone_ip=$(echo "$ip_line" | cut -d'.' -f4 | cut -c1-3)
-#echo "IP=" $phone_ip
 
 # Nastavi IP - za 192.168.yyy.zzz
 ifconfig_out=$(ifconfig)
