@@ -303,7 +303,7 @@ case $MODEL in
         ;;
 esac
 chmod +x ccminer
-echo -e "\n\e[93m CCminer copyd \e[0m" # -----------------------------------------------
+echo -e "\n\e[93m CCminer copied \e[0m" # -----------------------------------------------
 cd ~/
 # briše MOJE v ~    /.bashrc, vse do konca
 sed -i '/### ______  MOJE _/,$d' ~/.bashrc
@@ -321,7 +321,8 @@ alias ru='screen -d -r Update'
 alias oo='OOOOOO'
 alias ch='~/curr_hash.sh'
 alias sb='source .bashrc'
-alias hh='echo -e "\e[0;93m\
+alias nb='nano .bashrc'
+alias hh='echo -e "\e[0;93m\"'
 alias XX='xx'
 alias SL='sl'
 alias RR='rr'
@@ -345,6 +346,7 @@ exit: CTRL-a + d\n\
 __________________\n\
 posodobi ## = sistem iz github\n\
 pool = posodobi pool.sh iz github\n\
+nb = nano .bashr\n\
 sb = source .bashrc\n\
 __________________"'
 screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
@@ -372,4 +374,5 @@ chmod +x ~/start.sh
     #sed -i 's#~/ccminer/ccminer#~/ccminer#' ~/start.sh
 echo "done"
 bash ./inf.sh
+echo "$ip_line  $delavec"
 echo -e "\n\e[92m Type EXIT to restart TERMUX\e[0m\n"
