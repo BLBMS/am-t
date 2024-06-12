@@ -344,6 +344,8 @@ if screen -ls | grep -i 'dead'; then
   screen -wipe 1>/dev/null 2>&1
   ~/start.sh
 fi
+echo "Screens:"
+screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 bash ./curr_hash.sh
 EOF
 echo 'echo -e "\e[94mPool: \e[92m$(basename *.pool .pool)\e[0m .pool"'  >> ~/.bashrc
