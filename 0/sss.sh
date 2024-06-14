@@ -17,11 +17,11 @@ check_IP3() {
 }
 check_IP4() {
   while true; do
-    read -r -p "IP or worker: " check_IP4
+    read -r -p "IP or worker: " choice
     echo
-    if [[ "$check_IP4" =~ ^[0-9]{1,3}$ && "$check_IP4" -ge 0 && "$check_IP4" -le 254 ]]; then
+    if [[ "$choice" =~ ^[0-9]{1,3}$ && "$choice" -ge 0 && "$choice" -le 254 ]]; then
       break
-    elif [[ "$check_IP4" =~ ^[a-zA-Z0-9]+$ ]]; then
+    elif [[ "$choice" =~ ^[a-zA-Z0-9]+$ ]]; then
       break
     else
       echo "Neveljaven vnos! Vnesite številko med 0 in 254 ali ime delavca (brez presledka)."
@@ -41,15 +41,15 @@ if [ $# -eq 0 ]; then
   check_IP3
   check_IP4
 fi
-if [ "$#" -le 2 ]; then
-  echo "preveč parametrov! vzamem: [$1] in [$2]"
+if [ "$#" -ge 2 ]; then
+  echo "preveč parametrov! vzamem: [ $1 ] in [ $2 ]"
 fi
 
 if [[ $choice =~ ^[0-9]+$ ]]; then
     ip3="10$range"
-    ip4=$choice
+    ip4="$choice"
     ip="192.168.$IP3.$IP4"
-    echo "1 ip="$ip
+    echo "celi ip="$ip
     exit
     
     device=$(grep -w "$ip" spisek.list | cut -f 2)
