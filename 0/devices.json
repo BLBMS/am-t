@@ -1,0 +1,549 @@
+{
+  "devices": [
+    {
+      "ip": "192.168.100.110",
+      "name": "S9a",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.111",
+      "name": "S9b",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.112",
+      "name": "S9c",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.113",
+      "name": "S9d",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.114",
+      "name": "S9e",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.115",
+      "name": "S9f",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.116",
+      "name": "S9g",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.117",
+      "name": "S9h",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.118",
+      "name": "S9i",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.119",
+      "name": "S9j",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.120",
+      "name": "S9",
+      "ssid": "mygoldminek"
+    },
+    {
+      "ip": "192.168.100.121",
+      "name": "S9l",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.122",
+      "name": "S9m",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.123",
+      "name": "S9n",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.124",
+      "name": "S9o",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.125",
+      "name": "S9p",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.126",
+      "name": "S9q",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.127",
+      "name": "S9r",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.128",
+      "name": "S9s",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.129",
+      "name": "S9t",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.209",
+      "name": "S9u",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.131",
+      "name": "J7b",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.132",
+      "name": "J7c",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.133",
+      "name": "J7d",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.134",
+      "name": "J7e",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.135",
+      "name": "J7f",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.136",
+      "name": "J7g",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.137",
+      "name": "A5a",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.138",
+      "name": "A5b",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.139",
+      "name": "A5c",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.140",
+      "name": "A5d",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.141",
+      "name": "A40a",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.142",
+      "name": "A8a",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.149",
+      "name": "S7a",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.150",
+      "name": "S10a",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.151",
+      "name": "S10b",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.152",
+      "name": "S10c",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.153",
+      "name": "S10d",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.154",
+      "name": "S10e",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.155",
+      "name": "S10f",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.156",
+      "name": "S10g",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.157",
+      "name": "S10h",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.158",
+      "name": "S10i",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.169",
+      "name": "N8a",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.170",
+      "name": "S8a",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.171",
+      "name": "S8b",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.172",
+      "name": "S8c",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.173",
+      "name": "S8d",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.174",
+      "name": "S8e",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.175",
+      "name": "S8f",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.176",
+      "name": "S8g",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.177",
+      "name": "S8h",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.178",
+      "name": "S8i",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.179",
+      "name": "S8j",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.180",
+      "name": "S8k",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.181",
+      "name": "S8l",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.182",
+      "name": "S8m",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.183",
+      "name": "S8n",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.184",
+      "name": "S8o",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.185",
+      "name": "S8p",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.186",
+      "name": "S8q",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.187",
+      "name": "S8r",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.188",
+      "name": "S8s",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.189",
+      "name": "S8t",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.190",
+      "name": "S8u",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.191",
+      "name": "S8v",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.192",
+      "name": "S8w",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.193",
+      "name": "S8x",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.194",
+      "name": "S8y",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.195",
+      "name": "S8z",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.196",
+      "name": "S8aa",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.197",
+      "name": "S8ab",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.198",
+      "name": "S8ac",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.167",
+      "name": "S8ad",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.168",
+      "name": "S8ae",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.166",
+      "name": "S8af",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.165",
+      "name": "S8ag",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.164",
+      "name": "S8ah",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.163",
+      "name": "S8ai",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.162",
+      "name": "S8aj",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.206",
+      "name": "S8ak",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.109",
+      "name": "S8al",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.108",
+      "name": "S8am",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.107",
+      "name": "S8an",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.106",
+      "name": "S8ao",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.210",
+      "name": "P20a",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.211",
+      "name": "P20b",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.212",
+      "name": "P20c",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.213",
+      "name": "P20d",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.214",
+      "name": "P20e",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.215",
+      "name": "P20f",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.216",
+      "name": "P20g",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.217",
+      "name": "P20h",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.218",
+      "name": "P20i",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.219",
+      "name": "P20j",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.220",
+      "name": "P20k",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.222",
+      "name": "P20m",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.225",
+      "name": "P10a",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.226",
+      "name": "M20a",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.235",
+      "name": "P9a",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.236",
+      "name": "P9b",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.237",
+      "name": "P9c",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.240",
+      "name": "HNRa",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.241",
+      "name": "HNRb",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.242",
+      "name": "HNRc",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.247",
+      "name": "MIa",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.248",
+      "name": "PXa",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.100.249",
+      "name": "LGa",
+      "ssid": "mygoldmine"
+    },
+    {
+      "ip": "192.168.102.1",
+      "name": "A30a",
+      "ssid": "102"
+    }
+  ]
+}
