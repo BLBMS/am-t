@@ -201,13 +201,19 @@ rm -f ccminer*.compiled
 case $MODEL in
     "SM-G950F")
         echo " $MODEL Samsung Galaxy S8"
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS8.compiled
-        mv ccminer*.compiled ccminer
+        #wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS8.compiled
+        #mv ccminer*.compiled ccminer
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a53/ccminer
         ;;
     "SM-G955F")
         echo "$MODEL Samsung Galaxy S8+"
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS8.compiled
-        mv ccminer*.compiled ccminer
+        #wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminerS8.compiled
+        #mv ccminer*.compiled ccminer
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a53/ccminer
+        ;;
+    "SM-G955U")
+        echo "$MODEL Samsung Galaxy S8+ USA"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a53/ccminer
         ;;
     "SM-G960F")
         echo "$MODEL Samsung Galaxy S9"
