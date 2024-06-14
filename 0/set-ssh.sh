@@ -49,5 +49,5 @@ echo $phone_ip > ~/$phone_ip.ip
 
 # Nastavi SSH
 echo -e "\n\e[93m CHECK IP !!\e[0m\n"
-ssh $my_name@192.168.$ip_line -p 8022
+ssh $my_name@$ip_line -p 8022
 echo -e " done SSH \n"
