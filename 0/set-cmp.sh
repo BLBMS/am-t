@@ -354,6 +354,9 @@ EOF
 echo 'echo -e "\e[94mPool: \e[92m$(basename *.pool .pool)\e[0m .pool"'  >> ~/.bashrc
 sed -i 's/OOOOOO/echo -e "\\e[94mPool: \\e[92m$(basename *.pool .pool)\\e[0m"/g' ~/.bashrc
 cd ~/
+rm -f ccupdate.sh
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccupdate.sh
+chmod +x ccupdate.sh
 rm -f inf.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/inf.sh
 chmod +x inf.sh
