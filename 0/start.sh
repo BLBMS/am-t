@@ -1,4 +1,5 @@
 #!/bin/bash
+# v.2024-06-14
 
 #   FAJL="start4";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 
