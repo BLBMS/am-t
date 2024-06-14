@@ -211,7 +211,7 @@ case $MODEL in
         #mv ccminer*.compiled ccminer
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/a53/ccminer
         ;;
-    "SM-G955U")
+    "SM-G955U1")
         echo "$MODEL Samsung Galaxy S8+ USA"
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a53/ccminer
         ;;
@@ -290,7 +290,8 @@ case $MODEL in
     *)
         echo "----------------------------------------------------------"
         echo -e "\e[91m  Unknown model: $MODEL -> a53"
-        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminer-a53.compiled
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a53/ccminer
+        #wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminer-a53.compiled
         echo "----------------------------------------------------------"
         # exit 0
         ;;
