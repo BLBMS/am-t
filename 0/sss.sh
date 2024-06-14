@@ -32,15 +32,19 @@ check_IP4() {
 if [ $# -eq 2 ]; then
     range=$1
     choice=$2
-  else
-    if [ $# -eq 1 ]; then
-      range=0
-      choice=$1
-    else
-      check_IP3
-      check_IP4
-    fi
 fi
+if [ $# -eq 1 ]; then
+  range=0
+  choice=$1
+fi
+if [ $# -eq 0 ]; then
+  check_IP3
+  check_IP4
+fi
+if [ "$#" -le 2 ]; then
+  echo "preveč parametrov! vzamem: [$1] in [$2]"
+fi
+
 if [[ $choice =~ ^[0-9]+$ ]]; then
     ip3="10$range"
     ip4=$choice
@@ -61,6 +65,11 @@ else
 #    echo "2 ip="$ip
 #    echo "2 de="$device
 fi
+
+
+exit
+
+
 if [[ -z "$ip" ]] || [[ -z "$device" ]]; then
     echo "Naprave $device$ip ni v 'spisek.list'."
     exit 1
