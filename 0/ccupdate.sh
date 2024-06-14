@@ -1,4 +1,16 @@
 #!/bin/bash
+# v.2024-06-14
+#  najprej preveri če je ccminer DEAD ali ne dela
+if screen -ls | grep -i 'dead'; then
+  printf "\n\e[91m There are dead screen sessions -> STOP! \e[0m"
+  screen -ls | grep -o "[0-9]\+\.Dead" | awk '{print $1}' | xargs -I {} screen -X -S {} quit
+  screen -wipe 1>/dev/null 2>&1
+  ~/start.sh
+fi
+if ! screen -ls | grep -Ei 'ccminer'; then
+  screen -wipe 1>/dev/null 2>&1
+  ~/start.sh
+fi
 #  vsako polno uro preveri če je nastavljen nov pool
 ime_iz_pool=$(basename ~/*.pool)
 obst_pool=${ime_iz_pool%.pool}
