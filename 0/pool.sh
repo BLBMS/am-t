@@ -11,7 +11,7 @@
 
 # vipor SOLO
 #NAME="DE_vipor_SOLO";POOL="de.vipor.net:5045";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
-#NAME="RO_vipor_SOLO";POOL="ro.vipor.net:5045";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
+NAME="RO_vipor_SOLO";POOL="ro.vipor.net:5045";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
 
 # pool.verus
 #NAME="verus";POOL="pool.verus.io:9998";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""    #  merged
