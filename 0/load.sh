@@ -8,7 +8,7 @@ if ! [ -z "$1" ]; then
   FAJL=$1
   echo -e "\e[0;93mFile: $FAJL is loading.\e[0m"
   rm -f $FAJL
-  wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL
+  wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL
   sleep 1
   if [[ "${FAJL: -3}" == ".sh" ]]; then
     chmod +x $FAJL
