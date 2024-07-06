@@ -5,17 +5,19 @@
 
 cd /
 if ! [ -z "$1" ]; then
-  echo -e "\e[0;93mFile: $1 is loading.\e[0m"
-  rm -f $1
-  wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$1
-  if [[ "${1: -3}" == ".sh" ]]; then
-    chmod +x $1
+  FAJL=$1
+  echo -e "\e[0;93mFile: $FAJL is loading.\e[0m"
+  rm -f $FAJL
+  wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL
+  sleep 1
+  if [[ "${FAJL: -3}" == ".sh" ]]; then
+    chmod +x $FAJL
   fi
 else
-  echo -e "\e[0;91mFile: $1 NI PODAN.\e[0m"
+  echo -e "\e[0;91mFile: $FAJL NI PODAN.\e[0m"
 fi
 if ls "$1" > /dev/null 2>&1; then
-  echo -e "\e[0;92mFile: $1 loaded.\e[0m"
+  echo -e "\e[0;92mFile: $FAJL loaded.\e[0m"
 else
-  echo -e "\e[0;91mFile: $1 NOT loaded.\e[0m"
+  echo -e "\e[0;91mFile: $FAJL NOT loaded.\e[0m"
 fi
