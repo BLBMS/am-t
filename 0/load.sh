@@ -3,7 +3,7 @@
 
 #   FAJL="load";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 
-cd /
+cd ~/
 if ! [ -z "$1" ]; then
   FAJL=$1
   echo -e "\e[0;93mFile: $FAJL is loading.\e[0m"
