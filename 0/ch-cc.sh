@@ -33,6 +33,7 @@ for ((i = 0; i < num_cpus; i++)); do
 done
 echo -e "Android release      : \e[0;93m$ANDROID\e[0m"
 cd ~/
+exit
 echo -e "\e[0;92m"
 rm -f ccminer*.compiled
 case $MODEL in
@@ -118,6 +119,10 @@ case $MODEL in
     "SM-A415F")
         echo "$MODEL Samsung Galaxy A41"
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/a75-a55/ccminer
+        ;;
+    "SM-A")
+        echo "$MODEL Samsung Galaxy A"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
         ;;
     "SM-A")
         echo "$MODEL Samsung Galaxy A"
