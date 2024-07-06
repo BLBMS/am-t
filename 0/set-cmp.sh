@@ -286,6 +286,42 @@ case $MODEL in
         echo "$MODEL Samsung Galaxy A"
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
         ;;
+    "EML-L29")
+        echo "$MODEL Huawei P20"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a53/ccminer
+        ;;
+    "ANE-LX1")
+        echo "$MODEL Huawei P20 Lite"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a53/ccminer
+        ;;
+    "VTR-L09")
+        echo "$MODEL Huawei P10 L09"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a53/ccminer
+        ;;
+    "VTR-L29")
+        echo "$MODEL Huawei P10 L29"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a53/ccminer
+        ;;
+    "WAS-LX1")
+        echo "$MODEL Huawei P10 Lite"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a53/ccminer
+        ;;
+    "VNS-L21")
+        echo "$MODEL Huawei P9 Lite"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a53/ccminer
+        ;;
+    "PRA-LX1")
+        echo "$MODEL Huawei/Honor 8 Lite"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a53/ccminer
+        ;;
+    "LLD-L31")
+        echo "$MODEL Honor 9 Lite"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a53/ccminer
+        ;;
+    "STP-L09")
+        echo "$MODEL Honor 9"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a53/ccminer
+        ;;
 # ADD NEW MODEL
     *)
         echo "----------------------------------------------------------"
