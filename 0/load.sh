@@ -11,6 +11,8 @@ if ! [ -z "$1" ]; then
   if [[ "${1: -3}" == ".sh" ]]; then
     chmod +x $1
   fi
+else
+  echo -e "\e[0;92mFile: $1 NI PODAN.\e[0m"
 fi
 if ls "$1" > /dev/null 2>&1; then
   echo -e "\e[0;93mFile: $1 loaded.\e[0m"
