@@ -34,8 +34,8 @@ done
 echo -e "Android release      : \e[0;93m$ANDROID\e[0m"
 cd ~/
 
-echo -e "\e[0;92m"
-rm -f ccminer*.compiled
+echo -e "\e[0;92mMODEL: "
+
 case $MODEL in
     "SM-G950F")
         echo " $MODEL Samsung Galaxy S8"
@@ -175,4 +175,4 @@ echo -e "\n\e[93m CCminer copied \e[0m" # --------------------------------------
 cd ~/
 
 echo -e "\n\e[92m Restarting CCminer\e[0m\n"
-bash ~./start.sh
+bash ~/start.sh
