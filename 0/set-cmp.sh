@@ -400,6 +400,12 @@ cd ~/
 rm -f ccupdate.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccupdate.sh
 chmod +x ccupdate.sh
+rm -f load.sh
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/load.sh
+chmod +x load.sh
+rm -f chcc.sh
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/chcc.sh
+chmod +x chcc.sh
 rm -f inf.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/inf.sh
 chmod +x inf.sh
