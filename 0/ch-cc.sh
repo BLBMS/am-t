@@ -1,28 +1,11 @@
 #!/bin/bash
+# v2024-07-06 CHange CCminer
 
-#   FAJL="set-ccc";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
+#   FAJL="ch-cc";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 
-# premik starega compilerja
+# premik starega ccminerja
 mv -f ~/ccminer ~/ccminer-old
 echo "old ccminer moved"
-
-echo -e "\n\e[93m Setting TERMUX \e[0m\n" # -----------------------------------------------
-
-# Nastavi IP - za 192.168.yyy.zzz
-ifconfig_out=$(ifconfig)
-ip_line=$(echo "$ifconfig_out" | grep 'inet 192' | awk '{print $2}')
-zzz=$(echo "$ip_line" | cut -d'.' -f3)
-yyy=$(echo "$ip_line" | cut -d'.' -f4)
-last_digit_zzz=$(echo "$zzz" | rev | cut -c1)
-phone_ip="${last_digit_zzz}.${yyy}"
-echo -e "\nIP   = \e[92m$ip_line\e[0m"
-echo -e "\nIP ID= \e[92m$phone_ip\e[0m"
-
-echo -e "\n\e[93m Setting worker \e[0m" # -----------------------------------------------
-cd ~/
-ime_iz_datoteke=$(basename "$datoteka")
-delavec=${ime_iz_datoteke%.ww}
-echo -e "\n\e[92m  Worker from .ww file: $delavec\e[0m"
 
 cd ~/
 if screen -ls | grep -Ei 'ccminer|update'; then
