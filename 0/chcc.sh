@@ -1,7 +1,7 @@
 #!/bin/bash
 # v2024-07-06 CHange CCminer
 
-#   FAJL="ch-cc";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
+#   FAJL="chcc";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 
 # premik starega ccminerja
 mv -f ~/ccminer ~/ccminer-old
