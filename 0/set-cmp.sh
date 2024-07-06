@@ -403,9 +403,9 @@ chmod +x ccupdate.sh
 rm -f load.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/load.sh
 chmod +x load.sh
-rm -f chcc.sh
-wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/chcc.sh
-chmod +x chcc.sh
+rm -f changecc.sh
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/changecc.sh
+chmod +x changecc.sh
 rm -f inf.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/inf.sh
 chmod +x inf.sh
