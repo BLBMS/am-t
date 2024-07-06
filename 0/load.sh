@@ -5,6 +5,7 @@
 
 cd /
 if ! [ -z "$1" ]; then
+  echo -e "\e[0;94mFile: $1 is loading.\e[0m"
   rm -f $1
   wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$1
   if [[ "${1: -3}" == ".sh" ]]; then
