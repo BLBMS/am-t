@@ -29,11 +29,11 @@ num_cpus="${#cpus[@]}"
 for ((i = 0; i < num_cpus; i++)); do
     CORE="${cpus[i]}"
     eval "CPU$((i))=\"${cpus[i]}\""
-    echo -e "CORE :           \e[0;93mCPU$i  \e[0m: \e[0;92m$CORE\e[0m"
+    echo -e "CORE :         \e[0;93mCPU$i  \e[0m: \e[0;92m$CORE\e[0m"
 done
 echo -e "Android release      : \e[0;93m$ANDROID\e[0m"
 cd ~/
-exit
+
 echo -e "\e[0;92m"
 rm -f ccminer*.compiled
 case $MODEL in
