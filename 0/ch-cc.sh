@@ -124,9 +124,13 @@ case $MODEL in
         echo "$MODEL Samsung Galaxy A"
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
         ;;
-    "SM-A")
-        echo "$MODEL Samsung Galaxy A"
-        wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
+    "EML-L29")
+        echo "$MODEL Huawei P20"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a53/ccminer
+        ;;
+    "ANE-LX1")
+        echo "$MODEL Huawei P20 lite"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a53/ccminer
         ;;
 # ADD NEW MODEL
     *)
