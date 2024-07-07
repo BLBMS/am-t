@@ -335,9 +335,11 @@ esac
 chmod +x ccminer
 echo -e "\n\e[93m CCminer copied \e[0m" # -----------------------------------------------
 cd ~/
-# briše MOJE v ~    /.bashrc, vse do konca
-sed -i '/### ______  MOJE _/,$d' ~/.bashrc
-# MOJE v ~/.bashrc, če obstaja pa doda na koncu
+# briše MOJE v ~/.bashrc, vse do konca (če obstaja)
+if ! [ -f ~/.bashrc ]; then
+    sed -i '/### ______  MOJE _/,$d' ~/.bashrc
+fi
+# MOJE v ~/.bashrc, če obstaja doda na koncu, če ne, pa ustvari
 cat << EOF >> ~/.bashrc
 ### ______  MOJE _____
 sshd
