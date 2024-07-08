@@ -1,4 +1,4 @@
-#!/bin/bash
+e#!/bin/bash
 # v2024-07-06 CHange CCminer
 
 #   FAJL="changecc";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
@@ -104,7 +104,11 @@ case $MODEL in
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a53/ccminer
         ;;
     "SM-A505F")
-        echo "$MODEL Samsung Galaxy A50"
+        echo "$MODEL Samsung Galaxy A50 F"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a53/ccminer
+        ;;
+    "SM-A505FN")
+        echo "$MODEL Samsung Galaxy A50 FN"
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a53/ccminer
         ;;
     "SM-A705FN")
