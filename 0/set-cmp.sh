@@ -59,7 +59,7 @@ fi
 if [ "$choice_update_update" = "1" ]; then
     yes | pkg update
     yes | pkg upgrade
-    pkg install -y wget net-tools nano screen
+    pkg install -y wget net-tools nano screen jq
     echo "done"
 fi
 
