@@ -18,10 +18,13 @@ for datoteka in ~/*.ww; do
 done
 
 cd ~/
+rm -f .bashrc
+
 # briše MOJE v ~/.bashrc, vse do konca (če obstaja)
-if ! [ -f ~/.bashrc ]; then
-    sed -i '/### ______  MOJE _/,$d' ~/.bashrc
-fi
+#if ! [ -f ~/.bashrc ]; then
+#    sed -i '/### ______  MOJE _/,$d' ~/.bashrc
+#fi
+
 # MOJE v ~/.bashrc, če obstaja doda na koncu, če ne, pa ustvari
 cat << EOF >> ~/.bashrc
 ### ______  MOJE _____
