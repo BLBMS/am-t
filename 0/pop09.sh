@@ -115,4 +115,4 @@ chmod +x ~/start.sh
 echo "all done"
 screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
 source .bashrc
-~/start.sh
+#~/start.sh
