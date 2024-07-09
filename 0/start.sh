@@ -1,8 +1,6 @@
 #!/bin/bash
-# v.2024-06-14
-
-#   FAJL="start4";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
-
+# v.2024-07-09
+#   FAJL="start";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 sshd
 screen -wipe 1>/dev/null 2>&1
 cd ~/
