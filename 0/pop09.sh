@@ -2,7 +2,20 @@
 
 #   POP="09";cd ~/;rm -f pop$POP.sh;wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/pop$POP.sh;chmod +x pop$POP.sh;./pop$POP.sh
 
-FAJL="load.sh";cd ~/;rm -f $FAJL;wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL;chmod +x $FAJL
+# Nastavi IP - za 192.168.yyy.zzz
+ifconfig_out=$(ifconfig)
+ip_line=$(echo "$ifconfig_out" | grep 'inet 192' | awk '{print $2}')
+zzz=$(echo "$ip_line" | cut -d'.' -f3)
+yyy=$(echo "$ip_line" | cut -d'.' -f4)
+last_digit_zzz=$(echo "$zzz" | rev | cut -c1)
+phone_ip="${last_digit_zzz}.${yyy}"
+
+for datoteka in ~/*.ww; do
+    if [ -e "$datoteka" ]; then
+        ime_iz_datoteke=$(basename "$datoteka")
+        delavec=${ime_iz_datoteke%.ww}
+    fi
+done
 
 cd ~/
 # briše MOJE v ~/.bashrc, vse do konca (če obstaja)
