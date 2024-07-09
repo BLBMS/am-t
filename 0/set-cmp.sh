@@ -430,8 +430,7 @@ chmod +x curr_hash.sh
 rm -f start.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/start.sh
 chmod +x ~/start.sh
-    #sed -i 's#~/ccminer/ccminer#~/ccminer#' ~/start.sh
-echo "done"
+echo "all done"
 bash ./inf.sh
 echo "$ip_line  $delavec"
 echo -e "\n\e[92m Type EXIT to restart TERMUX\e[0m\n"
