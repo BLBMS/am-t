@@ -369,7 +369,7 @@ alias CH='ch'
 alias HH='hh'
 alias inf='~/inf.sh'
 alias posodobi='~/posodobi.sh'
-alias hh=echo -e "\e[0;93m__________________\n\
+alias hh=echo -e "\e[0;93m_________________________\n\
 ss = start CCminer/Update\n\
 xx = kill all screens\n\
 sl = list screens\n\
@@ -380,12 +380,12 @@ oo = current pool\n\
 inf = show phone info\n\
 hh = this help\n\
 exit: CTRL-a + d\n\
-__________________\n\
+_________________________\n\
 posodobi ## = sistem iz github\n\
 pool = posodobi pool.sh iz github\n\
 nb = nano .bashr\n\
 sb = source .bashrc\n\
-__________________\e[0m"'
+_________________________\e[0m"'
 echo "Screens:"
 screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 # Preveri, ali obstaja katera koli 'Dead' screen seja
