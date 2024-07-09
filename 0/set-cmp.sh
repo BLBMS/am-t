@@ -329,7 +329,7 @@ case $MODEL in
 # ADD NEW MODEL
     *)
         echo "----------------------------------------------------------"
-        echo -e "\e[91m  Unknown model: $MODEL -> a53"
+        echo -e "\e[0;91m  Unknown model: $MODEL -> a53"
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/a53/ccminer
         #wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccminer-a53.compiled
         echo "----------------------------------------------------------"
@@ -368,8 +368,8 @@ alias OO='oo'
 alias CH='ch'
 alias HH='hh'
 alias inf='~/inf.sh'
-alias posodobi='~/posodobi.sh' 
-__________________\n\
+alias posodobi='~/posodobi.sh'
+alias hh=echo -e "\e[0;93m__________________\n\
 ss = start CCminer/Update\n\
 xx = kill all screens\n\
 sl = list screens\n\
@@ -385,7 +385,7 @@ posodobi ## = sistem iz github\n\
 pool = posodobi pool.sh iz github\n\
 nb = nano .bashr\n\
 sb = source .bashrc\n\
-__________________"'
+__________________\e[0m"'
 echo "Screens:"
 screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 # Preveri, ali obstaja katera koli 'Dead' screen seja
