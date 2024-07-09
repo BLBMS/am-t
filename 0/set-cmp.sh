@@ -396,13 +396,20 @@ if screen -ls | grep -i 'dead'; then
   screen -wipe 1>/dev/null 2>&1
   ~/start.sh
 fi
-if ! screen -ls | grep -Ei 'ccminer|update'; then
+if ! (screen -list | grep -q -i "ccminer"); then
+  echo -e "\n\e[0;91m There are no CCminer\n\e[0m"
+  xx
+  screen -wipe 1>/dev/null 2>&1
+  ~/start.sh
+fi
+if ! (screen -list | grep -q -i "update"); then
+  echo -e "\n\e[0;91m There are no Update\n\e[0m"
+  xx
   screen -wipe 1>/dev/null 2>&1
   ~/start.sh
 fi
 bash ./curr_hash.sh
 EOF
-echo 'echo -e "\e[94mPool: \e[92m$(basename *.pool .pool)\e[0m .pool"'  >> ~/.bashrc
 sed -i 's/OOOOOO/echo -e "\\e[94mPool: \\e[92m$(basename *.pool .pool)\\e[0m"/g' ~/.bashrc
 cd ~/
 rm -f ccupdate.sh
