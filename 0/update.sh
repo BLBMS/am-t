@@ -24,11 +24,11 @@ while IFS=' ' read -r file new_date; do
         else
             # Primerjaj datuma
             if [[ "$new_date" > "$current_date" ]]; then
-                echo -e "\e[0;93mUpdating \e[0;92m$file \e[0;93m...\e[0m"
+                echo -e "\e[0;94mUpdating \e[0;92m$file \e[0;94m...\e[0m"
                 rm -f "$file"
                 wget -q "$github/$file"
             else
-                echo -e "\e[0;93m$file is up to date.\e[0m"
+                echo -e "\e[0;92m$file \e[0;93mis up to date.\e[0m"
             fi
         fi
     else
