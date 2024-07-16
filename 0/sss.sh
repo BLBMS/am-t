@@ -54,14 +54,14 @@ if [[ $choice =~ ^[0-9]+$ ]]; then
     echo "celi ip="$ip
     exit
     
-    device=$(grep -w "$ip" spisek.list | cut -f 2)
+    device=$(grep -w "$ip" $DEVICES | cut -f 2)
     device=$(echo "$device" | sed "s/$ip//g")
     device=$(echo "$device" | sed 's/   *//g')
 #    echo "1 ip="$ip
 #    echo "1 de="$device
 else
     device=$choice
-    ip=$(grep -F "$choice" spisek.list | awk -F'\t' '{print $1}')
+    ip=$(grep -F "$choice" $DEVICES | awk -F'\t' '{print $1}')
     ip=$(echo "$ip" | sed "s/$device//g")
     ip=$(echo "$ip" | sed 's/   *//g')
 #    echo "2 ip="$ip
@@ -73,7 +73,7 @@ exit
 
 
 if [[ -z "$ip" ]] || [[ -z "$device" ]]; then
-    echo "Naprave $device$ip ni v 'spisek.list'."
+    echo "Naprave $device$ip ni v '$DEVICES'."
     exit 1
 else
     echo "Zagon SSH za napravo: $device / 192.168.100.$ip"
