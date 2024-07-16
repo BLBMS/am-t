@@ -1,7 +1,6 @@
 #!/bin/bash
-
+# v.2024-07-16
 #   cd ~/ && rm -f inf.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/inf.sh && chmod +x inf.sh && ./inf.sh
-
 # Nastavi IP - za 192.168.yyy.zzz
 ifconfig_out=$(ifconfig)
 ip_line=$(echo "$ifconfig_out" | grep 'inet 192' | awk '{print $2}')
