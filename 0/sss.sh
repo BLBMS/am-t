@@ -1,10 +1,12 @@
 #!/bin/bash
-# v.2024-06-14
+# v.2024-07-10
 #
-#  ssh z uporabo: spisek.list
-#->  
+#  ssh z uporabo dev.list
+#
+#  192.168.100.100  Name   wifiname
+#
 
-DEVICES="spisek.list"
+deviceslist="dev.list"
 
 check_IP3() {
   while true; do
@@ -13,10 +15,11 @@ check_IP3() {
     if [[ "$range" =~ ^[012]$ ]]; then
       break
     else
-      echo "Neveljaven vnos! Vnesite 0, 1 ali 2."
+      echo -e "\e[91mNeveljaven vnos! Vnesite 0, 1 ali 2.\e[0m"
     fi
   done
 }
+
 check_IP4() {
   while true; do
     read -r -p "IP or worker: " choice
@@ -26,63 +29,51 @@ check_IP4() {
     elif [[ "$choice" =~ ^[a-zA-Z0-9]+$ ]]; then
       break
     else
-      echo "Neveljaven vnos! Vnesite številko med 0 in 254 ali ime delavca (brez presledka)."
+      echo -e "\e[91mNeveljaven vnos! Vnesite številko med 0 in 254 ali ime delavca (brez presledka).\e[90m"
     fi
   done
 }
 
-if [ $# -eq 2 ]; then
-    range=$1
-    choice=$2
-fi
-if [ $# -eq 1 ]; then
-  range=0
-  choice=$1
-fi
-if [ $# -eq 0 ]; then
-  check_IP3
-  check_IP4
-fi
-if [ "$#" -ge 2 ]; then
-  echo "preveč parametrov! vzamem: [ $1 ] in [ $2 ]"
-fi
+case $# in
+    "0")
+#       echo "Vnos parametrov: $#"
+        check_IP3
+        check_IP4
+    ;;
+    "1")
+#       echo "Vnos parametrov: $#"
+        range=0
+        choice=$1
+    ;;
+    "2")
+#       echo "Vnos parametrov: $#"
+        range=$1
+        choice=$2
+    ;;
+    *)
+#       echo "Vnos parametrov: $#"
+        echo "preveč parametrov! vzamem: [ $1 ] in [ $2 ]"
+        range=$1
+        choice=$2
+    ;;
+esac
 
 if [[ $choice =~ ^[0-9]+$ ]]; then
     ip3="10$range"
     ip4="$choice"
-    ip="192.168.$IP3.$IP4"
-    echo "celi ip="$ip
-    exit
-    
-    device=$(grep -w "$ip" $DEVICES | cut -f 2)
-    device=$(echo "$device" | sed "s/$ip//g")
-    device=$(echo "$device" | sed 's/   *//g')
-#    echo "1 ip="$ip
-#    echo "1 de="$device
+    ip="192.168.$ip3.$ip4"
+    device=$(grep -w "$ip" "$deviceslist" | awk '{print $2}')
 else
     device=$choice
-    ip=$(grep -F "$choice" $DEVICES | awk -F'\t' '{print $1}')
-    ip=$(echo "$ip" | sed "s/$device//g")
-    ip=$(echo "$ip" | sed 's/   *//g')
-#    echo "2 ip="$ip
-#    echo "2 de="$device
+    ip=$(grep -w "$device" "$deviceslist" | awk '{print $1}')
 fi
 
-
-exit
-
-
 if [[ -z "$ip" ]] || [[ -z "$device" ]]; then
-    echo "Naprave $device$ip ni v '$DEVICES'."
+    echo -e "\e[91mNaprave $device$ip ni v $deviceslist\e[0m"
     exit 1
 else
-    echo "Zagon SSH za napravo: $device / 192.168.100.$ip"
+    echo -e "\e[92mZagon SSH za napravo: $device / $ip\e[0m"
 
-    ssh -t -i ~/.ssh/id_blb blb@192.168.100.$ip -p 8022
-
-# "bash -ic './start-ubuntu.sh'"
-
-# za putty    putty -ssh -i /.ssh/id_pu.ppk blb@192.168.100.$ip -P 8022 -geometry 120x60 -bg "#390060" -title "[ $device @ $ip ]" -fn "Monospace 16"
-
+    ssh -t -i ~/.ssh/id_blb blb@$ip -p 8022
     echo "  exit SSH"
 fi
