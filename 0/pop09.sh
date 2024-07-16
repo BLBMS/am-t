@@ -17,6 +17,11 @@ for datoteka in ~/*.ww; do
     fi
 done
 
+if [ $(pkg list-installed | grep -c jq) -eq 0 ]; then
+    # Če ni nameščena, jo namesti
+    pkg install -y jq
+fi
+
 cd ~/
 rm -f .bashrc
 
