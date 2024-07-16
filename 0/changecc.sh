@@ -1,5 +1,6 @@
 e#!/bin/bash
-# v2024-07-06 CHange CCminer
+# v.2024-07-16
+# CHange CCminer - prenese pravilen ccminer glede na CPU
 
 #   FAJL="changecc";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 
