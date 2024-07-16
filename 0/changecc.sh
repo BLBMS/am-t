@@ -1,4 +1,4 @@
-e#!/bin/bash
+#!/bin/bash
 # v.2024-07-16
 # change ccminer - prenese pravilen ccminer glede na CPU
 
