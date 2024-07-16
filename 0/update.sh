@@ -4,7 +4,7 @@
 github="https://raw.githubusercontent.com/BLBMS/am-t/moje/0"
 rm -f update.list
 #wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/update.list
-wget "$github/update.list"
+wget -q "$github/update.list"
 UPDATE_LIST="update.list"
 
 # Preberi update.list in preveri vsako datoteko
@@ -20,20 +20,20 @@ while IFS=' ' read -r file new_date; do
             # Če ni datuma v drugi vrstici, posodobi datoteko
             echo -e "\e[0;93mUpdating \e[0;92m$file \e[0;93m(no date found in file)...\e[0m"
             rm -f "$file"
-            wget "$github/$file"
+            wget -q "$github/$file"
         else
             # Primerjaj datuma
             if [[ "$new_date" > "$current_date" ]]; then
                 echo -e "\e[0;93mUpdating \e[0;92m$file \e[0;93m...\e[0m"
                 rm -f "$file"
-                wget "$github/$file"
+                wget -q "$github/$file"
             else
                 echo -e "\e[0;93m$file is up to date.\e[0m"
             fi
         fi
     else
         echo -e "\e[0;91m$file \e[0;93mdoes not exist. Downloading...\e[0m"
-        wget "$github/$file"
+        wget -q "$github/$file"
     fi
     if [[ "$file" == *.sh ]]; then
         chmod +x "$file"
