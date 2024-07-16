@@ -1,4 +1,5 @@
 #!/bin/bash
+# v.2024-07-16
 delavec="$(basename ~/*.ww .ww)"
 # URL naslov
 url="https://luckpool.net/verus/worker/RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.$delavec"
