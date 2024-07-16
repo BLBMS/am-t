@@ -9,22 +9,22 @@ UPDATE_LIST="update.list"
 
 # Preberi update.list in preveri vsako datoteko
 while IFS=' ' read -r file new_date; do
-    echo -e "\e[0;96m--file    : $file--\e[0m"
-    echo -e "\e[0;96m--new_date: $new_date--\e[0m"
+    #echo -e "\e[0;96m--file    : $file--\e[0m"
+    #echo -e "\e[0;96m--new_date: $new_date--\e[0m"
     if [ -f "$file" ]; then
         # Preveri, če je datum v drugi vrstici
         current_date=$(sed -n '2p' "$file" | grep -oP '(?<=# v\.)\d{4}-\d{2}-\d{2}')
-        echo -e "\e[0;95m--current_date: $current_date--\e[0m"
+        #echo -e "\e[0;95m--current_date: $current_date--\e[0m"
         
         if [ -z "$current_date" ]; then
             # Če ni datuma v drugi vrstici, posodobi datoteko
-            echo -e "\e[0;93mUpdating \e[0;92m$file (no date found in file)...\e[0m"
+            echo -e "\e[0;93mUpdating \e[0;92m$file \e[0;93m(no date found in file)...\e[0m"
             rm -f "$file"
             wget "$github/$file"
         else
             # Primerjaj datuma
             if [[ "$new_date" > "$current_date" ]]; then
-                echo -e "\e[0;93mUpdating \e[0;92m$file...\e[0m"
+                echo -e "\e[0;93mUpdating \e[0;92m$file \e[0;93m...\e[0m"
                 rm -f "$file"
                 wget "$github/$file"
             else
@@ -32,7 +32,7 @@ while IFS=' ' read -r file new_date; do
             fi
         fi
     else
-        echo -e "\e[0;91m$file does not exist. Downloading...\e[0m"
+        echo -e "\e[0;91m$file \e[0;93mdoes not exist. Downloading...\e[0m"
         wget "$github/$file"
     fi
     if [[ "$file" == *.sh ]]; then
