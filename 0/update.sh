@@ -3,7 +3,7 @@
 # Osnovni imenik
 BASE_DIR="."
 rm -f update.list
-wget -P https://raw.githubusercontent.com/BLBMS/am-t/moje/0/update.list
+wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/update.list
 
 # Pot do datoteke update.list
 UPDATE_LIST="$BASE_DIR/update.list"
