@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-07-09
+# v.2024-07-016
 #   FAJL="start";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 sshd
 screen -wipe 1>/dev/null 2>&1
@@ -12,7 +12,7 @@ rm -f $FAJL.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh
 chmod +x $FAJL.sh
 source ./$FAJL.sh
-echo -e "\e[0m  NAME  :\e[96m $NAME \e[0m"
+echo -e "\n\e[0m  NAME  :\e[96m $NAME \e[0m"
 echo -e "\e[0m  POOL  :\e[96m $POOL \e[0m"
 echo -e "\e[0m  USER  :\e[96m $USER \e[0m"
 echo -e "\e[0m  PASS  :\e[96m $PASS \e[0m"
