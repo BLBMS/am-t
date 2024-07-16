@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024.06.14
+# v.2024-06-14
 #
 #  ssh z uporabo devices.json
 #->  
