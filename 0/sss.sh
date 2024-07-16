@@ -1,8 +1,10 @@
 #!/bin/bash
 # v.2024-06-14
 #
-#  ssh z uporabo devices.json
+#  ssh z uporabo: spisek.list
 #->  
+
+DEVICES="spisek.list"
 
 check_IP3() {
   while true; do
