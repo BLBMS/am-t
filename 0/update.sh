@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# v.2024-07-16
 # Osnovni imenik
 BASE_DIR="."
 
