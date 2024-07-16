@@ -35,4 +35,7 @@ while IFS=' ' read -r file new_date; do
         echo -e "\e[0;91m$file does not exist. Downloading...\e[0m"
         wget "$github/$file"
     fi
+    if [[ "$file" == *.sh ]]; then
+        chmod +x "$file"
+    fi
 done < "$UPDATE_LIST"
