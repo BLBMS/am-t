@@ -1,10 +1,9 @@
 start.sh  2024-07-16
 ccupdate.sh  2024-06-14
-set-cmp.sh  
-set-ssh.sh  
-posodobi.sh  
-changecc.sh  
-cpu-info.sh
-curr_hash.sh  
-inf.sh  
+set-cmp.sh  2024-07-16
+set-ssh.sh  2024-07-16
+posodobi.sh  2024-07-16
+changecc.sh  2024-07-16
+curr_hash.sh  2024-07-16
+inf.sh  2024-07-16
 load.sh  2024-07-16
