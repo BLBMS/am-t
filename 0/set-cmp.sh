@@ -282,6 +282,10 @@ case $MODEL in
         echo "$MODEL Samsung Galaxy A41"
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/a75-a55/ccminer
         ;;
+    "SM-A520F")
+        echo "$MODEL Samsung Galaxy A5"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a53/ccminer
+        ;;
     "SM-A")
         echo "$MODEL Samsung Galaxy A"
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
@@ -362,6 +366,7 @@ alias RU='ru'
 alias OO='oo'
 alias CH='ch'
 alias HH='hh'
+alias UU='uu'
 alias inf='~/inf.sh'
 alias posodobi='~/posodobi.sh'
 alias uu='yes | pkg update ; yes | pkg upgrade ; pkg install -y wget net-tools nano screen jq'
@@ -374,7 +379,7 @@ rr = show CCminer\n\
 ru = show Update\n\
 ch = current hash\n\
 oo = current pool\n\
-uu = update/upgrade
+uu = update/upgrade termux
 inf = show phone info\n\
 hh = this help\n\
 exit: CTRL-a + d\n\
