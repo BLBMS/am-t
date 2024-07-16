@@ -1,18 +1,13 @@
 #!/bin/bash
 # v.2024-07-16
-
 #   FAJL="set-cmp";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
-
 # usage: ./set-cmp.sh -u -m -p5 -wName
 #    -u     - update / upgrade
 #    -d     - don't update / upgrade
-
 #    -wName - worker name (overwrite file name.ww)
 #    -h     - help
-
 choice_update=0
 choice_worker=0
-
 if [ "$#" -ne 0 ]; then
     while [ "$#" -gt 0 ]; do
         case "$1" in
@@ -369,6 +364,7 @@ alias CH='ch'
 alias HH='hh'
 alias inf='~/inf.sh'
 alias posodobi='~/posodobi.sh'
+alias uu='yes | pkg update ; yes | pkg upgrade ; pkg install -y wget net-tools nano screen jq'
 alias hh='echo -e "\e[0;93m\
 _________________________________\n\
 ss = start CCminer/Update\n\
@@ -378,6 +374,7 @@ rr = show CCminer\n\
 ru = show Update\n\
 ch = current hash\n\
 oo = current pool\n\
+uu = update/upgrade
 inf = show phone info\n\
 hh = this help\n\
 exit: CTRL-a + d\n\
