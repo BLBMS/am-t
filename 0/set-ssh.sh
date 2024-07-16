@@ -1,7 +1,6 @@
 #!/bin/bash
-
+# v.2024-07-16
 #   FAJL="set-ssh";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
-
 # install vse potrebno
 cd ~/
 pkg install -y openssh net-tools nano screen
