@@ -422,6 +422,9 @@ cd ~/
 rm -f ccupdate.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/ccupdate.sh
 chmod +x ccupdate.sh
+rm -f update.sh
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/update.sh
+chmod +x update.sh
 rm -f load.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/load.sh
 chmod +x load.sh
