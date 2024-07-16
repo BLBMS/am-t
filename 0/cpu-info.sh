@@ -1,17 +1,12 @@
 #!/bin/bash
-
+# v.
 #  from @simeononsecurity
-
 #->  cd ~/ && rm -f ~/cpu-info.sh && wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/cpu-info.sh && chmod +x cpu-info.sh && ~/cpu-info.sh
-
-
 # Get CPU information
 arch=$(lscpu | awk '/Architecture:/ { print $2 }')
 model_name=$(lscpu | awk -F ': +' '/Model name:/ { print $2 }')
-
 # Common compiler flags
 common_flags="-O3 -ffinite-loops -ffast-math -D_REENTRANT -falign-functions=16 -fomit-frame-pointer -fpic -pthread -flto -fuse-ld=lld -fno-stack-protector"
-
 # Set architecture-specific flags
 if [[ "$arch" == "aarch64" ]]; then
     case "$model_name" in
