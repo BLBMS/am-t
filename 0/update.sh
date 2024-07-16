@@ -15,16 +15,16 @@ while IFS=' ' read -r file new_date; do
 
         # Primerjaj datuma
         if [[ "$new_date" > "$current_date" ]]; then
-            echo "Updating $file..."
+            echo -e "\e[0;93mUpdating \e[0;92m$file...\e[0m"
             # Dodaj URL za prenos datoteke
             URL="https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$file"
             rm -f "$file"
             wget "$URL"
         else
-            echo "$file is up to date."
+            echo -e "\e[0;93m$file is up to date.\e[0m"
         fi
     else
-        echo "$file does not exist. Downloading..."
+        echo -e "\e[0;91m$file does not exist. Downloading...\e[0m"
         # Dodaj URL za prenos datoteke
         URL="https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$file"
         wget "$URL"
