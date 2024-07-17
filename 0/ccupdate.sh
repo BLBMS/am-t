@@ -68,7 +68,8 @@ while true; do
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL
         chmod +x $FAJL
       fi
-      source ./$FAJL
+      echo -e "\e[93m Update time :D \e[0m"
+      source ./update.sh
     fi
     # Počakajte 1 minuto, preden preverite znova
     # sleep 40 # počaka 30 sec - TEST
