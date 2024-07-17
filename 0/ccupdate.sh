@@ -70,6 +70,7 @@ while true; do
       fi
       echo -e "\e[93m Update time :D \e[0m"
       source ./update.sh
+      echo -e "\n"
     fi
     # Počakajte 1 minuto, preden preverite znova
     # sleep 40 # počaka 30 sec - TEST
