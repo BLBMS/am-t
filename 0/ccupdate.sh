@@ -69,7 +69,7 @@ while true; do
       fi
       echo -e "\n\n\e[93m SW Update $(date) \e[0m"
       source ./update.sh
-      if [[ "$need_restart" == "1" ]], then
+      if [[ "$need_restart" == "1" ]]; then
         screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
         screen -wipe 1>/dev/null 2>&1
         screen -dmS CCminer 1>/dev/null 2>&1
