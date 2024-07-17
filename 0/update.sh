@@ -6,6 +6,7 @@ rm -f update.list
 #wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/update.list
 wget -q "$github/update.list"
 UPDATE_LIST="update.list"
+need_restart=0
 
 # Preberi update.list in preveri vsako datoteko
 while IFS=' ' read -r file new_date; do
@@ -21,12 +22,18 @@ while IFS=' ' read -r file new_date; do
             echo -e "\e[0;93mUpdating \e[0;92m$file \e[0;93m(no date found in file)...\e[0m"
             rm -f "$file"
             wget -q "$github/$file"
+            if [[ "$file" == "start.sh" || "$file" == "ccupdate.sh" ]]; then
+                need_restart=1
+            fi
         else
             # Primerjaj datuma
             if [[ "$new_date" > "$current_date" ]]; then
                 echo -e "\e[0;94mUpdating \e[0;92m$file \e[0;94m...\e[0m"
                 rm -f "$file"
                 wget -q "$github/$file"
+                if [[ "$file" == "start.sh" || "$file" == "ccupdate.sh" ]]; then
+                    need_restart=1
+                fi
             else
                 echo -e "\e[0;92m$file \e[0;93mis up to date.\e[0m"
             fi
@@ -34,6 +41,10 @@ while IFS=' ' read -r file new_date; do
     else
         echo -e "\e[0;91m$file \e[0;93mdoes not exist. Downloading...\e[0m"
         wget -q "$github/$file"
+
+        if [[ "$file" == "start.sh" || "$file" == "ccupdate.sh" ]]; then
+                need_restart=1
+        fi
     fi
     if [[ "$file" == *.sh ]]; then
         chmod +x "$file"
