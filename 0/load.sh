@@ -13,7 +13,7 @@ if ! [ -z "$1" ]; then
     chmod +x $FAJL
   fi
   current_date=$(sed -n '2p' "$FAJL" | grep -oP '(?<=# v\.)\d{4}-\d{2}-\d{2}')
-  echo -e "\e[0;95mVersion date: $current_date\e[0m"
+  echo -e "\e[0;94mVersion date: $current_date\e[0m"
 else
   echo -e "\e[0;91mFile: $FAJL NI PODAN.\e[0m"
 fi
