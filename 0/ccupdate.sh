@@ -59,18 +59,17 @@ while true; do
       echo -e "\e[93m New Pool: \e[92m$NAME \e[96m$POOL\e[0m"
       echo
     fi
-    # vsak dan po 22:00 preveri posodobitve
-    if [[ "$(date +%H)" == "20" ]]; then
-    #if [[ "$(date +%H:%M)" == "18:30" ]]; then # test
+    # vsak dan po 22:00 preveri posodobitve   #if [[ "$(date +%H:%M)" == "18:30" ]]; then # test
+    if [[ "$(date +%H)" == "21" ]]; then
       if ! [ -f "update.sh" ]; then
         FAJL="update.sh"
         rm -f $FAJL
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL
         chmod +x $FAJL
       fi
-      echo -e "\e[93m Update time :D \e[0m"
+      echo -e "\n\n\e[93m SW Update $(date) \e[0m"
       source ./update.sh
-      echo -e "\n"
+      #echo -e "\n"
     fi
     # Počakajte 1 minuto, preden preverite znova
     # sleep 40 # počaka 30 sec - TEST
