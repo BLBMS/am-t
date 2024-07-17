@@ -74,8 +74,10 @@ while true; do
         screen -wipe 1>/dev/null 2>&1
         screen -dmS CCminer 1>/dev/null 2>&1
         screen -S CCminer -X stuff "~/ccminer -c ~/config.json\n" 1>/dev/null 2>&1
-        # prekine!!! screen -dmS Update 1>/dev/null 2>&1
-        # prekine!!! screen -S Update -X stuff "~/ccupdate.sh\n" 1>/dev/null 2>&1
+      fi
+      if [[ "$need_restart" == "2" ]]; then
+        # prekine screen!!! screen -dmS Update 1>/dev/null 2>&1
+        # prekine screen!!! screen -S Update -X stuff "~/ccupdate.sh\n" 1>/dev/null 2>&1
         echo -e "\n\n\e[93m Please RESTART to update CCUPDATE (xx;ss)!! \e[0m"
       fi
       echo -e "\n\n"
