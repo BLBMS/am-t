@@ -19,7 +19,7 @@ echo
 iter=1
 while true; do
   echo -n -e "\e[96m== $(date) == ($iter)         \r"
-  # Preverite, ali je trenutna minuta 00 (polna ura)  # sekunda +%S minuta +%M)
+  # Preverite, ali je trenutna minuta 00 (polna ura)  # sekunda +%S minuta +%M ura +%H)
   if [[ "$(date +%M)" < "03" ]]; then
     # se izvesde ob polni uri
     echo -n -e "\r\e[96m== $(date) == ($iter)         \r"
@@ -58,6 +58,16 @@ while true; do
       echo $NAME > ~/$NAME.pool
       echo -e "\e[93m New Pool: \e[92m$NAME \e[96m$POOL\e[0m"
       echo
+    fi
+    # vsak dan po 22:00 preveri posodobitve
+    if [[ "$(date +%H)" == "22" ]]; then
+      if ! [ -f "update.sh" ]; then
+        FAJL="update.sh"
+        rm -f $FAJL
+        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL
+        chmod +x $FAJL
+      fi
+      source ./$FAJL
     fi
     # Počakajte 1 minuto, preden preverite znova
     # sleep 40 # počaka 30 sec - TEST
