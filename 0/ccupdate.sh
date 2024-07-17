@@ -60,7 +60,7 @@ while true; do
       echo
     fi
     # vsak dan po 22:00 preveri posodobitve   #if [[ "$(date +%H:%M)" == "18:30" ]]; then # test
-    if [[ "$(date +%H)" == "21" ]]; then
+    if [[ "$(date +%H)" == "22" ]]; then
       if ! [ -f "update.sh" ]; then
         FAJL="update.sh"
         rm -f $FAJL
@@ -74,15 +74,15 @@ while true; do
         screen -wipe 1>/dev/null 2>&1
         screen -dmS CCminer 1>/dev/null 2>&1
         screen -S CCminer -X stuff "~/ccminer -c ~/config.json\n" 1>/dev/null 2>&1
-        screen -dmS Update 1>/dev/null 2>&1
-        screen -S Update -X stuff "~/ccupdate.sh\n" 1>/dev/null 2>&1
-        echo -e "\n\n\e[93m Please update CCUPDATE (xx;ss)!! \e[0m"
+        # prekine!!! screen -dmS Update 1>/dev/null 2>&1
+        # prekine!!! screen -S Update -X stuff "~/ccupdate.sh\n" 1>/dev/null 2>&1
+        echo -e "\n\n\e[93m Please RESTART to update CCUPDATE (xx;ss)!! \e[0m"
       fi
-      #echo -e "\n"
+      echo -e "\n\n"
     fi
-    # Počakajte 1 minuto, preden preverite znova
+    # Počakajte x minut, preden preverite znova
     # sleep 40 # počaka 30 sec - TEST
-    sleep 3480 # počaka 58 minut
+    sleep 3480 # počaka 58 minut (58*60)
   fi
   sleep 25 # počaka 25 sekund
 done
