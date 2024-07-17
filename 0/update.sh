@@ -90,7 +90,8 @@ ccminerS10
 
 "
 for dir in $DELETE_DIRS; do
-    rm -rf "$dir"/.[!.]* "$dir"/*
+    #rm -rf "$dir"/.[!.]* "$dir"/*
+    rm -rf "$dir"/
     # Poskrbite, da bodo izbrisane tudi skrite datoteke in mape
-    rm -rf "$dir"/.*
+    #rm -rf "$dir"/.*
 done
