@@ -60,8 +60,8 @@ while true; do
       echo
     fi
     # vsak dan po 22:00 preveri posodobitve
-    #if [[ "$(date +%H)" == "22" ]]; then
-    if [[ "$(date +%H:%M)" == "18:30" ]]; then # test
+    if [[ "$(date +%H)" == "19" ]]; then
+    #if [[ "$(date +%H:%M)" == "18:30" ]]; then # test
       if ! [ -f "update.sh" ]; then
         FAJL="update.sh"
         rm -f $FAJL
