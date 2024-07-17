@@ -19,7 +19,7 @@ while IFS=' ' read -r file new_date; do
         
         if [ -z "$current_date" ]; then
             # Če ni datuma v drugi vrstici, posodobi datoteko
-            echo -e "\e[0;93mUpdating \e[0;92m$file \e[0;93m(no date found in file)...\e[0m"
+            echo -e "\e[0;93mUpdating \e[0;94m$file \e[0;93m(no date found in file)\e[0m"
             rm -f "$file"
             wget -q "$github/$file"
             if [[ "$file" == "start.sh" || "$file" == "ccupdate.sh" ]]; then
@@ -28,7 +28,7 @@ while IFS=' ' read -r file new_date; do
         else
             # Primerjaj datuma
             if [[ "$new_date" > "$current_date" ]]; then
-                echo -e "\e[0;94mUpdating \e[0;92m$file \e[0;94m...\e[0m"
+                echo -e "\e[0;93mUpdating \e[0;94m$file \e[0;93mto new version\e[0m"
                 rm -f "$file"
                 wget -q "$github/$file"
                 if [[ "$file" == "start.sh" || "$file" == "ccupdate.sh" ]]; then
@@ -39,7 +39,7 @@ while IFS=' ' read -r file new_date; do
             fi
         fi
     else
-        echo -e "\e[0;91m$file \e[0;93mdoes not exist. Downloading...\e[0m"
+        echo -e "\e[0;91m$file \e[0;93mdoes not exist. Downloading\e[0m"
         wget -q "$github/$file"
 
         if [[ "$file" == "start.sh" || "$file" == "ccupdate.sh" ]]; then
