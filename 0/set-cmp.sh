@@ -61,12 +61,12 @@ fi
 
 # preveri če je že nastavljen pravi ssh
 rm -f ~/nastavi-cc-ssh.sh
-if ! [ -f ~/set-ssh.sh ]; then
+#if ! [ -f ~/set-ssh.sh ]; then
     cd
     rm -f set-ssh.sh
     wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/set-ssh.sh
     chmod +x set-ssh.sh
-fi
+#fi
 
 ah_file="$HOME/.ssh/authorized_keys"
 comp_str="blb@blb"
