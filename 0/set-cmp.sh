@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-07-16
+# v.2024-07-17
 #   FAJL="set-cmp";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 # usage: ./set-cmp.sh -u -m -p5 -wName
 #    -u     - update / upgrade
