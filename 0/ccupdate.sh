@@ -69,6 +69,15 @@ while true; do
       fi
       echo -e "\n\n\e[93m SW Update $(date) \e[0m"
       source ./update.sh
+      if [[ "$need_restart" == "1" ]], then
+        screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
+        screen -wipe 1>/dev/null 2>&1
+        screen -dmS CCminer 1>/dev/null 2>&1
+        screen -S CCminer -X stuff "~/ccminer -c ~/config.json\n" 1>/dev/null 2>&1
+        screen -dmS Update 1>/dev/null 2>&1
+        screen -S Update -X stuff "~/ccupdate.sh\n" 1>/dev/null 2>&1
+        echo -e "\n\n\e[93m Please update CCUPDATE (xx;ss)!! \e[0m"
+      fi
       #echo -e "\n"
     fi
     # Počakajte 1 minuto, preden preverite znova
