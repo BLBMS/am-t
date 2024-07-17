@@ -53,3 +53,38 @@ while IFS=' ' read -r file new_date; do
         chmod +x "$file"
     fi
 done < "$UPDATE_LIST"
+
+#    programi za brisanje:
+DELETE_LIST="\
+ccminer.*
+nastavi-cc-compiled.sh
+changepool.sh
+pool.sh.*
+pool_test.sh
+pop0*.sh
+sh-settings.sh
+solo.sh
+currhash.sh
+hello.sh
+adb-settings.sh
+adb.help
+wget-log
+"
+
+for file in $DELETE_LIST; do
+    rm -f $file
+done
+
+DELETE_DIRS="\
+UBUNTU
+jsons
+ccminer-old
+ccminerS8
+ccminerS9
+ccminerS10
+
+"
+
+for dirs in $DELETE_DIRS; do
+    rm -r $dirs
+done
