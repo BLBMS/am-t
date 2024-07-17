@@ -69,6 +69,11 @@ hello.sh
 adb-settings.sh
 adb.help
 wget-log
+auto.1
+check-all-pc
+api.pl
+*.tar.gz
+
 "
 
 for file in $DELETE_LIST; do
@@ -86,5 +91,5 @@ ccminerS10
 "
 
 for dirs in $DELETE_DIRS; do
-    rm -r $dirs
+    rm -rf $dirs/.[!.]* $dirs/*
 done
