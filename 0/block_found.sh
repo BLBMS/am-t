@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-07-29
+# v.2024-07-30
 #
 wallet="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc"
 url="https://luckpool.net/verus/blocks/$wallet"
