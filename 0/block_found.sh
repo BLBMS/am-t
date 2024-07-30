@@ -3,9 +3,9 @@
 #
 wallet="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc"
 url="https://luckpool.net/verus/blocks/$wallet"
-output_file="found_block.list"
-temp_file="temp_block.list"
-temp_file_sorted="temp_block.sorted"
+output_file="block_found.list"
+temp_file="block_temp.list"
+temp_file_sorted="block_temp.sorted"
 
 # Fetch data from the URL
 data=$(curl -s "$url")
