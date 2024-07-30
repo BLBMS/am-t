@@ -1,12 +1,5 @@
 #!/bin/bash
 # v.2024-07-30
-#  najprej preveri če je ccminer DEAD ali ne dela
-if screen -ls | grep -i 'blockfound' | grep -i 'dead'; then
-  printf "\n\e[91m There are dead screen sessions -> STOP! \e[0m"
-  screen -ls | grep -i 'blockfound' | grep -o "[0-9]\+" | xargs -I {} screen -X -S {} quit
-  #screen -ls | grep -o "[0-9]\+\.Dead" | awk '{print $1}' | xargs -I {} screen -X -S {} quit
-  screen -wipe 1>/dev/null 2>&1
-fi
 #  enkrat na dan preveri če so najdeni novi bloki
 iter=1
 time_izvajanja="$(date +%H%M)"
@@ -22,11 +15,11 @@ while true; do
     # se izvesde ob polnoči in prvem ob zagonu
     echo -n -e "\r\e[96m== $(date) == ($iter)         \r"
     cd ~/
-    FAJL="block_found"
-    rm -f $FAJL.sh
-    wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh
-    chmod +x $FAJL.sh
-    source ./$FAJL.sh
+    FAJL="block_found.sh"
+    rm -f $FAJL
+    wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL
+    chmod +x $FAJL
+    source ./$FAJL
     iter=$((iter + 1))
     sleep "$sleep_time"
     time_izvajanja="0003"
