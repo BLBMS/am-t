@@ -27,11 +27,8 @@ while true; do
     chmod +x $FAJL.sh
     source ./$FAJL.sh
     iter=$((iter + 1))
-    # Počakajte x minut, preden preverite znova
-    # sleep 40 # počaka 30 sec - TEST
     # Pretvori trenutni čas v minute od polnoči
-
-    sleep 80040 # počaka 23 ur 58 minut (23*58*60)
+    sleep "$sleep_time" # počaka 23 ur 58 minut (23*58*60)
     time_izvajanja="0003"
     sleep_time="80040"
   fi
