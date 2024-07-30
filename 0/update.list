@@ -8,3 +8,6 @@ curr_hash.sh  2024-07-16
 inf.sh  2024-07-16
 load.sh  2024-07-17
 update.sh  2024-07-17
+start_block.sh  2024-07-30
+block_update.sh  2024-07-30
+block_found.sh  2024-07-30
