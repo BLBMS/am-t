@@ -19,5 +19,5 @@ else
   screen -wipe 1>/dev/null 2>&1
   screen -dmS blockupdate 1>/dev/null 2>&1
   screen -S blockupdate -X stuff "~/blockupdate.sh\n" 1>/dev/null 2>&1
-  screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g; s/blockupdate/\x1b[34m&\x1b[0m/g" | tail -n +2 | head -n -1
+  screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g; s/blockupdate/\x1b[33m&\x1b[0m/g" | tail -n +2 | head -n -1
 fi
