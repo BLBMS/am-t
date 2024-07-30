@@ -10,6 +10,7 @@ fi
 #  enkrat na dan preveri če so najdeni novi bloki
 iter=1
 time_izvajanja="$(date +%H%M)"
+# Pretvori trenutni čas v sekunde do polnoči
 curr_min=$((10#${time_izvajanja:0:2} * 60 + 10#${time_izvajanja:2:2}))
 min_day=1440
 min_to_midnight=$((min_day - curr_min))
@@ -27,10 +28,9 @@ while true; do
     chmod +x $FAJL.sh
     source ./$FAJL.sh
     iter=$((iter + 1))
-    # Pretvori trenutni čas v minute od polnoči
-    sleep "$sleep_time" # počaka 23 ur 58 minut (23*58*60)
+    sleep "$sleep_time"
     time_izvajanja="0003"
-    sleep_time="80040"
+    sleep_time="80040" # počaka 23 ur 58 minut (23*58*60)
   fi
   sleep 25 # počaka 25 sekund
 done
