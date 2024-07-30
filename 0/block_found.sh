@@ -1,7 +1,8 @@
 #!/bin/bash
 # v.2024-07-29
 #
-url="https://luckpool.net/verus/blocks/RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc"
+wallet="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc"
+url="https://luckpool.net/verus/blocks/$wallet"
 output_file="found_block.list"
 temp_file="temp_block.list"
 temp_file_sorted="temp_block.sorted"
