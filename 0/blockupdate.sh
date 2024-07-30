@@ -18,7 +18,7 @@ while true; do
   echo -n -e "\e[96m== $(date) == ($iter)         \r"
   # Preverite, ali je trenutna minuta 00 (polna ura)  # sekunda +%S minuta +%M ura +%H)
   if [[ "$(date +%H%M)" -le "$time_izvajanja" ]]; then
-    # se izvesde ob polnoči
+    # se izvesde ob polnoči in prvem ob zagonu
     echo -n -e "\r\e[96m== $(date) == ($iter)         \r"
     cd ~/
     FAJL="block_found"
@@ -35,5 +35,5 @@ while true; do
     time_izvajanja="0003"
     sleep_time="80040"
   fi
-  sleep 15 # počaka 25 sekund
+  sleep 25 # počaka 25 sekund
 done
