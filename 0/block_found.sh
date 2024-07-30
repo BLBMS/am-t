@@ -62,6 +62,7 @@ echo "$data" | tr -d '[]' | tr ',' '\n' | tac | while IFS=':' read -r hash sub_h
 
         # Write the new block information to the temporary file
         echo "$block_num   $block_time   $new_block_num   $worker_name" >> "$temp_file"
+        echo -e "New block: \e[0;92m$block_num   $block_time   $new_block_num   $worker_name\e[0m"
     fi
 done
 
