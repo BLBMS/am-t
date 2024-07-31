@@ -6,6 +6,7 @@ BUILD="["
 act=0
 inact=0
 khsall=0
+spisek="dev.list"
 while read -r line; do
     i=$(echo "$line" | awk '{print $1}')
     device=$(echo "$line" | awk '{print $2}')
