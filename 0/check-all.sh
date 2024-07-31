@@ -11,12 +11,13 @@ NOLIST=""
 while read -r line; do
     # Če se vrstica začne z '#', jo dodaj v NOLIST brez '#', nato nadaljuj
     if [[ $line =~ ^# ]]; then
-        NOLIST+="${line:1} "
+        ip=$(echo "${line:1}" | awk '{print $1}'  | awk '{print $2}')
+        NOLIST+="$ip "
         continue
     fi
     # Obdelaj vsako vrstico, ki ni komentar
     ip=$(echo "$line" | awk '{print $1}')
-    LIST+="192.168.100.$ip "
+    LIST+="$ip "
 done < $spisek
 echo -e "Not listed:\n$NOLIST"
 sleap 2
