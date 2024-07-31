@@ -34,4 +34,6 @@ C_Off='\x1B[0m'       # izklopi obarvanje
 -e "s/time/${iMagenta}&${iMagenta}/g" \
 -e "s/]/${C_Off}&${C_Off}/g" \
 -e "s/missing/${iYellow}&${iYellow}/g" \
+-e "s/NOT/${iRed}&${C_Off}/g" \
+-e "s/IN LIST/${iRed}&${C_Off}/g" \
  | column
