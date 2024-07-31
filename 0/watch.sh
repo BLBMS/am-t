@@ -12,12 +12,9 @@ spisek="dev.list"
 cd ~/
 rm -f $spisek
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$spisek
-LIST=""
-NOLIST=""
-
 while read -r line; do
     echo -e "Not listed:\n"
-    # Če se vrstica začne z '#', jo dodaj v NOLIST brez '#', nato nadaljuj
+    # Če se vrstica začne z '#' jo izpiše
     if [[ $line =~ ^# ]]; then
         first_field=$(echo "${line:1}" | awk '{print $1}')
         second_field=$(echo "${line:1}" | awk '{print $2}')
@@ -27,12 +24,8 @@ while read -r line; do
         echo -e "\e[0m$first_field$space_string\e[93m   $second_field \e[0m"
     fi
 done < $spisek
-sleap 1
-
-exit
-
+sleep 
 echo "0" > iteration.txt
-
 if ! [ -f ~/watch-screen.sh ]; then
     rm -f ./watch-screen.sh
     wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/watch-screen.sh
