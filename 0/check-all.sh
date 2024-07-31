@@ -35,6 +35,7 @@ while read -r line; do
   if ! [[ $line =~ ^# ]]; then
     #ii=$(echo "$i" | rev | cut -d '.' -f 1 | rev)
     #device=$(grep -w "$i" $spisek | cut -f 2 | rev | cut -d ' ' -f 1 | rev)
+    i=$(echo "$line" | awk '{print $1}')
     device=$(echo "$line" | awk '{print $2}')
     RESPONSE=$(printf "{\"PHONE\":\"$device\",\"HOST\":\"$i\",\""; $SCRIPTPATH/api.pl -c summary -a $i -p 4068 | tr -d '\0' | sed -r \
     's/=/":"/g; s/;/\",\"/g' | sed 's/|/",/g')$(printf "\""; $SCRIPTPATH/api.pl -c pool -a $i -p 4068 | tr -d \
