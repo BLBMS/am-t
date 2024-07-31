@@ -10,8 +10,8 @@ while read -r line; do
     i=$(echo "$line" | awk '{print $1}')
     device=$(echo "$line" | awk '{print $2}')
     if ! [[ $line =~ ^# ]]; then
-        RESPONSE=$(printf "{\"PHONE\":\"$device\",\"HOST\":\"$i\",\""; $SCRIPTPATH/api.pl -c summary -a $i -p 4068 | tr -d '\0' | sed -r \
-        's/=/":"/g; s/;/\",\"/g' | sed 's/|/",/g')$(printf "\""; $SCRIPTPATH/api.pl -c pool -a $i -p 4068 | tr -d \
+        RESPONSE=$(printf "{\"PHONE\":\"$device\",\"HOST\":\"$i\",\""; $SCRIPTPATH/api_pc.pl -c summary -a $i -p 4068 | tr -d '\0' | sed -r \
+        's/=/":"/g; s/;/\",\"/g' | sed 's/|/",/g')$(printf "\""; $SCRIPTPATH/api_pc.pl -c pool -a $i -p 4068 | tr -d \
         '\0' | sed -r 's/=/":"/g' | sed -r 's/;/\",\"/g' | sed 's/|/"},/g')
         if [[ "$RESPONSE" == *"No Connect"* ]]; then
             inact=$((inact+1))
