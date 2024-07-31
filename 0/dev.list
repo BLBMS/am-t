@@ -1,8 +1,6 @@
 192.168.100.110     S9a  mygoldmine
 #192.168.100.141     A40a  mygoldmine
 192.168.100.142     A8a  mygoldmine
-192.168.100.143     A8b  mygoldmine
-192.168.100.155     S10f  mygoldmine
 192.168.100.156     S10g  mygoldmine
 #192.168.100.157     S10h  mygoldmine
 192.168.100.158     S10i  mygoldmine
@@ -12,17 +10,8 @@
 192.168.100.212     P20c  mygoldmine
 #192.168.100.213     P20d  mygoldmine
 #192.168.100.214     P20e  mygoldmine
-192.168.100.215     P20f  mygoldmine
-192.168.100.216     P20g  mygoldmine
-192.168.100.217     P20h  mygoldmine
-192.168.100.218     P20i  mygoldmine
-192.168.100.219     P20j  mygoldmine
-192.168.100.220     P20k  mygoldmine
-192.168.100.222     P20m  mygoldmine
-192.168.100.225     P10a  mygoldmine
 192.168.100.226     M20a  mygoldmine
 #192.168.100.230     PF1a  mygoldmine
-192.168.100.235     P9a  mygoldmine
 192.168.102.3     A30c  102
 #192.168.102.4     A30d  102
 192.168.102.5     A30e  102
