@@ -1,7 +1,8 @@
 #!/bin/bash
-
+# v.2024-07-31
+#
 #->   cd ~/; rm -f ./watch.sh; wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/watch.sh; chmod +x watch.sh
-
+#
 # allows access for this IP range. Adjust to your own situation.
 # "api-allow": "192.168.xxx.0/24",
 # enables the API by making it listen on the specified IP address and port. 0.0.0.0 signifies all adapters and IPs.
