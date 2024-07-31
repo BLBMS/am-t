@@ -2,7 +2,7 @@
 # v.2024-07-31
 #
 # allows access for this IP range. Adjust to your own situation.
-# "api-allow": "192.168.xxx.0/24",
+# "api-allow": "192.168.100.0/18",
 # enables the API by making it listen on the specified IP address and port. 0.0.0.0 signifies all adapters and IPs.
 # "api-bind": "0.0.0.0:4068"
 
