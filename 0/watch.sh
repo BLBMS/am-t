@@ -20,11 +20,9 @@ while read -r line; do
         length=${#first_field}
         spaces=$((15 - length))
         space_string=$(printf '%*s' "$spaces")
-
         lengthi=${#i}
         spacesi=$((3 - lengthi))
         space_stringi=$(printf '%*s' "$spacesi")
-
         echo -e "\e[0m$i$space_stringi   $first_field$space_string\e[93m   $second_field \e[0m"
         ((i++))
     fi
