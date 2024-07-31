@@ -5,14 +5,21 @@ spisek="dev.list"
 cd ~/
 rm -f $spisek
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$spisek
+
 LIST=""
+NOLIST=""
 while read -r line; do
-    # Izpusti vrstice, ki se začnejo z '#'
-    [[ $line =~ ^# ]] && continue
-    # Obravnava vsako vrstico, ki ni komentar
+    # Če se vrstica začne z '#', jo dodaj v NOLIST brez '#', nato nadaljuj
+    if [[ $line =~ ^# ]]; then
+        NOLIST+="${line:1} "
+        continue
+    fi
+    # Obdelaj vsako vrstico, ki ni komentar
     ip=$(echo "$line" | awk '{print $1}')
-    LIST+="$ip "
+    LIST+="192.168.100.$ip "
 done < $spisek
+echo -e "Not listed:\n$NOLIST"
+sleap 2
 LIST=$(echo "$LIST" | sed 's/ *$//')
 SCRIPTPATH=$(dirname $(realpath $0))
 BUILD="["
