@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+# v.2024-07-31
 # sample script to query ccminer API
 use strict;
 use warnings;
