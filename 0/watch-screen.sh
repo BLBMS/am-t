@@ -1,4 +1,5 @@
 #!/bin/bash
+# v.2024-07-31
 
 Green='\x1B[32m'      # zelena
 Blue='\x1B[36m'       # modra
