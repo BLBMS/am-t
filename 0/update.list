@@ -11,3 +11,4 @@ update.sh  2024-07-17
 start_block.sh  2024-07-30
 block_update.sh  2024-07-30
 block_found.sh  2024-07-30
+check_all  2024-07-30
