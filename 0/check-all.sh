@@ -32,25 +32,25 @@ khsall=0
 
 #for i in $LIST; do
 while read -r line; do
-  if ! [[ $line =~ ^# ]]; then
-    #ii=$(echo "$i" | rev | cut -d '.' -f 1 | rev)
-    #device=$(grep -w "$i" $spisek | cut -f 2 | rev | cut -d ' ' -f 1 | rev)
     i=$(echo "$line" | awk '{print $1}')
     device=$(echo "$line" | awk '{print $2}')
-    RESPONSE=$(printf "{\"PHONE\":\"$device\",\"HOST\":\"$i\",\""; $SCRIPTPATH/api.pl -c summary -a $i -p 4068 | tr -d '\0' | sed -r \
-    's/=/":"/g; s/;/\",\"/g' | sed 's/|/",/g')$(printf "\""; $SCRIPTPATH/api.pl -c pool -a $i -p 4068 | tr -d \
-    '\0' | sed -r 's/=/":"/g' | sed -r 's/;/\",\"/g' | sed 's/|/"},/g')
-    if [[ "$RESPONSE" == *"No Connect"* ]]; then
-        inact=$((inact+1))
-        BUILD=$BUILD"{\"PHONE\":\"$device\",\"HOST\":\"$i\"},"
+    if ! [[ $line =~ ^# ]]; then
+        RESPONSE=$(printf "{\"PHONE\":\"$device\",\"HOST\":\"$i\",\""; $SCRIPTPATH/api.pl -c summary -a $i -p 4068 | tr -d '\0' | sed -r \
+        's/=/":"/g; s/;/\",\"/g' | sed 's/|/",/g')$(printf "\""; $SCRIPTPATH/api.pl -c pool -a $i -p 4068 | tr -d \
+        '\0' | sed -r 's/=/":"/g' | sed -r 's/;/\",\"/g' | sed 's/|/"},/g')
+        if [[ "$RESPONSE" == *"No Connect"* ]]; then
+            inact=$((inact+1))
+            BUILD=$BUILD"{\"PHONE\":\"$device\",\"HOST\":\"$i\"},"
+        else
+            BUILD=$BUILD$RESPONSE
+            RESP=$(echo "$RESPONSE" | sed 's/,$//')
+            act=$((act+1))
+            khs1=$(echo "$RESP" | jq -r '.KHS' | awk -F. '{print $1}')
+            khsall=$((khsall + khs1))
+        fi
     else
-        BUILD=$BUILD$RESPONSE
-        RESP=$(echo "$RESPONSE" | sed 's/,$//')
-        act=$((act+1))
-        khs1=$(echo "$RESP" | jq -r '.KHS' | awk -F. '{print $1}')
-        khsall=$((khsall + khs1))
+        BUILD=$BUILD"{\"PHONE\":\"$device\",\"HOST\":\"$i\"},\"POOL\":\"NOT\",\"KHS\":\"IN LIST\""
     fi
-  fi
 done < $spisek
 #done #-for
 iteration=$(<iteration.txt)
