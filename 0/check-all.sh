@@ -5,14 +5,15 @@ spisek="dev.list"
 cd ~/
 rm -f $spisek
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$spisek
-
 LIST=""
 NOLIST=""
+
 while read -r line; do
     # Če se vrstica začne z '#', jo dodaj v NOLIST brez '#', nato nadaljuj
     if [[ $line =~ ^# ]]; then
-        ip=$(echo "${line:1}" | awk '{print $1}'  | awk '{print $2}')
-        NOLIST+="$ip "
+        first_field=$(echo "${line:1}" | awk '{print $1}')
+        second_field=$(echo "${line:1}" | awk '{print $2}')
+        NOLIST+="$first_field   $second_field\n"
         continue
     fi
     # Obdelaj vsako vrstico, ki ni komentar
@@ -27,9 +28,14 @@ BUILD="["
 act=0
 inact=0
 khsall=0
-for i in $LIST; do
+
+
+#for i in $LIST; do
+while read -r line; do
+  if ! [[ $line =~ ^# ]]; then
     #ii=$(echo "$i" | rev | cut -d '.' -f 1 | rev)
-    device=$(grep -w "$i" $spisek | cut -f 2 | rev | cut -d ' ' -f 1 | rev)
+    #device=$(grep -w "$i" $spisek | cut -f 2 | rev | cut -d ' ' -f 1 | rev)
+    device=$(echo "$line" | awk '{print $2}')
     RESPONSE=$(printf "{\"PHONE\":\"$device\",\"HOST\":\"$i\",\""; $SCRIPTPATH/api.pl -c summary -a $i -p 4068 | tr -d '\0' | sed -r \
     's/=/":"/g; s/;/\",\"/g' | sed 's/|/",/g')$(printf "\""; $SCRIPTPATH/api.pl -c pool -a $i -p 4068 | tr -d \
     '\0' | sed -r 's/=/":"/g' | sed -r 's/;/\",\"/g' | sed 's/|/"},/g')
@@ -43,7 +49,9 @@ for i in $LIST; do
         khs1=$(echo "$RESP" | jq -r '.KHS' | awk -F. '{print $1}')
         khsall=$((khsall + khs1))
     fi
-done
+  fi
+done < $spisek
+#done #-for
 iteration=$(<iteration.txt)
 iteration=$((iteration + 1))
 echo $iteration > iteration.txt
