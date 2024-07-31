@@ -1,36 +1,11 @@
 #!/bin/bash
 # v.2024-07-31
 #
-spisek="dev.list"
-cd ~/
-rm -f $spisek
-wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$spisek
-LIST=""
-NOLIST=""
-
-while read -r line; do
-    # Če se vrstica začne z '#', jo dodaj v NOLIST brez '#', nato nadaljuj
-    if [[ $line =~ ^# ]]; then
-        first_field=$(echo "${line:1}" | awk '{print $1}')
-        second_field=$(echo "${line:1}" | awk '{print $2}')
-        NOLIST+="$first_field   $second_field\n"
-        continue
-    fi
-    # Obdelaj vsako vrstico, ki ni komentar
-    ip=$(echo "$line" | awk '{print $1}')
-    LIST+="$ip "
-done < $spisek
-echo -e "Not listed:\n$NOLIST"
-sleap 2
-LIST=$(echo "$LIST" | sed 's/ *$//')
 SCRIPTPATH=$(dirname $(realpath $0))
 BUILD="["
 act=0
 inact=0
 khsall=0
-
-
-#for i in $LIST; do
 while read -r line; do
     i=$(echo "$line" | awk '{print $1}')
     device=$(echo "$line" | awk '{print $2}')
@@ -52,7 +27,6 @@ while read -r line; do
         BUILD=$BUILD"{\"PHONE\":\"$device\",\"HOST\":\"$i\"},\"POOL\":\"NOT\",\"KHS\":\"IN LIST\""
     fi
 done < $spisek
-#done #-for
 iteration=$(<iteration.txt)
 iteration=$((iteration + 1))
 echo $iteration > iteration.txt
