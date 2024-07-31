@@ -25,7 +25,7 @@ while read -r line; do
             khsall=$((khsall + khs1))
         fi
     else
-        BUILD=$BUILD"{\"PHONE\":\"$device\",\"HOST\":\"$i\",\"POOL\":\"NOT\",\"KHS\":\"IN LIST\"}
+        BUILD=$BUILD"{\"PHONE\":\"$device\",\"HOST\":\"$i\",\"POOL\":\"NOT\",\"KHS\":\"IN LIST\"},"
     fi
 done < $spisek
 iteration=$(<iteration.txt)
