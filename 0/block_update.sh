@@ -8,7 +8,7 @@ freq_seconds=$(awk "BEGIN {print $freq * 3600}")
 
 # Funkcija za izvajanje zajema podatkov
 execute_block_found() {
-  echo -e "\e[96m== $(date) == ($iter)        "
+  echo -e "\e[96m== $(date +%Y-%m-%d\ %H:%M:%S) == ($iter)"
   cd ~/
   FILE="block_found.sh"
   rm -f $FILE
