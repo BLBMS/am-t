@@ -1,7 +1,7 @@
 #!/bin/bash
 # v.2024-08-03
 #  data capture frequency in hours (24 is 1x /day)
-freq=6
+freq=6    # 24 12 8 6 4...
 # the first data capture is immediate, then according to frequency from midnight onwards
 iter=1
 execution_time="$(date +%H%M)"
@@ -17,14 +17,14 @@ while true; do
     # se izvesde ob polnoči in prvem ob zagonu
     echo -n -e "\r\e[96m== $(date) == ($iter)         \r"
     cd ~/
-    FAJL="block_found.sh"
-    rm -f $FAJL
-    wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL
-    chmod +x $FAJL
-    source ./$FAJL
+    FILE="block_found.sh"
+    rm -f $FILE
+    wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FILE
+    chmod +x $FILE
+    source ./$FILE
     iter=$((iter + 1))
     sleep "$sleep_time"
-    execution_time="0003"
+    execution_time="0003" # spremeni v formulo in upoštevaj podan $freq
     sleep_time="80040" # počaka 23 ur 58 minut (23*58*60)
   fi
   sleep 25 # počaka 25 sekund
