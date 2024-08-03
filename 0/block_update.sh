@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-08-03
+# v.2024-08-04
 # Data capture frequency in hours (24 is 1x /day)
 freq=0.1    # 24 12 8 6 4 0.25 ...
 
