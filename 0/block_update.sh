@@ -1,7 +1,7 @@
 #!/bin/bash
 # v.2024-08-03
 #  data capture frequency in hours (24 is 1x /day)
-freq=0.1    # 24 12 8 6 4...
+freq=0,1    # 24 12 8 6 4...
 
 # Pretvori frekvenco v minute
 freq_minutes=$((freq * 60))
