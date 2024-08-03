@@ -5,8 +5,8 @@ use strict;
 use warnings;
 use Getopt::Long qw(GetOptions);
 my $command = "summary";
-my $address = "127.0.0.1";
-my $port = "4086";
+my $address = "0.0.0.0";
+my $port = "4068";                     # popravleno iz 4086
 GetOptions('cmd=s' => \$command,
            'address=s' => \$address,
            'port=s' => \$port,
