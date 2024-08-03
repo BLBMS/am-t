@@ -21,7 +21,7 @@ get_block() {
     # Check if data is empty (ie [])
     if echo "$data" | head -n 1 | grep -q "<html>"; then
  #       echo "No new data found for $coin."
-        continue
+        echo ""
     else
         # Create a temporary file to hold the updated block data
         > "$temp_file"
