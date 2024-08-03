@@ -62,11 +62,11 @@ get_block() {
                 new_block_num=${month_block_count[$block_month]}
                 # Write the new block information to the temporary file
                 echo "$block_num   $block_time   $new_block_num   $worker_name" >> "$temp_file"
-                echo -e "New block: \e[0;92m$block_num   $block_time   $new_block_num   $worker_name\e[0m"
+                echo -e "\nNew block: \e[0;92m$block_num   $block_time   $new_block_num   $worker_name\e[0m"
             fi
         done
         if [ ! -s "$temp_file" ]; then
-            echo "No new data found for $coin."
+            echo -e "\nNo new data found for $coin."
         fi
         # Combine the new data with the existing data, ensuring that new blocks come first
         cat "$temp_file" "$output_file" | sort -r -k2,2 -k3,3 | awk '!seen[$0]++' > "$output_file.new"
