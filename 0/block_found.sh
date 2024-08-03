@@ -6,7 +6,7 @@ wallet="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc"
 
 # A function for obtaining and processing blocks
 get_block() {
-    echo -e "Getting new data for: \e[0;93m$coin\e[0m"
+    #echo -e "Getting new data for: \e[0;93m$coin\e[0m"
     if [[ "$coin" == "VRSC" ]]; then
         coinf="verus"
     else
@@ -20,7 +20,7 @@ get_block() {
     data=$(curl -s "$url")
     # Check if data is empty (ie [])
     if echo "$data" | head -n 1 | grep -q "<html>"; then
-        echo "No new data found for $coin."
+        #echo "No new data found for $coin."
     else
         # Create a temporary file to hold the updated block data
         > "$temp_file"
