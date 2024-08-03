@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-08-03
+# v.2024-08-04
 
 # Define variables
 wallet="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc"
