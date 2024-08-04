@@ -18,10 +18,10 @@ get_block() {
     # Fetch data from the URL
     data=$(curl -s "$url")
     # Check if data is empty (ie [])
-    if echo "$data" | head -n 1 | grep -q "<html>"; then
+    if ! [[ echo "$data" | head -n 1 | grep -q "<html>" ]]; then
  #       echo "No new data found for $coin."
-        echo ""
-    else
+ #       echo ""
+ #   else
         # Create a temporary file to hold the updated block data
         > "$temp_file"
         # Create a temporary file to hold the sorted blocks by date
