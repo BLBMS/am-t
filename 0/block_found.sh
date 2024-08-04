@@ -14,15 +14,12 @@ get_block() {
     url="https://luckpool.net/$coinf/blocks/$wallet"
     output_file="block_$coin.list"
     temp_file="block_temp.list"
-    temp_file_sorted="block_temp.sorted"
     # Fetch data from the URL
     data=$(curl -s "$url")
     # Check if data is empty (ie [])
     if ! echo "$data" | head -n 1 | grep -q "<html>"; then
         # Create a temporary file to hold the updated block data
         > "$temp_file"
-        # Create a temporary file to hold the sorted blocks by date
-        > "$temp_file_sorted"
         # Read the existing file into an associative array
         declare -A timestamp_map
         declare -A month_block_count
@@ -69,10 +66,14 @@ get_block() {
         done
         if $new_data; then
             # Combine the new data with the existing data, ensuring that new blocks come first
-            cat "$temp_file" "$output_file" | sort -r -k2,2 -k3,3 | awk '!seen[$0]++' > "$output_file.new"
+            if [[ -f "$output_file" ]]; then
+                cat "$temp_file" "$output_file" | sort -r -k2,2 -k3,3 | awk '!seen[$0]++' > "$output_file.new"
+            else
+                cp "$temp_file" "$output_file.new"
+            fi
             mv "$output_file.new" "$output_file"
         fi
-        rm "$temp_file" "$temp_file_sorted"
+        rm "$temp_file"
     fi
 }
 
