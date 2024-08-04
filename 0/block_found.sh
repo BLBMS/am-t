@@ -18,7 +18,7 @@ get_block() {
     # Fetch data from the URL
     data=$(curl -s "$url")
     # Check if data is empty (ie [])
-    if [[ ! $(echo "$data" | head -n 1) =~ "<html>" ]]; then
+    if ! echo "$data" | grep -q "<html>"; then
         # Create a temporary file to hold the updated block data
         > "$temp_file"
         # Create a temporary file to hold the sorted blocks by date
@@ -62,8 +62,9 @@ get_block() {
                 new_block_num=${month_block_count[$block_month]}
                 # Write the new block information to the temporary file
                 echo "$block_num   $block_time   $new_block_num   $worker_name" >> "$temp_file"
-                echo -e "New block: \e[0;92m$block_num   $block_time   $new_block_num   $worker_name\e[0m"
                 new_data=true
+                # Premik kurzorja eno vrstico gor in izpis novega sporočila
+                echo -e "\033[A\033[KNew block: \e[0;92m$block_num   $block_time   $new_block_num   $worker_name\e[0m"
             fi
         done
         if $new_data; then
