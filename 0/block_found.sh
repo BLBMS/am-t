@@ -18,10 +18,7 @@ get_block() {
     # Fetch data from the URL
     data=$(curl -s "$url")
     # Check if data is empty (ie [])
-    if ! [[ echo "$data" | head -n 1 | grep -q "<html>" ]]; then
- #       echo "No new data found for $coin."
- #       echo ""
- #   else
+    if [[ ! $(echo "$data" | head -n 1) =~ "<html>" ]]; then
         # Create a temporary file to hold the updated block data
         > "$temp_file"
         # Create a temporary file to hold the sorted blocks by date
@@ -30,20 +27,21 @@ get_block() {
         declare -A timestamp_map
         declare -A month_block_count
         # Read the existing file into memory
-        while read -r line; do
-            # Read the block number, timestamp, and worker from each line
-            block_num=$(echo "$line" | awk '{print $1}')
-            timestamp=$(echo "$line" | awk '{print $2" "$3}')
-            # Save the timestamp for the existing block number
-            timestamp_map[$block_num]="$timestamp"
-            # Extract year and month for counting blocks
-            block_month=$(echo "$timestamp" | cut -d'-' -f1,2)
-            month_block_count[$block_month]=$((month_block_count[$block_month]+1))
-        done < "$output_file"
+        if [[ -f "$output_file" ]]; then
+            while read -r line; do
+                # Read the block number, timestamp, and worker from each line
+                block_num=$(echo "$line" | awk '{print $1}')
+                timestamp=$(echo "$line" | awk '{print $2" "$3}')
+                # Save the timestamp for the existing block number
+                timestamp_map[$block_num]="$timestamp"
+                # Extract year and month for counting blocks
+                block_month=$(echo "$timestamp" | cut -d'-' -f1,2)
+                month_block_count[$block_month]=$((month_block_count[$block_month]+1))
+            done < "$output_file"
+        fi
         # Process each new block and determine its new block number, from latest to earliest
-echo "-1-"
+        new_data=false
         echo "$data" | tr -d '[]' | tr ',' '\n' | tac | while IFS=':' read -r hash sub_hash block_num worker timestamp_millis pool data1 data2 data3; do
-echo "-11-"
             # Extract the worker name (part after the last dot)
             worker_name=$(echo "$worker" | awk -F'.' '{print $NF}')
             # Convert milliseconds to seconds
@@ -65,14 +63,14 @@ echo "-11-"
                 # Write the new block information to the temporary file
                 echo "$block_num   $block_time   $new_block_num   $worker_name" >> "$temp_file"
                 echo -e "New block: \e[0;92m$block_num   $block_time   $new_block_num   $worker_name\e[0m"
+                new_data=true
             fi
         done
-#        if [ ! -s "$temp_file" ]; then
-#            echo -e "No new data found for $coin."
-#        fi
-        # Combine the new data with the existing data, ensuring that new blocks come first
-        cat "$temp_file" "$output_file" | sort -r -k2,2 -k3,3 | awk '!seen[$0]++' > "$output_file.new"
-        mv "$output_file.new" "$output_file"
+        if $new_data; then
+            # Combine the new data with the existing data, ensuring that new blocks come first
+            cat "$temp_file" "$output_file" | sort -r -k2,2 -k3,3 | awk '!seen[$0]++' > "$output_file.new"
+            mv "$output_file.new" "$output_file"
+        fi
         rm "$temp_file" "$temp_file_sorted"
     fi
 }
