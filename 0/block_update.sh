@@ -1,7 +1,10 @@
 #!/bin/bash
 # v.2024-08-04
+
+wallet="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc"
+
 # Data capture frequency in hours (24 is 1x /day)
-freq=0,003    # 24 12 8 6 4 0.25 ...
+freq=0.003    # 24 12 8 6 4 0.25 ...
 
 # Pretvori frekvenco v sekunde
 freq_seconds=$(awk "BEGIN {print int($freq * 3600)}")
@@ -11,9 +14,9 @@ execute_block_found() {
   echo -e "\e[96m== $(date +%Y-%m-%d\ %H:%M:%S) \e[0m== ($iter)"
   cd ~/
   FILE="block_found.sh"
-  rm -f $FILE
-  wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FILE
-  chmod +x $FILE
+#  rm -f $FILE
+#  wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FILE
+#  chmod +x $FILE
   source ./$FILE
   iter=$((iter + 1))
 }
