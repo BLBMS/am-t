@@ -10,7 +10,6 @@ get_block() {
         coinf="$coinl"
     fi
     url="https://luckpool.net/$coinf/blocks/$wallet"
-    echo "url=$url"
     output_file="block_$coin.list"
     temp_file="block_temp.list"
     temp_file_sorted="block_temp.sorted"
@@ -48,6 +47,7 @@ get_block() {
         block_month=$(echo "$timestamp" | cut -d'-' -f1,2)
         month_block_count[$block_month]=$((month_block_count[$block_month]+1))
     done < "$output_file"
+    
     # Process each new block and determine its new block number, from latest to earliest
     echo "$data" | tr -d '[]' | tr ',' '\n' | tac | while IFS=':' read -r hash sub_hash block_num worker timestamp_millis pool data1 data2 data3; do
         # Extract the worker name (part after the last dot)
@@ -86,7 +86,13 @@ get_block() {
     rm "$temp_file" "$temp_file_sorted"
 }
 
+line_up=0
+
 # Process blocks for each coin
 for coin in "VRSC" "vARRR" "vDEX"; do
     get_block
 done
+
+if "$line_up" == 1; then
+    echo -n -e ""
+fi
