@@ -1,10 +1,10 @@
 #!/bin/bash
 # v.2024-08-04
 # Data capture frequency in hours (24 is 1x /day)
-freq=6    # 24 12 8 6 4 0.25 ...
+freq=0,003    # 24 12 8 6 4 0.25 ...
 
 # Pretvori frekvenco v sekunde
-freq_seconds=$(awk "BEGIN {print $freq * 3600}")
+freq_seconds=$(awk "BEGIN {print int($freq * 3600)}")
 
 # Funkcija za izvajanje zajema podatkov
 execute_block_found() {
