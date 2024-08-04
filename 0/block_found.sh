@@ -1,4 +1,4 @@
-#!/bin/bash
+  GNU nano 6.2                                                                                                    block_found.sh                                                                                                             #!/bin/bash
 # v.2024-08-04
 
 # Funkcija za pridobivanje in obdelavo blokov
@@ -47,7 +47,7 @@ get_block() {
         block_month=$(echo "$timestamp" | cut -d'-' -f1,2)
         month_block_count[$block_month]=$((month_block_count[$block_month]+1))
     done < "$output_file"
-    
+
     # Process each new block and determine its new block number, from latest to earliest
     echo "$data" | tr -d '[]' | tr ',' '\n' | tac | while IFS=':' read -r hash sub_hash block_num worker timestamp_millis pool data1 data2 data3; do
         # Extract the worker name (part after the last dot)
@@ -75,7 +75,7 @@ get_block() {
 
             # Write the new block information to the temporary file
             echo "$block_num   $block_time   $new_block_num   $worker_name" >> "$temp_file"
-            echo -e "New \e[0;92m$coin\e[0m block: \e[0;92m$block_num   $block_time   $new_block_num   $worker_name\e[0m"
+            echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $block_time   $new_block_num   $worker_name\e[0m"
             line_up=1
         fi
     done
@@ -94,5 +94,5 @@ for coin in "VRSC" "vARRR" "vDEX"; do
 done
 
 if "$line_up" == 1; then
-    echo -n -e ""
+    echo -n -e "\e[A"
 fi
