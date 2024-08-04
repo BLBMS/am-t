@@ -93,6 +93,8 @@ for coin in "VRSC" "vARRR" "vDEX"; do
     get_block
 done
 
-if "$line_up" == 1; then
+if [[ "$line_up" == 1 ]]; then
     echo -n -e "\e[A"
+else
+    echo -n -e "\e[A\e[A\e[A"
 fi
