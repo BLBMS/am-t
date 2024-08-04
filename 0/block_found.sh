@@ -41,7 +41,9 @@ get_block() {
             month_block_count[$block_month]=$((month_block_count[$block_month]+1))
         done < "$output_file"
         # Process each new block and determine its new block number, from latest to earliest
+echo "-1-"
         echo "$data" | tr -d '[]' | tr ',' '\n' | tac | while IFS=':' read -r hash sub_hash block_num worker timestamp_millis pool data1 data2 data3; do
+echo "-11-"
             # Extract the worker name (part after the last dot)
             worker_name=$(echo "$worker" | awk -F'.' '{print $NF}')
             # Convert milliseconds to seconds
