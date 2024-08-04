@@ -63,7 +63,7 @@ get_block() {
                 # Write the new block information to the temporary file
                 echo "$block_num   $block_time   $new_block_num   $worker_name" >> "$temp_file"
                 # Premik kurzorja eno vrstico gor in izpis novega sporočila
-                echo -e "New block: \e[0;92m$block_num   $block_time   $new_block_num   $worker_name\e[0m"
+                echo -e "New $coin block: \e[0;92m$block_num   $block_time   $new_block_num   $worker_name\e[0m"
                 new_data=true
             fi
         done
