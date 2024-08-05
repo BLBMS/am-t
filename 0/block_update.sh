@@ -4,20 +4,24 @@
 wallet="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc"
 
 # Data capture frequency in hours (24 is 1x /day)
-freq=0.003    # 24 12 8 6 4 0.25 ...
+freq=24   #0.003    # 24 12 8 6 4 0.25 ...
 
 # Pretvori frekvenco v sekunde
 freq_seconds=$(awk "BEGIN {print int($freq * 3600)}")
-echo -e "Capture frequency (sec): \e[1;92m$freq_seconds"
+if [[ $freq_seconds -lt 3600 ]]; then
+    echo -e "\n\e[1;93mCapture frequency: \e[1;91m$freq_seconds\e[0m (sec)\n"
+else
+    echo -e "\n\e[1;93mCapture frequency: \e[1;91m$freq\e[0m (h)\n"
+fi
 
 # Funkcija za izvajanje zajema podatkov
 execute_block_found() {
     echo -e "\e[96m== $(date +%Y-%m-%d\ %H:%M:%S) \e[0m== ($iter)"
     cd ~/
     FILE="block_found.sh"
-#   rm -f $FILE
-#   wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FILE
-#   chmod +x $FILE
+    rm -f $FILE
+    wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FILE
+    chmod +x $FILE
     source ./$FILE
     iter=$((iter + 1))
 }
