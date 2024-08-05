@@ -96,7 +96,7 @@ done
 if [[ -f is_found.txt ]]; then
     is_found=$(cat is_found.txt)
     if [[ "$is_found" == "yes" ]]; then
-        echo -e ""
+        echo -e "\n"
     fi
 fi
 
