@@ -93,7 +93,9 @@ rm -f is_found.txt
 
 # Process blocks for each coin
 #for coin in "VRSC" "vARRR" "vDEX"; do
-for coin in "$coin_list"; do
+#for coin in "$coin_list"; do
+# Process blocks for each coin in coin_list
+echo "$coin_list" | tr ' ' '\n' | while read -r coin; do
     get_block
 done
 
