@@ -4,7 +4,7 @@
 wallet="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc"
 
 # Data capture frequency in hours (24 is 1x /day)
-freq=24   #0.003    # 24 12 8 6 4 0.25 ...
+freq=0.003   #0.003    # 24 12 8 6 4 0.25 ...
 
 # Pretvori frekvenco v sekunde
 freq_seconds=$(awk "BEGIN {print int($freq * 3600)}")
