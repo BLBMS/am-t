@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-08-04
+# v.2024-08-05
 
 wallet="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc"
 
@@ -13,7 +13,6 @@ echo -e "Capture frequency (sec): \e[1;92m$freq_seconds"
 # Funkcija za izvajanje zajema podatkov
 execute_block_found() {
     echo -e "\e[96m== $(date +%Y-%m-%d\ %H:%M:%S) \e[0m== ($iter)"
-    is_found="no"
     cd ~/
     FILE="block_found.sh"
 #   rm -f $FILE
