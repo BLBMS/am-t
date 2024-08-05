@@ -12,14 +12,15 @@ echo -e "Capture frequency (sec): \e[1;92m$freq_seconds"
 
 # Funkcija za izvajanje zajema podatkov
 execute_block_found() {
-  echo -e "\e[96m== $(date +%Y-%m-%d\ %H:%M:%S) \e[0m== ($iter)"
-  cd ~/
-  FILE="block_found.sh"
-#  rm -f $FILE
-#  wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FILE
-#  chmod +x $FILE
-  source ./$FILE
-  iter=$((iter + 1))
+    echo -e "\e[96m== $(date +%Y-%m-%d\ %H:%M:%S) \e[0m== ($iter)"
+    is_found="no"
+    cd ~/
+    FILE="block_found.sh"
+#   rm -f $FILE
+#   wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FILE
+#   chmod +x $FILE
+    source ./$FILE
+    iter=$((iter + 1))
 }
 
 # Izvede prvi zajem podatkov takoj
@@ -33,20 +34,20 @@ next_capture_time=$last_midnight
 
 # Dodaj intervale glede na frekvenco, dokler ne pridemo do trenutnega časa
 while [[ $next_capture_time -lt $current_time ]]; do
-  next_capture_time=$((next_capture_time + freq_seconds))
+    next_capture_time=$((next_capture_time + freq_seconds))
 done
 
 # Prikaz časa naslednjega zajema podatkov
-echo -e "Next capture time: \e[93m$(date -d @$next_capture_time +%Y-%m-%d\ %H:%M:%S)\e[0m"
+echo -e "Next capture time: \e[93m$(date -d @$next_capture_time +%Y-%m-%d\ %H:%M:%S)\e[0m\033[A\033[K\033[A\033[K"
 
 while true; do
-  current_time=$(date +%s)
-  # Preveri, ali je trenutni čas enak ali večji od časa naslednjega zajema podatkov
-  if [[ "$current_time" -ge "$next_capture_time" ]]; then
-    execute_block_found
-    # Nastavi naslednji čas zajema podatkov glede na frekvenco
-    next_capture_time=$((next_capture_time + freq_seconds))
-    # Prikaz časa naslednjega zajema podatkov
-    echo -e "Next capture time: \e[93m$(date -d @$next_capture_time +%Y-%m-%d\ %H:%M:%S)\e[0m"
-  fi
+    current_time=$(date +%s)
+    # Preveri, ali je trenutni čas enak ali večji od časa naslednjega zajema podatkov
+    if [[ "$current_time" -ge "$next_capture_time" ]]; then
+        execute_block_found
+        # Nastavi naslednji čas zajema podatkov glede na frekvenco
+        next_capture_time=$((next_capture_time + freq_seconds))
+        # Prikaz časa naslednjega zajema podatkov
+        echo -e "Next capture time: \e[93m$(date -d @$next_capture_time +%Y-%m-%d\ %H:%M:%S)\e[0m\033[A\033[K\033[A\033[K"
+    fi
 done
