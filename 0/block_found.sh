@@ -86,15 +86,18 @@ get_block() {
 }
 
 # Clear the status file at the beginning of the script
-echo "no" > is_found.txt
+rm -f is_found.txt
 
 # Process blocks for each coin
 for coin in "VRSC" "vARRR" "vDEX"; do
     get_block
 done
 
-is_found=$(cat is_found.txt)
-
-if [[ "$is_found" == "yes" ]]; then
-    echo -e "\n"
+if [[ -f is_found.txt ]]; then
+    is_found=$(cat is_found.txt)
+    if [[ "$is_found" == "yes" ]]; then
+        echo -e ""
+    fi
 fi
+
+# vrstica gor   echo -n -e "\e[A\e[A\e[A"
