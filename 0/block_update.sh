@@ -8,6 +8,7 @@ freq=0.003    # 24 12 8 6 4 0.25 ...
 
 # Pretvori frekvenco v sekunde
 freq_seconds=$(awk "BEGIN {print int($freq * 3600)}")
+echo -e "Capture frequency (sec): \e[1;92m$freq_seconds"
 
 # Funkcija za izvajanje zajema podatkov
 execute_block_found() {
