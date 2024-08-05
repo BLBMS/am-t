@@ -1,6 +1,9 @@
 #!/bina/bash
 # v.2024-08-05
 
+# luckpool coin list (VRSC and PBaaS)
+coin_list="VRSC vARRR vDEX"
+
 # Funkcija za pridobivanje in obdelavo blokov
 get_block() {
     coinl=$(echo "$coin" | tr '[:upper:]' '[:lower:]')
@@ -89,7 +92,8 @@ get_block() {
 rm -f is_found.txt
 
 # Process blocks for each coin
-for coin in "VRSC" "vARRR" "vDEX"; do
+#for coin in "VRSC" "vARRR" "vDEX"; do
+for coin in "$coin_list"; do
     get_block
 done
 
