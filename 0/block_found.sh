@@ -1,5 +1,5 @@
 #!/bina/bash
-# v.2024-08-04
+# v.2024-08-05
 
 # Funkcija za pridobivanje in obdelavo blokov
 get_block() {
@@ -55,7 +55,6 @@ get_block() {
 
         # Convert milliseconds to seconds
         timestamp_seconds=$((timestamp_millis / 1000))
-
         # Convert to human-readable date and time
         block_time=$(date -d @"$timestamp_seconds" +"%Y-%m-%d %H:%M:%S")
 
@@ -76,8 +75,7 @@ get_block() {
             # Write the new block information to the temporary file
             echo "$block_num   $block_time   $new_block_num   $worker_name" >> "$temp_file"
             echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $block_time   $new_block_num   $worker_name\e[0m"
-            is_found="yes"
-            echo "FOUND -> TO: $is_found  "
+            echo "yes" > is_found.txt
         fi
     done
 
@@ -87,18 +85,16 @@ get_block() {
     rm "$temp_file" "$temp_file_sorted"
 }
 
-#is_found="no"
+# Clear the status file at the beginning of the script
+echo "no" > is_found.txt
 
 # Process blocks for each coin
 for coin in "VRSC" "vARRR" "vDEX"; do
     get_block
 done
 
-echo "FOUND: $is_found  "
-if [[ "$is_found" == "yes" ]]; then
-    echo -e "\n\n\n******************************************************************************"
-fi
+is_found=$(cat is_found.txt)
 
-#else
-#    echo -n -e "\e[A\e[A\e[A"
-#fi
+if [[ "$is_found" == "yes" ]]; then
+    echo -e "\n"
+fi
