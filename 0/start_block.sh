@@ -6,10 +6,10 @@ coin_list=$(jq -r '.coin_list[]' block_data.json)
 
 # Create initial coin files
 echo "$coin_list" | while read -r coin; do
-    echo -e "\e[1;93mLast 5 blocks: \e[1;92m$coin\e[0m:"
     block_file="block_${coin}.list"
     if [[ ! -f "$block_file" || ! -s "$block_file" ]]; then
         echo "0000000   2000-01-01 00:00:00   0   ___" > "$block_file"
+        echo -e "New file created: \e[1;92m$block_file\e[0m"
     fi
 done
 
