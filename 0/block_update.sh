@@ -3,6 +3,7 @@
 
 # Read data from JSON
 wallet=$(jq -r '.wallet' block_data.json)
+my_github=$(jq -r '.my_github' block_data.json)
 coin_list=$(jq -r '.coin_list[]' block_data.json)
 freq=$(jq -r '.freq' block_data.json)
 
@@ -28,8 +29,11 @@ fi
 # Function to execute block_found.sh
 execute_block_found() {
     echo -e "\e[96m== $(date +%Y-%m-%d\ %H:%M:%S) \e[0m== ($iter)"
-    cd ~/
     FILE="block_found.sh"
+    cd ~/
+    rm -f $FILE
+    wget -q "$my_github$FILE"
+    chmod +x $FILE
     source ./$FILE
     iter=$((iter + 1))
 }
