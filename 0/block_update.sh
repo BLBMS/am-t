@@ -12,7 +12,7 @@
 
 # Printout of the last 5 already saved blocks
 echo "$coin_list" | tr ' ' '\n' | while read -r coin; do
-    echo -e "\e[1;93mLast 5 blocks: \e[1;91m$coin\e[0m:"
+    echo -e "\e[1;93mLast 5 blocks: \e[1;92m$coin\e[0m:"
     block_file="block_$coin.list"
     if [[ -f "$block_file" && -s "$block_file" && $(head -n 1 "$block_file" | awk '{print $1}') -ne 0 ]]; then
         head -n 5 "$block_file"
