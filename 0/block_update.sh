@@ -1,4 +1,4 @@
-#!/bin/bash
+  GNU nano 6.2                                                                                                   block_update.sh                                                                                                             #!/bin/bash
 # v.2024-08-05
 
 wallet="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc"
