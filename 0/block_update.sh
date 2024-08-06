@@ -2,13 +2,13 @@
 # v.2024-08-05
 
 # Your wallet on luckpool
-wallet="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc"
+#wallet="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc"
 
 # luckpool coin list (VRSC and PBaaS)
-coin_list="VRSC vARRR vDEX"
+#coin_list="VRSC vARRR vDEX"
 
 # Data capture frequency in hours (24 is 1x /day)
-freq=24    # 24 12 8 6 4 0.25 ...
+#freq=24    # 24 12 8 6 4 0.25 ...
 
 # Printout of the last 5 already saved blocks
 echo "$coin_list" | tr ' ' '\n' | while read -r coin; do
