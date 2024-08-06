@@ -5,14 +5,14 @@
 wallet=$(jq -r '.wallet' block_data.json)
 coin_list=$(jq -r '.coin_list[]' block_data.json)
 
-# Function to fetch and process blocks
+# Funkcija za pridobivanje in obdelavo blokov
 get_block() {
     coinl=$(echo "$coin" | tr '[:upper:]' '[:lower:]')
     if [[ "$coinl" == "vrsc" ]]; then
         coinf="verus"
     else
         coinf="$coinl"
-    }
+    fi
     url="https://luckpool.net/$coinf/blocks/$wallet"
     output_file="block_${coin}.list"
     temp_file="block_temp.list"
@@ -21,8 +21,10 @@ get_block() {
     # Fetch data from the URL
     data=$(curl -s "$url")
 
-    # Check if data is empty or contains <html> in the first line
-    if [[ "$data" == "[]" || $(echo "$data" | head -n 1 | grep -q "<html>") ]]; then
+    # Preveri, ali so podatki prazni ali vsebujejo <html> v prvi vrstici
+    if [[ "$data" == "[]" ]]; then
+        return
+    elif echo "$data" | head -n 1 | grep -q "<html>"; then
         return
     fi
 
@@ -38,6 +40,7 @@ get_block() {
 
     # Read the existing file into memory
     while read -r line; do
+        # Read the block number, timestamp, and worker from each line
         block_num=$(echo "$line" | awk '{print $1}')
         timestamp=$(echo "$line" | awk '{print $2" "$3}')
 
@@ -65,25 +68,38 @@ get_block() {
         # Check if the new block is more recent than the last recorded one
         if [[ -z "${timestamp_map[$block_num]}" || "$block_time" > "${timestamp_map[$block_num]}" ]]; then
             # Increment block count for this month
-            if [[ -n "$block_month" ]]; then
+            if [[ -z "${month_block_count[$block_month]}" ]]; then
+                month_block_count[$block_month]=1
+            else
                 month_block_count[$block_month]=$((month_block_count[$block_month]+1))
             fi
+            # Get the new block number
+            new_block_num=${month_block_count[$block_month]}
 
-            # Write new block to temporary file
-            echo "$block_num   $block_time   $worker_name" >> "$temp_file"
+            # Write the new block information to the temporary file
+            echo "$block_num   $block_time   $new_block_num   $worker_name" >> "$temp_file"
+            echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $block_time   $new_block_num   $worker_name\e[0m"
+            echo "yes" > is_found.txt
         fi
     done
 
-    # Sort the combined existing and new blocks by date (latest first) and save the top 5
-    sort -k2,3r "$output_file" "$temp_file" | head -n 5 > "$temp_file_sorted"
-    # Move the sorted file back to the original output file
-    mv "$temp_file_sorted" "$output_file"
+    # Combine the new data with the existing data, ensuring that new blocks come first
+    cat "$temp_file" "$output_file" | sort -r -k2,2 -k3,3 | awk '!seen[$0]++' > "$output_file.new"
+    mv "$output_file.new" "$output_file"
+    rm "$temp_file" "$temp_file_sorted"
 }
 
-# Iterate over each coin and process blocks
+# Clear the status file at the beginning of the script
+rm -f is_found.txt
+
+# Process blocks for each coin
 echo "$coin_list" | while read -r coin; do
     get_block
 done
 
-# Update the is_found field in JSON to "yes"
-jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
+if [[ -f is_found.txt ]]; then
+    is_found=$(cat is_found.txt)
+    if [[ "$is_found" == "yes" ]]; then
+        echo -e "\n"
+    fi
+fi
