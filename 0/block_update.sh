@@ -13,7 +13,7 @@ echo "$coin_list" | while read -r coin; do
     if [[ -f "$block_file" && -s "$block_file" && $(head -n 1 "$block_file" | awk '{print $1}') -ne 0 ]]; then
         head -n 5 "$block_file"
     else
-        echo "No valid block data available."
+        echo -e "\e[0;37mNo valid block data available.\e[0m"
     fi
 done
 
