@@ -2,7 +2,6 @@
 # v.2024-08-06
 
 # Read data from JSON
-wallet=$(jq -r '.wallet' block_data.json)
 my_github=$(jq -r '.my_github' block_data.json)
 coin_list=$(jq -r '.coin_list[]' block_data.json)
 freq=$(jq -r '.freq' block_data.json)
