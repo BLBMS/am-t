@@ -2,7 +2,7 @@
 # v.2024-08-05
 
 # luckpool coin list (VRSC and PBaaS)
-coin_list="VRSC vARRR vDEX"
+#coin_list="VRSC vARRR vDEX"
 
 # Funkcija za pridobivanje in obdelavo blokov
 get_block() {
