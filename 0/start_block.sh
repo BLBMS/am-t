@@ -1,20 +1,11 @@
 #!/bin/bash
 # v.2024-08-06
 
-# Initialize JSON data
-json_data='{
-  "wallet": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc",
-  "coin_list": "VRSC vARRR vDEX",
-  "freq": 0.003,
-  "is_found": "no"
-}'
-echo "$json_data" > block_data.json
-
 # Read coin list from JSON
-coin_list=$(jq -r '.coin_list' block_data.json)
+coin_list=$(jq -r '.coin_list[]' block_data.json)
 
 # Create initial coin files
-echo "$coin_list" | tr ' ' '\n' | while read -r coin; do
+echo "$coin_list" | while read -r coin; do
     echo -e "\e[1;93mLast 5 blocks: \e[1;92m$coin\e[0m:"
     block_file="block_${coin}.list"
     if [[ ! -f "$block_file" || ! -s "$block_file" ]]; then
