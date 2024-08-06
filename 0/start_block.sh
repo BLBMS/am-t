@@ -3,6 +3,13 @@
 
 # Read coin list from JSON
 coin_list=$(jq -r '.coin_list[]' block_data.json)
+my_github=$(jq -r '.my_github' block_data.json)
+
+FILE="block_update.sh"
+cd ~/
+rm -f $FILE
+wget -q "$my_github$FILE"
+chmod +x $FILE
 
 # Create initial coin files
 echo "$coin_list" | while read -r coin; do
