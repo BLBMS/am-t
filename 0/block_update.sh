@@ -1,10 +1,25 @@
-  GNU nano 6.2                                                                                                   block_update.sh                                                                                                             #!/bin/bash
+#!/bin/bash
 # v.2024-08-05
 
+# Your wallet on luckpool
 wallet="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc"
+
+# luckpool coin list (VRSC and PBaaS)
+coin_list="VRSC vARRR vDEX"
 
 # Data capture frequency in hours (24 is 1x /day)
 freq=24    # 24 12 8 6 4 0.25 ...
+
+# Printout of the last 5 already saved blocks
+echo "$coin_list" | tr ' ' '\n' | while read -r coin; do
+    echo -e "\e[1;93mLast 5 blocks: \e[1;91m$coin\e[0m:"
+    block_file="block_$coin.list"
+    if [[ -f "$block_file" && -s "$block_file" && $(head -n 1 "$block_file" | awk '{print $1}') -ne 0 ]]; then
+        head -n 5 "$block_file"
+    else
+        echo "No valid block data available."
+    fi
+done
 
 # Pretvori frekvenco v sekunde
 freq_seconds=$(awk "BEGIN {print int($freq * 3600)}")
