@@ -111,15 +111,12 @@ get_block_vipor() {
     data=$(curl -s "$url")
 
     # Preveri, ali so podatki prazni
-    if [[ "$data" == "[]" ]]; potem
+    if [[ "$data" == "[]" ]]; then
         return
     fi
 
     # Create a temporary file to hold the updated block data
     > "$temp_file"
-
-    # Create a temporary file to hold the sorted blocks by date
-    > "$temp_file_sorted"
 
     # Read the existing file into an associative array
     declare -A timestamp_map
@@ -169,7 +166,7 @@ get_block_vipor() {
     # Combine the new data with the existing data, ensuring that new blocks come first
     cat "$temp_file" "$output_file" | sort -r -k2,2 -k3,3 | awk '!seen[$0]++' > "$output_file.new"
     mv "$output_file.new" "$output_file"
-    rm "$temp_file" "$temp_file_sorted"
+    rm "$temp_file"
 }
 
 # Clear the status file at the beginning of the script
