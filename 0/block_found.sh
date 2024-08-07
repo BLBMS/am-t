@@ -80,7 +80,7 @@ get_block_luckpool() {
             # Write the new block information to the temporary file
             echo "$block_num   $block_time   $new_block_num   $worker_name" >> "$temp_file"
             echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $block_time   $new_block_num   $worker_name\e[0m"
-            echo "yes" > is_found.txt
+            jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
         fi
     done
 
@@ -159,7 +159,7 @@ get_block_vipor() {
             # Write the new block information to the temporary file
             echo "$block_num   $block_time   $new_block_num   $worker" >> "$temp_file"
             echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $block_time   $new_block_num   $worker\e[0m"
-            echo "yes" > is_found.txt
+            jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
         fi
     done
 
@@ -169,8 +169,8 @@ get_block_vipor() {
     rm "$temp_file"
 }
 
-# Clear the status file at the beginning of the script
-rm -f is_found.txt
+# Reset is_found to "no" at the beginning of the script
+jq '.is_found = "no"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
 
 # Process each pool
 echo "$pool_list" | while read -r pool; do
@@ -198,11 +198,9 @@ echo "$pool_list" | while read -r pool; do
     echo "$coin_list" | while read -r coin; do
         $get_block_func
     done
-    
-    if [[ -f is_found.txt ]]; then
-        is_found=$(cat is_found.txt)
-        if [[ "$is_found" == "yes" ]]; then
-            echo -e "\n"
-        fi
+
+    is_found=$(jq -r '.is_found' block_data.json)
+    if [[ "$is_found" == "yes" ]]; then
+        echo -e "\n"
     fi
 done
