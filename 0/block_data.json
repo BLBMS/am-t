@@ -1,1 +1,15 @@
-
+{
+  "wallet": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc",
+  "my_github": "https://raw.githubusercontent.com/BLBMS/am-t/moje/0/",
+  "coin_list": [
+    "VRSC",
+    "vARRR",
+    "vDEX"
+  ],
+  "pool_list": [
+    "luckpool",
+    "vipor"
+  ],
+  "freq": 0.003,
+  "is_found": "no"
+}
