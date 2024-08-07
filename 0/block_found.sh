@@ -4,6 +4,7 @@
 # Read data from JSON
 wallet=$(jq -r '.wallet' block_data.json)
 coin_list=$(jq -r '.coin_list[]' block_data.json)
+pool_list=$(jq -r '.pool_list[]' block_data.json)
 
 # Funkcija za pridobivanje in obdelavo blokov
 get_block() {
@@ -13,7 +14,8 @@ get_block() {
     else
         coinf="$coinl"
     fi
-    url="https://luckpool.net/$coinf/blocks/$wallet"
+    # url="https://luckpool.net/$coinf/blocks/$wallet"
+    url="$url_pre$coinf$url_post"
     output_file="block_${coin}.list"
     temp_file="block_temp.list"
     temp_file_sorted="block_temp.sorted"
@@ -92,14 +94,31 @@ get_block() {
 # Clear the status file at the beginning of the script
 rm -f is_found.txt
 
-# Process blocks for each coin
-echo "$coin_list" | while read -r coin; do
-    get_block
-done
+# Process each pool
+echo "$pool_list" | while read -r pool; do
 
-if [[ -f is_found.txt ]]; then
-    is_found=$(cat is_found.txt)
-    if [[ "$is_found" == "yes" ]]; then
-        echo -e "\n"
+    case $pool in
+        "luckpool")
+            url_pre="https://luckpool.net/"
+            url_post="/blocks/$wallet"
+        ;;
+        *)
+            echo "----------------------------------------------------------"
+            echo -e "\e[0;91m  Unknown pool: $pool\e[0m"
+            echo "----------------------------------------------------------"
+            exit 0
+        ;;
+    esac
+
+    # Process blocks for each coin
+    echo "$coin_list" | while read -r coin; do
+        get_block
+    done
+    
+    if [[ -f is_found.txt ]]; then
+        is_found=$(cat is_found.txt)
+        if [[ "$is_found" == "yes" ]]; then
+            echo -e "\n"
+        fi
     fi
-fi
+done
