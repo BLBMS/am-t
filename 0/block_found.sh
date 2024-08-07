@@ -92,6 +92,11 @@ get_block_luckpool() {
 
 # Funkcija za pridobivanje in obdelavo blokov iz VIPOR
 get_block_vipor() {
+    # Preveri, ali je kovanec VRSC
+    if [[ "$coin" != "VRSC" ]]; then
+        return
+    fi
+    
     coinl=$(echo "$coin" | tr '[:upper:]' '[:lower:]')
     if [[ "$coinl" == "vrsc" ]]; then
         coinf="verus"
@@ -106,7 +111,7 @@ get_block_vipor() {
     data=$(curl -s "$url")
 
     # Preveri, ali so podatki prazni
-    if [[ "$data" == "[]" ]]; then
+    if [[ "$data" == "[]" ]]; potem
         return
     fi
 
