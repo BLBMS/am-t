@@ -78,8 +78,8 @@ get_block_luckpool() {
             new_block_num=${month_block_count[$block_month]}
 
             # Write the new block information to the temporary file
-            echo "$block_num   $block_time   $new_block_num   $worker_name" >> "$temp_file"
-            echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $block_time   $new_block_num   $worker_name\e[0m"
+            echo "$block_num   $pool   $block_time   $new_block_num   $worker_name" >> "$temp_file"
+            echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool   $block_time   $new_block_num   $worker_name\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
         fi
     done
@@ -157,8 +157,8 @@ get_block_vipor() {
             new_block_num=${month_block_count[$block_month]}
 
             # Write the new block information to the temporary file
-            echo "$block_num   $block_time   $new_block_num   $worker" >> "$temp_file"
-            echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $block_time   $new_block_num   $worker\e[0m"
+            echo "$block_num   $pool   $block_time   $new_block_num   $worker" >> "$temp_file"
+            echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool   $block_time   $new_block_num   $worker\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
         fi
     done
