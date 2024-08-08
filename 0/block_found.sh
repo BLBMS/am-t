@@ -8,6 +8,9 @@ pool_list=$(jq -r '.pool_list[]' block_data.json)
 
 # Funkcija za pridobivanje in obdelavo blokov iz Luckpool
 get_block_luckpool() {
+}
+
+nika() {
     coinl=$(echo "$coin" | tr '[:upper:]' '[:lower:]')
     if [[ "$coinl" == "vrsc" ]]; then
         coinf="verus"
