@@ -1,6 +1,6 @@
 #!/bin/bash
 # v.2024-08-08
-# 22:39
+# 22:43
 
 # Read data from JSON
 wallet=$(jq -r '.wallet' block_data.json)
@@ -9,7 +9,8 @@ pool_list=$(jq -r '.pool_list[]' block_data.json)
 
 # Funkcija za pridobivanje in obdelavo blokov iz Luckpool
 get_block_luckpool() {
-    echo "---get_block_luckpool---"
+    # echo "---get_block_luckpool---"
+    aaa=""
 }
 
 nika() {
