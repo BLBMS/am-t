@@ -32,39 +32,67 @@ nika() {
         return
     fi
 
+    # Create a temporary file to hold the updated block data
+    > "$temp_file"
+
     # Read the existing file into an associative array
-    declare -A existing_blocks
+    declare -A timestamp_map
+    declare -A month_block_count
 
-    if [[ -f "$output_file" ]]; then
-        while read -r line; do
-            block_num=$(echo "$line" | awk '{print $1}')
-            existing_blocks["$block_num"]=1
-        done < "$output_file"
-    fi
+    # Read the existing file into memory
+    while read -r line; do
+        # Read the block number, timestamp, and worker from each line
+        block_num=$(echo "$line" | awk '{print $1}')
+        timestamp=$(echo "$line" | awk '{print $3" "$4}')
 
-    # Process each new block and insert if not already present
+        # Save the timestamp for the existing block number
+        timestamp_map[$block_num]="$timestamp"
+
+        # Extract year and month for counting blocks
+        block_month=$(echo "$timestamp" | cut -d'-' -f1,2)
+        month_block_count[$block_month]=$((month_block_count[$block_month]+1))
+    done < "$output_file"
+
+    # Process each new block and determine its new block number, from latest to earliest
     echo "$data" | tr -d '[]' | tr ',' '\n' | tac | while IFS=':' read -r hash sub_hash block_num worker timestamp_millis pool data1 data2 data3; do
-        if [[ -z "${existing_blocks[$block_num]}" ]]; then
-            worker_name=$(echo "$worker" | awk -F'.' '{print $NF}')
-            timestamp_seconds=$((timestamp_millis / 1000))
-            block_time=$(date -d @"$timestamp_seconds" +"%Y-%m-%d %H:%M:%S")
+        # Extract the worker name (part after the last dot)
+        worker_name=$(echo "$worker" | awk -F'.' '{print $NF}')
 
-            echo "$block_num   $pool   $block_time   $worker_name" >> "$temp_file"
-            echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool   $block_time   $worker_name\e[0m"
+        # Convert milliseconds to seconds
+        timestamp_seconds=$((timestamp_millis / 1000))
+        # Convert to human-readable date and time
+        block_time=$(date -d @"$timestamp_seconds" +"%Y-%m-%d %H:%M:%S")
+
+        # Extract year and month
+        block_month=$(date -d @"$timestamp_seconds" +"%Y-%m")
+
+        # Check if the new block is more recent than the last recorded one
+        if [[ -z "${timestamp_map[$block_num]}" || "$block_time" > "${timestamp_map[$block_num]}" ]]; then
+            # Increment block count for this month
+            if [[ -z "${month_block_count[$block_month]}" ]]; then
+                month_block_count[$block_month]=1
+            else
+                month_block_count[$block_month]=$((month_block_count[$block_month]+1))
+            fi
+            # Get the new block number
+            new_block_num=${month_block_count[$block_month]}
+
+            # Write the new block information to the temporary file
+            echo "$block_num   $pool   $block_time   $new_block_num   $worker_name" >> "$temp_file"
+            echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool   $block_time   $new_block_num   $worker_name\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
         fi
     done
 
-    if [[ -f "$temp_file" ]]; then
-        cat "$temp_file" >> "$output_file"
-        sort -k3,3r -k1,1n "$output_file" | uniq > "$output_file.sorted"
-        mv "$output_file.sorted" "$output_file"
-        rm "$temp_file"
-    fi
+    # Combine the new data with the existing data, ensuring that new blocks come first
+    cat "$temp_file" "$output_file" | sort -r -k2,2 -k3,3 | awk '!seen[$0]++' > "$output_file.new"
+    mv "$output_file.new" "$output_file"
+    rm "$temp_file"
 }
 
 # Funkcija za pridobivanje in obdelavo blokov iz VIPOR
 get_block_vipor() {
+    # Preveri, ali je kovanec VRSC
     if [[ "$coin" != "VRSC" ]]; then
         return
     fi
@@ -87,35 +115,58 @@ get_block_vipor() {
         return
     fi
 
+    # Create a temporary file to hold the updated block data
+    > "$temp_file"
+
     # Read the existing file into an associative array
-    declare -A existing_blocks
+    declare -A timestamp_map
+    declare -A month_block_count
 
-    if [[ -f "$output_file" ]]; then
-        while read -r line; do
-            block_num=$(echo "$line" | awk '{print $1}')
-            existing_blocks["$block_num"]=1
-        done < "$output_file"
-    fi
+    # Read the existing file into memory
+    while read -r line; do
+        # Read the block number, timestamp, and worker from each line
+        block_num=$(echo "$line" | awk '{print $1}')
+        timestamp=$(echo "$line" | awk '{print $3" "$4}')
 
-    # Process each new block and insert if not already present
+        # Save the timestamp for the existing block number
+        timestamp_map[$block_num]="$timestamp"
+
+        # Extract year and month for counting blocks
+        block_month=$(echo "$timestamp" | cut -d'-' -f1,2)
+        month_block_count[$block_month]=$((month_block_count[$block_month]+1))
+    done < "$output_file"
+
+    # Process each new block and determine its new block number, from latest to earliest
     echo "$data" | jq -c '.[]' | while read -r block; do
         block_num=$(echo "$block" | jq -r '.blockHeight')
-        if [[ -z "${existing_blocks[$block_num]}" ]]; then
-            worker=$(echo "$block" | jq -r '.worker')
-            block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/Z//')
+        worker=$(echo "$block" | jq -r '.worker')
+        block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/Z//')
 
-            echo "$block_num   $pool   $block_time   $worker" >> "$temp_file"
-            echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool   $block_time   $worker\e[0m"
+        # Extract year and month
+        block_month=$(echo "$block_time" | cut -d'-' -f1,2)
+
+        # Check if the new block is more recent than the last recorded one
+        if [[ -z "${timestamp_map[$block_num]}" || "$block_time" > "${timestamp_map[$block_num]}" ]]; then
+            # Increment block count for this month
+            if [[ -z "${month_block_count[$block_month]}" ]]; then
+                month_block_count[$block_month]=1
+            else
+                month_block_count[$block_month]=$((month_block_count[$block_month]+1))
+            fi
+            # Get the new block number
+            new_block_num=${month_block_count[$block_month]}
+
+            # Write the new block information to the temporary file
+            echo "$block_num   $pool   $block_time   $new_block_num   $worker" >> "$temp_file"
+            echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool   $block_time   $new_block_num   $worker\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
         fi
     done
 
-    if [[ -f "$temp_file" ]]; then
-        cat "$temp_file" >> "$output_file"
-        sort -k3,3r -k1,1n "$output_file" | uniq > "$output_file.sorted"
-        mv "$output_file.sorted" "$output_file"
-        rm "$temp_file"
-    fi
+    # Combine the new data with the existing data, ensuring that new blocks come first
+    cat "$temp_file" "$output_file" | sort -r -k2,2 -k3,3 | awk '!seen[$0]++' > "$output_file.new"
+    mv "$output_file.new" "$output_file"
+    rm "$temp_file"
 }
 
 # Reset is_found to "no" at the beginning of the script
@@ -136,20 +187,23 @@ echo "$pool_list" | while read -r pool; do
             get_block_func="get_block_vipor"
         ;;
         *)
-            echo "----------------------------------------------------------"
-            echo -e "\e[0;91m  Unknown pool: $pool\e[0m"
-            echo "----------------------------------------------------------"
-            exit 0
+            echo "-----------------------------------------------------------"
+            echo "ERROR: pool \"$pool\" not recognized or supported."
+            echo "-----------------------------------------------------------"
+            continue
         ;;
     esac
 
-    # Process blocks for each coin
     echo "$coin_list" | while read -r coin; do
+        echo "Processing $coin at $pool pool..."
         $get_block_func
     done
-
-    is_found=$(jq -r '.is_found' block_data.json)
-    if [[ "$is_found" == "yes" ]]; then
-        echo -e "\n"
-    fi
 done
+
+# Check if any block was found and trigger the necessary actions
+if [[ "$(jq -r '.is_found' block_data.json)" == "yes" ]]; then
+    echo "New blocks found! Triggering alert..."
+    # Tukaj dodajte vašo kodo za sprožitev opozorila ali nadaljnje korake
+else
+    echo "No new blocks found."
+fi
