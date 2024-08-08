@@ -8,6 +8,7 @@ pool_list=$(jq -r '.pool_list[]' block_data.json)
 
 # Funkcija za pridobivanje in obdelavo blokov iz Luckpool
 get_block_luckpool() {
+    echo "---get_block_luckpool()---"
 }
 
 nika() {
