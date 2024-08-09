@@ -62,7 +62,7 @@ get_block_luckpool() {
     done
 
     if [[ $sort == 1 ]]; then
-        python3 xxblock_sort.py
+        python3 block_sort.py $coin
     fi
 }
 
@@ -77,6 +77,7 @@ get_block_vipor() {
     url="$url_pre$coinf$url_post"
     output_file="block_${coin}.list"
     temp_file="block_temp.list"
+    sort=0
 
     # Read the existing file into memory
     block_num_saved_list=""
@@ -111,7 +112,8 @@ get_block_vipor() {
             echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
             echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
-
+            sort=1
+            
         fi
     done
 
