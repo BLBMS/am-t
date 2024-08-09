@@ -27,13 +27,6 @@ for line in lines:
 if blocks[0]["height"] == 0:
     blocks.append(blocks.pop(0))
 
-# Zamenjaj "eu" z "luckpool.eu" in "na" z "luckpool.na"
-for block in blocks:
-    if block["pool"] == "eu":
-        block["pool"] = "luckpool.eu"
-    elif block["pool"] == "na":
-        block["pool"] = "luckpool.na"
-
 # Razvrsti bloke po padajočem vrstnem redu glede na višino bloka (block height)
 blocks.sort(key=lambda x: x["height"], reverse=True)
 
