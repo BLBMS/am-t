@@ -22,7 +22,6 @@ echo "$coin_list" | while read -r coin; do
     #rm -f $block_file
     #> $block_file
 done
-echo -e "\n<$block_num_saved_list>\n"
 
 # Funkcija za pridobivanje in obdelavo blokov iz Luckpool
 get_block_luckpool() {
@@ -149,7 +148,8 @@ echo "$pool_list" | while read -r pool; do
             block_num_saved=$(echo "$line" | awk '{print $1}')
             block_num_saved_list+="$block_num_saved "
         done < "$block_file"
-        
+        echo -e "\n<$block_num_saved_list>\n"
+
         $get_block_func
     done
 done
