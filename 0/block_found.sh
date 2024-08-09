@@ -77,7 +77,7 @@ return
     echo "$data" | jq -c '.[]' | while read -r block; do
         block_num=$(echo "$block" | jq -r '.blockHeight')
 
-        if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
+        if ! [[ "$block_num_saved_list" =~ "$block_num" ]]; then
         
             worker_name=$(echo "$block" | jq -r '.worker')
             source=$(echo "$block" | jq -r '.source')
@@ -144,12 +144,12 @@ done
 
 # Check if any block was found and trigger the necessary actions
 if [[ "$(jq -r '.is_found' block_data.json)" == "yes" ]]; then
-    echo "New blocks found! Triggering alert..."
-    # Tukaj dodajte vašo kodo za sprožitev opozorila ali nadaljnje korake
-else
-    echo "No new blocks found."
+    echo -e "\n"
+    # Reset is_found to "no" at the beginning of the script
+    jq '.is_found = "no"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
 fi
 
+# Printout of the last 5 already saved blocks
 echo "$coin_list" | while read -r coin; do
     echo -e "\e[4m\e[1;93mLast 5 blocks: \e[1;91m$coin\e[0m:\e[24m"
     block_file="block_${coin}.list"
