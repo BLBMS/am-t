@@ -7,6 +7,12 @@ wallet=$(jq -r '.wallet' block_data.json)
 coin_list=$(jq -r '.coin_list[]' block_data.json)
 pool_list=$(jq -r '.pool_list[]' block_data.json)
 
+echo "$coin_list" | while read -r coin; do
+    block_file="block_${coin}.list"
+    rm -f $block_file
+    > $block_file
+done
+
 # Funkcija za pridobivanje in obdelavo blokov iz Luckpool
 get_block_luckpool() {
     url="$url_pre$coinf$url_post"
@@ -143,3 +149,12 @@ else
     echo "No new blocks found."
 fi
 
+echo "$coin_list" | while read -r coin; do
+    echo -e "\e[4m\e[1;93mLast 5 blocks: \e[1;91m$coin\e[0m:\e[24m"
+    block_file="block_${coin}.list"
+    if [[ -f "$block_file" && -s "$block_file" ]]; then
+        head -n 5 "$block_file"
+    else
+        echo -e "\e[90mNo valid $block_file data available.\e[0m"
+    fi
+done
