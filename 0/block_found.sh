@@ -23,15 +23,7 @@ get_block_luckpool() {
         return
     fi
 
-    # Read the existing file into memory
-    block_num_saved_list=""
-    while read -r line; do
-        # Read the block number, timestamp, and worker from each line
-        block_num_saved=$(echo "$line" | awk '{print $1}')
-        block_num_saved_list+="$block_num_saved "
-    done < "$output_file"
-
-    # Process each new block and determine its new block number, from latest to earliest
+    # Process each new block and determine its new block number
     echo "$data" | tr -d '[]' | tr ',' '\n' | tac | while IFS=':' read -r hash sub_hash block_num worker timestamp_millis pool_code data1 data2 data3; do
 
         if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
@@ -75,20 +67,6 @@ get_block_vipor() {
     elif echo "$data" | head -n 1 | grep -q "<html>"; then
         return
     fi
-
-    # Read the existing file into memory
-    while read -r line; do
-        # Read the block number, timestamp, and worker from each line
-        block_num=$(echo "$line" | awk '{print $1}')
-        timestamp=$(echo "$line" | awk '{print $3" "$4}')
-
-        # Save the timestamp for the existing block number
-        timestamp_map[$block_num]="$timestamp"
-
-        # Extract year and month for counting blocks
-        block_month=$(echo "$timestamp" | cut -d'-' -f1,2)
-        month_block_count[$block_month]=$((month_block_count[$block_month]+1))
-    done < "$output_file"
 
     # Process each new block and determine its new block number, from latest to earliest
     echo "$data" | jq -c '.[]' | while read -r block; do
@@ -156,6 +134,15 @@ echo "$pool_list" | while read -r pool; do
         else
             coinf="$coinl"
         fi
+
+        # Read the existing file into memory
+        block_num_saved_list=""
+        while read -r line; do
+            # Read the block number, timestamp, and worker from each line
+            block_num_saved=$(echo "$line" | awk '{print $1}')
+            block_num_saved_list+="$block_num_saved "
+        done < "$output_file"
+        
         $get_block_func
     done
 done
