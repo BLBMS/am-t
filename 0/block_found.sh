@@ -22,6 +22,7 @@ echo "$coin_list" | while read -r coin; do
     #rm -f $block_file
     #> $block_file
 done
+echo -e "\n<$block_num_saved_list>\n"
 
 # Funkcija za pridobivanje in obdelavo blokov iz Luckpool
 get_block_luckpool() {
@@ -42,7 +43,7 @@ get_block_luckpool() {
     # Process each new block and determine its new block number
     echo "$data" | tr -d '[]' | tr ',' '\n' | tac | while IFS=':' read -r hash sub_hash block_num worker timestamp_millis pool_code data1 data2 data3; do
 
-        if ! [[ "$block_num_saved_list" =~ "$block_num" ]]; then
+        if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
 
             worker_name=$(echo "$worker" | awk -F'.' '{print $NF}')
             timestamp_seconds=$((timestamp_millis / 1000))
