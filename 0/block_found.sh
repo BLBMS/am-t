@@ -19,6 +19,7 @@ pool_list=$(jq -r '.pool_list[]' block_data.json)
 
 # Funkcija za pridobivanje in obdelavo blokov iz Luckpool
 get_block_luckpool() {
+return
     url="$url_pre$coinf$url_post"
     output_file="block_${coin}.list"
     temp_file="block_temp.list"
@@ -64,7 +65,7 @@ get_block_luckpool() {
 
 # Funkcija za pridobivanje in obdelavo blokov iz VIPOR   
 get_block_vipor() {
-
+return
     # Preveri, ali je kovanec VRSC
     if [[ "$coin" != "VRSC" ]]; then
         return
