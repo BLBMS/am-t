@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-08-09 22:07
+# v.2024-08-09 22:18
 
 # Read data from JSON
 wallet=$(jq -r '.wallet' block_data.json)
