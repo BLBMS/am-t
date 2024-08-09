@@ -29,6 +29,15 @@ get_block_luckpool() {
     output_file="block_${coin}.list"
     temp_file="block_temp.list"
 
+    # Read the existing file into memory
+    block_num_saved_list=""
+    while read -r line; do
+        # Read the block number, timestamp, and worker from each line
+        block_num_saved=$(echo "$line" | awk '{print $1}')
+        block_num_saved_list+="$block_num_saved "
+    done < "$output_file"
+    echo -e "\n<$block_num_saved_list>\n"
+    
     # Fetch data from the URL
     data=$(curl -s "$url")
 
@@ -140,15 +149,6 @@ echo "$pool_list" | while read -r pool; do
         else
             coinf="$coinl"
         fi
-
-        # Read the existing file into memory
-        block_num_saved_list=""
-        while read -r line; do
-            # Read the block number, timestamp, and worker from each line
-            block_num_saved=$(echo "$line" | awk '{print $1}')
-            block_num_saved_list+="$block_num_saved "
-        done < "$block_file"
-        echo -e "\n<$block_num_saved_list>\n"
 
         $get_block_func
     done
