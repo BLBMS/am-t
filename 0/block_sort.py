@@ -1,7 +1,12 @@
 import json
 
+import sys
+
+# Pridobitev argumenta iz ukazne vrstice
+coin = sys.argv[1]
+
 # Load the data from block_VRSC.list into a structured format
-with open('block_VRSC.list', 'r') as f:
+with open('block_#coin.list', 'r') as f:
     lines = f.readlines()
 
 # Parse the lines into a list of dictionaries
