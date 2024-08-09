@@ -53,6 +53,8 @@ get_block_luckpool() {
 # Funkcija za pridobivanje in obdelavo blokov iz VIPOR   
 get_block_vipor() {
 
+return
+
     # Preveri, ali je kovanec VRSC
     if [[ "$coin" != "VRSC" ]]; then
         return
