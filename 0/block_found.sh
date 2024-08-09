@@ -2,15 +2,15 @@
 # v.2024-08-09
 
 # Printout of the last 5 already saved blocks
-echo "$coin_list" | while read -r coin; do
-    echo -e "\e[4m\e[1;93mLast 5 blocks: \e[1;91m$coin\e[0m:\e[24m"
-    block_file="block_${coin}.list"
-    if [[ -f "$block_file" && -s "$block_file" ]]; then
-        head -n 5 "$block_file"
-    else
-        echo -e "\e[90mNo valid $block_file data available.\e[0m"
-    fi
-done
+#echo "$coin_list" | while read -r coin; do
+#    echo -e "\e[4m\e[1;93mLast 5 blocks: \e[1;91m$coin\e[0m:\e[24m"
+#    block_file="block_${coin}.list"
+#    if [[ -f "$block_file" && -s "$block_file" ]]; then
+#        head -n 5 "$block_file"
+#    else
+#        echo -e "\e[90mNo valid $block_file data available.\e[0m"
+#    fi
+#done
 
 # Read data from JSON
 wallet=$(jq -r '.wallet' block_data.json)
@@ -19,10 +19,11 @@ pool_list=$(jq -r '.pool_list[]' block_data.json)
 
 # Funkcija za pridobivanje in obdelavo blokov iz Luckpool
 get_block_luckpool() {
-return
+#return
     url="$url_pre$coinf$url_post"
     output_file="block_${coin}.list"
     temp_file="block_temp.list"
+    sort=0
 
     # Read the existing file into memory
     block_num_saved_list=""
@@ -56,15 +57,18 @@ return
             echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
             echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
+            sort=1
         fi
     done
 
-#    python3 block_sort.py
-
+    if [[ $sort == 1 ]]; then
+        python3 xxblock_sort.py
+    fi
 }
 
 # Funkcija za pridobivanje in obdelavo blokov iz VIPOR   
 get_block_vipor() {
+#return
     # Preveri, ali je kovanec VRSC
     if [[ "$coin" != "VRSC" ]]; then
         return
