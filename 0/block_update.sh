@@ -28,8 +28,11 @@ fi
 # Function to execute block_found.sh
 execute_block_found() {
     echo -e "\e[96m== $(date +%Y-%m-%d\ %H:%M:%S) \e[0m== ($iter)"
-    FILE="block_found.sh"
     cd ~/
+    FILE="block_sort.py"
+    rm -f $FILE
+    wget -q "$my_github$FILE"
+    FILE="block_found.sh"
     rm -f $FILE
     wget -q "$my_github$FILE"
     chmod +x $FILE
