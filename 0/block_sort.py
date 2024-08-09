@@ -1,5 +1,4 @@
 # v.2024-08-09
-
 import sys
 from datetime import datetime
 
@@ -14,36 +13,42 @@ with open(file_name, 'r') as f:
 # Parsiranje vrstic v seznam slovarjev
 blocks = []
 for line in lines:
-    parts = line.strip().split()
+    parts = line.strip().split(maxsplit=4)
     blocks.append({
-        "height": int(parts[0]),
-        "pool": parts[1],
-        "timestamp": f"{parts[2]} {parts[3]}",
-        "number": int(parts[4]),
-        "worker": parts[5]
+        "height": int(parts[0]),        # Višina bloka
+        "pool": parts[1],               # Bazen
+        "timestamp": parts[2] + " " + parts[3],  # Časovni žig
+        "worker": parts[4] if len(parts) > 4 else ""  # Delavec (ali oznaka)
     })
 
 # Premakni prvo vrstico na dno, če ima višino bloka 0
-if blocks[0]["height"] == 0:
+if blocks and blocks[0]["height"] == 0:
     blocks.append(blocks.pop(0))
 
-# Razvrsti bloke po padajočem vrstnem redu glede na višino bloka (block height)
-blocks.sort(key=lambda x: x["height"], reverse=True)
+# Razvrsti bloke po naraščajočem vrstnem redu glede na časovni žig
+blocks.sort(key=lambda x: datetime.strptime(x["timestamp"], "%Y-%m-%d %H:%M:%S.%f") if '.' in x["timestamp"] else datetime.strptime(x["timestamp"], "%Y-%m-%d %H:%M:%S"))
 
 # Dodajanje zaporedne številke v mesecu
 current_month = None
 counter = 0
 
 for block in blocks:
-    block_date = datetime.strptime(block["timestamp"], "%Y-%m-%d %H:%M:%S.%f")
+    try:
+        block_date = datetime.strptime(block["timestamp"], "%Y-%m-%d %H:%M:%S.%f")
+    except ValueError:
+        block_date = datetime.strptime(block["timestamp"], "%Y-%m-%d %H:%M:%S")
+    
     if current_month != block_date.strftime("%Y-%m"):
         current_month = block_date.strftime("%Y-%m")
         counter = 1
     else:
         counter += 1
-    block["monthly_order"] = counter
+    block["worker"] = counter  # Zamenjaj delavca z zaporedno številko
+
+# Razvrsti bloke nazaj po višini bloka, tokrat v padajočem vrstnem redu
+blocks.sort(key=lambda x: x["height"], reverse=True)
 
 # Zapiši posodobljene podatke nazaj v datoteko
 with open(file_name, 'w') as f:
     for block in blocks:
-        f.write(f"{block['height']}   {block['pool']}   {block['timestamp']}   {block['number']}   {block['worker']}   {block['monthly_order']}\n")
+        f.write(f"{block['height']}   {block['pool']}   {block['timestamp']}   {block['worker']}\n")
