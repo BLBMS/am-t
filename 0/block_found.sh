@@ -193,6 +193,12 @@ echo "$pool_list" | while read -r pool; do
 
     echo "$coin_list" | while read -r coin; do
         echo "Processing $coin at $pool pool..."
+        coinl=$(echo "$coin" | tr '[:upper:]' '[:lower:]')
+        if [[ "$coinl" == "vrsc" ]]; then
+            coinf="verus"
+        else
+            coinf="$coinl"
+        fi
         $get_block_func
     done
 done
