@@ -122,7 +122,7 @@ echo "$pool_list" | while read -r pool; do
     esac
 
     echo "$coin_list" | while read -r coin; do
-        echo "Processing $coin at $pool pool..."
+        echo -e "\e[4m\e[1;93mProcessing $coin at $pool pool...\e[0m\e[24m"
         coinl=$(echo "$coin" | tr '[:upper:]' '[:lower:]')
         if [[ "$coinl" == "vrsc" ]]; then
             coinf="verus"
