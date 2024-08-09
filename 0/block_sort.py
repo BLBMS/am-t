@@ -1,73 +1,56 @@
-import json
+# v.2024-08-09
 
 import sys
+from datetime import datetime
 
 # Pridobitev argumenta iz ukazne vrstice
 coin = sys.argv[1]
 
-# Load the data from block_VRSC.list into a structured format
-with open('block_#coin.list', 'r') as f:
+# Naloži podatke iz datoteke block_{coin}.list v strukturiran format
+file_name = f'block_{coin}.list'
+with open(file_name, 'r') as f:
     lines = f.readlines()
 
-# Parse the lines into a list of dictionaries
+# Parsiranje vrstic v seznam slovarjev
 blocks = []
 for line in lines:
     parts = line.strip().split()
     blocks.append({
         "height": int(parts[0]),
         "pool": parts[1],
-        "timestamp": parts[2] + ' ' + parts[3],
+        "timestamp": f"{parts[2]} {parts[3]}",
         "number": int(parts[4]),
         "worker": parts[5]
     })
 
-# Move the first row to the bottom
+# Premakni prvo vrstico na dno, če ima višino bloka 0
 if blocks[0]["height"] == 0:
     blocks.append(blocks.pop(0))
 
-# Replace "eu" with "luckpool.eu" and "na" with "luckpool.na"
+# Zamenjaj "eu" z "luckpool.eu" in "na" z "luckpool.na"
 for block in blocks:
     if block["pool"] == "eu":
         block["pool"] = "luckpool.eu"
     elif block["pool"] == "na":
         block["pool"] = "luckpool.na"
 
-# Function to insert VIPOR blocks in the right place
-def insert_vipor_blocks(vipor_blocks, blocks):
-    for vipor_block in vipor_blocks:
-        inserted = False
-        for i, block in enumerate(blocks):
-            if vipor_block["timestamp"] < block["timestamp"]:
-                blocks.insert(i, vipor_block)
-                inserted = True
-                break
-        if not inserted:
-            blocks.append(vipor_block)
-    return blocks
+# Razvrsti bloke po padajočem vrstnem redu glede na višino bloka (block height)
+blocks.sort(key=lambda x: x["height"], reverse=True)
 
-# Example VIPOR blocks data (this should be fetched from your URL or another source)
-vipor_blocks = [
-    {
-        "height": 2954162,
-        "pool": "vipor.de",
-        "timestamp": "2024-03-08 20:04:59",
-        "number": 6,
-        "worker": "A5d"
-    },
-    {
-        "height": 2936110,
-        "pool": "vipor.de",
-        "timestamp": "2024-02-24 21:40:53",
-        "number": 6,
-        "worker": "MIa"
-    }
-    # Add more VIPOR blocks here as needed
-]
+# Dodajanje zaporedne številke v mesecu
+current_month = None
+counter = 0
 
-# Insert VIPOR blocks into the list
-blocks = insert_vipor_blocks(vipor_blocks, blocks)
+for block in blocks:
+    block_date = datetime.strptime(block["timestamp"], "%Y-%m-%d %H:%M:%S.%f")
+    if current_month != block_date.strftime("%Y-%m"):
+        current_month = block_date.strftime("%Y-%m")
+        counter = 1
+    else:
+        counter += 1
+    block["monthly_order"] = counter
 
-# Write the updated data back to the file
-with open('block_VRSC.list', 'w') as f:
+# Zapiši posodobljene podatke nazaj v datoteko
+with open(file_name, 'w') as f:
     for block in blocks:
-        f.write(f"{block['height']}   {block['pool']}   {block['timestamp']}   {block['number']}   {block['worker']}\n")
+        f.write(f"{block['height']}   {block['pool']}   {block['timestamp']}   {block['number']}   {block['worker']}   {block['monthly_order']}\n")
