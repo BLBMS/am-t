@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-08-09 22:28
+# v.2024-08-09
 
 # Printout of the last 5 already saved blocks
 echo "$coin_list" | while read -r coin; do
@@ -17,12 +17,6 @@ wallet=$(jq -r '.wallet' block_data.json)
 coin_list=$(jq -r '.coin_list[]' block_data.json)
 pool_list=$(jq -r '.pool_list[]' block_data.json)
 
-echo "$coin_list" | while read -r coin; do
-    block_file="block_${coin}.list"
-    #rm -f $block_file
-    #> $block_file
-done
-
 # Funkcija za pridobivanje in obdelavo blokov iz Luckpool
 get_block_luckpool() {
     url="$url_pre$coinf$url_post"
@@ -36,7 +30,6 @@ get_block_luckpool() {
         block_num_saved=$(echo "$line" | awk '{print $1}')
         block_num_saved_list+="$block_num_saved "
     done < "$output_file"
-    echo -e "\n<$block_num_saved_list>\n"
     
     # Fetch data from the URL
     data=$(curl -s "$url")
@@ -83,6 +76,14 @@ return
     output_file="block_${coin}.list"
     temp_file="block_temp.list"
 
+    # Read the existing file into memory
+    block_num_saved_list=""
+    while read -r line; do
+        # Read the block number, timestamp, and worker from each line
+        block_num_saved=$(echo "$line" | awk '{print $1}')
+        block_num_saved_list+="$block_num_saved "
+    done < "$output_file"
+    
     # Fetch data from the URL
     data=$(curl -s "$url")
 
@@ -97,7 +98,7 @@ return
     echo "$data" | jq -c '.[]' | while read -r block; do
         block_num=$(echo "$block" | jq -r '.blockHeight')
 
-        if ! [[ "$block_num_saved_list" =~ "$block_num" ]]; then
+        if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
         
             worker_name=$(echo "$block" | jq -r '.worker')
             source=$(echo "$block" | jq -r '.source')
@@ -149,7 +150,7 @@ echo "$pool_list" | while read -r pool; do
         else
             coinf="$coinl"
         fi
-
+        # Call coin function
         $get_block_func
     done
 done
