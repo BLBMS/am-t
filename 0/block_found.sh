@@ -1,6 +1,17 @@
 #!/bin/bash
 # v.2024-08-09 22:18
 
+# Printout of the last 5 already saved blocks
+echo "$coin_list" | while read -r coin; do
+    echo -e "\e[4m\e[1;93mLast 5 blocks: \e[1;91m$coin\e[0m:\e[24m"
+    block_file="block_${coin}.list"
+    if [[ -f "$block_file" && -s "$block_file" ]]; then
+        head -n 5 "$block_file"
+    else
+        echo -e "\e[90mNo valid $block_file data available.\e[0m"
+    fi
+done
+
 # Read data from JSON
 wallet=$(jq -r '.wallet' block_data.json)
 coin_list=$(jq -r '.coin_list[]' block_data.json)
