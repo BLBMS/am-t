@@ -147,7 +147,7 @@ echo "$pool_list" | while read -r pool; do
             # Read the block number, timestamp, and worker from each line
             block_num_saved=$(echo "$line" | awk '{print $1}')
             block_num_saved_list+="$block_num_saved "
-        done < "$output_file"
+        done < "$block_file"
         
         $get_block_func
     done
