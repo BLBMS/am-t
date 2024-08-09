@@ -19,8 +19,8 @@ pool_list=$(jq -r '.pool_list[]' block_data.json)
 
 echo "$coin_list" | while read -r coin; do
     block_file="block_${coin}.list"
-    rm -f $block_file
-    > $block_file
+    #rm -f $block_file
+    #> $block_file
 done
 
 # Funkcija za pridobivanje in obdelavo blokov iz Luckpool
