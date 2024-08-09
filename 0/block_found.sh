@@ -9,12 +9,6 @@ pool_list=$(jq -r '.pool_list[]' block_data.json)
 
 # Funkcija za pridobivanje in obdelavo blokov iz Luckpool
 get_block_luckpool() {
-    coinl=$(echo "$coin" | tr '[:upper:]' '[:lower:]')
-    if [[ "$coinl" == "vrsc" ]]; then
-        coinf="verus"
-    else
-        coinf="$coinl"
-    fi
     url="$url_pre$coinf$url_post"
     output_file="block_${coin}.list"
     temp_file="block_temp.list"
@@ -29,77 +23,45 @@ get_block_luckpool() {
         return
     fi
 
-    # Create a temporary file to hold the updated block data
-    > "$temp_file"
-
-    # Read the existing file into an associative array
-    declare -A timestamp_map
-    declare -A month_block_count
-
     # Read the existing file into memory
+    block_num_saved_list=""
     while read -r line; do
         # Read the block number, timestamp, and worker from each line
-        block_num=$(echo "$line" | awk '{print $1}')
-        timestamp=$(echo "$line" | awk '{print $3" "$4}')
-
-        # Save the timestamp for the existing block number
-        timestamp_map[$block_num]="$timestamp"
-
-        # Extract year and month for counting blocks
-        block_month=$(echo "$timestamp" | cut -d'-' -f1,2)
-        month_block_count[$block_month]=$((month_block_count[$block_month]+1))
+        block_num_saved=$(echo "$line" | awk '{print $1}')
+        block_num_saved_list+="$block_num_saved "
     done < "$output_file"
 
     # Process each new block and determine its new block number, from latest to earliest
-    echo "$data" | tr -d '[]' | tr ',' '\n' | tac | while IFS=':' read -r hash sub_hash block_num worker timestamp_millis pool data1 data2 data3; do
-        # Extract the worker name (part after the last dot)
-        worker_name=$(echo "$worker" | awk -F'.' '{print $NF}')
+    echo "$data" | tr -d '[]' | tr ',' '\n' | tac | while IFS=':' read -r hash sub_hash block_num worker timestamp_millis pool_code data1 data2 data3; do
 
-        # Convert milliseconds to seconds
-        timestamp_seconds=$((timestamp_millis / 1000))
-        # Convert to human-readable date and time
-        block_time=$(date -d @"$timestamp_seconds" +"%Y-%m-%d %H:%M:%S")
+        if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
 
-        # Extract year and month
-        block_month=$(date -d @"$timestamp_seconds" +"%Y-%m")
-
-        # Check if the new block is more recent than the last recorded one
-        if [[ -z "${timestamp_map[$block_num]}" || "$block_time" > "${timestamp_map[$block_num]}" ]]; then
-            # Increment block count for this month
-            if [[ -z "${month_block_count[$block_month]}" ]]; then
-                month_block_count[$block_month]=1
-            else
-                month_block_count[$block_month]=$((month_block_count[$block_month]+1))
-            fi
-            # Get the new block number
-            new_block_num=${month_block_count[$block_month]}
+            worker_name=$(echo "$worker" | awk -F'.' '{print $NF}')
+            timestamp_seconds=$((timestamp_millis / 1000))
+            block_time=$(date -d @"$timestamp_seconds" +"%Y-%m-%d %H:%M:%S")
+            pool_out="$pool.$pool_code"
 
             # Write the new block information to the temporary file
-            echo "$block_num   $pool   $block_time   $new_block_num   $worker_name" >> "$temp_file"
-            echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool   $block_time   $new_block_num   $worker_name\e[0m"
+            echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
+            echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
         fi
     done
 
-    # Combine the new data with the existing data, ensuring that new blocks come first
-    cat "$temp_file" "$output_file" | sort -r -k2,2 -k3,3 | awk '!seen[$0]++' > "$output_file.new"
-    mv "$output_file.new" "$output_file"
-    rm "$temp_file"
+#    python3 block_sort.py
+
 }
 
-# Funkcija za pridobivanje in obdelavo blokov iz VIPOR
+# Funkcija za pridobivanje in obdelavo blokov iz VIPOR   
 get_block_vipor() {
+
+    return
+
     # Preveri, ali je kovanec VRSC
     if [[ "$coin" != "VRSC" ]]; then
         return
     fi
     
-    coinl=$(echo "$coin" | tr '[:upper:]' '[:lower:]')
-    if [[ "$coinl" == "vrsc" ]]; then
-        coinf="verus"
-    else
-        coinf="$coinl"
-    fi
     url="$url_pre$coinf$url_post"
     output_file="block_${coin}.list"
     temp_file="block_temp.list"
@@ -107,17 +69,12 @@ get_block_vipor() {
     # Fetch data from the URL
     data=$(curl -s "$url")
 
-    # Preveri, ali so podatki prazni
+    # Preveri, ali so podatki prazni ali vsebujejo <html> v prvi vrstici
     if [[ "$data" == "[]" ]]; then
         return
+    elif echo "$data" | head -n 1 | grep -q "<html>"; then
+        return
     fi
-
-    # Create a temporary file to hold the updated block data
-    > "$temp_file"
-
-    # Read the existing file into an associative array
-    declare -A timestamp_map
-    declare -A month_block_count
 
     # Read the existing file into memory
     while read -r line; do
