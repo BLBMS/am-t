@@ -31,7 +31,7 @@ get_block_luckpool() {
             worker_name=$(echo "$worker" | awk -F'.' '{print $NF}')
             timestamp_seconds=$((timestamp_millis / 1000))
             block_time=$(date -d @"$timestamp_seconds" +"%Y-%m-%d %H:%M:%S")
-            pool_out="$pool.$pool_code"
+            pool_out="$pool-$pool_code"
 
             # Write the new block information to the temporary file
             echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
@@ -46,8 +46,6 @@ get_block_luckpool() {
 
 # Funkcija za pridobivanje in obdelavo blokov iz VIPOR   
 get_block_vipor() {
-
-    return
 
     # Preveri, ali je kovanec VRSC
     if [[ "$coin" != "VRSC" ]]; then
@@ -71,34 +69,24 @@ get_block_vipor() {
     # Process each new block and determine its new block number, from latest to earliest
     echo "$data" | jq -c '.[]' | while read -r block; do
         block_num=$(echo "$block" | jq -r '.blockHeight')
-        worker=$(echo "$block" | jq -r '.worker')
-        block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/Z//')
 
-        # Extract year and month
-        block_month=$(echo "$block_time" | cut -d'-' -f1,2)
-
-        # Check if the new block is more recent than the last recorded one
-        if [[ -z "${timestamp_map[$block_num]}" || "$block_time" > "${timestamp_map[$block_num]}" ]]; then
-            # Increment block count for this month
-            if [[ -z "${month_block_count[$block_month]}" ]]; then
-                month_block_count[$block_month]=1
-            else
-                month_block_count[$block_month]=$((month_block_count[$block_month]+1))
-            fi
-            # Get the new block number
-            new_block_num=${month_block_count[$block_month]}
+        if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
+        
+            worker_name=$(echo "$block" | jq -r '.worker')
+            source=$(echo "$block" | jq -r '.source')
+            block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/Z//')
+            pool_out="$pool-$source"
 
             # Write the new block information to the temporary file
-            echo "$block_num   $pool   $block_time   $new_block_num   $worker" >> "$temp_file"
-            echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool   $block_time   $new_block_num   $worker\e[0m"
+            echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
+            echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
+
         fi
     done
 
-    # Combine the new data with the existing data, ensuring that new blocks come first
-    cat "$temp_file" "$output_file" | sort -r -k2,2 -k3,3 | awk '!seen[$0]++' > "$output_file.new"
-    mv "$output_file.new" "$output_file"
-    rm "$temp_file"
+#    python3 block_sort.py
+
 }
 
 # Reset is_found to "no" at the beginning of the script
