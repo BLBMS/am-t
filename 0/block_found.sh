@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-08-09 22:18
+# v.2024-08-09 22:28
 
 # Printout of the last 5 already saved blocks
 echo "$coin_list" | while read -r coin; do
