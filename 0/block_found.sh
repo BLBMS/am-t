@@ -129,7 +129,7 @@ pool_list=$(jq -r '.pool_list[]' block_data.json)
 jq '.is_found = "no"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
 
 # Preberi json in filtriraj samo aktivne poole
-for pool in $(jq -c '.pool_list[]' < your_json_file.json); do
+for pool in $(jq -c '.pool_list[]' < block_data.json); do
     name=$(echo "$pool" | jq -r '.name')
     active=$(echo "$pool" | jq -r '.active')
     if [ "$active" -eq 1 ]; then
