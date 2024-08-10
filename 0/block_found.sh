@@ -123,7 +123,7 @@ for pool in $(jq -c '.pool_list[]' < block_data.json); do
     name=$(echo "$pool" | jq -r '.name')
     active=$(echo "$pool" | jq -r '.active')
     if [ "$active" -eq 1 ]; then
-        active_pools+=("$name")
+        active_pools+="$name "
     fi
 done
 
