@@ -10,13 +10,7 @@ get_block_luckpool() {
     sort=0
 
     saved_blocks
-    # Read the existing file into memory
-    #block_num_saved_list=""
-    #while read -r line; do
-    #    # Read the block number, timestamp, and worker from each line
-    #    block_num_saved=$(echo "$line" | awk '{print $1}')
-    #    block_num_saved_list+="$block_num_saved "
-    #done < "$output_file"
+    echo "<$saved_blocks>"
 
     # Fetch data from the URL
     data=$(curl -s "$url")
@@ -65,13 +59,7 @@ get_block_vipor() {
     sort=0
 
     saved_blocks
-    # Read the existing file into memory
-    #block_num_saved_list=""
-    #while read -r line; do
-    #    # Read the block number, timestamp, and worker from each line
-    #    block_num_saved=$(echo "$line" | awk '{print $1}')
-    #    block_num_saved_list+="$block_num_saved "
-    #done < "$output_file"
+    echo "<$saved_blocks>"
 
     # Fetch data from the URL
     data=$(curl -s "$url")
@@ -116,6 +104,7 @@ saved_blocks() {
         block_num_saved=$(echo "$line" | awk '{print $1}')
         block_num_saved_list+="$block_num_saved "
     done < "$output_file"
+    echo "<$block_num_saved_list>"
 }
 
 # ******************************************************************************************************
@@ -129,6 +118,7 @@ pool_list=$(jq -r '.pool_list[]' block_data.json)
 jq '.is_found = "no"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
 
 # Preberi json in filtriraj samo aktivne poole
+active_pools=""
 for pool in $(jq -c '.pool_list[]' < block_data.json); do
     name=$(echo "$pool" | jq -r '.name')
     active=$(echo "$pool" | jq -r '.active')
@@ -181,7 +171,7 @@ fi
 
 # Printout of the last 5 already saved blocks
 echo "$coin_list" | while read -r coin; do
-    echo -e "\e[4m\e[1;93mLast 5 blocks: \e[1;91m$coin\e[0m:\e[24m"
+    echo -e "\e[1;93m\e[4mLast 5 blocks: \e[1;91m$coin\e[0m:\e[24m"
     block_file="block_${coin}.list"
     if [[ -f "$block_file" && -s "$block_file" ]]; then
         head -n 5 "$block_file"
