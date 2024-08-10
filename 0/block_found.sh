@@ -130,7 +130,7 @@ for pool in $(jq -c '.pool_list[]' < block_data.json); do
     fi
 done
 
-echo "<active_poolc=$active_pools>"
+echo "<active_pools=$active_pools>"
 
 # Process each pool
 echo "$active_pools" | while read -r pool; do
