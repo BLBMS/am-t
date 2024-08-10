@@ -40,9 +40,7 @@ get_block_luckpool() {
         fi
     done
 
-    if [[ $sort == 1 ]]; then
-        python3 block_sort.py $coin
-    fi
+    sort
 }
 
 # Funkcija za pridobivanje in obdelavo blokov iz VIPOR   
@@ -90,9 +88,7 @@ get_block_vipor() {
         fi
     done
 
-    if [[ $sort == 1 ]]; then
-        python3 block_sort.py $coin
-    fi
+    sort
 }
 
 # Preberi obstoječo datoteko v spomin in filtriraj glede na aktivne poole
@@ -105,6 +101,13 @@ saved_blocks() {
         block_num_saved_list+="$block_num_saved "
     done < "$output_file"
     echo "<$block_num_saved_list>"
+}
+
+# Sort blocks in output_file
+sort () {
+    if [[ $sort == 1 ]]; then
+        python3 block_sort.py $coin
+    fi
 }
 
 # ******************************************************************************************************
