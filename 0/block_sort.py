@@ -1,4 +1,4 @@
-# v.2024-08-09
+# v.2024-08-10
 import sys
 from datetime import datetime
 
@@ -37,7 +37,7 @@ for block in blocks:
         block_date = datetime.strptime(block["timestamp"], "%Y-%m-%d %H:%M:%S.%f")
     except ValueError:
         block_date = datetime.strptime(block["timestamp"], "%Y-%m-%d %H:%M:%S")
-    
+
     if current_month != block_date.strftime("%Y-%m"):
         current_month = block_date.strftime("%Y-%m")
         counter = 1
