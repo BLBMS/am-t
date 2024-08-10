@@ -17,7 +17,7 @@ get_block_luckpool() {
     #    block_num_saved=$(echo "$line" | awk '{print $1}')
     #    block_num_saved_list+="$block_num_saved "
     #done < "$output_file"
-    
+
     # Fetch data from the URL
     data=$(curl -s "$url")
 
@@ -58,7 +58,7 @@ get_block_vipor() {
     if [[ "$coin" != "VRSC" ]]; then
         return
     fi
-    
+
     url="$url_pre$coinf$url_post"
     output_file="block_${coin}.list"
     temp_file="block_temp.list"
@@ -72,7 +72,7 @@ get_block_vipor() {
     #    block_num_saved=$(echo "$line" | awk '{print $1}')
     #    block_num_saved_list+="$block_num_saved "
     #done < "$output_file"
-    
+
     # Fetch data from the URL
     data=$(curl -s "$url")
 
@@ -98,8 +98,7 @@ get_block_vipor() {
             echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
             echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
-            sort=1
-            
+            sort=1         
         fi
     done
 
