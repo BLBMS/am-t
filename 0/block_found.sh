@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-08-10 12:25
+# v.2024-08-10 12:35
 
 # Funkcija za pridobivanje in obdelavo blokov iz Luckpool
 get_block_luckpool() {
@@ -133,7 +133,7 @@ done
 echo "<active_pools=$active_pools>"
 
 # Process each pool
-echo "$active_pools" | while read -r pool; do
+for pool in $active_pools; do
 
     case $pool in
         "luckpool")
