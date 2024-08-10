@@ -127,6 +127,8 @@ for pool in $(jq -c '.pool_list[]' < block_data.json); do
     fi
 done
 
+echo "<active_poolc=$active_pools>"
+
 # Process each pool
 echo "$active_pools" | while read -r pool; do
 
@@ -148,6 +150,8 @@ echo "$active_pools" | while read -r pool; do
             continue
         ;;
     esac
+
+echo "<pool=$pool>"
 
     echo "$coin_list" | while read -r coin; do
         echo -e "\e[4m\e[1;93mProcessing $coin at $pool pool...\e[0m\e[24m"
