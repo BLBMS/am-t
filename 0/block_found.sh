@@ -1,10 +1,5 @@
 #!/bin/bash
-# v.2024-08-09
-
-# Read data from JSON
-wallet=$(jq -r '.wallet' block_data.json)
-coin_list=$(jq -r '.coin_list[]' block_data.json)
-pool_list=$(jq -r '.pool_list[]' block_data.json)
+# v.2024-08-10
 
 # Funkcija za pridobivanje in obdelavo blokov iz Luckpool
 get_block_luckpool() {
@@ -110,11 +105,27 @@ get_block_vipor() {
 
 }
 
+# ******************************************************************************************************
+
+# Read data from JSON
+wallet=$(jq -r '.wallet' block_data.json)
+coin_list=$(jq -r '.coin_list[]' block_data.json)
+pool_list=$(jq -r '.pool_list[]' block_data.json)
+
 # Reset is_found to "no" at the beginning of the script
 jq '.is_found = "no"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
 
+# Preberi json in filtriraj samo aktivne poole
+for pool in $(jq -c '.pool_list[]' < your_json_file.json); do
+    name=$(echo "$pool" | jq -r '.name')
+    active=$(echo "$pool" | jq -r '.active')
+    if [ "$active" -eq 1 ]; then
+        active_pools+=("$name")
+    fi
+done
+
 # Process each pool
-echo "$pool_list" | while read -r pool; do
+echo "$active_pools" | while read -r pool; do
 
     case $pool in
         "luckpool")
