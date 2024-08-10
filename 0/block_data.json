@@ -7,9 +7,18 @@
     "vDEX"
   ],
   "pool_list": [
-    "community",
-    "luckpool",
-    "vipor"
+    {
+      "name": "community",
+      "active": 0
+    },
+    {
+      "name": "luckpool",
+      "active": 1
+    },
+    {
+      "name": "vipor",
+      "active": 1
+    }
   ],
   "freq": 0.003,
   "is_found": "no"
