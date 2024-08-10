@@ -9,13 +9,14 @@ get_block_luckpool() {
     temp_file="block_temp.list"
     sort=0
 
+    saved_blocks
     # Read the existing file into memory
-    block_num_saved_list=""
-    while read -r line; do
-        # Read the block number, timestamp, and worker from each line
-        block_num_saved=$(echo "$line" | awk '{print $1}')
-        block_num_saved_list+="$block_num_saved "
-    done < "$output_file"
+    #block_num_saved_list=""
+    #while read -r line; do
+    #    # Read the block number, timestamp, and worker from each line
+    #    block_num_saved=$(echo "$line" | awk '{print $1}')
+    #    block_num_saved_list+="$block_num_saved "
+    #done < "$output_file"
     
     # Fetch data from the URL
     data=$(curl -s "$url")
@@ -63,13 +64,14 @@ get_block_vipor() {
     temp_file="block_temp.list"
     sort=0
 
+    saved_blocks
     # Read the existing file into memory
-    block_num_saved_list=""
-    while read -r line; do
-        # Read the block number, timestamp, and worker from each line
-        block_num_saved=$(echo "$line" | awk '{print $1}')
-        block_num_saved_list+="$block_num_saved "
-    done < "$output_file"
+    #block_num_saved_list=""
+    #while read -r line; do
+    #    # Read the block number, timestamp, and worker from each line
+    #    block_num_saved=$(echo "$line" | awk '{print $1}')
+    #    block_num_saved_list+="$block_num_saved "
+    #done < "$output_file"
     
     # Fetch data from the URL
     data=$(curl -s "$url")
@@ -101,8 +103,20 @@ get_block_vipor() {
         fi
     done
 
-#    python3 block_sort.py
+    if [[ $sort == 1 ]]; then
+        python3 block_sort.py $coin
+    fi
+}
 
+# Preberi obstoječo datoteko v spomin in filtriraj glede na aktivne poole
+saved_blocks() {
+    # Read the existing file into memory
+    block_num_saved_list=""
+    while read -r line; do
+        # Read the block number, timestamp, and worker from each line
+        block_num_saved=$(echo "$line" | awk '{print $1}')
+        block_num_saved_list+="$block_num_saved "
+    done < "$output_file"
 }
 
 # ******************************************************************************************************
