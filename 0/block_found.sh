@@ -24,7 +24,7 @@ get_block_luckpool() {
 
     # Process each new block and determine its new block number
     echo "$data" | tr -d '[]' | tr ',' '\n' | tac | while IFS=':' read -r hash sub_hash block_num worker timestamp_millis pool_code data1 data2 data3; do
-
+aaa=0
         if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
 
             worker_name=$(echo "$worker" | awk -F'.' '{print $NF}')
@@ -37,6 +37,8 @@ get_block_luckpool() {
             echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
             sort=1
+            echo "aaa=$aaa"
+            aaa+=1
         fi
     done
 
