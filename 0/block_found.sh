@@ -35,7 +35,9 @@ get_block_luckpool() {
             echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
             echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
+            echo "sort1=$sort"
             sort="yes"
+            echo "sort2=$sort"
         fi
     done
     echo "sort=$sort"
