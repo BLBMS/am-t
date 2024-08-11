@@ -35,12 +35,12 @@ get_block_luckpool() {
             echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
             echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
-            sort=1
+            sort="yes"
         fi
     done
-    echo "PREsort1: $coin  sort= $sort  !!!!!!!!!!!!!!!!"
-    if [[ $sort == 1 ]]; then
-        echo "sort: $coin    !!!!!!!!!!!!!!!!"
+    echo "sort=$sort"
+    if [[ $sort == "yes" ]]; then
+        echo "sort: $coin"
     #    python3 block_sort.py $coin
         sort_blocks
     fi
@@ -120,7 +120,7 @@ sort_blocks () {
 # Read data from JSON
 wallet=$(jq -r '.wallet' block_data.json)
 coin_list=$(jq -r '.coin_list[]' block_data.json)
-sort=0
+sort="no"
 
 # Reset is_found to "no" at the beginning of the script
 jq '.is_found = "no"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
