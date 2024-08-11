@@ -22,20 +22,25 @@ get_block_community() {
     # Preverite in obdelajte vsak nov blok
     while IFS=':' read -r coin_block hash sub_hash block_num wallet_worker timestamp_millis; do
 
-        vzemi iz  $coin_block samo prvi del do vezaja, in shrani v $coin_api
+        # Vzemi iz $coin_block samo prvi del do vezaja, in shrani v $coin_api
+        coin_api=$(echo "$coin_block" | awk -F'-' '{print $1}')
 
-        if stavek:  če je $coin_api enaka $coinf potem nadaljuj
-        
-            razdeli $wallet_worker na $bl_wallet in $worker_name
-    
-            if stavek:  če je $bl_wallet enaka $wallet potem nadaljuj
-    
+        # if stavek:  če je $coin_api enaka $coinf potem nadaljuj
+        if [[ "$coin_api" == "$coinf" ]]; then
+
+            # Razdeli $wallet_worker na $bl_wallet in $worker_name
+            bl_wallet=$(echo "$wallet_worker" | awk -F'.' '{print $1}')
+            worker_name=$(echo "$wallet_worker" | awk -F'.' '{print $2}')
+
+            # if stavek:  če je $bl_wallet enaka $wallet potem nadaljuj
+            if [[ "$bl_wallet" == "$wallet" ]]; then
+
                 if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
-        
+
                     timestamp_seconds=$((timestamp_millis / 1000))
                     block_time=$(date -d @"$timestamp_seconds" +"%Y-%m-%d %H:%M:%S")
                     pool_out="$pool"
-        
+
                     # Zapišite nove informacije o bloku v začasno datoteko
                     echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
                     echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
@@ -50,6 +55,7 @@ get_block_community() {
         sort_blocks
     fi
 }
+
 
 # Funkcija za pridobivanje in obdelavo blokov iz LUCKPOOL
 get_block_luckpool() {
