@@ -1,7 +1,57 @@
 #!/bin/bash
-# v.2024-08-11 22:35
+# v.2024-08-12
 
-# Funkcija za pridobivanje in obdelavo blokov iz Luckpool
+# Funkcija za pridobivanje in obdelavo blokov iz COMMUNITY POOL
+get_block_community() {
+    url="$url_pre$coinf$url_post"
+    output_file="block_${coin}.list"
+    temp_file="block_temp.list"
+
+    saved_blocks
+
+    # Fetch data from the URL
+    data=$(curl -s "$url")
+
+    # Preveri, ali so podatki prazni ali vsebujejo <html> v prvi vrstici
+    if [[ "$data" == "[]" ]]; then
+        return
+    elif echo "$data" | head -n 1 | grep -q "<html>"; then
+        return
+    fi
+
+    # Preverite in obdelajte vsak nov blok
+    while IFS=':' read -r coin_block hash sub_hash block_num wallet_worker timestamp_millis; do
+
+        vzemi iz  $coin_block samo prvi del do vezaja, in shrani v $coin_api
+
+        if stavek:  če je $coin_api enaka $coinf potem nadaljuj
+        
+            razdeli $wallet_worker na $bl_wallet in $worker_name
+    
+            if stavek:  če je $bl_wallet enaka $wallet potem nadaljuj
+    
+                if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
+        
+                    timestamp_seconds=$((timestamp_millis / 1000))
+                    block_time=$(date -d @"$timestamp_seconds" +"%Y-%m-%d %H:%M:%S")
+                    pool_out="$pool"
+        
+                    # Zapišite nove informacije o bloku v začasno datoteko
+                    echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
+                    echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
+                    jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
+                    sort="yes"
+                fi
+            fi
+        fi
+    done < <(echo "$data" | tr -d '[]' | tr ',' '\n' | tac)
+
+    if [[ $sort == "yes" ]]; then
+        sort_blocks
+    fi
+}
+
+# Funkcija za pridobivanje in obdelavo blokov iz LUCKPOOL
 get_block_luckpool() {
     url="$url_pre$coinf$url_post"
     output_file="block_${coin}.list"
