@@ -38,7 +38,11 @@ get_block_luckpool() {
             sort=1
         fi
     done
-    sort_blocks
+    if [[ $sort == 1 ]]; then
+        echo "sort: $coin    !!!!!!!!!!!!!!!!"
+    #    python3 block_sort.py $coin
+        sort_blocks
+    fi
 }
 
 # Funkcija za pridobivanje in obdelavo blokov iz VIPOR
