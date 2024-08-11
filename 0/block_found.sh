@@ -38,6 +38,7 @@ get_block_luckpool() {
             sort=1
         fi
     done
+    echo "PREsort1: $coin  sort= $sort  !!!!!!!!!!!!!!!!"
     if [[ $sort == 1 ]]; then
         echo "sort: $coin    !!!!!!!!!!!!!!!!"
     #    python3 block_sort.py $coin
