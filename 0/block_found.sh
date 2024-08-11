@@ -42,7 +42,7 @@ aaa=0
         fi
     done
 
-    sort
+    sort_blocks
 }
 
 # Funkcija za pridobivanje in obdelavo blokov iz VIPOR
@@ -90,7 +90,7 @@ get_block_vipor() {
         fi
     done
 
-    sort
+    sort_blocks
 }
 
 # Preberi obstoječo datoteko v spomin in filtriraj glede na aktivne poole
@@ -108,7 +108,7 @@ sleep 3
 }
 
 # Sort blocks in output_file
-sort () {
+sort_blocks () {
     echo "PREsort: $coin    !!!!!!!!!!!!!!!!"
     if [[ $sort == 1 ]]; then
         echo "sort: $coin    !!!!!!!!!!!!!!!!"
