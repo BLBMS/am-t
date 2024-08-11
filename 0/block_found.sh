@@ -93,6 +93,8 @@ get_block_vipor() {
 
 # Preberi obstoječo datoteko v spomin in filtriraj glede na aktivne poole
 saved_blocks() {
+echo "done < $output_file"
+sleep 3
     # Read the existing file into memory
     block_num_saved_list=""
     while read -r line; do
