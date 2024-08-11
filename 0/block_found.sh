@@ -7,7 +7,6 @@ get_block_luckpool() {
     url="$url_pre$coinf$url_post"
     output_file="block_${coin}.list"
     temp_file="block_temp.list"
-    sort=0
 
     saved_blocks
     #echo "<$saved_blocks>"
@@ -21,7 +20,7 @@ get_block_luckpool() {
     elif echo "$data" | head -n 1 | grep -q "<html>"; then
         return
     fi
-aaa=0
+
     # Process each new block and determine its new block number
     echo "$data" | tr -d '[]' | tr ',' '\n' | tac | while IFS=':' read -r hash sub_hash block_num worker timestamp_millis pool_code data1 data2 data3; do
 
@@ -37,11 +36,8 @@ aaa=0
             echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
             sort=1
-            echo "aaa=$aaa"
-            aaa+=1
         fi
     done
-
     sort_blocks
 }
 
@@ -56,7 +52,6 @@ get_block_vipor() {
     url="$url_pre$coinf$url_post"
     output_file="block_${coin}.list"
     temp_file="block_temp.list"
-    sort=0
 
     saved_blocks
     #echo "<$saved_blocks>"
@@ -89,7 +84,6 @@ get_block_vipor() {
             sort=1
         fi
     done
-
     sort_blocks
 }
 
@@ -121,7 +115,7 @@ sort_blocks () {
 # Read data from JSON
 wallet=$(jq -r '.wallet' block_data.json)
 coin_list=$(jq -r '.coin_list[]' block_data.json)
-pool_list=$(jq -r '.pool_list[]' block_data.json)
+sort=0
 
 # Reset is_found to "no" at the beginning of the script
 jq '.is_found = "no"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
