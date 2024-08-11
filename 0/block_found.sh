@@ -3,6 +3,52 @@
 
 # Funkcija za pridobivanje in obdelavo blokov iz Luckpool
 get_block_luckpool() {
+    #return
+    url="$url_pre$coinf$url_post"
+    output_file="block_${coin}.list"
+    temp_file="block_temp.list"
+
+    saved_blocks
+
+    # Fetch data from the URL
+    data=$(curl -s "$url")
+
+    # Preveri, ali so podatki prazni ali vsebujejo <html> v prvi vrstici
+    if [[ "$data" == "[]" ]]; then
+        return
+    elif echo "$data" | head -n 1 | grep -q "<html>"; then
+        return
+    fi
+
+    # Preverite in obdelajte vsak nov blok
+    while IFS=':' read -r hash sub_hash block_num worker timestamp_millis pool_code data1 data2 data3; do
+
+        if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
+
+            worker_name=$(echo "$worker" | awk -F'.' '{print $NF}')
+            timestamp_seconds=$((timestamp_millis / 1000))
+            block_time=$(date -d @"$timestamp_seconds" +"%Y-%m-%d %H:%M:%S")
+            pool_out="$pool-$pool_code"
+
+            # Zapišite nove informacije o bloku v začasno datoteko
+            echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
+            echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
+            jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
+            echo "sort1=$sort"
+            sort="yes"
+            echo "sort2=$sort"
+        fi
+    done < <(echo "$data" | tr -d '[]' | tr ',' '\n' | tac)
+    
+    echo "sort3=$sort"
+    if [[ $sort == "yes" ]]; then
+        echo "sort4: $coin"
+    #    python3 block_sort.py $coin
+        sort_blocks
+    fi
+}
+
+get_block_luckpool_old() {
 #return
     url="$url_pre$coinf$url_post"
     output_file="block_${coin}.list"
