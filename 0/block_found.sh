@@ -40,9 +40,9 @@ get_block_luckpool() {
             echo "sort2=$sort"
         fi
     done
-    echo "sort=$sort"
+    echo "sort3=$sort"
     if [[ $sort == "yes" ]]; then
-        echo "sort: $coin"
+        echo "sort4: $coin"
     #    python3 block_sort.py $coin
         sort_blocks
     fi
@@ -122,7 +122,7 @@ sort_blocks () {
 # Read data from JSON
 wallet=$(jq -r '.wallet' block_data.json)
 coin_list=$(jq -r '.coin_list[]' block_data.json)
-sort="no"
+#sort="no"
 
 # Reset is_found to "no" at the beginning of the script
 jq '.is_found = "no"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
