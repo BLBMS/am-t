@@ -3,7 +3,6 @@
 
 # Funkcija za pridobivanje in obdelavo blokov iz Luckpool
 get_block_luckpool() {
-    #return
     url="$url_pre$coinf$url_post"
     output_file="block_${coin}.list"
     temp_file="block_temp.list"
@@ -34,69 +33,18 @@ get_block_luckpool() {
             echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
             echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
-            echo "sort1=$sort"
+            is_found1=1
             sort="yes"
-            echo "sort2=$sort"
         fi
     done < <(echo "$data" | tr -d '[]' | tr ',' '\n' | tac)
-    
-    echo "sort3=$sort"
+
     if [[ $sort == "yes" ]]; then
-        echo "sort4: $coin"
-    #    python3 block_sort.py $coin
-        sort_blocks
-    fi
-}
-
-get_block_luckpool_old() {
-#return
-    url="$url_pre$coinf$url_post"
-    output_file="block_${coin}.list"
-    temp_file="block_temp.list"
-
-    saved_blocks
-    #echo "<$saved_blocks>"
-
-    # Fetch data from the URL
-    data=$(curl -s "$url")
-
-    # Preveri, ali so podatki prazni ali vsebujejo <html> v prvi vrstici
-    if [[ "$data" == "[]" ]]; then
-        return
-    elif echo "$data" | head -n 1 | grep -q "<html>"; then
-        return
-    fi
-
-    # Process each new block and determine its new block number
-    echo "$data" | tr -d '[]' | tr ',' '\n' | tac | while IFS=':' read -r hash sub_hash block_num worker timestamp_millis pool_code data1 data2 data3; do
-
-        if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
-
-            worker_name=$(echo "$worker" | awk -F'.' '{print $NF}')
-            timestamp_seconds=$((timestamp_millis / 1000))
-            block_time=$(date -d @"$timestamp_seconds" +"%Y-%m-%d %H:%M:%S")
-            pool_out="$pool-$pool_code"
-
-            # Write the new block information to the temporary file
-            echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
-            echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
-            jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
-            echo "sort1=$sort"
-            sort="yes"
-            echo "sort2=$sort"
-        fi
-    done
-    echo "sort3=$sort"
-    if [[ $sort == "yes" ]]; then
-        echo "sort4: $coin"
-    #    python3 block_sort.py $coin
         sort_blocks
     fi
 }
 
 # Funkcija za pridobivanje in obdelavo blokov iz VIPOR
 get_block_vipor() {
-#return
     # Preveri, ali je kovanec VRSC
     if [[ "$coin" != "VRSC" ]]; then
         return
@@ -107,7 +55,6 @@ get_block_vipor() {
     temp_file="block_temp.list"
 
     saved_blocks
-    #echo "<$saved_blocks>"
 
     # Fetch data from the URL
     data=$(curl -s "$url")
@@ -120,24 +67,28 @@ get_block_vipor() {
     fi
 
     # Process each new block and determine its new block number, from latest to earliest
-    echo "$data" | jq -c '.[]' | while read -r block; do
+    while read -r block; do
         block_num=$(echo "$block" | jq -r '.blockHeight')
-
+    
         if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
-
+    
             worker_name=$(echo "$block" | jq -r '.worker')
             source=$(echo "$block" | jq -r '.source')
             block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/Z//')
             pool_out="$pool-$source"
-
-            # Write the new block information to the temporary file
+    
+            # Zapiši nove informacije o bloku v začasno datoteko
             echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
             echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
-            sort=1
+            is_found1=1
+            sort="yes"
         fi
-    done
-    sort_blocks
+    done < <(echo "$data" | jq -c '.[]')
+
+    if [[ $sort == "yes" ]]; then
+        sort_blocks
+    fi
 }
 
 # Preberi obstoječo datoteko v spomin in filtriraj glede na aktivne poole
@@ -156,11 +107,7 @@ sleep 3
 
 # Sort blocks in output_file
 sort_blocks () {
-    echo "PREsort: $coin  sort= $sort  !!!!!!!!!!!!!!!!"
-    if [[ $sort == 1 ]]; then
-        echo "sort: $coin    !!!!!!!!!!!!!!!!"
-        python3 block_sort.py $coin
-    fi
+    python3 block_sort.py $coin
 }
 
 # ******************************************************************************************************
@@ -168,7 +115,7 @@ sort_blocks () {
 # Read data from JSON
 wallet=$(jq -r '.wallet' block_data.json)
 coin_list=$(jq -r '.coin_list[]' block_data.json)
-#sort="no"
+sort="no"
 
 # Reset is_found to "no" at the beginning of the script
 jq '.is_found = "no"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
@@ -227,6 +174,7 @@ for pool in $active_pools; do
     done
 done
 
+echo "found=$is_found1"
 # Check if any block was found and trigger the necessary actions
 if [[ "$(jq -r '.is_found' block_data.json)" == "yes" ]]; then
     echo -e "\n"
