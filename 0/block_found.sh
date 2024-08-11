@@ -21,10 +21,10 @@ get_block_luckpool() {
     elif echo "$data" | head -n 1 | grep -q "<html>"; then
         return
     fi
-
+aaa=0
     # Process each new block and determine its new block number
     echo "$data" | tr -d '[]' | tr ',' '\n' | tac | while IFS=':' read -r hash sub_hash block_num worker timestamp_millis pool_code data1 data2 data3; do
-aaa=0
+
         if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
 
             worker_name=$(echo "$worker" | awk -F'.' '{print $NF}')
