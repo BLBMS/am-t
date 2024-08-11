@@ -109,7 +109,7 @@ sleep 3
 
 # Sort blocks in output_file
 sort_blocks () {
-    echo "PREsort: $coin    !!!!!!!!!!!!!!!!"
+    echo "PREsort: $coin  sort= $sort  !!!!!!!!!!!!!!!!"
     if [[ $sort == 1 ]]; then
         echo "sort: $coin    !!!!!!!!!!!!!!!!"
         python3 block_sort.py $coin
