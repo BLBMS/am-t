@@ -33,7 +33,6 @@ get_block_luckpool() {
             echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
             echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
-            is_found1=1
             sort="yes"
         fi
     done < <(echo "$data" | tr -d '[]' | tr ',' '\n' | tac)
@@ -81,7 +80,6 @@ get_block_vipor() {
             echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
             echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
-            is_found1=1
             sort="yes"
         fi
     done < <(echo "$data" | jq -c '.[]')
@@ -93,8 +91,6 @@ get_block_vipor() {
 
 # Preberi obstoječo datoteko v spomin in filtriraj glede na aktivne poole
 saved_blocks() {
-echo "done < $output_file"
-sleep 3
     # Read the existing file into memory
     block_num_saved_list=""
     while read -r line; do
@@ -102,7 +98,6 @@ sleep 3
         block_num_saved=$(echo "$line" | awk '{print $1}')
         block_num_saved_list+="$block_num_saved "
     done < "$output_file"
-    #echo "<$block_num_saved_list>"
 }
 
 # Sort blocks in output_file
@@ -129,8 +124,6 @@ for pool in $(jq -c '.pool_list[]' < block_data.json); do
         active_pools+="$name "
     fi
 done
-
-#echo "<active_pools=$active_pools>"
 
 # Process each pool
 for pool in $active_pools; do
@@ -159,8 +152,6 @@ for pool in $active_pools; do
         ;;
     esac
 
-#echo "<pool=$pool>"
-
     echo "$coin_list" | while read -r coin; do
         echo -e "\e[4m\e[1;93mProcessing $coin at $pool pool...\e[0m\e[24m"
         coinl=$(echo "$coin" | tr '[:upper:]' '[:lower:]')
@@ -174,7 +165,6 @@ for pool in $active_pools; do
     done
 done
 
-echo "found=$is_found1"
 # Check if any block was found and trigger the necessary actions
 if [[ "$(jq -r '.is_found' block_data.json)" == "yes" ]]; then
     echo -e "\n"
