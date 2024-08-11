@@ -3,7 +3,7 @@
 
 # Funkcija za pridobivanje in obdelavo blokov iz Luckpool
 get_block_luckpool() {
-return
+#return
     url="$url_pre$coinf$url_post"
     output_file="block_${coin}.list"
     temp_file="block_temp.list"
