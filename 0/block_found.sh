@@ -10,7 +10,7 @@ get_block_luckpool() {
     sort=0
 
     saved_blocks
-    echo "<$saved_blocks>"
+    #echo "<$saved_blocks>"
 
     # Fetch data from the URL
     data=$(curl -s "$url")
@@ -57,7 +57,7 @@ get_block_vipor() {
     sort=0
 
     saved_blocks
-    echo "<$saved_blocks>"
+    #echo "<$saved_blocks>"
 
     # Fetch data from the URL
     data=$(curl -s "$url")
@@ -100,7 +100,7 @@ saved_blocks() {
         block_num_saved=$(echo "$line" | awk '{print $1}')
         block_num_saved_list+="$block_num_saved "
     done < "$output_file"
-    echo "<$block_num_saved_list>"
+    #echo "<$block_num_saved_list>"
 }
 
 # Sort blocks in output_file
@@ -130,12 +130,17 @@ for pool in $(jq -c '.pool_list[]' < block_data.json); do
     fi
 done
 
-echo "<active_pools=$active_pools>"
+#echo "<active_pools=$active_pools>"
 
 # Process each pool
 for pool in $active_pools; do
 
     case $pool in
+        "community")
+            url_pre="https://poolweb.verus.io/api/worker_stats?"
+            url_post="$wallet"
+            get_block_func="get_block_community"
+        ;;
         "luckpool")
             url_pre="https://luckpool.net/"
             url_post="/blocks/$wallet"
@@ -154,7 +159,7 @@ for pool in $active_pools; do
         ;;
     esac
 
-echo "<pool=$pool>"
+#echo "<pool=$pool>"
 
     echo "$coin_list" | while read -r coin; do
         echo -e "\e[4m\e[1;93mProcessing $coin at $pool pool...\e[0m\e[24m"
@@ -175,6 +180,8 @@ if [[ "$(jq -r '.is_found' block_data.json)" == "yes" ]]; then
     # Reset is_found to "no" at the beginning of the script
     jq '.is_found = "no"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
 fi
+
+exit
 
 # Printout of the last 5 already saved blocks
 echo "$coin_list" | while read -r coin; do
