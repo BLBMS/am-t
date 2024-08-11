@@ -43,7 +43,7 @@ get_block_luckpool() {
     sort
 }
 
-# Funkcija za pridobivanje in obdelavo blokov iz VIPOR   
+# Funkcija za pridobivanje in obdelavo blokov iz VIPOR
 get_block_vipor() {
 #return
     # Preveri, ali je kovanec VRSC
@@ -74,7 +74,7 @@ get_block_vipor() {
         block_num=$(echo "$block" | jq -r '.blockHeight')
 
         if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
-        
+
             worker_name=$(echo "$block" | jq -r '.worker')
             source=$(echo "$block" | jq -r '.source')
             block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/Z//')
@@ -84,7 +84,7 @@ get_block_vipor() {
             echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
             echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
-            sort=1         
+            sort=1
         fi
     done
 
