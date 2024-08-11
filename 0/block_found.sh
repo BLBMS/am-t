@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-08-10 12:35
+# v.2024-08-11 22:35
 
 # Funkcija za pridobivanje in obdelavo blokov iz Luckpool
 get_block_luckpool() {
