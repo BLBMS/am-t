@@ -1,5 +1,6 @@
 {
-  "wallet": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc",
+  "wallet": "RXZSmaHbqshL5kQQBtNiXx6WwdpHQpSgeU",
+  "wallet_my": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc",
   "my_github": "https://raw.githubusercontent.com/BLBMS/am-t/moje/0/",
   "coin_list": [
     "VRSC",
@@ -9,21 +10,25 @@
   "pool_list": [
     {
       "name": "community",
-      "active": 1
+      "active": 0
     },
     {
       "name": "verus_farm",
-      "active": 1
+      "active": 0
     },
     {
       "name": "luckpool",
-      "active": 1
+      "active": 0
     },
     {
       "name": "vipor",
+      "active": 0
+    },
+    {
+      "name": "cloudiko",
       "active": 1
     }
   ],
-  "freq": 0.003,
+  "freq": 0.03,
   "is_found": "no"
 }
