@@ -3,7 +3,6 @@
 
 # Funkcija za pridobivanje in obdelavo blokov iz COMMUNITY POOL
 get_block_community() {
-    #url="$url_pre$coinf$url_post"
     url="$url_pre"
     output_file="block_${coin}.list"
     temp_file="block_temp.list"
@@ -63,7 +62,6 @@ get_block_community() {
 
 # Funkcija za pridobivanje in obdelavo blokov iz VERUS.FARM
 get_block_verus_farm() {
-    #url="$url_pre$coinf$url_post"
     url="$url_pre"
     output_file="block_${coin}.list"
     temp_file="block_temp.list"
@@ -185,7 +183,7 @@ get_block_vipor() {
         return
     fi
 
-    # Process each new block and determine its new block number, from latest to earliest
+    # Process each new block and determine its new block number
     while read -r block; do
         block_num=$(echo "$block" | jq -r '.blockHeight')
 
@@ -201,6 +199,63 @@ get_block_vipor() {
             echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
             sort="yes"
+        fi
+    done < <(echo "$data" | jq -c '.[]')
+
+    if [[ $sort == "yes" ]]; then
+        sort_blocks
+    fi
+}
+
+# Funkcija za pridobivanje in obdelavo blokov iz CLOUDIKO
+get_block_cloudiko() {
+    # Preveri, ali je kovanec VRSC
+    if [[ "$coin" != "VRSC" ]]; then
+        return
+    fi
+
+    if [[ "$coin" = "VRSC" ]]; then
+        coin1="vrsc1"
+    fi
+    
+    url="$url_pre"
+    output_file="block_${coin}.list"
+    temp_file="block_temp.list"
+
+    saved_blocks
+
+    # Fetch data from the URL
+    data=$(curl -s "$url")
+
+    # Preveri, ali so podatki prazni ali vsebujejo <html> v prvi vrstici
+    if [[ "$data" == "[]" ]]; then
+        return
+    elif echo "$data" | head -n 1 | grep -q "<html>"; then
+        return
+    fi
+
+    # Preverite in obdelajte vsak nov blok
+    while read -r block; do
+
+        pool_id=$(echo "$block" | jq -r '.poolId')
+
+        if [[ " $pool_id " =~ " $pool1 " ]]; then
+            
+            miner=$(echo "$block" | jq -r '.miner')
+    
+            if ! [[ " $miner " =~ " $wallet " ]]; then
+    
+                worker_name="---"
+                source=$(echo "$block" | jq -r '.source')
+                block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/Z//')
+                pool_out="$source"
+    
+                # Zapiši nove informacije o bloku v začasno datoteko
+                echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
+                echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
+                jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
+                sort="yes"
+            fi
         fi
     done < <(echo "$data" | jq -c '.[]')
 
@@ -269,6 +324,11 @@ for pool in $active_pools; do
             url_post="/miners/$wallet/blocks?pageSize=100"
             get_block_func="get_block_vipor"
         ;;
+         "cloudiko")
+            url_pre="https://cloudiko.io/api/blocks?pageSize=100"
+            url_post=""
+            get_block_func="get_block_cloudiko"
+        ;;       
         *)
             echo "-----------------------------------------------------------"
             echo "ERROR: pool \"$pool\" not recognized or supported."
