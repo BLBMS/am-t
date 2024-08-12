@@ -9,7 +9,11 @@
   "pool_list": [
     {
       "name": "community",
-      "active": 0
+      "active": 1
+    },
+        {
+      "name": "verus_farm",
+      "active": 1
     },
     {
       "name": "luckpool",
