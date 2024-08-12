@@ -14,12 +14,14 @@ get_block_community() {
     data=$(curl -s "$url")
 
     echo -e "\ndata:$data\n"
+    sleep 2
 
     # Preveri, ali so podatki prazni ali vsebujejo <html> v prvi vrstici
     if [[ "$data" == "[]" ]]; then
         return
     elif echo "$data" | head -n 1 | grep -q "<html>"; then
-        echo -e "\ndata: HTML\n"
+        echo -e "data: HTML"
+        sleep 2
         return
     fi
 
@@ -28,7 +30,8 @@ get_block_community() {
 
         # Vzemi iz $coin_block samo prvi del do vezaja, in shrani v $coin_api
         coin_api=$(echo "$coin_block" | awk -F'-' '{print $1}')
-        echo -e "\ncoin_api:$coin_api\n"
+        echo -e "coin_api:$coin_api"
+        sleep 2
 
         # if stavek:  če je $coin_api enaka $coinf potem nadaljuj
         if [[ "$coin_api" == "$coinf" ]]; then
