@@ -26,16 +26,16 @@ get_block_community() {
 
         # if stavek:  če je $coin_api enaka $coinf potem nadaljuj
         if [[ "$coin_api" == "$coinf" ]]; then
-            
+
             # Razdeli $wallet_worker na $bl_wallet in $worker_name
             bl_wallet=$(echo "$wallet_worker" | awk -F'.' '{print $1}' | sed 's/"//g')
             worker_name=$(echo "$wallet_worker" | awk -F'.' '{print $2}' | sed 's/"//g')
-    
+
             # if stavek:  če je $bl_wallet enaka $wallet potem nadaljuj
             if [[ "$bl_wallet" == "$wallet" ]]; then
-    
+
                 if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
-        
+
                     # Odstranimo morebitne neveljavne znake iz timestamp_millis
                     clean_timestamp_millis=$(echo "$timestamp_millis" | sed 's/[^0-9]//g')
 
@@ -43,7 +43,7 @@ get_block_community() {
                     timestamp_seconds=$((clean_timestamp_millis / 1000))
                     block_time=$(date -d @"$timestamp_seconds" +"%Y-%m-%d %H:%M:%S")
                     pool_out="$pool"
-        
+
                     # Zapišite nove informacije o bloku v začasno datoteko
                     echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
                     echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
@@ -84,16 +84,16 @@ get_block_verus_farm() {
 
         # if stavek:  če je $coin_api enaka $coinf potem nadaljuj
         if [[ "$coin_api" == "$coinf" ]]; then
-            
+
             # Razdeli $wallet_worker na $bl_wallet in $worker_name
             bl_wallet=$(echo "$wallet_worker" | awk -F'.' '{print $1}' | sed 's/"//g')
             worker_name=$(echo "$wallet_worker" | awk -F'.' '{print $2}' | sed 's/"//g')
-    
+
             # if stavek:  če je $bl_wallet enaka $wallet potem nadaljuj
             if [[ "$bl_wallet" == "$wallet" ]]; then
-    
+
                 if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
-        
+
                     # Odstranimo morebitne neveljavne znake iz timestamp_millis
                     clean_timestamp_millis=$(echo "$timestamp_millis" | sed 's/[^0-9]//g')
 
@@ -101,7 +101,7 @@ get_block_verus_farm() {
                     timestamp_seconds=$((clean_timestamp_millis / 1000))
                     block_time=$(date -d @"$timestamp_seconds" +"%Y-%m-%d %H:%M:%S")
                     pool_out="$pool"
-        
+
                     # Zapišite nove informacije o bloku v začasno datoteko
                     echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
                     echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
@@ -235,15 +235,15 @@ get_block_cloudiko() {
 
         if [[ "$pool_id" == "$coin1" ]]; then
             miner=$(echo "$block" | jq -r '.miner')
-    
+
             if [[ "$miner" == "$wallet" ]]; then
 
                 block_num=$(echo "$block" | jq -r '.blockHeight')
                 worker_name="---"
                 source=$(echo "$block" | jq -r '.source')
-                block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/Z//')
+                block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/\..*//;s/Z//')
                 pool_out="$source"
-    
+
                 # Zapiši nove informacije o bloku v začasno datoteko
                 echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
                 echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
