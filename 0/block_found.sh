@@ -5,7 +5,6 @@
 get_block_community() {
     url="$url_pre"
     output_file="block_${coin}.list"
-    temp_file="block_temp.list"
 
     saved_blocks
 
@@ -64,7 +63,6 @@ get_block_community() {
 get_block_verus_farm() {
     url="$url_pre"
     output_file="block_${coin}.list"
-    temp_file="block_temp.list"
 
     saved_blocks
 
@@ -123,7 +121,6 @@ get_block_verus_farm() {
 get_block_luckpool() {
     url="$url_pre$coinf$url_post"
     output_file="block_${coin}.list"
-    temp_file="block_temp.list"
 
     saved_blocks
 
@@ -169,7 +166,6 @@ get_block_vipor() {
 
     url="$url_pre$coinf$url_post"
     output_file="block_${coin}.list"
-    temp_file="block_temp.list"
 
     saved_blocks
 
@@ -220,7 +216,6 @@ get_block_cloudiko() {
     
     url="$url_pre"
     output_file="block_${coin}.list"
-    temp_file="block_temp.list"
 
     saved_blocks
 
@@ -236,15 +231,14 @@ get_block_cloudiko() {
 
     # Preverite in obdelajte vsak nov blok
     while read -r block; do
-
         pool_id=$(echo "$block" | jq -r '.poolId')
 
-        if [[ " $pool_id " =~ " $pool1 " ]]; then
-            
+        if [[ "$pool_id" == "$coin1" ]]; then
             miner=$(echo "$block" | jq -r '.miner')
     
-            if ! [[ " $miner " =~ " $wallet " ]]; then
-    
+            if [[ "$miner" == "$wallet" ]]; then
+
+                block_num=$(echo "$block" | jq -r '.blockHeight')
                 worker_name="---"
                 source=$(echo "$block" | jq -r '.source')
                 block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/Z//')
