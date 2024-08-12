@@ -61,6 +61,65 @@ get_block_community() {
     fi
 }
 
+# Funkcija za pridobivanje in obdelavo blokov iz VERUS.FARM
+get_block_verus_farm() {
+    #url="$url_pre$coinf$url_post"
+    url="$url_pre"
+    output_file="block_${coin}.list"
+    temp_file="block_temp.list"
+
+    saved_blocks
+
+    # Fetch data from the URL
+    data=$(curl -s "$url")
+
+    # Preveri, ali so podatki prazni ali vsebujejo <html> v prvi vrstici
+    if [[ "$data" == "[]" ]]; then
+        return
+    elif echo "$data" | head -n 1 | grep -q "<html>"; then
+        return
+    fi
+
+    # Preverite in obdelajte vsak nov blok
+    while IFS=':' read -r coin_block hash sub_hash block_num wallet_worker timestamp_millis; do
+
+        # Vzemi iz $coin_block samo prvi del do vezaja, odstrani morebitne narekovaje, in shrani v $coin_api
+        coin_api=$(echo "$coin_block" | awk -F'-' '{print $1}' | sed 's/"//g')
+
+        # if stavek:  če je $coin_api enaka $coinf potem nadaljuj
+        if [[ "$coin_api" == "$coinf" ]]; then
+            
+            # Razdeli $wallet_worker na $bl_wallet in $worker_name
+            bl_wallet=$(echo "$wallet_worker" | awk -F'.' '{print $1}' | sed 's/"//g')
+            worker_name=$(echo "$wallet_worker" | awk -F'.' '{print $2}' | sed 's/"//g')
+    
+            # if stavek:  če je $bl_wallet enaka $wallet potem nadaljuj
+            if [[ "$bl_wallet" == "$wallet" ]]; then
+    
+                if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
+        
+                    # Odstranimo morebitne neveljavne znake iz timestamp_millis
+                    clean_timestamp_millis=$(echo "$timestamp_millis" | sed 's/[^0-9]//g')
+
+                    # Nato izračunamo čas v sekundah
+                    timestamp_seconds=$((clean_timestamp_millis / 1000))
+                    block_time=$(date -d @"$timestamp_seconds" +"%Y-%m-%d %H:%M:%S")
+                    pool_out="$pool"
+        
+                    # Zapišite nove informacije o bloku v začasno datoteko
+                    echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
+                    echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
+                    jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
+                    sort="yes"
+                fi
+            fi
+        fi
+    done < <(echo "$data" | tr -d '[]' | tr ',' '\n' | tac)
+
+    if [[ $sort == "yes" ]]; then
+        sort_blocks
+    fi
+}
 
 # Funkcija za pridobivanje in obdelavo blokov iz LUCKPOOL
 get_block_luckpool() {
@@ -191,12 +250,15 @@ for pool in $active_pools; do
 
     case $pool in
         "community")
-#            url_pre="https://poolweb.verus.io/api/worker_stats?"
             url_pre="https://poolweb.verus.io/api/blocks"
-#            url_post="$wallet"
             url_post=""
             get_block_func="get_block_community"
         ;;
+         "verus_farm")
+            url_pre="https://verus.farm/api/blocks"
+            url_post=""
+            get_block_func="get_block_verus_farm"
+        ;;       
         "luckpool")
             url_pre="https://luckpool.net/"
             url_post="/blocks/$wallet"
