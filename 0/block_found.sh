@@ -296,16 +296,3 @@ if [[ "$(jq -r '.is_found' block_data.json)" == "yes" ]]; then
     # Reset is_found to "no" at the beginning of the script
     jq '.is_found = "no"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
 fi
-
-exit
-
-# Printout of the last 5 already saved blocks
-echo "$coin_list" | while read -r coin; do
-    echo -e "\e[1;93m\e[4mLast 5 blocks: \e[1;91m$coin\e[0m:\e[24m"
-    block_file="block_${coin}.list"
-    if [[ -f "$block_file" && -s "$block_file" ]]; then
-        head -n 5 "$block_file"
-    else
-        echo -e "\e[90mNo valid $block_file data available.\e[0m"
-    fi
-done
