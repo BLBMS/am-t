@@ -38,7 +38,11 @@ get_block_community() {
     
                 if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
         
-                    timestamp_seconds=$((timestamp_millis / 1000))
+                    # Odstranimo morebitne neveljavne znake iz timestamp_millis
+                    clean_timestamp_millis=$(echo "$timestamp_millis" | sed 's/[^0-9]//g')
+
+                    # Nato izračunamo čas v sekundah
+                    timestamp_seconds=$((clean_timestamp_millis / 1000))
                     block_time=$(date -d @"$timestamp_seconds" +"%Y-%m-%d %H:%M:%S")
                     pool_out="$pool"
         
