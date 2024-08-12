@@ -26,7 +26,7 @@ if screen -list | grep -q "block_update"; then
     echo -e "\e[93m  block_update already started\e[0m"
     exit
 else
-    echo -e "\n\e[0;92m Starting block_update (luckpool) \e[0m\n"
+    echo -e "\n\e[0;92m Starting block_update\e[0m\n"
     screen -ls
     screen -wipe 1>/dev/null 2>&1
     screen -dmS block_update 1>/dev/null 2>&1
