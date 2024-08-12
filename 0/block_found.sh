@@ -239,16 +239,20 @@ get_block_cloudiko() {
             if [[ "$miner" == "$wallet" ]]; then
 
                 block_num=$(echo "$block" | jq -r '.blockHeight')
-                worker_name="---"
-                source=$(echo "$block" | jq -r '.source')
-                block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/\..*//;s/Z//')
-                pool_out="$source"
 
-                # Zapiši nove informacije o bloku v začasno datoteko
-                echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
-                echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
-                jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
-                sort="yes"
+                if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
+
+                    worker_name="---"
+                    source=$(echo "$block" | jq -r '.source')
+                    block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/\..*//;s/Z//')
+                    pool_out="$source"
+    
+                    # Zapiši nove informacije o bloku v začasno datoteko
+                    echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
+                    echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
+                    jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
+                    sort="yes"
+                fi
             fi
         fi
     done < <(echo "$data" | jq -c '.[]')
