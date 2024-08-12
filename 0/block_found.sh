@@ -128,14 +128,14 @@ get_block_vipor() {
     # Process each new block and determine its new block number, from latest to earliest
     while read -r block; do
         block_num=$(echo "$block" | jq -r '.blockHeight')
-    
+
         if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
-    
+
             worker_name=$(echo "$block" | jq -r '.worker')
             source=$(echo "$block" | jq -r '.source')
             block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/Z//')
             pool_out="$pool-$source"
-    
+
             # Zapiši nove informacije o bloku v začasno datoteko
             echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
             echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
