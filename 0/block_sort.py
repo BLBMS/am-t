@@ -1,5 +1,5 @@
 # by blbMS
-# v.2024-08-12
+# v.2024-08-12 21:24
 import sys
 from datetime import datetime
 
