@@ -10,22 +10,26 @@
   "pool_list": [
     {
       "name": "community",
-      "active": 0
+      "active": 1
     },
     {
       "name": "verus_farm",
-      "active": 0
+      "active": 1
     },
     {
       "name": "luckpool",
-      "active": 0
+      "active": 1
     },
     {
       "name": "vipor",
-      "active": 0
+      "active": 1
     },
     {
       "name": "cloudiko",
+      "active": 1
+    },
+    {
+      "name": "aninterestinghole",
       "active": 1
     }
   ],
