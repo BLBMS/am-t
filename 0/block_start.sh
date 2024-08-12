@@ -1,5 +1,6 @@
 #!/bin/bash
 # v.2024-08-06
+# by blbMS
 
 # Read coin list from JSON
 coin_list=$(jq -r '.coin_list[]' block_data.json)
@@ -26,7 +27,7 @@ if screen -list | grep -q "block_update"; then
     echo -e "\e[93m  block_update already started\e[0m"
     exit
 else
-    echo -e "\n\e[0;92m Starting block_update\e[0m\n"
+    echo -e "\n\e[0;92m  Starting block_update\e[0m\n"
     screen -ls
     screen -wipe 1>/dev/null 2>&1
     screen -dmS block_update 1>/dev/null 2>&1
