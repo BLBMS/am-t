@@ -31,7 +31,11 @@
     {
       "name": "aninterestinghole",
       "active": 1
-    }
+    },
+    {
+      "name": "paddypool",
+      "active": 1
+    } 
   ],
   "freq": 0.03,
   "is_found": "no"
