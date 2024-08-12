@@ -3,7 +3,8 @@
 
 # Funkcija za pridobivanje in obdelavo blokov iz COMMUNITY POOL
 get_block_community() {
-    url="$url_pre$coinf$url_post"
+    #url="$url_pre$coinf$url_post"
+    url="$url_pre"
     output_file="block_${coin}.list"
     temp_file="block_temp.list"
 
@@ -191,9 +192,9 @@ for pool in $active_pools; do
     case $pool in
         "community")
 #            url_pre="https://poolweb.verus.io/api/worker_stats?"
-            url_pre="https://poolweb.verus.io/api/"
+            url_pre="https://poolweb.verus.io/api/blocks"
 #            url_post="$wallet"
-            url_post="blocks"
+            url_post=""
             get_block_func="get_block_community"
         ;;
         "luckpool")
