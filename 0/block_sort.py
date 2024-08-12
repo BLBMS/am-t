@@ -14,13 +14,13 @@ with open(file_name, 'r') as f:
 # Parsiranje vrstic v seznam slovarjev
 blocks = []
 for line in lines:
-    parts = line.strip().split(maxsplit=4)
+    parts = line.strip().split(maxsplit=5)
     blocks.append({
         "height": int(parts[0]),        # Višina bloka
         "pool": parts[1],               # Bazen
         "timestamp": parts[2] + " " + parts[3],  # Časovni žig
-        "worker": parts[4] if len(parts) > 4 else "",  # Delavec (ali oznaka)
-        "sequence": 0                   # Zaporedna številka v mesecu (bo izračunana)
+        "worker": parts[4],             # Delavec
+        "sequence": int(parts[5]) if len(parts) > 5 else None  # Zaporedna številka, če obstaja
     })
 
 # Premakni prvo vrstico na dno, če ima višino bloka 0
