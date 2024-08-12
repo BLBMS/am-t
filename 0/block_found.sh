@@ -190,8 +190,10 @@ for pool in $active_pools; do
 
     case $pool in
         "community")
-            url_pre="https://poolweb.verus.io/api/worker_stats?"
-            url_post="$wallet"
+#            url_pre="https://poolweb.verus.io/api/worker_stats?"
+            url_pre="https://poolweb.verus.io/api/"
+#            url_post="$wallet"
+            url_post="blocks"
             get_block_func="get_block_community"
         ;;
         "luckpool")
