@@ -1,5 +1,5 @@
 # by blbMS
-# v.2024-08-12 21:24
+# v.2024-08-13
 import sys
 from datetime import datetime
 
@@ -15,17 +15,15 @@ with open(file_name, 'r') as f:
 blocks = []
 for line in lines:
     parts = line.strip().split(maxsplit=5)
-    blocks.append({
+    block_data = {
         "height": int(parts[0]),        # Višina bloka
         "pool": parts[1],               # Bazen
         "timestamp": parts[2] + " " + parts[3],  # Časovni žig
-        "worker": parts[4],             # Delavec
-        "sequence": int(parts[5]) if len(parts) > 5 else None  # Zaporedna številka, če obstaja
-    })
-
-# Premakni prvo vrstico na dno, če ima višino bloka 0
-if blocks and blocks[0]["height"] == 0:
-    blocks.append(blocks.pop(0))
+        "worker": parts[4]              # Delavec
+    }
+    
+    # Doda blok podatkov v seznam (šestega elementa ne upošteva)
+    blocks.append(block_data)
 
 # Razvrsti bloke po naraščajočem vrstnem redu glede na časovni žig
 blocks.sort(key=lambda x: datetime.strptime(x["timestamp"], "%Y-%m-%d %H:%M:%S.%f") if '.' in x["timestamp"] else datetime.strptime(x["timestamp"], "%Y-%m-%d %H:%M:%S"))
