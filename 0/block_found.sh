@@ -263,6 +263,64 @@ get_block_cloudiko() {
     fi
 }
 
+# Funkcija za pridobivanje in obdelavo blokov iz ANINTERESTINGHOLE
+get_block_aninterestinghole() {
+    url="$url_pre"
+    output_file="block_${coin}.list"
+
+    saved_blocks
+
+    # Fetch data from the URL
+    data=$(curl -s "$url")
+
+    # Preveri, ali so podatki prazni ali vsebujejo <html> v prvi vrstici
+    if [[ "$data" == "[]" ]]; then
+        return
+    elif echo "$data" | head -n 1 | grep -q "<html>"; then
+        return
+    fi
+
+    # Preverite in obdelajte vsak nov blok
+    while IFS=':' read -r coin_block hash sub_hash block_num wallet_worker timestamp_millis; do
+
+        # Vzemi iz $coin_block samo prvi del do vezaja, odstrani morebitne narekovaje, in shrani v $coin_api
+        coin_api=$(echo "$coin_block" | awk -F'-' '{print $1}' | sed 's/"//g')
+
+        # if stavek:  če je $coin_api enaka $coinf potem nadaljuj
+        if [[ "$coin_api" == "$coinf" ]]; then
+
+            # Razdeli $wallet_worker na $bl_wallet in $worker_name
+            bl_wallet=$(echo "$wallet_worker" | awk -F'.' '{print $1}' | sed 's/"//g')
+            worker_name=$(echo "$wallet_worker" | awk -F'.' '{print $2}' | sed 's/"//g')
+
+            # if stavek:  če je $bl_wallet enaka $wallet potem nadaljuj
+            if [[ "$bl_wallet" == "$wallet" ]]; then
+
+                if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
+
+                    # Odstranimo morebitne neveljavne znake iz timestamp_millis
+                    clean_timestamp_millis=$(echo "$timestamp_millis" | sed 's/[^0-9]//g')
+
+                    # Nato izračunamo čas v sekundah
+                    timestamp_seconds=$((clean_timestamp_millis / 1000))
+                    block_time=$(date -d @"$timestamp_seconds" +"%Y-%m-%d %H:%M:%S")
+                    pool_out="$pool"
+
+                    # Zapišite nove informacije o bloku v začasno datoteko
+                    echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
+                    echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
+                    jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
+                    sort="yes"
+                fi
+            fi
+        fi
+    done < <(echo "$data" | tr -d '[]' | tr ',' '\n' | tac)
+
+    if [[ $sort == "yes" ]]; then
+        sort_blocks
+    fi
+}
+
 # Preberi obstoječo datoteko v spomin in filtriraj glede na aktivne poole
 saved_blocks() {
     # Read the existing file into memory
@@ -327,7 +385,12 @@ for pool in $active_pools; do
             url_pre="https://cloudiko.io/api/blocks?pageSize=100"
             url_post=""
             get_block_func="get_block_cloudiko"
-        ;;       
+        ;;
+        "aninterestinghole")
+            url_pre="https://verus.aninterestinghole.xyz/api/blocks"
+            url_post=""
+            get_block_func="get_block_aninterestinghole"
+        ;;
         *)
             echo "-----------------------------------------------------------"
             echo "ERROR: pool \"$pool\" not recognized or supported."
