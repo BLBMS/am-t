@@ -186,7 +186,7 @@ get_block_vipor() {
         if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
 
             worker_name=$(echo "$block" | jq -r '.worker')
-            source=$(echo "$block" | jq -r '.source')
+            source=$(echo "$block" | jq -r '.source' | tr '[:upper:]' '[:lower:]')
             block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/Z//')
             pool_out="$pool-$source"
 
