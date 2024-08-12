@@ -1,5 +1,6 @@
 #!/bin/bash
 # v.2024-08-06
+# by blbMS
 
 # Read data from JSON
 my_github=$(jq -r '.my_github' block_data.json)
