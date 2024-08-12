@@ -1,5 +1,6 @@
 #!/bin/bash
 # v.2024-08-12
+# by blbMS
 
 # Funkcija za pridobivanje in obdelavo blokov iz COMMUNITY POOL
 get_block_community() {
