@@ -213,7 +213,7 @@ get_block_cloudiko() {
     if [[ "$coin" = "VRSC" ]]; then
         coin1="vrsc1"
     fi
-    
+
     url="$url_pre"
     output_file="block_${coin}.list"
 
