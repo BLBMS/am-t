@@ -188,7 +188,8 @@ get_block_vipor() {
 
             worker_name=$(echo "$block" | jq -r '.worker')
             source=$(echo "$block" | jq -r '.source' | tr '[:upper:]' '[:lower:]')
-            block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/Z//')
+            block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/\..*//;s/Z//')
+#           block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/Z//')
             pool_out="$pool-$source"
 
             # Zapiši nove informacije o bloku v začasno datoteko
