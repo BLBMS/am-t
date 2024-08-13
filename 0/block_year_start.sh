@@ -6,7 +6,7 @@
 coin_list=$(jq -r '.coin_list[]' block_data.json)
 my_github=$(jq -r '.my_github' block_data.json)
 
-FILE="block_update.sh"
+FILE="block_year_update.sh"
 cd ~/
 rm -f $FILE
 wget -q "$my_github$FILE"
@@ -22,6 +22,6 @@ else
     screen -ls
     screen -wipe 1>/dev/null 2>&1
     screen -dmS block_update 1>/dev/null 2>&1
-    screen -S block_update -X stuff "~/block_update.sh\n" 1>/dev/null 2>&1
-    screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g; s/Watch/\x1b[33m&\x1b[0m/g; s/block_update/\x1b[1;35m&\x1b[0m/g" | tail -n +2 | head -n -1
+    screen -S block_update -X stuff "~/block_year_update.sh\n" 1>/dev/null 2>&1
+    screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g; s/Watch/\x1b[33m&\x1b[0m/g; s/block_update/\x1b[1;33m&\x1b[0m/g" | tail -n +2 | head -n -1
 fi
