@@ -386,7 +386,11 @@ get_block_cedric_crispin() {
         return
     fi
 
-    url="$url_pre$coinf$url_post"
+    if [[ "$coin" = "VRSC" ]]; then
+        coin1="vrsc1"
+    fi
+
+    url="$url_pre"
     output_file="block_${coin}.list"
 
     saved_blocks
@@ -401,24 +405,31 @@ get_block_cedric_crispin() {
         return
     fi
 
-    # Process each new block and determine its new block number
+    # Procesiraj vsak nov blok in določi njegovo zaporedno številko
     while read -r block; do
-        block_num=$(echo "$block" | jq -r '.blockHeight')
+        pool_id=$(echo "$block" | jq -r '.poolId')
 
-        if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
+        if [[ "$pool_id" == "$coin1" ]]; then
+            miner=$(echo "$block" | jq -r '.miner')
 
-            worker_name=$(echo "$block" | jq -r '.worker')
-            source=$(echo "$block" | jq -r '.source' | tr '[:upper:]' '[:lower:]')
-            block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/Z//')
-            pool_out="$pool-$source"
+            if [[ "$miner" == "$wallet" ]]; then
+                block_num=$(echo "$block" | jq -r '.blockHeight')
 
-            # Zapiši nove informacije o bloku v začasno datoteko
-            echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
-            echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
-            jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
-            sort="yes"
+                if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
+
+                    worker_name="---"
+                    block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/\..*//;s/Z//')
+                    pool_out="$pool"
+    
+                    # Zapiši nove informacije o bloku v začasno datoteko
+                    echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
+                    echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
+                    jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
+                    sort="yes"
+                fi
+            fi
         fi
-    done < <(echo "$data" | jq -c '.[]')
+    done < <(echo "$data" | jq -c '.mResponse[]')
 
     if [[ $sort == "yes" ]]; then
         sort_blocks
