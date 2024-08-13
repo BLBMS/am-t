@@ -379,6 +379,52 @@ get_block_paddypool() {
     fi
 }
 
+# Funkcija za pridobivanje in obdelavo blokov iz CEDRIC-CRISPIN
+get_block_cedric_crispin() {
+    # Preveri, ali je kovanec VRSC
+    if [[ "$coin" != "VRSC" ]]; then
+        return
+    fi
+
+    url="$url_pre$coinf$url_post"
+    output_file="block_${coin}.list"
+
+    saved_blocks
+
+    # Fetch data from the URL
+    data=$(curl -s "$url")
+
+    # Preveri, ali so podatki prazni ali vsebujejo <html> v prvi vrstici
+    if [[ "$data" == "[]" ]]; then
+        return
+    elif echo "$data" | head -n 1 | grep -q "<html>"; then
+        return
+    fi
+
+    # Process each new block and determine its new block number
+    while read -r block; do
+        block_num=$(echo "$block" | jq -r '.blockHeight')
+
+        if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
+
+            worker_name=$(echo "$block" | jq -r '.worker')
+            source=$(echo "$block" | jq -r '.source' | tr '[:upper:]' '[:lower:]')
+            block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/Z//')
+            pool_out="$pool-$source"
+
+            # Zapiši nove informacije o bloku v začasno datoteko
+            echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
+            echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
+            jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
+            sort="yes"
+        fi
+    done < <(echo "$data" | jq -c '.[]')
+
+    if [[ $sort == "yes" ]]; then
+        sort_blocks
+    fi
+}
+
 # Preberi obstoječo datoteko v spomin in filtriraj glede na aktivne poole
 saved_blocks() {
     # Read the existing file into memory
@@ -453,6 +499,11 @@ for pool in $active_pools; do
             url_pre="https://paddypool.net/api/blocks"
             url_post=""
             get_block_func="get_block_paddypool"
+        ;;
+        "cedric_crispin")
+            url_pre="https://veruscoin.cedric-crispin.com/api/pool/blocks/page/0/pagesize/100/"
+            url_post=""
+            get_block_func="get_block_cedric_crispin"
         ;;
         *)
             echo "-----------------------------------------------------------"
