@@ -43,7 +43,7 @@ execute_block_found() {
     FILE="block_sort.py"
     rm -f $FILE
     wget -q "$my_github$FILE"
-    FILE="block_found.sh"
+    FILE="block_year_found.sh"
     rm -f $FILE
     wget -q "$my_github$FILE"
     chmod +x $FILE
