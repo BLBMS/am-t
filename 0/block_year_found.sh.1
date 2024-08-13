@@ -120,9 +120,11 @@ get_block_verus_farm() {
 
 # Funkcija za pridobivanje in obdelavo blokov iz LUCKPOOL
 get_block_luckpool() {
-    url="$url_pre$coinf$url_post"
-    output_file="block_${coin}.list"
 
+# this_year
+
+    url="$url_pre$coinf$url_post"
+    
     saved_blocks
 
     # Fetch data from the URL
@@ -143,7 +145,13 @@ get_block_luckpool() {
             worker_name=$(echo "$worker" | awk -F'.' '{print $NF}')
             timestamp_seconds=$((timestamp_millis / 1000))
             block_time=$(date -d @"$timestamp_seconds" +"%Y-%m-%d %H:%M:%S")
+            block_year=$(date -d @"$timestamp_seconds" +"%Y")
             pool_out="$pool-$pool_code"
+            output_file="block_${coin}_${block_year}.list"
+
+            if [[ ! -f "$output_file" ]]; then
+                > "$output_file"
+            fi
 
             # Zapišite nove informacije o bloku v začasno datoteko
             echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
@@ -440,12 +448,14 @@ get_block_cedric_crispin() {
 # Preberi obstoječo datoteko v spomin in filtriraj glede na aktivne poole
 saved_blocks() {
     # Read the existing file into memory
+    this_year=$(date +%Y)
+    saved_output_file="block_${coin}_${this_year}.list"
     block_num_saved_list=""
     while read -r line; do
         # Read the block number, timestamp, and worker from each line
         block_num_saved=$(echo "$line" | awk '{print $1}')
         block_num_saved_list+="$block_num_saved "
-    done < "$output_file"
+    done < "$saved_output_file"
 }
 
 # Sort blocks in output_file
@@ -479,12 +489,10 @@ for pool in $active_pools; do
     case $pool in
         "community")
             url_pre="https://poolweb.verus.io/api/blocks"
-            url_post=""
             get_block_func="get_block_community"
         ;;
          "verus_farm")
             url_pre="https://verus.farm/api/blocks"
-            url_post=""
             get_block_func="get_block_verus_farm"
         ;;       
         "luckpool")
@@ -499,22 +507,18 @@ for pool in $active_pools; do
         ;;
          "cloudiko")
             url_pre="https://cloudiko.io/api/blocks?pageSize=100"
-            url_post=""
             get_block_func="get_block_cloudiko"
         ;;
         "aninterestinghole")
             url_pre="https://verus.aninterestinghole.xyz/api/blocks"
-            url_post=""
             get_block_func="get_block_aninterestinghole"
         ;;
         "paddypool")
             url_pre="https://paddypool.net/api/blocks"
-            url_post=""
             get_block_func="get_block_paddypool"
         ;;
         "cedric_crispin")
             url_pre="https://veruscoin.cedric-crispin.com/api/pool/blocks/page/0/pagesize/100/"
-            url_post=""
             get_block_func="get_block_cedric_crispin"
         ;;
         *)
