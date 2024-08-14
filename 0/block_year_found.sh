@@ -105,10 +105,14 @@ get_block_luckpool() {
     year_list=""
 
     data=$(curl -s "$url")
+    echo "Fetched data from $url:"
+    echo "$data"
 
     if [[ "$data" == "[]" ]]; then
+        echo "Data is empty."
         return
     elif echo "$data" | head -n 1 | grep -q "<html>"; then
+        echo "Data contains HTML content."
         return
     fi
 
@@ -150,14 +154,18 @@ get_block_vipor() {
 
     url="$url_pre$coinf$url_post"
     output_file="block_${coin}.list"
+    echo "Fetched data from $url:"
+    echo "$data"
 
     saved_blocks
 
     data=$(curl -s "$url")
 
     if [[ "$data" == "[]" ]]; then
+        echo "Data is empty."
         return
     elif echo "$data" | head -n 1 | grep -q "<html>"; then
+        echo "Data contains HTML content."
         return
     fi
 
