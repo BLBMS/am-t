@@ -124,8 +124,7 @@ get_block_luckpool() {
 # this_year
 
     url="$url_pre$coinf$url_post"
-    
-    saved_blocks
+    year_list=""
 
     # Fetch data from the URL
     data=$(curl -s "$url")
@@ -140,24 +139,27 @@ get_block_luckpool() {
     # Preverite in obdelajte vsak nov blok
     while IFS=':' read -r hash sub_hash block_num worker timestamp_millis pool_code data1 data2 data3; do
 
+        block_year=$(date -d @"$timestamp_seconds" +"%Y")
+
+        saved_blocks  $block_year
+
         if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
 
             worker_name=$(echo "$worker" | awk -F'.' '{print $NF}')
             timestamp_seconds=$((timestamp_millis / 1000))
             block_time=$(date -d @"$timestamp_seconds" +"%Y-%m-%d %H:%M:%S")
-            block_year=$(date -d @"$timestamp_seconds" +"%Y")
             pool_out="$pool-$pool_code"
             output_file="block_${coin}_${block_year}.list"
-
-            if [[ ! -f "$output_file" ]]; then
-                > "$output_file"
-            fi
 
             # Zapišite nove informacije o bloku v začasno datoteko
             echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
             echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
             jq '.is_found = "yes"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
             sort="yes"
+
+            if ! [[ " $year_list " =~ " $block_year " ]]; then
+                year_list+="$block_year "
+            fi
         fi
     done < <(echo "$data" | tr -d '[]' | tr ',' '\n' | tac)
 
@@ -448,19 +450,26 @@ get_block_cedric_crispin() {
 # Preberi obstoječo datoteko v spomin in filtriraj glede na aktivne poole
 saved_blocks() {
     # Read the existing file into memory
-    this_year=$(date +%Y)
-    saved_output_file="block_${coin}_${this_year}.list"
-    block_num_saved_list=""
-    while read -r line; do
-        # Read the block number, timestamp, and worker from each line
-        block_num_saved=$(echo "$line" | awk '{print $1}')
-        block_num_saved_list+="$block_num_saved "
-    done < "$saved_output_file"
+    saved_output_file="block_${coin}_${block_year}.list"
+
+    if [[ ! -f "$saved_output_file" ]]; then
+        > "$saved_output_file"
+    else
+        block_num_saved_list=""
+        while read -r line; do
+            # Read the block number, timestamp, and worker from each line
+            block_num_saved=$(echo "$line" | awk '{print $1}')
+            block_num_saved_list+="$block_num_saved "
+        done < "$saved_output_file"
+    fi
 }
 
 # Sort blocks in output_file
 sort_blocks () {
-    python3 block_sort.py $coin
+
+    ponovi za vsako shranjeno leto $year v 
+        python3 block_sort.py $coin $year
+    done
 }
 
 # ******************************************************************************************************
