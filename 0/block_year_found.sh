@@ -467,8 +467,8 @@ saved_blocks() {
 # Sort blocks in output_file
 sort_blocks () {
 
-    ponovi za vsako shranjeno leto $year v 
-        python3 block_sort.py $coin $year
+    ponovi za vsako shranjeno leto $year v $year_list
+        python3 block_year_sort.py $coin $year
     done
 }
 
