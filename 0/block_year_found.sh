@@ -101,6 +101,7 @@ get_block_verus_farm() {
 
 # Funkcija za pridobivanje in obdelavo blokov iz LUCKPOOL
 get_block_luckpool() {
+echo "Starting block processing..."
     url="$url_pre$coinf$url_post"
     year_list=""
 
@@ -247,3 +248,90 @@ saved_blocks() {
 sort_blocks() {
     sort -n "$output_file" -o "$output_file"
 }
+
+
+# ******************************************************************************************************
+
+# Read data from JSON
+wallet=$(jq -r '.wallet' block_data.json)
+coin_list=$(jq -r '.coin_list[]' block_data.json)
+sort="no"
+
+# Reset is_found to "no" at the beginning of the script
+jq '.is_found = "no"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
+
+# Preberi json in filtriraj samo aktivne poole
+active_pools=""
+for pool in $(jq -c '.pool_list[]' < block_data.json); do
+    name=$(echo "$pool" | jq -r '.name')
+    active=$(echo "$pool" | jq -r '.active')
+    if [ "$active" -eq 1 ]; then
+        active_pools+="$name "
+    fi
+done
+
+# Process each pool
+for pool in $active_pools; do
+
+    case $pool in
+        "community")
+            url_pre="https://poolweb.verus.io/api/blocks"
+            get_block_func="get_block_community"
+        ;;
+         "verus_farm")
+            url_pre="https://verus.farm/api/blocks"
+            get_block_func="get_block_verus_farm"
+        ;;       
+        "luckpool")
+            url_pre="https://luckpool.net/"
+            url_post="/blocks/$wallet"
+            get_block_func="get_block_luckpool"
+        ;;
+        "vipor")
+            url_pre="https://master.vipor.net/api/pools/"
+            url_post="/miners/$wallet/blocks?pageSize=100"
+            get_block_func="get_block_vipor"
+        ;;
+         "cloudiko")
+            url_pre="https://cloudiko.io/api/blocks?pageSize=100"
+            get_block_func="get_block_cloudiko"
+        ;;
+        "aninterestinghole")
+            url_pre="https://verus.aninterestinghole.xyz/api/blocks"
+            get_block_func="get_block_aninterestinghole"
+        ;;
+        "paddypool")
+            url_pre="https://paddypool.net/api/blocks"
+            get_block_func="get_block_paddypool"
+        ;;
+        "cedric_crispin")
+            url_pre="https://veruscoin.cedric-crispin.com/api/pool/blocks/page/0/pagesize/100/"
+            get_block_func="get_block_cedric_crispin"
+        ;;
+        *)
+            echo "-----------------------------------------------------------"
+            echo "ERROR: pool \"$pool\" not recognized or supported."
+            echo "-----------------------------------------------------------"
+            continue
+        ;;
+    esac
+
+    echo "$coin_list" | while read -r coin; do
+#        echo -e "\e[4m\e[1;93mProcessing $coin at $pool pool...\e[0m\e[24m"
+        coinl=$(echo "$coin" | tr '[:upper:]' '[:lower:]')
+        if [[ "$coinl" == "vrsc" ]]; then
+            coinf="verus"
+        else
+            coinf="$coinl"
+        fi
+        # Call coin function
+        $get_block_func
+    done
+done
+
+# Check if any block was found and trigger the necessary actions
+if [[ "$(jq -r '.is_found' block_data.json)" == "yes" ]]; then
+    echo -e "\n"
+    # Reset is_found to "no" at the beginning of the script
+    jq '.is_found = "no"' block_data.json > tmp.$$.json && mv tmp.$$.json block_data.json
+fi
