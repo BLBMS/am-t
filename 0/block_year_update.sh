@@ -1,11 +1,12 @@
 #!/bin/bash
-# v.2024-08-13
+# v.2024-08-14
 # by blbMS
 
 # Read data from JSON
 my_github=$(jq -r '.my_github' block_data.json)
 coin_list=$(jq -r '.coin_list[]' block_data.json)
 freq=$(jq -r '.freq' block_data.json)
+this_year=$(date +%Y)
 
 # Create initial coin files - this year
 #this_year=$(date +%Y)
