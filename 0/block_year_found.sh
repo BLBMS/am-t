@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-08-13
+# v.2024-08-14
 # by blbMS
 
 # Funkcija za pridobivanje in obdelavo blokov iz COMMUNITY POOL
