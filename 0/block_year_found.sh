@@ -235,6 +235,8 @@ get_block_cloudiko() {
     fi
 }
 
+# ******************************************************************************************************
+
 # Funkcija za shranjevanje blokov
 saved_blocks() {
     if [[ -f $output_file ]]; then
@@ -245,10 +247,11 @@ saved_blocks() {
 }
 
 # Funkcija za sortiranje blokov
-sort_blocks() {
-    sort -n "$output_file" -o "$output_file"
+sort_blocks () {
+    echo "$year_list" | while read -r year; do
+        python3 block_year_sort.py $coin $year
+    done
 }
-
 
 # ******************************************************************************************************
 
