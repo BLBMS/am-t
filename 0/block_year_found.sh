@@ -101,13 +101,9 @@ get_block_verus_farm() {
 
 # Funkcija za pridobivanje in obdelavo blokov iz LUCKPOOL
 get_block_luckpool() {
-echo "Starting block processing..."
     url="$url_pre$coinf$url_post"
     year_list=""
-
     data=$(curl -s "$url")
-#    echo "Fetched data from $url:"
-#    echo "$data"
 
     if [[ "$data" == "[]" ]]; then
         echo "Data is empty."
@@ -116,6 +112,10 @@ echo "Starting block processing..."
         echo "Data contains HTML content."
         return
     fi
+
+    this_year=$(date +%Y)
+    output_file="block_${coin}_${this_year}.list"
+    saved_blocks
 
     while IFS=':' read -r hash sub_hash block_num worker timestamp_millis pool_code data1 data2 data3; do
 
@@ -250,6 +250,21 @@ saved_blocks() {
     if [[ ! -f "$output_file" ]]; then
         > "$output_file"
     else
+        eval "block_num_saved_list_$block_year=\"\""
+        #block_num_saved_list=""
+        while read -r line; do
+            # Read the block number, timestamp, and worker from each line
+            block_num_saved=$(echo "$line" | awk '{print $1}')
+            eval "block_num_saved_list_$block_year=\"\${block_num_saved_list_$block_year} $block_num_saved\""
+            #block_num_saved_list+="$block_num_saved "
+        done < "$output_file"
+    fi
+}
+
+saved_blocks_ORG() {
+    if [[ ! -f "$output_file" ]]; then
+        > "$output_file"
+    else
         block_num_saved_list=""
         while read -r line; do
             # Read the block number, timestamp, and worker from each line
@@ -261,8 +276,9 @@ saved_blocks() {
 
 # Funkcija za sortiranje blokov
 sort_blocks () {
+    echo "year_list:$year_list"
     echo "$year_list" | tr ' ' '\n' | while read -r year; do
-        echo "Sorting blocks for coin: $coin, year: $year"
+        echo "Sorting blocks for coin: $coin, year: $year :"
         python3 block_year_sort.py "$coin" "$year"
     done
 }
