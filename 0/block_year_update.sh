@@ -41,7 +41,7 @@ fi
 execute_block_found() {
     echo -e "\e[96m== $(date +%Y-%m-%d\ %H:%M:%S) \e[0m== ($iter)"
     cd ~/block_found/
-    FILE="block_sort.py"
+    FILE="block_year_sort.py"
     rm -f $FILE
     wget -q "$my_github$FILE"
     FILE="block_year_found.sh"
