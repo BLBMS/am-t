@@ -5,6 +5,7 @@ from datetime import datetime
 
 # Pridobitev argumenta iz ukazne vrstice
 coin = sys.argv[1]
+year = sys.argv[2]
 
 # Naloži podatke iz datoteke block_{coin}.list v strukturiran format
 file_name = f'block_{coin}_{year}.list'
