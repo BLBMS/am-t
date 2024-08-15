@@ -249,7 +249,8 @@ saved_blocks() {
 # Funkcija za sortiranje blokov
 sort_blocks () {
     echo "$year_list" | while read -r year; do
-        python3 block_year_sort.py $coin $year
+        echo "Sorting blocks for coin: $coin, year: $year"
+        python3 block_year_sort.py "$coin" "$year"
     done
 }
 
