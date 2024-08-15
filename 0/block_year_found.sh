@@ -2,7 +2,7 @@
 # v.2024-08-14
 # by blbMS
 
-# Funkcija za pridobivanje in obdelavo blokov iz COMMUNITY POOL
+# Funkcija za pridobivanje in obdelavo blokov iz COMMUNITY POOL    ********************************************************
 get_block_community() {
     url="$url_pre"
     output_file="block_${coin}.list"
@@ -52,7 +52,7 @@ get_block_community() {
     fi
 }
 
-# Funkcija za pridobivanje in obdelavo blokov iz VERUS.FARM
+# Funkcija za pridobivanje in obdelavo blokov iz VERUS.FARM    ********************************************************
 get_block_verus_farm() {
     url="$url_pre"
     output_file="block_${coin}.list"
@@ -99,7 +99,7 @@ get_block_verus_farm() {
     fi
 }
 
-# Funkcija za pridobivanje in obdelavo blokov iz LUCKPOOL
+# Funkcija za pridobivanje in obdelavo blokov iz LUCKPOOL    ********************************************************
 get_block_luckpool() {
     url="$url_pre$coinf$url_post"
     year_list=""
@@ -115,18 +115,28 @@ get_block_luckpool() {
 
     this_year=$(date +%Y)
     output_file="block_${coin}_${this_year}.list"
+    saved_year=$this_year
     saved_blocks
 
     while IFS=':' read -r hash sub_hash block_num worker timestamp_millis pool_code data1 data2 data3; do
 
-        timestamp_seconds=$((timestamp_millis / 1000))
         block_year=$(date -d @"$timestamp_seconds" +"%Y")
-        output_file="block_${coin}_${block_year}.list"
-        saved_blocks
+        output_file="block_${coin}_${this_year}.list"
+        saved_year=$this_year
 
-        if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
+        if ! [[ "$block_year" == "$this_year" ]]; then
+            output_file="block_${coin}_${block_year}.list"
+            saved_year=$block_year
+            saved_blocks
+        fi
+        
+        # eval "echo 'Bloki za $saved_year: '"\$\{block_num_saved_list_$saved_year\}
+        eval "block_list=\"\${block_num_saved_list_$saved_year}\""
+
+        if ! [[ " $block_list " =~ " $block_num " ]]; then
 
             worker_name=$(echo "$worker" | awk -F'.' '{print $NF}')
+            timestamp_seconds=$((timestamp_millis / 1000))
             block_time=$(date -d @"$timestamp_seconds" +"%Y-%m-%d %H:%M:%S")
             pool_out="$pool-$pool_code"
 
@@ -147,7 +157,7 @@ get_block_luckpool() {
     fi
 }
 
-# Funkcija za pridobivanje in obdelavo blokov iz VIPOR
+# Funkcija za pridobivanje in obdelavo blokov iz VIPOR    ********************************************************
 get_block_vipor() {
     if [[ "$coin" != "VRSC" ]]; then
         return
@@ -200,7 +210,7 @@ get_block_vipor() {
     fi
 }
 
-# Funkcija za pridobivanje in obdelavo blokov iz CLOUDIKO
+# Funkcija za pridobivanje in obdelavo blokov iz CLOUDIKO    ********************************************************
 get_block_cloudiko() {
     if [[ "$coin" != "VRSC" ]]; then
         return
@@ -250,12 +260,12 @@ saved_blocks() {
     if [[ ! -f "$output_file" ]]; then
         > "$output_file"
     else
-        eval "block_num_saved_list_$block_year=\"\""
+        eval "block_num_saved_list_$saved_year=\"\""
         #block_num_saved_list=""
         while read -r line; do
             # Read the block number, timestamp, and worker from each line
             block_num_saved=$(echo "$line" | awk '{print $1}')
-            eval "block_num_saved_list_$block_year=\"\${block_num_saved_list_$block_year} $block_num_saved\""
+            eval "block_num_saved_list_$saved_year=\"\${block_num_saved_list_$saved_year} $block_num_saved\""
             #block_num_saved_list+="$block_num_saved "
         done < "$output_file"
     fi
