@@ -106,8 +106,8 @@ echo "Starting block processing..."
     year_list=""
 
     data=$(curl -s "$url")
-    echo "Fetched data from $url:"
-    echo "$data"
+#    echo "Fetched data from $url:"
+#    echo "$data"
 
     if [[ "$data" == "[]" ]]; then
         echo "Data is empty."
@@ -121,15 +121,14 @@ echo "Starting block processing..."
 
         timestamp_seconds=$((timestamp_millis / 1000))
         block_year=$(date -d @"$timestamp_seconds" +"%Y")
-
-        saved_blocks $block_year
+        output_file="block_${coin}_${block_year}.list"
+        saved_blocks
 
         if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
 
             worker_name=$(echo "$worker" | awk -F'.' '{print $NF}')
             block_time=$(date -d @"$timestamp_seconds" +"%Y-%m-%d %H:%M:%S")
             pool_out="$pool-$pool_code"
-            output_file="block_${coin}_${block_year}.list"
 
             echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
             echo -e "New \e[0;91m$coin\e[0m block: \e[0;92m$block_num   $pool_out   $block_time   $worker_name\e[0m"
@@ -158,7 +157,7 @@ get_block_vipor() {
     echo "Fetched data from $url:"
     echo "$data"
 
-    saved_blocks
+    #saved_blocks
 
     data=$(curl -s "$url")
 
@@ -173,11 +172,15 @@ get_block_vipor() {
     while read -r block; do
         block_num=$(echo "$block" | jq -r '.blockHeight')
 
+        block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/\..*//;s/Z//')
+        block_year=$(echo "$block_time" | cut -d '-' -f 1)
+        output_file="block_${coin}_${block_year}.list"
+        saved_blocks
+        
         if ! [[ " $block_num_saved_list " =~ " $block_num " ]]; then
 
             worker_name=$(echo "$block" | jq -r '.worker')
             source=$(echo "$block" | jq -r '.source' | tr '[:upper:]' '[:lower:]')
-            block_time=$(echo "$block" | jq -r '.created' | sed 's/T/ /;s/\..*//;s/Z//')
             pool_out="$pool-$source"
 
             echo "$block_num   $pool_out   $block_time   $worker_name" >> "$output_file"
@@ -239,10 +242,15 @@ get_block_cloudiko() {
 
 # Funkcija za shranjevanje blokov
 saved_blocks() {
-    if [[ -f $output_file ]]; then
-        block_num_saved_list=$(awk '{print $1}' "$output_file")
+    if [[ ! -f "$output_file" ]]; then
+        > "$output_file"
     else
         block_num_saved_list=""
+        while read -r line; do
+            # Read the block number, timestamp, and worker from each line
+            block_num_saved=$(echo "$line" | awk '{print $1}')
+            block_num_saved_list+="$block_num_saved "
+        done < "$output_file"
     fi
 }
 
