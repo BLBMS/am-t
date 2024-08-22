@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-07-31
+# v.2024-08-22
 
 Green='\x1B[32m'      # zelena
 Blue='\x1B[36m'       # modra
@@ -23,6 +23,7 @@ C_Off='\x1B[0m'       # izklopi obarvanje
 -e "s/\"2\./${iYellow}&${iYellow}/g" \
 -e "s/mrr/${Green}&${C_Off}/g" \
 -e "s/de.vipor.net/${Yellow}&${C_Off}/g" \
+-e "s/vipor_SOLO_DE/${Yellow}&${C_Off}/g" \
 -e "s/luckpool/${Blue}&${C_Off}/g" \
 -e "s/eu.cloudiko.io/${Magenta}&${C_Off}/g" \
 -e "s/pool.verus.io/${Red}&${C_Off}/g" \
@@ -32,8 +33,9 @@ C_Off='\x1B[0m'       # izklopi obarvanje
 -e "s/VRSC\/day/${iBlue}&${iBlue}/g" \
 -e "s/USDT\/day/${iWhite}&${iWhite}/g" \
 -e "s/time/${iMagenta}&${iMagenta}/g" \
--e "s/]/${C_Off}&${C_Off}/g" \
 -e "s/missing/${iYellow}&${iYellow}/g" \
--e "s/NOT/${iRed}&${C_Off}/g" \
--e "s/IN LIST/${iRed}&${C_Off}/g" \
+-e "s/NOT ON LIST/${iRed}&${C_Off}/g" \
+-e "s/OFF LINE/${Red}&${C_Off}/g" \
+-e "s/]/${C_Off}&${C_Off}/g" \
  | column
+ 
