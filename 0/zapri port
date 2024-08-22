@@ -7,3 +7,9 @@ pkg install iptables -y
 iptables -A INPUT -p tcp --dport 4068 -j DROP
 
 iptables -A OUTPUT -p tcp --sport 4068 -j DROP
+
+pkg install root-repo -y
+
+su
+tsu
+sudo iptables -A INPUT -p tcp --dport 4068 -j DROP
