@@ -1,4 +1,3 @@
-  GNU nano 6.2                                                                                                                     watch-screen.sh *                                                                                                                            #!/bin/bash
 # v.2024-08-22
 
 Green='\x1B[32m'      # zelena
@@ -22,7 +21,7 @@ C_Off='\x1B[0m'       # izklopi obarvanje
 -e "s/\"1\./${iRed}&${iRed}/g" \
 -e "s/\"2\./${iYellow}&${iYellow}/g" \
 -e "s/mrr/${Green}&${C_Off}/g" \
--e "s/vipor_/${Yellow}&${C_Off}/g" \
+-e "s/vipor/${Yellow}&${C_Off}/g" \
 -e "s/luckpool/${Blue}&${C_Off}/g" \
 -e "s/eu.cloudiko.io/${Magenta}&${C_Off}/g" \
 -e "s/pool.verus.io/${Red}&${C_Off}/g" \
