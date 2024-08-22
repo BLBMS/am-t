@@ -3,7 +3,7 @@
 #    FAJL="pool";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh; # ./$FAJL.sh
 
 # vipor
-NAME="vipor_DE";POOL="de.vipor.net:5040";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC":PASS=""
+#NAME="vipor_DE";POOL="de.vipor.net:5040";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC":PASS=""
 #NAME="vipor_FR";POOL="fr.vipor.net:5040";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
 #NAME="vipor_RO";POOL="ro.vipor.net:5040";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
 #NAME="vipor_FI";POOL="fi.vipor.net:5040";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
@@ -21,7 +21,7 @@ NAME="vipor_DE";POOL="de.vipor.net:5040";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4w
 #NAME="farm";POOL="verus.farm:9999";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""    #  merged
 
 # luckpool
-#NAME="luckpool";POOL="eu.luckpool.net:3956";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""    #  merged
+NAME="luckpool";POOL="eu.luckpool.net:3956";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""    #  merged
 
 #cloudiko
 #NAME="cloudiko";POOL="eu.cloudiko.io:9999";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
