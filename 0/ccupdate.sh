@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-07-17
+# v.2024-08-22
 #  najprej preveri če je ccminer DEAD ali ne dela
 if screen -ls | grep -i 'dead'; then
   printf "\n\e[91m There are dead screen sessions -> STOP! \e[0m"
