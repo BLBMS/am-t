@@ -1,16 +1,17 @@
 # v.2024-08-22
 
-Green='\x1B[32m'      # zelena
-Blue='\x1B[36m'       # modra
-Magenta='\x1B[35m'    # vijolična
 Red='\x1B[31m'        # rdeča
+Green='\x1B[32m'      # zelena
 Yellow='\x1B[33m'     # rumena
+Magenta='\x1B[35m'    # vijolična
+Blue='\x1B[36m'       # modra
+Gray='\x1B[0;30m'     # siva
 
-iGreen='\x1B[1;32m'   # svetlo zelena
-iBlue='\x1B[1;36m'    # svetlo modra
-iMagenta='\x1B[1;35m' # svetlo vijolična
 iRed='\x1B[1;31m'     # svetlo rdeča
+iGreen='\x1B[1;32m'   # svetlo zelena
 iYellow='\x1B[1;33m'  # svetlo rumena
+iMagenta='\x1B[1;35m' # svetlo vijolična
+iBlue='\x1B[1;36m'    # svetlo modra
 iWhite='\x1B[1;37m'   # svetlo bela
 
 C_Off='\x1B[0m'       # izklopi obarvanje
@@ -20,6 +21,7 @@ C_Off='\x1B[0m'       # izklopi obarvanje
 -e "s/\"0\./${Red}&${Red}/g" \
 -e "s/\"1\./${iRed}&${iRed}/g" \
 -e "s/\"2\./${iYellow}&${iYellow}/g" \
+-e "s/_/${Gray}&${C_Off}/g" \
 -e "s/mrr/${Green}&${C_Off}/g" \
 -e "s/vipor/${Yellow}&${C_Off}/g" \
 -e "s/luckpool/${Blue}&${C_Off}/g" \
