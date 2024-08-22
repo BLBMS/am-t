@@ -39,4 +39,5 @@ C_Off='\x1B[0m'       # izklopi obarvanje
 -e "s/missing/${iYellow}&${iYellow}/g" \
 -e "s/NOT ON LIST/${iRed}&${C_Off}/g" \
 -e "s/OFF LINE/${Red}&${C_Off}/g" \
--e "s/]/${C_Off}&${C_Off}/g" | column
+-e "s/]/${C_Off}&${C_Off}/g" \
+| column
