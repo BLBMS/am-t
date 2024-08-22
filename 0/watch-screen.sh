@@ -18,6 +18,8 @@ C_Off='\x1B[0m'       # izklopi obarvanje
 
 ./check-all.sh | jq -c '.[] | [.PHONE,.HOST,.POOL,.MHS]' | sed \
 -e "s/null/${Red}&${C_Off}/g" \
+-e "s/[\"/${C_Off}&${iYellow}/g" \
+-e "s/\",\"/${C_Off}&${C_Off}/g" \
 -e "s/\"0\./${Red}&${Red}/g" \
 -e "s/\"1\./${iRed}&${iRed}/g" \
 -e "s/\"2\./${iYellow}&${iYellow}/g" \
