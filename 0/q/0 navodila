@@ -24,7 +24,8 @@ sleep 2
 apt update
 apt upgrade -y
 apt install wget -y
-wget https://github.com/Qubic-Solutions/rqiner-builds/releases/download/v0.4.1/rqiner-aarch64-mobile
+#wget https://github.com/Qubic-Solutions/rqiner-builds/releases/download/v0.4.1/rqiner-aarch64-mobile
+wget https://github.com/Qubic-Solutions/rqiner-builds/releases/download/v0.8.0/rqiner-aarch64-mobile
 chmod u+x rqiner-aarch64-mobile
 rm -f config.sh
 wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/config.sh
