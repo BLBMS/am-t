@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 #     FAJL="DL_apoolminer.sh";rm -f $FAJL;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/$FAJL;chmod +x $FAJL;./$FAJL
@@ -37,3 +38,5 @@ sed -i "s/DELAVEC/$delavec/g" "$MY"
 mv miner.conf miner.conf.org
 
 cp "$MY" miner.conf
+
+echo -e "\n done"
