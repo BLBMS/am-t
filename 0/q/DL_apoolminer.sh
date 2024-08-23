@@ -14,8 +14,14 @@ mv ~/apoolminer/"$IME_FAJL"/* ~/apoolminer/
 > "$IME_FAJL.version"
 rm -rf $IME_FAJL
 
+SQ="start_qubic.sh"
+rm -f $SQ
+wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/$SQ
+chmod +x $SQ
+
 MY="miner.my"
 rm -f $MY
-wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/$FAJL
+wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/$MY
+
 
 
