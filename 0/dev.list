@@ -25,11 +25,11 @@
 192.168.100.134     J7e  mygoldmine
 192.168.100.135     J7f  mygoldmine
 192.168.100.136     J7g  mygoldmine
-#192.168.100.137     A5a  mygoldmine
+#192.168.100.137     A5a  mygoldmine # tipka za fklop
 192.168.100.138     A5b  mygoldmine
 192.168.100.139     A5c  mygoldmine
 192.168.100.140     A5d  mygoldmine
-#192.168.100.141     A40a  mygoldmine
+#192.168.100.141     A40a  mygoldmine # vklop
 192.168.100.142     A8a  mygoldmine
 192.168.100.143     A8b  mygoldmine
 192.168.100.144     A8c  mygoldmine
@@ -42,10 +42,10 @@
 192.168.100.154     S10e  mygoldmine
 192.168.100.155     S10f  mygoldmine
 192.168.100.156     S10g  mygoldmine
-#192.168.100.157     S10h  mygoldmine
+#192.168.100.157     S10h  mygoldmine # v škatli
 192.168.100.158     S10i  mygoldmine
-#192.168.100.159     S10j  mygoldmine
-#192.168.100.160     S10k  mygoldmine
+#192.168.100.159     S10j  mygoldmine # v škatli
+#192.168.100.160     S10k  mygoldmine # v škatli
 192.168.100.161     S10l  mygoldmine
 192.168.100.169     N8a  mygoldmine
 192.168.100.170     S8a  mygoldmine
@@ -90,10 +90,10 @@
 192.168.100.107     S8an  mygoldmine
 192.168.100.106     S8ao  mygoldmine
 192.168.100.210     P20a  mygoldmine
-192.168.100.211     P20b  mygoldmine
+#192.168.100.211     P20b  mygoldmine # šče format
 192.168.100.212     P20c  mygoldmine
-192.168.100.213     P20d  mygoldmine
-#192.168.100.214     P20e  mygoldmine
+#192.168.100.213     P20d  mygoldmine # šče format
+#192.168.100.214     P20e  mygoldmine # boot loop
 192.168.100.215     P20f  mygoldmine
 192.168.100.216     P20g  mygoldmine
 192.168.100.217     P20h  mygoldmine
@@ -103,7 +103,7 @@
 192.168.100.222     P20m  mygoldmine
 192.168.100.225     P10a  mygoldmine
 192.168.100.226     M20a  mygoldmine
-#192.168.100.230     PF1a  mygoldmine
+#192.168.100.230     PF1a  mygoldmine # se ne vužge
 192.168.100.235     P9a  mygoldmine
 192.168.100.236     P9b  mygoldmine
 192.168.100.237     P9c  mygoldmine
