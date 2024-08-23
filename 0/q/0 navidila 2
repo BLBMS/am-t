@@ -1,0 +1,18 @@
+Detailed Commands:
+pkg update
+termux-change-repo
+apt update && apt upgrade -y
+pkg install proot-distro
+proot-distro list
+proot-distro install ubuntu
+proot-distro login ubuntu
+cat /etc/os-release
+apt update
+apt install wget
+wget https://github.com/Qubic-Solutions/rq...
+chmod u+x rqiner-aarch64-mobile 
+./rqiner-aarch64-mobile -t 8 -i DMKD
+
+
+
+https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbFlQVzdfWF90Z1FaeXAtOVRhZExxX3Y4Z2JHQXxBQ3Jtc0trOGhhTFN4M19rOU54d2liQk4yWlFoUWxJdDZ2YjJMZi02aEROWnJINlBsNW5KVDg4dlVJbVhvYjE0Tm4xWk5kbWhIbDk2ZlhDcFZwYTBkRFhlZlNadzZ2TzhiejF6U3NlTVVHbGdqT0pIdG1nWXcxOA&q=https%3A%2F%2Fgithub.com%2FQubic-Solutions%2Frqiner-builds%2Freleases%2Fdownload%2Fv0.3.11%2Frqiner-aarch64-mobile&v=HJ6-185qaJU
