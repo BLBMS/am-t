@@ -1,0 +1,23 @@
+algo=qubic
+account=CP_wx120ccdao
+pool=qubic1.hk.apool.io:3334
+
+worker = DELAVEC
+#cpu-off = true
+cpu-off = false
+thread = 8
+gpu-off = true
+#gpu-off = false
+#gpu = 0,1,2
+#mode = 1
+
+
+
+### If you do not need to automatically upgrade apoolminer, you can execute the run.sh script
+#sudo bash run.sh
+
+### View apoolminer log
+#sudo tail -f qubic.log
+
+### shutdown apoolminer command
+#sudo killall -9 apoolminer
