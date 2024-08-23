@@ -23,5 +23,17 @@ MY="miner.my"
 rm -f $MY
 wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/$MY
 
+if ls ~/*.ww >/dev/null 2>&1; then
+  for datoteka in ~/*.ww; do
+    if [ -e "$datoteka" ]; then
+      ime_iz_datoteke=$(basename "$datoteka")
+      delavec=${ime_iz_datoteke%.ww}
+    fi
+  done
+fi
 
+sed -i "s/DELAVEC/$delavec/g" "$MY"
 
+mv miner.conf miner.conf.org
+
+cp "$MY" miner.conf
