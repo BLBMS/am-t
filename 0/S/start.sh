@@ -31,6 +31,8 @@ cd ~/
   fi
   export PS1
 
+  rm -f *.pool
+  echo "SOLO" > ~/SOLO.pool
 
 #fi
 
