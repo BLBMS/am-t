@@ -1,6 +1,8 @@
 #!/bin/bash
 # v.2024-08-31
 
+#  SOLO
+
 sshd
 screen -wipe 1>/dev/null 2>&1
 echo -e "\n\e[0m  SOLO Vipor\e[0m\n"
