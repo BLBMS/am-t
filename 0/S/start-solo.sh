@@ -23,6 +23,9 @@ cd ~/
 
   screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 
+
+  if [[ $PS1 != *"SOLO"* ]]; then ; PS1=$(echo "$PS1" | sed 's/\\\[\\033\[00m\\\]:/\\\[\\033\[36m\\\]SOLO\\\[\\033\[00m\\\]:/') ; fi
+
 #fi
 
 #  screen -dmS CCminer 1>/dev/null 2>&1;screen -S CCminer -X stuff "~/ccminer -c ~/config-solo.json\n" 1>/dev/null 2>&1
