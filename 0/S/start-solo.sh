@@ -15,8 +15,8 @@ cd ~/
 
   echo -e "\e[92m  zagon CCminer\e[0m\n"
 #  vse briše  screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
-  screen -dmS CCminer 1>/dev/null 2>&1
-  screen -S CCminer -X stuff "clear ; echo -e '\n\n ______ PRAZEN SCREEN ______ ' ;\n" 1>/dev/null 2>&1
+  screen -dmS Update 1>/dev/null 2>&1
+  screen -S Update -X stuff "clear ; echo -e '\n\n ______ PRAZEN SCREEN ______ ' ;\n" 1>/dev/null 2>&1
 
   screen -dmS CCminer 1>/dev/null 2>&1
   screen -S CCminer -X stuff "~/ccminer -c ~/config-solo.json\n" 1>/dev/null 2>&1
