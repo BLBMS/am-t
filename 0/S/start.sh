@@ -26,7 +26,11 @@ cd ~/
   screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 
 
-  if [[ $PS1 != *"SOLO"* ]]; then PS1=$(echo "$PS1" | sed 's/\\\[\\033\[00m\\\]:/\\\[\\033\[36m\\\]SOLO\\\[\\033\[00m\\\]:/') ; fi
+  if [[ $PS1 != *"SOLO"* ]]; then
+    PS1=$(echo "$PS1" | sed 's/\\\[\\033\[00m\\\]:/\\\[\\033\[36m\\\]SOLO\\\[\\033\[00m\\\]:/')
+  fi
+  export PS1
+
 
 #fi
 
