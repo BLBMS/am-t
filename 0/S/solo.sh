@@ -8,7 +8,12 @@ if [ ! -f "start.sh.X" ]; then
   mv start.sh start.sh.X
 fi
 
-FAJL="config-solo.json"
+if [ ! -f "config.json.X" ]; then
+  mv config.json config.json.X
+fi
+
+
+FAJL="config.json"
 rm -f $FAJL
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/S/$FAJL
 
