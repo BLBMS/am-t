@@ -29,7 +29,7 @@ cd ~/
   if [[ $PS1 != *"SOLO"* ]]; then
     PS1=$(echo "$PS1" | sed 's/\\\[\\033\[00m\\\]:/\\\[\\033\[36m\\\]SOLO\\\[\\033\[00m\\\]:/')
   fi
-  export PS1
+  export $PS1
 
   rm -f *.pool
   echo "SOLO" > ~/SOLO.pool
