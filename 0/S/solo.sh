@@ -21,7 +21,7 @@ ime_iz_ww=$(basename ~/*.ww)
 delavec=${ime_iz_ww%.ww}
 echo -e "\e[0m  WORKER:\e[96m $delavec\e[0m"
 
-sed -i "s#DELAVEC#$delavec#g" config-solo.json
+sed -i "s#DELAVEC#$delavec#g" config.json
 
 FAJL="start"
 rm -f $FAJL.sh
