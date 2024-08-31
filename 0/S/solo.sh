@@ -9,7 +9,7 @@ FAJL="config-solo.json"
 rm -f $FAJL
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/S/$FAJL
 
-FAJL="start-solo.sh"
+FAJL="start-solo"
 rm -f $FAJL.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/S/$FAJL.sh
 chmod +x $FAJL.sh
