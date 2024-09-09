@@ -32,9 +32,11 @@ wget https://github.com/Qubic-Solutions/rqiner-builds/releases/download/v1.0.7/r
 
 chmod +x rqiner-aarch64
 
-wget 
+wget https://github.com/BLBMS/am-t/blob/moje/0/q/qstart.sh
 
+chmod +x qstart.sh
 
+nano qstart.sh
 
 
 
