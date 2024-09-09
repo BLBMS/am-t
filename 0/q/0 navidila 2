@@ -17,6 +17,7 @@ proot-distro login ubuntu
 -> ubuntu
 apt update -y
 apt upgrade -y
+apt install screen nano jq -y
 nano .bashrc
 
 -> copy
