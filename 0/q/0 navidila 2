@@ -1,9 +1,42 @@
+-> termux
 yes | pkg update ; pkg upgrade
 pkg install proot-distro -y
 proot-distro install ubuntu
 proot-distro login ubuntu
 
+-> ubuntu
 nano .bashrc
+
+-> copy
+###    MOJE
+echo -e "\n  Ubuntu  \n"
+sshd
+PS1='\[\033[0;95m\]U \[\033[0;93m\]S9a\[\033[0;91m\]@\[\033[0;93m\]0.110\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]$ '
+if [[ ! -z "$WINDOW" ]]; then PS1="\[\e[01;31m\][${PS1}\e[01;31m\]]\[\e[0m\]"; fi
+
+alias sl='screen -ls | sed -E "s/RQiner/\x1b[32m&\x1b[0m/g" | tail -n +2 | head -n -1'
+alias sll='screen -ls'
+
+alias sq='~/qstart.sh'
+alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit && screen -ls'
+alias xq='screen -S RQiner -X quit 1>/dev/null 2>&1 ; screen -wipe'
+alias rq='screen -d -r RQiner'
+ls
+echo -e "\n"
+
+-> edit worker name
+
+
+
+
+
+
+
+
+
+
+
+
 
 Detailed Commands:
 pkg update
