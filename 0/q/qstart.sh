@@ -1,6 +1,10 @@
 #!/bin/bash
+# v.2024-09-09
 
 #   FAJL="qstart";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
+
+RQINER="./rqiner-aarch64 -t8 -i NFCEVVPMJVQAFBRWIWQJTIICADPAUTJSCGNYWGBOCFWPPSBSCZQRGVQGLKHI -l S9a"
+
 
 screen -wipe 1>/dev/null 2>&1
 if screen -ls | grep -q "RQiner" ; then
@@ -13,7 +17,5 @@ else
     screen -ls
     screen -wipe 1>/dev/null 2>&1
     screen -dmS RQiner 1>/dev/null 2>&1
-    screen -S RQiner -X stuff "~/config.sh\n" 1>/dev/null 2>&1
+    screen -S RQiner -X stuff "$RQINER\n" 1>/dev/null 2>&1
 fi
-
-#   ./rqiner-aarch64-mobile -t8 -i NFCEVVPMJVQAFBRWIWQJTIICADPAUTJSCGNYWGBOCFWPPSBSCZQRGVQGLKHI -l S9a
