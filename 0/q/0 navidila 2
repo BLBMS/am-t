@@ -1,10 +1,22 @@
 -> termux
-yes | pkg update ; pkg upgrade
+
+nano .bashrc
+
+-> copy
+alias uu='proot-distro login ubuntu'
+
+source .bashrc
+xx
+
+yes | pkg update -y ; pkg upgrade -y
 pkg install proot-distro -y
 proot-distro install ubuntu
 proot-distro login ubuntu
+-> or: uu
 
 -> ubuntu
+apt update -y
+apt upgrade -y
 nano .bashrc
 
 -> copy
@@ -29,16 +41,15 @@ echo -e "\n"
 source .bashrc
 
 wget https://github.com/Qubic-Solutions/rqiner-builds/releases/download/v1.0.7/rqiner-aarch64
-
 chmod +x rqiner-aarch64
 
-wget https://github.com/BLBMS/am-t/blob/moje/0/q/qstart.sh
-
+wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/qstart.sh
 chmod +x qstart.sh
 
 nano qstart.sh
+-> edit worker name
 
-
+sq
 
 
 
