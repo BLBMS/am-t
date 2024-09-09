@@ -24,10 +24,15 @@ alias rq='screen -d -r RQiner'
 ls
 echo -e "\n"
 
--> edit worker name
+-> edit worker name and IP
 
+source .bashrc
 
+wget https://github.com/Qubic-Solutions/rqiner-builds/releases/download/v1.0.7/rqiner-aarch64
 
+chmod +x rqiner-aarch64
+
+wget 
 
 
 
