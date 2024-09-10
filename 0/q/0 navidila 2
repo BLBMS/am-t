@@ -35,6 +35,10 @@ alias rq='screen -d -r RQiner'
 ls
 echo -e "\n"
 screen -ls | sed -E "s/RQiner/\x1b[32m&\x1b[0m/g" | tail -n +2 | head -n -1
+source ~/qstart.sh
+sleep 1
+screen -d -r RQiner
+
 
 
 -> edit worker name and IP
