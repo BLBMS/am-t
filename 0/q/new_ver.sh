@@ -9,13 +9,13 @@ if [ "$#" -ne 1 ]; then
     exit 1
 fi
 
+cd "$HOME/apoolminer/"
 file="$1"
 regex="^https://github.com/.+"
-rm -f "$file"
 
 if [[ "$file" =~ $regex ]]; then
-    
-    cd "$HOME/apoolminer/"
+
+    rm -f "$file"
     if ! wget $file; then
         echo "Napaka pri prenosu datoteke"
         exit 1
@@ -26,7 +26,6 @@ if [[ "$file" =~ $regex ]]; then
         exit 1
     fi
 
-    rm $file
     filedir="${file%.tar.gz}"
     filedirall="$HOME/apoolminer/${file%.tar.gz}"
 
