@@ -5,7 +5,7 @@ else
     echo "qnohup.sh is already running"
 fi
 
-# Run third_miner.sh to monitor log and control third.sh
-if ! pgrep -f "third_miner.sh" > /dev/null; then
-    nohup bash "$HOME/third_miner.sh" > /dev/null 2>&1 &
+# Run third.sh to monitor log and control third_miner.sh
+if ! pgrep -f "third.sh" > /dev/null; then
+    nohup bash "$HOME/third.sh" > /dev/null 2>&1 &
 fi
