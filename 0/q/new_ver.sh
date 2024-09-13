@@ -11,6 +11,7 @@ fi
 
 file="$1"
 regex="^https://github.com/.+"
+rm -f "$file"
 
 if [[ "$file" =~ $regex ]]; then
     
