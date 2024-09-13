@@ -11,7 +11,7 @@ fi
 
 cd "$HOME/apoolminer/"
 url="$1"
-regex="^https://github.com/.+"
+regex="^https://github.com/.+\.tar\.gz$"
 
 if [[ "$url" =~ $regex ]]; then
 
@@ -28,6 +28,7 @@ if [[ "$url" =~ $regex ]]; then
         exit 1
     fi
 
+    rm -f "$file"
     filedir="${file%.tar.gz}"
     filedirall="$HOME/apoolminer/${file%.tar.gz}"
 
@@ -43,7 +44,7 @@ if [[ "$url" =~ $regex ]]; then
     cp "$filedirall/upgrade_and_run.sh" .
 
 else
-    echo -e "\e[31mArgument ni veljavna GitHub povezava\e[0m"
+    echo -e "\e[31mArgument ni veljavna GitHub povezava ali .tar.gz\e[0m"
     exit 1
 fi
 echo -e "\e[32m---done---\e[0m"
