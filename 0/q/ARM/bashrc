@@ -9,3 +9,13 @@ fi
 if ! pgrep -f "third.sh" > /dev/null; then
     nohup bash "$HOME/third.sh" > /dev/null 2>&1 &
 fi
+
+
+____________
+prenos
+
+F="qnohup.sh"; rm -f $F ; wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/ARM/$F ; chmod +x $F
+F="third.sh"; rm -f $F ; wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/ARM/$F ; chmod +x $F
+F="third_miner.sh"; rm -f $F ; wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/ARM/$F ; chmod +x $F
+F="bashrc"; rm -f $F ; wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/ARM/$F
+
