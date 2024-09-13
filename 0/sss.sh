@@ -6,7 +6,7 @@
 #  192.168.100.100  Name   wifiname
 #
 
-deviceslist="dev.list"
+deviceslist="$HOME/dev.list"
 
 check_IP3() {
   while true; do
