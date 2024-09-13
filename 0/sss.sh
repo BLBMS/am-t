@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-07-10
+# v.2024-09-13
 #
 #  ssh z uporabo dev.list
 #
