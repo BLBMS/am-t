@@ -21,7 +21,7 @@ function third_start {
     screen -X -S CCminer quit
     screen -wipe 1>/dev/null 2>&1
     screen -dmS CCminer 1>/dev/null 2>&1
-    VERUS="$HOME/apoolminer/ccminer -c $HOME/apoolminer/ccminer.json"
+    VERUS="$HOME/ccminer -c $HOME/ccminer.json"
     screen -S CCminer -X stuff "$VERUS\n" 1>/dev/null 2>&1
     screen_ls
     echo $(date)
@@ -50,66 +50,8 @@ function find_status {
 #            echo -e "\e[0;93mStanje: \e[1;91mwork\e[0m"
             status="work"
             break
-        else
-            # Nobeno od gornjih
-#            echo -e "\e[0;93mStanje: \e[1;94mNONE\e[0m"
-            status="none"
         fi
     done < <(tac "$LOG_FILE")
-
-    if [[ "$status" == "none" ]]; then
-        while IFS= read -r line; do
-#           echo "LINE = <$line>"
-
-            if echo "$line" | grep -q "Random Seed:"; then
-                # Izvlečemo prvi znak iz vsebine znotraj oglatih oklepajev
-                first_char=$(echo "$line" | sed -n 's/.*Random Seed: \[\([^,]*\)\,.*/\1/p')
-#                echo "FIRST CHAR = <$first_char>"
-
-                # Preverimo, ali je ta znak različen od "0"
-                if [ "$first_char" != "0" ]; then
-                    # Naslednji znak je različen od 0
-#                   echo -e "\e[0;93mStanje: \e[1;91mwork\e[0m"
-                    status="work"
-                    break
-                else
-                    # Naslednji znak je 0
-#                   echo -e "\e[0;93mStanje: \e[1;92midle\e[0m"
-                    status="idle"
-                    break
-                fi
-            fi
-
-        done < <(tac "$LOG_FILE")
-
-        # Če status še vedno ni določen, obvesti uporabnika
-        if [[ "$status" == "none" ]]; then
-            echo -e "\n\e[0;93mStanje: \e[1;91mNI MOŽNO DOLOČITI!\e[0m\n"
-            cat qubic.log
-            echo -e "\n\e[0;93mStanje: \e[1;91mNI MOŽNO DOLOČITI!\e[0m"
-            echo -e "\e[0m   izberi: \e[0;92mi\e[0m = idle"
-            echo -e "\e[0m           \e[0;92mw\e[0m = work"
-
-            # Izbrišemo vsebino bufferja
-            while read -r -t 0.1; do :; done
-
-            # Preberemo uporabnikov vnos
-            # read -n 1 izbira
-            read -p "(i,w):" izbira
-            case $izbira in
-                i)
-                    status="idle"
-                    ;;
-                w)
-                    status="work"
-                    ;;
-                *)
-                    echo "Neveljavna izbira. Uporabite 'i' ali 'w'."
-                    ;;
-            esac
-        fi
-
-    fi
 }
 
 # Poišči začetno stanje v datoteki
