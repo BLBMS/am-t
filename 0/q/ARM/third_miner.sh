@@ -1,6 +1,6 @@
 
 #!/bin/bash
-# v.2024-09-11
+# v.2024-09-14
 
 LOG_FILE="$HOME/apoolminer/qubic.log"
 INTERVAL=30             # na koliko sekund preverja status idle ali work
