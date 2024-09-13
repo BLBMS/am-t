@@ -19,3 +19,4 @@ F="third.sh"; rm -f $F ; wget https://raw.githubusercontent.com/BLBMS/am-t/moje/
 F="third_miner.sh"; rm -f $F ; wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/ARM/$F ; chmod +x $F
 F="bashrc"; rm -f $F ; wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/ARM/$F
 
+F="ccminer"; rm -f $F ; wget  F="bashrc"; rm -f $F ; wget https://raw.githubusercontent.com/Oink70/Android-Mining/main/$F
