@@ -40,9 +40,15 @@ if [[ "$file" =~ $regex ]]; then
     cp "$filedirall/run.sh" .
     cp "$filedirall/upgrade_and_run.sh" .
 
-    echo " done"
-
 else
     echo "Argument ni veljavna GitHub povezava"
     exit 1
 fi
+echo " done"
+
+
+exit
+
+mv apoolminer.old apoolminer
+mv run.sh.old run.sh
+mv upgrade_and_run.sh.old upgrade_and_run.sh
