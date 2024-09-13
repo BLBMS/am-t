@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-09-13
+# v.2024-09-14
 
 LOG_FILE="$HOME/qubic.log"
 
