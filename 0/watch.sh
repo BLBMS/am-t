@@ -6,7 +6,15 @@
 # enables the API by making it listen on the specified IP address and port. 0.0.0.0 signifies all adapters and IPs.
 # "api-bind": "0.0.0.0:4068"
 
-spisek="dev.list"
+# -------------------------------------------------------------
+# set refreshing time in minutes
+
+refreshing_min=10                      # refreshing time in min
+
+refreshing=$((refreshing_min * 60))    # refreshing time in sec
+# -------------------------------------------------------------
+
+spisek="$HOME/dev.list"
 cd ~/
 rm -f $spisek
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$spisek
@@ -20,14 +28,15 @@ while read -r line; do
         length=${#first_field}
         spaces=$((15 - length))
         space_string=$(printf '%*s' "$spaces")
+
         lengthi=${#i}
         spacesi=$((3 - lengthi))
         space_stringi=$(printf '%*s' "$spacesi")
+
         echo -e "\e[0m$i$space_stringi   $first_field$space_string\e[93m   $second_field \e[0m"
         ((i++))
     fi
 done < $spisek
-refreshing=300   # refreshing time in sec
 rm -f iteration.txt
 echo "0" >> iteration.txt
 screen -wipe 1>/dev/null 2>&1
