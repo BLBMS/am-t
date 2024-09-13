@@ -15,9 +15,9 @@ regex="^https://github.com/.+"
 
 if [[ "$url" =~ $regex ]]; then
 
-    file= iz url !!!
-
+    file="${url##*/}"
     rm -f "$file"
+
     if ! wget $url; then
         echo -e "\e[31mNapaka pri prenosu datoteke\e[0m"
         exit 1
