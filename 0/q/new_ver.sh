@@ -5,7 +5,7 @@
 # https://github.com/apool-io/apoolminer/releases/download/v2.1.1/apoolminer_linux_autoupdate_v2.1.1.tar.gz
 
 if [ "$#" -ne 1 ]; then
-    echo "Podaj link kot argument"
+    echo -e "\e[31mPodaj link kot argument\e[0m"
     exit 1
 fi
 
@@ -17,12 +17,12 @@ if [[ "$file" =~ $regex ]]; then
 
     rm -f "$file"
     if ! wget $file; then
-        echo "Napaka pri prenosu datoteke"
+        echo -e "\e[31mNapaka pri prenosu datoteke\e[0m"
         exit 1
     fi
 
     if ! tar -xzf "$file"; then
-        echo "Napaka pri razpakiranju datoteke"
+        echo -e "\e[31mNapaka pri razpakiranju datoteke\e[0m"
         exit 1
     fi
 
@@ -41,10 +41,10 @@ if [[ "$file" =~ $regex ]]; then
     cp "$filedirall/upgrade_and_run.sh" .
 
 else
-    echo "Argument ni veljavna GitHub povezava"
+    echo -e "\e[31mArgument ni veljavna GitHub povezava\e[0m"
     exit 1
 fi
-echo " done"
+echo -e "\e[32m---done---\e[0m"
 
 
 exit
@@ -52,3 +52,5 @@ exit
 mv apoolminer.old apoolminer
 mv run.sh.old run.sh
 mv upgrade_and_run.sh.old upgrade_and_run.sh
+
+if ! tar -xzf "$file"; then echo -e "\e[31mNapaka pri razpakiranju datoteke\e[0m";exit 1;fi
