@@ -1,0 +1,11 @@
+# Check if qnohup.sh is already running
+if ! pgrep -f "rqiner-aarch64" > /dev/null; then
+    bash "$HOME/qnohup.sh"
+else
+    echo "qnohup.sh is already running"
+fi
+
+# Run third_miner.sh to monitor log and control third.sh
+if ! pgrep -f "third_miner.sh" > /dev/null; then
+    nohup bash "$HOME/third_miner.sh" > /dev/null 2>&1 &
+fi
