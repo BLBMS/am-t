@@ -14,7 +14,7 @@ refreshing_min=10                      # refreshing time in min
 refreshing=$((refreshing_min * 60))    # refreshing time in sec
 # -------------------------------------------------------------
 
-spisek="$HOME/dev.list"
+spisek="dev.list"
 cd ~/
 rm -f $spisek
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$spisek
@@ -36,7 +36,7 @@ while read -r line; do
         echo -e "\e[0m$i$space_stringi   $first_field$space_string\e[93m   $second_field \e[0m"
         ((i++))
     fi
-done < $spisek
+done < "$HOME/$spisek"
 rm -f iteration.txt
 echo "0" >> iteration.txt
 screen -wipe 1>/dev/null 2>&1
