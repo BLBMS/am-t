@@ -1,9 +1,8 @@
 #!/bin/bash
 # v.2024-09-14
 
-LOG_FILE="$HOME/apoolminer/qubic.log"
-INTERVAL=30             # na koliko sekund preverja status idle ali work
-STEP=5                  # koliko vrstic se premaknemo naenkrat navzgor
+LOG_FILE="$HOME/qubic.log"
+INTERVAL=10             # na koliko sekund preverja status idle ali work
 found_status=false      # indikator, da je bilo stanje najdeno
 last_status=""
 
