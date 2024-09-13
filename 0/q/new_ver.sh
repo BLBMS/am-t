@@ -10,13 +10,15 @@ if [ "$#" -ne 1 ]; then
 fi
 
 cd "$HOME/apoolminer/"
-file="$1"
+url="$1"
 regex="^https://github.com/.+"
 
-if [[ "$file" =~ $regex ]]; then
+if [[ "$url" =~ $regex ]]; then
+
+    file= iz url !!!
 
     rm -f "$file"
-    if ! wget $file; then
+    if ! wget $url; then
         echo -e "\e[31mNapaka pri prenosu datoteke\e[0m"
         exit 1
     fi
