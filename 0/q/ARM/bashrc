@@ -1,13 +1,17 @@
 # Check if qnohup.sh is already running
 if ! pgrep -f "rqiner-aarch64" > /dev/null; then
+    echo -e "\e[32mqnohup.sh is starting\e[0m"
     bash "$HOME/qnohup.sh"
 else
-    echo "qnohup.sh is already running"
+    echo -e "\e[33mqnohup.sh is already running\e[0m"
 fi
 
 # Run third.sh to monitor log and control third_miner.sh
 if ! pgrep -f "third.sh" > /dev/null; then
+    echo -e "\e[32mthird.sh is starting\e[0m"
     nohup bash "$HOME/third.sh" > /dev/null 2>&1 &
+else
+    echo -e "\e[33mthird.sh is already running\e[0m"
 fi
 
 
