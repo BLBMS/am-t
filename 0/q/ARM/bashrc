@@ -24,3 +24,8 @@ F="third_miner.sh"; rm -f $F ; wget https://raw.githubusercontent.com/BLBMS/am-t
 F="bashrc"; rm -f $F ; wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/q/ARM/$F
 
 F="ccminer"; rm -f $F ; wget  F="bashrc"; rm -f $F ; wget https://raw.githubusercontent.com/Oink70/Android-Mining/main/$F
+
+____________
+namesti
+apt-get install psmisc
+za ukaz:   pstree -ap | grep 'nohup'
