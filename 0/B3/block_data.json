@@ -1,1 +1,49 @@
-1
+{
+  "wallet": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc",
+  "my_github": "https://raw.githubusercontent.com/BLBMS/block_found/main/",
+  "coin_list": [
+    "VRSC",
+    "vARRR",
+    "vDEX"
+  ],
+  "pool_list": [
+    {
+      "name": "community",
+      "merged": 1,
+      "active": 0
+    },
+    {
+      "name": "verus_farm",
+      "merged": 1,
+      "active": 0
+    },
+    {
+      "name": "luckpool",
+      "merged": 1,
+      "active": 1
+    },
+    {
+      "name": "vipor",
+      "merged": 0,
+      "active": 0
+    },
+    {
+      "name": "aninterestinghole",
+      "merged": 1,
+      "active": 0
+    },
+    {
+      "name": "paddypool",
+      "merged": 1,
+      "active": 0
+    },
+    {
+      "name": "cedric_crispin",
+      "merged": 0,
+      "active": 0
+    }
+  ],
+  "freq": 6,
+  "is_found": "no"
+}
+
