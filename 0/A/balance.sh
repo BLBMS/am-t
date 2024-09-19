@@ -1,3 +1,5 @@
+NE DELA
+
 #!/bin/bash
 
 # File to store the balances
