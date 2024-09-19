@@ -2,15 +2,15 @@
 # v.2024-09-19
 # by blbMS
 
-interval=15         # v minutah
-IP_from=1           # dejansko prvi IP xxx.xxx.xxx.$IP_from
-IP_to=8             # dejansko zadnji IP xxx.xxx.xxx.$IP_to
+interval=15                         # v minutah
+IP_from=1                           # dejansko prvi IP xxx.xxx.xxx.$IP_from
+IP_to=8                             # dejansko zadnji IP xxx.xxx.xxx.$IP_to
 phones=$(($IP_to - $IP_from + 1))   # število vseh naprav
 
 # Skripta za preverjanje dostopnosti IP naslovov
 while true; do
     # Prikaži trenutno uro
-    echo -e "\e[93m$(date) : $phones phones      \e[0m\n"
+    echo -e "\e[93m$(date) : $phones phones : interval $interval min     \e[0m\n"
     unreach=0
 
     for IP in $(seq "$IP_from" "$IP_to"); do
