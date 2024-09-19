@@ -16,20 +16,18 @@ while true; do
     for IP in $(seq "$IP_from" "$IP_to"); do
         # Preveri dosegljivost IP naslova
         if ping -q -c 2 192.168.90.$IP > /dev/null; then
-            # IP je dosegljiv, izpiši brez brisanja prejšnjih vrstic
-            tput cuu1   # Pomakni kazalec eno vrstico gor
-            tput el     # Pobriši vrstico
+            tput cuu1           # Pomakni kazalec eno vrstico gor
+            tput el             # Pobriši vrstico
             echo -e "\e[92m192.168.90.$IP - Reachable\e[0m"
         else
-            # IP ni dosegljiv, izpiši in ohrani vrstico
-            tput cuu1   # Pomakni kazalec eno vrstico gor
+            tput cuu1           # Pomakni kazalec eno vrstico gor
             echo -e "\e[91m192.168.90.$IP - Destination Host Unreachable\e[0m"
-            tput cud1   # Pomakni kazalec eno vrstico dol
+            tput cud1           # Pomakni kazalec eno vrstico dol
             unreach=1
         fi
     done
 
-    sleep $(($interval*60)  # Časovni interval med ponovitvami v sekundah
+    sleep $(($interval*60))     # Časovni interval med ponovitvami v sekundah
 
     # Če ni bilo nedosegljivih IP-jev, skoči nazaj na časovno vrstico
     if [ "$unreach" -eq 0 ]; then
