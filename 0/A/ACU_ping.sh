@@ -30,6 +30,7 @@ while true; do
                 tput cuu1           # Pomakni kazalec eno vrstico gor
                 echo -e "\e[92m192.168.90.$IP - Reachable (Unreachable for $elapsed_time)\e[0m"
                 tput cud1           # Pomakni kazalec eno vrstico dol
+                tput cud1           # Pomakni kazalec eno vrstico dol
 
                 # Reset the un_time for this IP
                 unset un_time[$IP]
