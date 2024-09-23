@@ -60,11 +60,14 @@ while true; do
         fi
     done
 
+    current_time=$(date +%s)
+    new_time_s=$(($current_time + (($interval * 60)) ))
+    new_time=$(date -u -d @"$new_time_s" '+%Y-%m-%d %H:%M:%S')
     tput cuu1                   # Pomakni kazalec eno vrstico gor
-    echo -e "\e[93mwaiting-----------------------------------------  \e[0m\n"
+    echo -e "\e[93mwaiting to $new_time ------------------  \e[0m\n"
     tput el                     # Pobriši vrstico
     tput cuu1                   # Pomakni kazalec eno vrstico gor
-    sleep $(($interval*60))     # Časovni interval med ponovitvami v sekundah
+    sleep $(($interval * 60))   # Časovni interval med ponovitvami v sekundah
 
     # Če ni bilo nedosegljivih IP-jev, skoči nazaj na časovno vrstico
     if [ "$unreach" -eq 0 ]; then
