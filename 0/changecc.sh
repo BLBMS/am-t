@@ -145,6 +145,10 @@ case $MODEL in
         echo "$MODEL Huawei P20 Lite"
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/a53/ccminer
         ;;
+    "SNE-LX1")
+        echo "$MODEL Huawei Mate 20 Lite"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a53/ccminer
+        ;;
     "VTR-L09")
         echo "$MODEL Huawei P10 L09"
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a53/ccminer
