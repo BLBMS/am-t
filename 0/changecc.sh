@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-07-16
+# v.2024-09-25
 # change ccminer - prenese pravilen ccminer glede na CPU
 
 #   FAJL="changecc";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
