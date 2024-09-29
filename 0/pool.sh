@@ -27,4 +27,5 @@
 #NAME="cloudiko";POOL="eu.cloudiko.io:9999";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
 
 # MRR
-NAME="MRR";POOL="eu-de01.miningrigrentals.com:51287";USER="BLB.295007";PASS="DELAVEC"
+#NAME="MRR";POOL="eu-de01.miningrigrentals.com:51287";USER="BLB.295007";PASS="DELAVEC"
+NAME="MRR";POOL="eu-de01.miningrigrentals.com:51287";USER="BLB.295007";PASS="MRR"
