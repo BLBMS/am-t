@@ -38,7 +38,7 @@
 192.168.100.150     S10a  mygoldmine
 192.168.100.151     S10b  mygoldmine
 192.168.100.152     S10c  mygoldmine
-#192.168.100.153     S10d  mygoldmine # no boot
+192.168.100.153     S10d  mygoldmine
 192.168.100.154     S10e  mygoldmine
 192.168.100.155     S10f  mygoldmine
 192.168.100.156     S10g  mygoldmine
