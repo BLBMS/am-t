@@ -1,5 +1,7 @@
 #!/bin/bash
-# v.2024-07-16
+# v.2024-10-08
+# by blbMS
+
 worker="$(basename ~/*.ww .ww)"
 pool="$(basename ~/*.pool .pool)"
 
