@@ -19,7 +19,7 @@ case $pool in
         currhash=$(echo "scale=2; $hashrate / 1000000" | bc)
         ;;
     *)
-        echo -e "\e[0;91m  no $worker on $pool \e[0m"
+#        echo -e "\e[0;91m  no $worker on $pool \e[0m"
         exit 1
 esac
 
