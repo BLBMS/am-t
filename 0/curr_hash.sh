@@ -1,26 +1,28 @@
 #!/bin/bash
 # v.2024-07-16
-delavec="$(basename ~/*.ww .ww)"
+worker="$(basename ~/*.ww .ww)"
 pool="$(basename ~/*.pool .pool)"
-# URL naslov
+
 case $pool in
     "luckpool")
         # blocks https://luckpool.net/verus/blocks/RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc
         # miner  https://luckpool.net/verus/miner/RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc
         # worker https://luckpool.net/verus/worker/RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.worker
-        url="https://luckpool.net/verus/worker/RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.$delavec"
-        podatki=$(curl -s $url)
-        currhash=$(echo "$podatki" | grep -o '"hashrateString":"[^"]*' | cut -d'"' -f4)
-        currpool=$(jq -r '.pools[0].name' config.json)
+        url="https://luckpool.net/verus/worker/RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.$worker"
+        response=$(curl -s $url)
+        currhash=$(echo "$response" | grep -o '"hashrateString":"[^"]*' | cut -d'"' -f4)
         ;;
     "vipor")
         url="https://master.vipor.net/api/pools/verus/miners/RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc/"
-        
+        response=$(curl -s "$url")
+        hashrate=$(echo "$response" | jq -r --arg device "$worker" '.performance.workers[$worker].hashrate')
+        currhash=$(echo "scale=2; $hashrate / 1000000" | bc)
         ;;
+    *)
+        echo -e "\e[0;91m  no $worker on $pool \e[0m"
+        exit 1
 esac
 
-
-
-
+#currpool=$(jq -r '.pools[0].name' config.json)
 # Izpis rezultata
-echo -e "Current: \e[0;94m$currpool\e[0m: \e[0;93m$delavec\e[0m: \e[0;92m$currhash\e[0m"
+echo -e "Current: \e[0;94m$pool\e[0m: \e[0;93m$worker\e[0m: \e[0;92m$currhash MH/s\e[0m"
