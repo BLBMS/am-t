@@ -22,7 +22,8 @@ case $pool in
         ;;
     *)
 #        echo -e "\e[0;91m  no $worker on $pool \e[0m"
-        exit 1
+        currhash="--"
+        # exit 1
 esac
 
 #currpool=$(jq -r '.pools[0].name' config.json)
