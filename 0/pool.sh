@@ -28,4 +28,4 @@
 #NAME="MRR";POOL="eu-de01.miningrigrentals.com:51287";USER="BLB.295007";PASS="MRR"
 
 # NiceHash     stratum+tcp://verushash.auto.nicehash.com:9200     3GKJ7GBcSkqC5n19zg5WzbYwqqB823zNiJ 
-NAME="NH";POOL="verushash.auto.nicehash.com:9200";USER="3GKJ7GBcSkqC5n19zg5WzbYwqqB823zNiJ.NH";PASS="x"
+NAME="NH";POOL="verushash.auto.nicehash.com:9200";USER="3GKJ7GBcSkqC5n19zg5WzbYwqqB823zNiJ.DELAVEC";PASS="x"
