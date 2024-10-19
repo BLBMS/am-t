@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-10-16
+# v.2024-10-19
 #    FAJL="pool";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh; # ./$FAJL.sh
 
 # vipor
