@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-10-20
+# v.2024-10-21
 
 # Funkcija za posodobitev repozitorija
 update_mirror_1() {
