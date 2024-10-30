@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-10-20
+# v.2024-10-30
 #   FAJL="set-ssh";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 # install vse potrebno
 cd ~/
@@ -22,7 +22,7 @@ ssh-keygen -A
 my_name=$(whoami)
 echo "whoami=" $my_name
 #  Ustvari password
-#passwd $my_name
+#passwd $my_name - javlja napako v novem termux
 
 if ! passwd "$my_name" 2>&1 | grep -q "Run passwd without args"; then
     echo "Napaka 'passwd $my_name'. Zagon brez argumenta"
