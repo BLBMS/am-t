@@ -4,7 +4,7 @@
 # Funkcija za posodobitev repozitorija
 update_mirror_5() {
   # Izberi npr. 3 naključne repozitorije iz seznama, da povečaš možnost delujočih
-  MIRRORS=$(shuf -n 5 $HOME/termux_eu_mirrors.list)
+  MIRRORS=$(shuf -n 5 $HOME/mirrors_eu.list)
   echo -e "\n\e[96mAdded Repos:\e[93m"
   echo "$MIRRORS"
   echo -e "\n\e[0m"
