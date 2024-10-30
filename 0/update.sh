@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-07-17
+# v.2024-10-30
 # posodobi datoteko update.list
 github="https://raw.githubusercontent.com/BLBMS/am-t/moje/0"
 rm -f update.list
@@ -28,7 +28,7 @@ while IFS=' ' read -r file new_date; do
         else
             # Primerjaj datuma
             if [[ "$new_date" > "$current_date" ]]; then
-                echo -e "\e[0;94mUpdating \e[0;92m$file \e[0;94m- to new version.\e[0m"
+                #echo -e "\e[0;94mUpdating \e[0;92m$file \e[0;94m- to new version.\e[0m"
                 rm -f "$file"
                 wget -q "$github/$file"
                 if [[ "$file" == "start.sh" || "$file" == "ccupdate.sh" ]]; then
