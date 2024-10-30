@@ -1,5 +1,18 @@
 #!/bin/bash
 # v.2024-10-30
+#    FAJL="set-cmp";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
+
+FAJL="mirrors_eu.list"
+TEMPF="${FAJL}.tmp"
+cd
+# Prenesi novo datoteko v začasno datoteko
+if wget -O "$TEMPF" wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL; then
+    rm -f "$FAJL"
+    mv "$TEMPF" "$FAJL"
+else
+    rm -f "$TEMPF"
+    echo -e "\n\e[92mOld repo fajl!\n\e[0m"
+fi
 
 # Funkcija za posodobitev repozitorija
 update_mirror_5() {
