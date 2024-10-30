@@ -2,29 +2,21 @@
 # v.2024-10-21
 
 # Funkcija za posodobitev repozitorija
-update_mirror_1() {
-  MIRROR=$(shuf -n 1 $HOME/termux_eu_mirrors.list)
-  echo -e "\n\e[96mRepozitorij: $MIRROR\e[0m\n"
-
-  # Posodobi sources.list z izbranim repozitorijem
-  echo "deb $MIRROR stable main" | tee $PREFIX/etc/apt/sources.list
-}
-
 update_mirror_5() {
   # Izberi npr. 3 naključne repozitorije iz seznama, da povečaš možnost delujočih
   MIRRORS=$(shuf -n 5 $HOME/termux_eu_mirrors.list)
   echo -e "\n\e[96mAdded Repos:\e[93m"
   echo "$MIRRORS"
   echo -e "\n\e[0m"
-  
   # Posodobi sources.list z izbranimi repozitoriji
   echo "$MIRRORS" | sed 's|^|deb |; s|$| stable main|' | tee $PREFIX/etc/apt/sources.list
+  echo -e "\n\e[96m----------\e[0m"
 }
 
-update_mirror_all() {
-  echo -e "\n\e[96mAdding repos\e[0m"
-  sed 's|^|deb |; s|$| stable main|' $HOME/termux_eu_mirrors.list | tee $PREFIX/etc/apt/sources.list
-}
+#update_mirror_all() {
+#  echo -e "\n\e[96mAdding repos\e[0m"
+#  sed 's|^|deb |; s|$| stable main|' $HOME/termux_eu_mirrors.list | tee $PREFIX/etc/apt/sources.list
+#}
 
 # Glavna posodobitvena zanka
 while true; do
