@@ -1,100 +1,27 @@
 #!/bin/bash
 # v.2024-10-20
 
-termux-change-repo
+# Funkcija za posodobitev repozitorija
+update_mirror() {
+  MIRROR=$(shuf -n 1 $HOME/termux_eu_mirrors.list)
+  echo -e "\n\e[96mRepozitorij: $MIRROR\e[0m\n"
 
-yes | pkg update
+  # Posodobi sources.list z izbranim repozitorijem
+  echo "deb $MIRROR stable main" | tee $PREFIX/etc/apt/sources.list
+}
+
+# Glavna posodobitvena zanka
+while true; do
+  # Poskusi posodobitev z 'yes | pkg update' in preveri, če pride do napake
+  if yes | pkg update 2>&1 | tee /tmp/pkg_update.log | grep -q "termux-change-repo"; then
+    echo -e "\n\e[92mERROR: need 'termux-change-repo' -> new repo \e[0m"
+    update_mirror
+  else
+    echo -e "\n\e[92m- update OK!\e[0m"
+    break
+  fi
+done
+
+# Po uspešni posodobitvi zaženi 'pkg upgrade'
 yes | pkg upgrade
-
-pkg install -y wget libjansson net-tools nano screen jq
-
-
-if [ $(pkg list-installed | grep -c libjansson) -eq 0 ]; then
-    # Če ni nameščena, jo namesti
-    pkg install -y libjansson
-fi
-if [ $(pkg list-installed | grep -c jq) -eq 0 ]; then
-    # Če ni nameščena, jo namesti
-    pkg install -y jq
-fi
-
-if [ "$choice_update_update" = "1" ]; then
-    yes | pkg update
-    yes | pkg upgrade
-    pkg install -y wget net-tools nano screen jq
-    echo "done"
-fi
-
-
-
-
-[*] pkg --check-mirror update
-Testing the available mirrors:
-[*] (10) https://packages-cf.termux.dev/apt/termux-main: ok
-[*] (1) https://tmx.xvx.my.id/apt/termux-main: bad
-[*] (1) https://mirror.albony.in/termux/termux-main: ok
-[*] (1) https://mirrors.saswata.cc/termux/termux-main: ok
-[*] (1) https://mirrors.nguyenhoang.cloud/termux/termux-main: ok
-[*] (1) https://mirror.textcord.xyz/termux/termux-main: bad
-[*] (1) https://mirrors.in.sahilister.net/termux/termux-main/: ok
-[*] (1) https://termux.niranjan.co/termux-main: ok
-[*] (1) https://mirror.freedif.org/termux/termux-main: ok
-[*] (1) https://mirror.jeonnam.school/termux/termux-main: ok
-[*] (1) https://mirrors.cbrx.io/apt/termux/termux-main: ok
-[*] (1) https://mirror.bardia.tech/termux/termux-main: bad
-[*] (1) https://mirror.nevacloud.com/applications/termux/termux-main: ok
-[*] (1) https://linux.domainesia.com/applications/termux/termux-main: ok
-[*] (1) https://mirror.twds.com.tw/termux/termux-main: ok
-[*] (1) https://mirrors.ravidwivedi.in/termux/termux-main: ok
-[*] (1) https://mirrors.bfsu.edu.cn/termux/apt/termux-main: ok
-[*] (1) https://mirror.sjtu.edu.cn/termux/termux-main/: ok
-[*] (1) https://mirror.iscas.ac.cn/termux/apt/termux-main: ok
-[*] (1) https://mirrors.sustech.edu.cn/termux/apt/termux-main: ok
-[*] (1) https://mirrors.nju.edu.cn/termux/apt/termux-main: ok
-[*] (1) https://mirrors.aliyun.com/termux/termux-main: ok
-[*] (1) https://mirrors.ustc.edu.cn/termux/termux-main: ok
-[*] (1) https://mirrors.hust.edu.cn/termux/apt/termux-main: ok
-[*] (1) https://mirrors.cqupt.edu.cn/termux/termux-main: ok
-[*] (1) https://mirrors.sdu.edu.cn/termux/termux-main: ok
-[*] (1) https://mirrors.zju.edu.cn/termux/apt/termux-main: ok
-[*] (1) https://mirrors.pku.edu.cn/termux/termux-main/: ok
-[*] (1) https://mirrors.sau.edu.cn/termux/apt/termux-main: ok
-[*] (1) https://mirror.nyist.edu.cn/termux/apt/termux-main: ok
-[*] (1) https://mirrors.tuna.tsinghua.edu.cn/termux/apt/termux-main: ok
-[*] (1) https://mirrors.qvq.net.cn/termux/termux-main: ok
-[*] (1) https://packages.termux.dev/apt/termux-main: ok
-[*] (1) https://mirror.polido.pt/termux/termux-main: bad
-[*] (1) https://termux.cdn.lumito.net/termux-main: ok
-[*] (1) https://mirror.accum.se/mirror/termux.dev/termux-main: ok
-[*] (1) https://termux.3san.dev/termux/termux-main: ok
-[*] (1) https://ftp.agdsn.de/termux/termux-main: ok
-[*] (1) https://mirror.mwt.me/termux/main: ok
-[*] (4) https://grimler.se/termux/termux-main: ok
-[*] (1) https://termux.mentality.rip/termux-main: ok
-[*] (1) https://mirror.termux.dev/termux-main: bad
-[*] (1) https://ftp.fau.de/termux/termux-main: ok
-[*] (1) https://mirrors.medzik.dev/termux/termux-main: ok
-[*] (1) https://ro.mirror.flokinet.net/termux/termux-main: ok
-[*] (1) https://mirrors.de.sahilister.net/termux/termux-main: ok
-[*] (1) https://mirror.sunred.org/termux/termux-main: ok
-[*] (1) https://mirror.leitecastro.com/termux/termux-main: ok
-[*] (1) https://mirror.bouwhuis.network/termux/termux-main: ok
-[*] (1) https://is.mirror.flokinet.net/termux/termux-main: ok
-[*] (1) https://mirror.autkin.net/termux/termux-main: ok
-[*] (1) https://nl.mirror.flokinet.net/termux/termux-main: ok
-[*] (1) https://termux.librehat.com/apt/termux-main: ok
-[*] (1) https://md.mirrors.hacktegic.com/termux/termux-main: ok
-[*] (1) https://mirrors.cfe.re/termux/termux-main: bad
-[*] (1) https://plug-mirror.rcac.purdue.edu/termux/termux-main: ok
-[*] (1) https://mirror.fcix.net/termux/termux-main: ok
-[*] (1) https://termux.danyael.xyz/termux/termux-main: ok
-[*] (1) https://gnlug.org/pub/termux/termux-main: ok
-[*] (1) https://mirror.mwt.me/termux/main: ok
-[*] (1) https://dl.kcubeterm.com/termux-main: bad
-[*] (1) https://mirror.vern.cc/termux/termux-main: ok
-[*] (1) https://mirrors.utermux.dev/termux/termux-main: ok
-[*] (1) https://mirror.quantum5.ca/termux/termux-main: ok
-[*] (1) https://mirror.csclub.uwaterloo.ca/termux/termux-main: ok
-[*] (1) https://mirrors.middlendian.com/termux/termux-main: ok
-[*] (1) http://mirror.mephi.ru/termux/termux-main: ok
-[*] (1) https://repository.su/termux/termux-main/: ok
+echo -e "\n\e[92m- upgrade OK!\e[0m"
