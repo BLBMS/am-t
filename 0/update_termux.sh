@@ -1,6 +1,6 @@
 #!/bin/bash
 # v.2024-10-30
-#    FAJL="set-cmp";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
+#    FAJL="update_termux";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 
 FAJL="mirrors_eu.list"
 TEMPF="${FAJL}.tmp"
