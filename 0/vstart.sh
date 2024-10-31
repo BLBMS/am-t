@@ -16,6 +16,9 @@ wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL
 #echo -e "\e[0m  POOL  :\e[96m $POOL \e[0m"
 #echo -e "\e[0m  USER  :\e[96m $USER \e[0m"
 #echo -e "\e[0m  PASS  :\e[96m $PASS \e[0m"
+
+NAME="vipor-FIX"
+
 ime_iz_ww=$(basename ~/*.ww)
 delavec=${ime_iz_ww%.ww}
 echo -e "\e[0m  WORKER:\e[96m $delavec\e[0m"
@@ -46,6 +49,6 @@ echo -e "\e[0m  WORKER:\e[96m $delavec\e[0m"
   #screen -S Update -X stuff "~/ccupdate.sh\n" 1>/dev/null 2>&1
   rm -f *.pool
   echo $NAME > ~/$NAME.pool
-  echo -e "\e[93m New Pool: \e[92m$NAME \e[96m$POOL\e[0m"
+  echo -e "\e[93m New Pool: \e[92m$NAME \e[0m"
   screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 #fi
