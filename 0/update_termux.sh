@@ -1,4 +1,5 @@
-
+#!/bin/bash
+# v.2024-10-31
 
 if yes | pkg update; then
   echo -e "\n\e[92m  update OK  \n\e[0m"
