@@ -1,5 +1,5 @@
 #!/data/data/com.termux/files/usr/bin/bash
-# v.2024-10-17
+# v.2024-10-18
 
 # Ustvari začasni imenik, če ne obstaja
 TEMP_DIR="/data/data/com.termux/files/usr/tmp"
