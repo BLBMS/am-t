@@ -12,33 +12,42 @@ curl -s -o mirrors_eu.list.tmp "https://raw.githubusercontent.com/BLBMS/am-t/moj
 # Preveri ogledala in izpiši samo tista, ki delujejo
 echo "Preverjam dostopne točke..."
 count=0
-chosen_mirrors=()
+#chosen_mirrors=()
+chosen_mirror=()
 
 while read -r mirror; do
   response=$(curl -s -o /dev/null -w "%{http_code}" -L "$mirror")
   if [ "$response" -eq 200 ]; then
     echo "$mirror: $response"
-    chosen_mirrors+=("$mirror")  # Shranimo delujoče ogledalo
-    count=$((count + 1))
+    #chosen_mirrors+=("$mirror")  # Shranimo delujoče ogledalo
+    chosen_mirror="$mirror"  # Shranimo delujoče ogledalo
+    #count=$((count + 1))
+    break
   else
     echo "$mirror: Neuspešno (koda $response)"
   fi
-  if [ "$count" -eq 3 ]; then
-    break
-  fi
+  echo "All mirrors = Neuspešno"
+  exit 1
+#  if [ "$count" -eq 3 ]; then
+#    break
+#  fi
 done < mirrors_eu.list.tmp
 
+termux-change-repo -y "$chosen_mirror"
+
+
+
 # Izberi prvo delujoče ogledalo
-if [ ${#chosen_mirrors[@]} -gt 0 ]; then
-  chosen_mirror=${chosen_mirrors[0]}  # Izberi prvo delujoče ogledalo
-  echo "Izbrano ogledalo: $chosen_mirror"
-  
+#if [ ${#chosen_mirrors[@]} -gt 0 ]; then
+#  chosen_mirror=${chosen_mirrors[0]}  # Izberi prvo delujoče ogledalo
+#  echo "Izbrano ogledalo: $chosen_mirror"
+#  
   # Nastavi ogledalo in posodobi Termux pakete
-  termux-change-repo -y "$chosen_mirror"
-  pkg update && pkg upgrade -y
-else
-  echo "Ni delujočih ogledal, preverite povezavo ali seznam ogledal."
-fi
+#  termux-change-repo -y "$chosen_mirror"
+#  pkg update && pkg upgrade -y
+#else
+#  echo "Ni delujočih ogledal, preverite povezavo ali seznam ogledal."
+#fi
 
 # Počisti začasne datoteke
 rm -f mirrors_eu.list.tmp "$LOG_FILE"
