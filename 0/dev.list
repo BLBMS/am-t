@@ -91,7 +91,7 @@
 192.168.100.107     S8an  mygoldmine
 192.168.100.106     S8ao  mygoldmine
 #192.168.100.210     P20a  mygoldmine # preformatejrani
-192.168.100.211     P20b  mygoldmine # šče format
+#192.168.100.211     P20b  mygoldmine # zamenjo + - osmojeni
 192.168.100.212     P20c  mygoldmine
 192.168.100.213     P20d  mygoldmine # šče format
 #192.168.100.214     P20e  mygoldmine # boot loop
@@ -103,13 +103,13 @@
 192.168.100.220     P20k  mygoldmine
 192.168.100.222     P20m  mygoldmine
 192.168.100.225     P10a  mygoldmine
-192.168.100.226     M20a  mygoldmine
+192.168.100.226     M20a  mygoldmine # boukše dela na APP
 #192.168.100.230     PF1a  mygoldmine # se ne vužge
 192.168.100.235     P9a  mygoldmine
 192.168.100.236     P9b  mygoldmine
 192.168.100.237     P9c  mygoldmine
-192.168.100.240     HNRa  mygoldmine
-192.168.100.241     HNRb  mygoldmine
+192.168.100.240     HNRa  mygoldmine # boukše dela na APP
+192.168.100.241     HNRb  mygoldmine # boukše dela na APP
 192.168.100.242     HNRc  mygoldmine
 #192.168.100.247     MIa  mygoldmine # v škatli
 #192.168.100.248     PXa  mygoldmine # v škatli
