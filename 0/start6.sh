@@ -37,7 +37,8 @@ else
   cd ~/
   rm -f config.json
   cp $CFAJL config.json
-  sed -i "s#NAME1#$NAME1#g; s#POOL1#$POOL1#g; s#NAME2#$NAME2#g; s#POOL2#$POOL2#g; s#USER1#$USER1#g; s#PASS1#$PASS1#g; s#DELAVEC#$delavec#g" config.json
+  sed -i "s#NAME1#$NAME1#g; s#POOL1#$POOL1#g; s#NAME2#$NAME2#g; s#POOL2#$POOL2#g; s#DELAVEC#$delavec#g" config.json
+  sed -i "s#USER1#$USER1#g; s#PASS1#$PASS1#g; s#USER2#$USER2#g; s#PASS2#$PASS2#g" config.json
   echo -e "\n\e[0;92m Starting CCminer on NEW POOL \e[0m\n"
   screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
   screen -ls
@@ -47,7 +48,7 @@ else
   screen -dmS Update 1>/dev/null 2>&1
   screen -S Update -X stuff "~/ccupdate.sh\n" 1>/dev/null 2>&1
   rm -f *.pool
-  echo $NAME1 > ~/$NAME1.pool
-  echo -e "\e[93m New Pool: \e[92m$NAME1 \e[96m$POOL1\e[0m"
+  echo "$NAME1 $NAME2" > ~/$NAME1.pool
+  echo -e "\e[93m New Pool: \e[92m$NAME1 ($NAME2)\e[96m$POOL1 ($POOL2)\e[0m"
   screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 fi
