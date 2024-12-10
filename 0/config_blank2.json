@@ -1,1 +1,24 @@
-w
+{
+  "pools":[
+    {
+    "name": "NAME1",
+    "url": "stratum+tcp://POOL1",
+    "timeout": 180,
+    "disabled": 0
+    },
+    {
+    "name": "NAME2",
+    "url": "stratum+tcp://POOL2",
+    "timeout": 60,
+    "disabled": 0
+    }
+  ],
+  "user": "USER",
+  "pass": "PASS",
+  "algo": "verus",
+  "threads": 8,
+  "cpu-priority": 1,
+  "retry-pause": 5,
+  "api-allow": "192.168.100.0/18",
+  "api-bind": "0.0.0.0:4068"
+}
