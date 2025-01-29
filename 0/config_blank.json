@@ -3,7 +3,7 @@
     {
     "name": "NAME",
     "url": "stratum+tcp://POOL",
-    "timeout": 180,
+    "timeout": 300,
     "disabled": 0
     },
     {
