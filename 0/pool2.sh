@@ -3,11 +3,11 @@
 #    FAJL="pool";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh; # ./$FAJL.sh
 
 # vipor
-NAME1="vipor_DE";POOL1="de.vipor.net:5040";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC":PASS=""
-NAME2="vipor_FR";POOL2="fr.vipor.net:5040"#;USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
-#NAME="vipor_RO";POOL="ro.vipor.net:5040";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
-#NAME="vipor_FI";POOL="fi.vipor.net:5040";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
-#NAME="vipor_LP";POOL="pl.vipor.net:5040";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
+P="1";NAME="vipor_DE";POOL="de.vipor.net:5040";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC":PASS=""
+P="2";NAME="vipor_FR";POOL="fr.vipor.net:5040";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
+#P="1";NAME="vipor_RO";POOL="ro.vipor.net:5040";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
+#P="1";NAME="vipor_FI";POOL="fi.vipor.net:5040";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
+#P="1";NAME="vipor_LP";POOL="pl.vipor.net:5040";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
 
 # vipor SOLO
 #NAME="vipor_DE_SOLO";POOL="de.vipor.net:5045";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
