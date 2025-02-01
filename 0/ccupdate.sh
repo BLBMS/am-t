@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-08-22
+# v.2025-02-01
 #  najprej preveri če je ccminer DEAD ali ne dela
 if screen -ls | grep -i 'dead'; then
   printf "\n\e[91m There are dead screen sessions -> STOP! \e[0m"
@@ -14,7 +14,7 @@ fi
 #  vsako polno uro preveri če je nastavljen nov pool
 ime_iz_pool=$(basename ~/*.pool)
 obst_pool=${ime_iz_pool%.pool}
-echo -e "\n\e[0m  CRpool:\e[96m $obst_pool\e[0m"
+echo -e "\n\e[0m  Current pool:\e[96m $obst_pool\e[0m"
 echo
 iter=1
 while true; do
@@ -37,7 +37,7 @@ while true; do
       echo -n -e "\r\e[96m== $(date) == ($iter)         \r"
     else
       # zamenja pool
-      echo -e "\n\e[93m  Change pool:\e[91m $obst_pool \e[93m -> \e[92m $NAME\e[0m"
+      echo -e "\n\e[93m  Changing pool:\e[91m $obst_pool \e[93m -> \e[92m $NAME\e[0m"
       cd ~/
       echo -e "\e[0m  NAME  :\e[96m $NAME \e[0m"
       echo -e "\e[0m  POOL  :\e[96m $POOL \e[0m"
@@ -46,13 +46,17 @@ while true; do
       echo -e "\e[0m  WORKER:\e[96m $delavec\e[0m"
       ime_iz_pool=$(basename ~/*.pool)
       obst_pool=${ime_iz_pool%.pool}
-      echo -e "\e[0m  CRpool:\e[96m $obst_pool\e[0m"
+      echo -e "\e[0m  Current pool:\e[96m $obst_pool\e[0m"
+      FAJL="config_blank.json"
+      rm -f $FAJL
+      wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL
       rm -f config.json
       cp config_blank.json config.json
       sed -i "s/NAME/$NAME/g; s/POOL/$POOL/g; s/DELAVEC/$delavec/g" config.json
       screen -S CCminer -X quit
       screen -wipe 1>/dev/null 2>&1
       echo -e "\e[91m Starting CCminer on NEW POOL \e[0m"
+      sleep 1
       screen -dmS CCminer 1>/dev/null 2>&1
       screen -S CCminer -X stuff "~/ccminer -c ~/config.json\n" 1>/dev/null 2>&1
       rm -f *.pool
@@ -73,6 +77,7 @@ while true; do
       if [[ "$need_restart" == "1" ]]; then
         screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
         screen -wipe 1>/dev/null 2>&1
+        sleep 1
         screen -dmS CCminer 1>/dev/null 2>&1
         screen -S CCminer -X stuff "~/ccminer -c ~/config.json\n" 1>/dev/null 2>&1
       fi
