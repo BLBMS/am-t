@@ -1,4 +1,4 @@
-{
+[  
     {"order": "0", "name": "vipor_DE", "pool": "de.vipor.net:5040", "user": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC", "pass": ""},
     {"order": "0", "name": "vipor_FR", "pool": "fr.vipor.net:5040", "user": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC", "pass": ""},
     {"order": "0", "name": "vipor_RO", "pool": "ro.vipor.net:5040", "user": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC", "pass": ""},
@@ -13,4 +13,4 @@
     {"order": "0", "name": "MRR", "pool": "eu-de01.miningrigrentals.com:51287", "user": "BLB.295007", "pass": "DELAVEC"},
     {"order": "0", "name": "MRR", "pool": "eu-de01.miningrigrentals.com:51287", "user": "BLB.295007", "pass": "MRR"},
     {"order": "0", "name": "NH", "pool": "verushash.auto.nicehash.com:9200", "user": "3GKJ7GBcSkqC5n19zg5WzbYwqqB823zNiJ.DELAVEC", "pass": "x"}
-}
+]
