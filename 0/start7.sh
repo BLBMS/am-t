@@ -8,19 +8,35 @@ cd ~/
 CFAJL="config_blank2.json"
 rm -f $CFAJL
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$CFAJL
-PFAJL="pool2"
-rm -f $PFAJL.sh
-wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$PFAJL.sh
-chmod +x $PFAJL.sh
-source ./$PFAJL.sh
-echo -e "\n\e[0m  NAME1  :\e[96m $NAME1 \e[0m"
-echo -e "\e[0m  POOL1  :\e[96m $POOL1 \e[0m"
-echo -e "\e[0m  USER1  :\e[96m $USER1 \e[0m"
-echo -e "\e[0m  PASS1  :\e[96m $PASS1 \e[0m"
-echo -e "\n\e[0m  NAME2  :\e[96m $NAME2 \e[0m"
-echo -e "\e[0m  POOL2  :\e[96m $POOL2 \e[0m"
-echo -e "\e[0m  USER2  :\e[96m $USER2 \e[0m"
-echo -e "\e[0m  PASS2  :\e[96m $PASS2 \e[0m"
+
+# Novi podatki za pool so v JSON obliki
+PFAJL="pool.json"
+rm -f $PFAJL
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$PFAJL
+
+# Najdi največjo številko pod "order"
+MAX_ORDER=$(jq -r '.[].order' "$PFILE" | sort -n | tail -1)
+
+echo "Number of pool's for config: $MAX_ORDER"
+
+# Preberi podatke za vse order vrednosti od 1 do MAX_ORDER
+for ((i=1; i<=MAX_ORDER; i++)); do
+    eval NAME$i='$(jq -r ".[] | select(.order==\"'$i'\") | .name" "$PFILE")'
+    eval POOL$i='$(jq -r ".[] | select(.order==\"'$i'\") | .pool" "$PFILE")'
+    eval USER$i='$(jq -r ".[] | select(.order==\"'$i'\") | .user" "$PFILE")'
+    eval PASS$i='$(jq -r ".[] | select(.order==\"'$i'\") | .pass" "$PFILE")'
+done
+
+# Izpis vseh zajetih vrednosti
+for ((i=1; i<=MAX_ORDER; i++)); do
+    eval echo "Order $i:"
+    eval echo "NAME$i=\$NAME$i"
+    eval echo "POOL$i=\$POOL$i"
+    eval echo "USER$i=\$USER$i"
+    eval echo "PASS$i=\$PASS$i"
+    echo ""
+
+exit
 
 ime_iz_ww=$(basename ~/*.ww)
 delavec=${ime_iz_ww%.ww}
