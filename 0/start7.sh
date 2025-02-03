@@ -1,7 +1,7 @@
 #!/bin/bash
 # v.2025-02-03
 # za pop10
-#   FAJL="start";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
+#   FAJL="start7";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 sshd
 screen -wipe 1>/dev/null 2>&1
 cd ~/
