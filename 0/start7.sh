@@ -1,7 +1,7 @@
 #!/bin/bash
 # v.2025-02-03
 # za pop10
-#   FAJL="start7";cd ~/;rm -f $FAJL.sh;wget https://raw.#!/bin/bash
+# FAJL="start";cd ~/;rm -f $FAJL.sh;wget https://raw.#!/bin/bash
 
 sshd
 screen -wipe 1>/dev/null 2>&1
@@ -80,6 +80,14 @@ else
   #echo "$NAME1 $NAME2" > ~/$NAME1.pool
   echo "$NAME1" > ~/$NAME1.pool
   #echo -e "\e[93m New Pool: \e[92m$NAME1 ($NAME2)\e[96m$POOL1 ($POOL2)\e[0m"
-  echo -e "\e[93m New Pool: \e[92m$NAME1 \e[96m$POOL1 \e[0m"
+  #echo -e "\e[93m New Pool: \e[92m$NAME1 \e[96m$POOL1 \e[0m"
+  # Izpis vseh zajetih vrednosti
+  for ((i=1; i<=MAX_ORDER; i++)); do
+      eval echo "Pool $i:"
+      eval echo "NAME$i=\$NAME$i POOL$i=\$POOL$i"
+      #eval echo "USER$i=\$USER$i"
+      #eval echo "PASS$i=\$PASS$i"
+      echo ""
+  done
   screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 fi
