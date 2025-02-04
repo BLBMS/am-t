@@ -10,13 +10,14 @@ cd ~/
 # Podatki iz naprave
 ime_iz_ww=$(basename ~/*.ww)
 DELAVEC=${ime_iz_ww%.ww}
-echo -e "\e[0m  WORKER:\e[96m $delavec\e[0m"
+echo -e "\e[0m  WORKER:\e[96m $DELAVEC\e[0m"
 ime_iz_pool=$(basename ~/*.pool)
 obst_pool=${ime_iz_pool%.pool}
 echo -e "\e[0m  Current pool:\e[96m $obst_pool\e[0m"
 
 # config file
 CJOSN="config.json"
+
 # Potatki iz github
 CFAJL="config_orders.json"
 rm -f $CFAJL
@@ -53,17 +54,14 @@ for ((i=1; i<=MAX_ORDER; i++)); do
         fi
     fi
 done
-#echo -e "ORDERS:\n$ORDERS\n"
 
 sed -i "s#ORDERS#$ORDERS#g; s#USER#$USER1#g; s#DELAVEC#$DELAVEC#g; s#PASS#$PASS1#g" $CFAJL
 rm -f $CJOSN
 jq . $CFAJL > $CJOSN
 
 # Preverba
-#if screen -list | grep -q "CCminer" && { [ "$NAME1" = "$obst_pool" ] || [ "$NAME2" = "$obst_pool" ]; }; then
 if screen -list | grep -q "CCminer" && { [ "$NAME1" = "$obst_pool" ]; }; then
   # pool je pravi
-  #echo -e "\e[93m  Same pool:\e[92m $NAME1 / $NAME2 = $obst_pool\e[0m"
   echo -e "\e[93m  Same pool:\e[92m $NAME1 = $obst_pool\e[0m"
   screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 else
@@ -80,10 +78,7 @@ else
   screen -dmS Update 1>/dev/null 2>&1
   screen -S Update -X stuff "~/ccupdate.sh\n" 1>/dev/null 2>&1
   rm -f *.pool
-  #echo "$NAME1 $NAME2" > ~/$NAME1.pool
   echo "$NAME1" > ~/$NAME1.pool
-  #echo -e "\e[93m New Pool: \e[92m$NAME1 ($NAME2)\e[96m$POOL1 ($POOL2)\e[0m"
-  #echo -e "\e[93m New Pool: \e[92m$NAME1 \e[96m$POOL1 \e[0m"
   # Izpis vseh zajetih vrednosti
   for ((i=1; i<=MAX_ORDER; i++)); do
       eval echo "Pool $i:"
