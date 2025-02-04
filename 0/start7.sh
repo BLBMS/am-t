@@ -60,6 +60,9 @@ rm -f $CJOSN
 jq . $CFAJL > $CJOSN
 
 # Preverba
+
+#    if ! pgrep -f 'ccminer' >/dev/null; then
+
 if screen -list | grep -q "CCminer" && { [ "$NAME1" = "$obst_pool" ]; }; then
   # pool je pravi
   echo -e "\e[93m  Same pool:\e[92m $NAME1 = $obst_pool\e[0m"
