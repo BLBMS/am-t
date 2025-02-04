@@ -9,7 +9,7 @@ cd ~/
 
 # Podatki iz naprave
 ime_iz_ww=$(basename ~/*.ww)
-delavec=${ime_iz_ww%.ww}
+DELAVEC=${ime_iz_ww%.ww}
 echo -e "\e[0m  WORKER:\e[96m $delavec\e[0m"
 ime_iz_pool=$(basename ~/*.pool)
 obst_pool=${ime_iz_pool%.pool}
