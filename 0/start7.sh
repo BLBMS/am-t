@@ -15,6 +15,8 @@ ime_iz_pool=$(basename ~/*.pool)
 obst_pool=${ime_iz_pool%.pool}
 echo -e "\e[0m  Current pool:\e[96m $obst_pool\e[0m"
 
+# config file
+CJOSN="config.json"
 # Potatki iz github
 CFAJL="config_orders.json"
 rm -f $CFAJL
