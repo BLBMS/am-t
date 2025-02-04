@@ -54,7 +54,7 @@ done
 #echo -e "ORDERS:\n$ORDERS\n"
 
 sed -i "s#ORDERS#$ORDERS#g; s#USER#$USER1#g; s#DELAVEC#$DELAVEC#g; s#PASS#$PASS1#g" $CFAJL
-jq . $CFAJL > temp.json && mv temp.json $CFAJLgithubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
+jq . $CFAJL > temp.json && mv temp.json $CFAJL
 
 # Preverba
 #if screen -list | grep -q "CCminer" && { [ "$NAME1" = "$obst_pool" ] || [ "$NAME2" = "$obst_pool" ]; }; then
