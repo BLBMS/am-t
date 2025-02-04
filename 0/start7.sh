@@ -56,7 +56,8 @@ done
 #echo -e "ORDERS:\n$ORDERS\n"
 
 sed -i "s#ORDERS#$ORDERS#g; s#USER#$USER1#g; s#DELAVEC#$DELAVEC#g; s#PASS#$PASS1#g" $CFAJL
-jq . $CFAJL > temp.json && mv temp.json $CFAJL
+rm -f $CJOSN
+jq . $CFAJL > $CJOSN
 
 # Preverba
 #if screen -list | grep -q "CCminer" && { [ "$NAME1" = "$obst_pool" ] || [ "$NAME2" = "$obst_pool" ]; }; then
@@ -75,7 +76,7 @@ else
   screen -wipe 1>/dev/null 2>&1
   sleep 1
   screen -dmS CCminer 1>/dev/null 2>&1
-  screen -S CCminer -X stuff "~/ccminer -c ~/config.json\n" 1>/dev/null 2>&1
+  screen -S CCminer -X stuff "~/ccminer -c $CJOSN\n" 1>/dev/null 2>&1
   screen -dmS Update 1>/dev/null 2>&1
   screen -S Update -X stuff "~/ccupdate.sh\n" 1>/dev/null 2>&1
   rm -f *.pool
@@ -86,10 +87,8 @@ else
   # Izpis vseh zajetih vrednosti
   for ((i=1; i<=MAX_ORDER; i++)); do
       eval echo "Pool $i:"
-      eval echo "NAME$i=\$NAME$i POOL$i=\$POOL$i"
-      #eval echo "USER$i=\$USER$i"
-      #eval echo "PASS$i=\$PASS$i"
-      echo ""
+      eval echo "$NAME$i"
+      eval echo "$POOL$i"
   done
   screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 fi
