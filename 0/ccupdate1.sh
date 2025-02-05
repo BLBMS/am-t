@@ -43,10 +43,9 @@ iter=1
 while true; do
     echo -n -e "\e[96m== $(date) == ($iter)         \r"
     # Preverite, ali je trenutna minuta 00 (polna ura)  # sekunda +%S minuta +%M ura +%H)
-    if [[ "$(date +%M)" < "02" ]]; then
+    if [[ "$(date +%M)" =~ ^[0-5]?[05]$ ]]; then  # zadnjo 0 ali 5
+    #if [[ "$(date +%M)" < "02" ]]; then
         # se izvesde ob polni uri
-        echo -n -e "\r\e[96m== $(date) == ($iter)         \r"
-
         # Preveri če je ccminer sploh aktiven 
         if ! pgrep -f 'ccminer' >/dev/null; then
             # če NI začene start.sh
@@ -181,4 +180,5 @@ while true; do
     MINUTE=$(date +%M)
     SEKUNDE_DO_URE=$(( (59 - MINUTE) * 60 )) 
     sleep $SEKUNDE_DO_URE
+    iter=$((iter + 1))
 done
