@@ -57,12 +57,12 @@ while true; do
             ip=$(ifconfig 2>/dev/null | grep -oP 'inet \K[\d.]+(?=\s)' | grep -v '127.0.0.1')
             #echo -e "\e[0m  Device ip  :\e[96m $ip\e[0m"
             
-            ime_iz_ww=$(basename ~/*.ww)
-            DELAVEC=${ime_iz_ww%.ww}
+            #ime_iz_ww=$(basename ~/*.ww)
+            #DELAVEC=${ime_iz_ww%.ww}
             #echo -e "\e[0m  Worker     :\e[96m $DELAVEC\e[0m"
             
-            #ime_iz_pool=$(basename ~/*.pool)
-            #obst_pool=${ime_iz_pool%.pool}
+            ime_iz_pool=$(basename ~/*.pool)
+            obst_pool=${ime_iz_pool%.pool}
             #echo -e "\e[0m  First pool :\e[96m $obst_pool\e[0m"
             
             RAW_POOL=$(api_pc "pool" "$ip" "4068" | tr -d '\0')
@@ -74,12 +74,12 @@ while true; do
             #echo -e "\e[0m  Mining pool:\e[96m $API_POOL\e[0m"
     
             # config file
-            CJOSN="config.json"
+            #CJOSN="config.json"
             
             # Potatki iz github
-            CFAJL="config_orders.json"
-            rm -f $CFAJL
-            wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$CFAJL
+            #CFAJL="config_orders.json"
+            #rm -f $CFAJL
+            #wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$CFAJL
             
             # Novi podatki za pool v JSON obliki
             PFAJL="pool.json"
@@ -126,7 +126,10 @@ while true; do
                 screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
             else
                 # zamenja pool
-                echo -e "\e[0;92m Starting CCminer on NEW POOL: $NAME1\e[0m\n"
+                echo -e "\n\n"
+                echo -e "\e[0m  Original pool :\e[96m $obst_pool\e[0m"
+                echo -e "\e[0m  API pool      :\e[91m $API_POOL\e[0m"
+                echo -e "\e[0;93m  Start NEW pool:\e[0;92m $NAME1\e[0m\n"
                 source ./start.sh
                 #screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
                 #screen -wipe 1>/dev/null 2>&1
@@ -139,20 +142,43 @@ while true; do
                 #echo "$NAME1" > ~/$NAME1.pool
                 #screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
             fi
-                # Izpis vseh zajetih vrednosti
-                #for ((i=1; i<=MAX_ORDER; i++)); do
-                #        eval "echo -e \"\e[0;93m$i:\e[0;92m \${NAME$i} \e[0;93m/\e[0;94m \${POOL$i} \e[0m\""
-                #done
-                #_________________________________________________________
+            # Izpis vseh zajetih vrednosti
+            #for ((i=1; i<=MAX_ORDER; i++)); do
+            #        eval "echo -e \"\e[0;93m$i:\e[0;92m \${NAME$i} \e[0;93m/\e[0;94m \${POOL$i} \e[0m\""
+            #done
+            #_________________________________________________________
         fi
     fi
 
-    
+    # vsak dan po 22:00 preveri posodobitve   #if [[ "$(date +%H:%M)" == "18:30" ]]; then # test
+    if [[ "$(date +%H)" == "22" ]]; then
+      if ! [ -f "update.sh" ]; then
+        FAJL="update.sh"
+        rm -f $FAJL
+        wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL
+        chmod +x $FAJL
+      fi
+      echo -e "\n\n\e[93m SW Update $(date) \e[0m"
+      source ./update.sh
+      if [[ "$need_restart" == "1" ]]; then
+        screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
+        screen -wipe 1>/dev/null 2>&1
+        sleep 1
+        screen -dmS CCminer 1>/dev/null 2>&1
+        screen -S CCminer -X stuff "~/ccminer -c ~/config.json\n" 1>/dev/null 2>&1
+      fi
+      if [[ "$need_restart" == "2" ]]; then
+        # prekine screen!!! screen -dmS Update 1>/dev/null 2>&1
+        # prekine screen!!! screen -S Update -X stuff "~/ccupdate.sh\n" 1>/dev/null 2>&1
+        echo -e "\n\n\e[93m Please RESTART to update CCUPDATE (xx;ss)!! \e[0m"
+      fi
+      echo -e "\n\n"
+    fi
 
-    sleep 3480 # počaka 58 minut (58*60)
+    #sleep 3480 # počaka 58 minut (58*60)
 
-    # Izračunaj sekunde do naslednje polne ure
-    #MINUTE=$(date +%M)
-    #SEKUNDE_DO_URE=$(( (60 - MINUTE) * 60 ))
-    #sleep $SEKUNDE_DO_URE
+    # Izračunaj sekunde do naslednje polne ure (minus 1 minuta)
+    MINUTE=$(date +%M)
+    SEKUNDE_DO_URE=$(( (59 - MINUTE) * 60 )) 
+    sleep $SEKUNDE_DO_URE
 done
