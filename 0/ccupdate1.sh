@@ -52,7 +52,7 @@ ccstart() {
 }
 
 cd ~/
-iter=1
+iter=0
 
 while true; do
     echo -n -e "\e[96m== $(date) == ($iter)         \r"
@@ -191,8 +191,9 @@ while true; do
     #sleep 3480 # počaka 58 minut (58*60)
 
     # Izračunaj sekunde do naslednje polne ure (minus 1 minuta)
-    MINUTE=$(date +%M)
-    SEKUNDE_DO_URE=$(( (59 - MINUTE) * 60 )) 
-    sleep $SEKUNDE_DO_URE
+    #MINUTE=$(date +%M)
+    #SEKUNDE_DO_URE=$(( (59 - MINUTE) * 60 )) 
+    #sleep $SEKUNDE_DO_URE
+    sleep 50
     iter=$((iter + 1))
 done
