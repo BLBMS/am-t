@@ -41,10 +41,14 @@ api_pc() {
 ccstart() {
     screen -X -S CCminer quit
     screen -wipe 1>/dev/null 2>&1
+    pkill -f 'ccminer'
     sleep 0.5
     screen -dmS CCminer 1>/dev/null 2>&1
     screen -S CCminer -X stuff "~/ccminer -c ~/config.json\n" 1>/dev/null 2>&1
+    until pgrep -f 'ccminer' >/dev/null; do sleep 0.2; done
+    #until screen -ls | grep -q "CCminer"; do sleep 0.2; done
     screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
+    echo ""
 }
 
 cd ~/
@@ -53,8 +57,8 @@ iter=0
 while true; do
     echo -n -e "\e[96m== $(date +'%d.%m.%Y %H:%M:%S') == ($iter)         \r"
     # Preverite, ali je trenutna minuta 00 (polna ura)  # sekunda +%S minuta +%M ura +%H)
-    if [[ "$(date +%M)" =~ ^[0-5]?[05]$ ]]; then  # zadnjo 0 ali 5
-    #if [[ "$(date +%M)" < "02" ]]; then
+    #if [[ "$(date +%M)" =~ ^[0-5]?[05]$ ]]; then  # test - zadnjo 0 ali 5
+    if [[ "$(date +%M)" < "02" ]]; then
         # se izvesde ob polni uri
         # Preveri če je ccminer sploh aktiven 
         if ! pgrep -f 'ccminer' >/dev/null; then
@@ -118,11 +122,10 @@ while true; do
     fi
 
     #sleep 3480 # počaka 58 minut (58*60)
-
     # Izračunaj sekunde do naslednje polne ure (minus 1 minuta)
-    #MINUTE=$(date +%M)
-    #SEKUNDE_DO_URE=$(( (59 - MINUTE) * 60 )) 
-    #sleep $SEKUNDE_DO_URE
-    sleep 50
+    MINUTE=$(date +%M)
+    SEKUNDE_DO_URE=$(( (59 - MINUTE) * 60 )) 
+    sleep $SEKUNDE_DO_URE
+    #sleep 50 # test
     iter=$((iter + 1))
 done
