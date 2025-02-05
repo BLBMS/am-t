@@ -109,5 +109,30 @@ chmod +x update.sh
 rm -f start.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/start.sh
 chmod +x ~/start.sh
-echo "all done"
 
+# to izbrisati !!!!
+#  Welcome to Termux!
+#
+#  Docs:       https://termux.dev/docs
+#  Donate:     https://termux.dev/donate
+#  Community:  https://termux.dev/community
+#
+#  Working with packages:
+#
+#   - Search:  pkg search <query>
+#   - Install: pkg install <package>
+#   - Upgrade: pkg upgrade
+#
+#  Subscribing to additional repositories:
+#
+#   - Root:    pkg install root-repo
+#   - X11:     pkg install x11-repo
+#
+#  For fixing any repository issues,
+#  try 'termux-change-repo' command.
+#
+#  Report issues at https://termux.dev/issues
+
+
+
+echo "all done"
