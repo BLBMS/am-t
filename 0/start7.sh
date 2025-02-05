@@ -7,13 +7,57 @@ sshd
 screen -wipe 1>/dev/null 2>&1
 cd ~/
 
+# Funkcija za klic Perl skripte v notranjosti Bash
+api_pc() {
+    local command=$1
+    local address=$2
+    local port=$3
+
+    perl -e '
+        use strict;
+        use warnings;
+        use IO::Socket::INET;
+        my $command = "'"$command"'" ;
+        my $address = "'"$address"'" ;
+        my $port = "'"$port"'" ;
+        
+        my $sock = new IO::Socket::INET (
+            PeerAddr => $address,
+            PeerPort => $port,
+            Proto => "tcp",
+            ReuseAddr => 1,
+            Timeout => 2,
+        );
+
+        if ($sock) {
+            print $sock $command;
+            my $res = "";
+            while(<$sock>) {
+                $res .= $_;
+            }
+            close($sock);
+            print("$res\n");
+        } else {
+            print("No Connection\n");
+        }
+    '
+}
+
 # Podatki iz naprave
+ip=$(ifconfig 2>/dev/null | grep -oP 'inet \K[\d.]+(?=\s)' | grep -v '127.0.0.1')
+echo -e "\e[0m  ip:\e[96m $ip\e[0m"
+
 ime_iz_ww=$(basename ~/*.ww)
 DELAVEC=${ime_iz_ww%.ww}
 echo -e "\e[0m  WORKER:\e[96m $DELAVEC\e[0m"
+
 ime_iz_pool=$(basename ~/*.pool)
 obst_pool=${ime_iz_pool%.pool}
-echo -e "\e[0m  Current pool:\e[96m $obst_pool\e[0m"
+echo -e "\e[0m  First pool:\e[96m $obst_pool\e[0m"
+
+RAW_POOL=$(api_pc "pool" "$ip" "4068" | tr -d '\0')
+API_POOL=$(echo "$RAW_POOL" | sed -n 's/POOL=\([^;]*\);.*/\1/p')
+echo -e "\e[0m  Mining pool:\e[96m $API_POOL\e[0m"
 
 # config file
 CJOSN="config.json"
@@ -23,14 +67,13 @@ CFAJL="config_orders.json"
 rm -f $CFAJL
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$CFAJL
 
-# Novi podatki za pool so v JSON obliki
+# Novi podatki za pool v JSON obliki
 PFAJL="pool.json"
 rm -f $PFAJL
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$PFAJL
 
 # Najdi največjo številko pod "order"
 MAX_ORDER=$(jq -r '.[].order' "$PFAJL" | sort -n | tail -1)
-#echo "Number of pool's for config: $MAX_ORDER"
 
 # Preberi podatke za vse order vrednosti od 1 do MAX_ORDER
 for ((i=1; i<=MAX_ORDER; i++)); do
@@ -54,51 +97,34 @@ for ((i=1; i<=MAX_ORDER; i++)); do
         fi
     fi
 done
-
 sed -i "s#ORDERS#$ORDERS#g; s#USER#$USER1#g; s#DELAVEC#$DELAVEC#g; s#PASS#$PASS1#g" $CFAJL
 rm -f $CJOSN
 jq . $CFAJL > $CJOSN
 
 # Preverba
-
-ip=$(ifconfig 2>/dev/null | grep -oP 'inet \K[\d.]+(?=\s)' | grep -v '127.0.0.1')
-#echo "$ip"
-RAW_POOL=$($home_dir/api_pc.pl -c pool -a $ip -p 4068 | tr -d '\0')
-POOL=$(echo "$RAW_POOL" | sed -n 's/POOL=\([^;]*\);.*/\1/p')
-#echo $POOL
-
-if [ "$NAME1" = "$POOL" ]; }; then
+# na rabim (če ccminer ni aktiven): if ! pgrep -f 'ccminer' >/dev/null; then
+#  Če je prvi novi pool enak iz poll-u iz API
+if [ "$NAME1" = "$API_POOL" ]; }; then
     # pool je pravi
-    echo -e "\e[93m  Same pool:\e[92m $NAME1 = $obst_pool\e[0m"
+    echo -e "\e[93m  Same pool:\e[92m $NAME1 = $API_POOL\e[0m"
     screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 else
-    if ! pgrep -f 'ccminer' >/dev/null; then
-
-#staro
-if screen -list | grep -q "CCminer" && { [ "$NAME1" = "$obst_pool" ]; }; then
-  # pool je pravi
-  echo -e "\e[93m  Same pool:\e[92m $NAME1 = $obst_pool\e[0m"
-  screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
-else
-  # zamenja pool
-  cd ~/
-  rm -f config.json
-  cp $CFAJL config.json
-  echo -e "\e[0;92m Starting CCminer on NEW POOL \e[0m\n"
-  screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
-  screen -wipe 1>/dev/null 2>&1
-  sleep 1
-  screen -dmS CCminer 1>/dev/null 2>&1
-  screen -S CCminer -X stuff "~/ccminer -c $CJOSN\n" 1>/dev/null 2>&1
-  screen -dmS Update 1>/dev/null 2>&1
-  screen -S Update -X stuff "~/ccupdate.sh\n" 1>/dev/null 2>&1
-  rm -f *.pool
-  echo "$NAME1" > ~/$NAME1.pool
-  # Izpis vseh zajetih vrednosti
-  for ((i=1; i<=MAX_ORDER; i++)); do
+    # zamenja pool
+    echo -e "\e[0;92m Starting CCminer on NEW POOL: $NAME1\e[0m\n"
+    screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
+    screen -wipe 1>/dev/null 2>&1
+    sleep 1
+    screen -dmS CCminer 1>/dev/null 2>&1
+    screen -S CCminer -X stuff "~/ccminer -c $CJOSN\n" 1>/dev/null 2>&1
+    screen -dmS Update 1>/dev/null 2>&1
+    screen -S Update -X stuff "~/ccupdate.sh\n" 1>/dev/null 2>&1
+    rm -f *.pool
+    echo "$NAME1" > ~/$NAME1.pool
+    # Izpis vseh zajetih vrednosti
+    for ((i=1; i<=MAX_ORDER; i++)); do
       eval echo "Pool $i:"
       eval echo "$NAME$i"
       eval echo "$POOL$i"
-  done
-  screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
+    done
+    screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 fi
