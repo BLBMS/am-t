@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-10-30
+# v.2025-02-05
 # posodobi datoteko update.list
 github="https://raw.githubusercontent.com/BLBMS/am-t/moje/0"
 rm -f update.list
@@ -29,6 +29,13 @@ while IFS=' ' read -r file new_date; do
             # Primerjaj datuma
             if [[ "$new_date" > "$current_date" ]]; then
                 #echo -e "\e[0;94mUpdating \e[0;92m$file \e[0;94m- to new version.\e[0m"
+                rm -f "$file"
+                wget -q "$github/$file"
+                if [[ "$file" == "start.sh" || "$file" == "ccupdate.sh" ]]; then
+                    need_restart=1
+                fi
+            elif [[ "$new_date" < "$current_date" ]]; then
+                #echo -e "\e[0;91mDOWNGRADING \e[0;93m$file \e[0;91m- to OLD version.\e[0m"
                 rm -f "$file"
                 wget -q "$github/$file"
                 if [[ "$file" == "start.sh" || "$file" == "ccupdate.sh" ]]; then
