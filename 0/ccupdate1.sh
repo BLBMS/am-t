@@ -39,10 +39,6 @@ api_pc() {
 
 # samo zagon ccminer brez update
 ccstart() {
-    echo -e "\n\n"
-    echo -e "\e[0m  Original pool :\e[96m $obst_pool\e[0m"
-    echo -e "\e[0m  API pool      :\e[91m $API_POOL\e[0m"
-    echo -e "\e[0;93m  Start NEW pool:\e[0;92m $NAME1\e[0m\n"
     screen -X -S CCminer quit
     screen -wipe 1>/dev/null 2>&1
     sleep 0.5
@@ -133,13 +129,17 @@ while true; do
 
             # Preverba
             #  Če je prvi novi pool enak iz poll-u iz API
-            if [ "$NAME1" = "$API_POOL" ]; then
+            if [[ "$NAME1" == "$API_POOL" ]]; then
                 # pool je pravi
-                echo -e "\e[93m  Same pool:\e[92m $NAME1 = $API_POOL\e[0m"
+                echo -e "\e[93m  Same pool:\e[92m $NAME1 \e[93m=\e[92m $API_POOL \e[0m"
                 screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
             else
                 # zamenja pool
-                ccstart
+                echo -e "\n\n"
+                echo -e "\e[0m  Original pool :\e[96m $obst_pool\e[0m"
+                echo -e "\e[0m  API pool      :\e[91m $API_POOL\e[0m"
+                echo -e "\e[0;93m  Start NEW pool:\e[0;92m $NAME1\e[0m\n"
+                ccstart 
                 #echo -e "\n\n"
                 #echo -e "\e[0m  Original pool :\e[96m $obst_pool\e[0m"
                 #echo -e "\e[0m  API pool      :\e[91m $API_POOL\e[0m"
