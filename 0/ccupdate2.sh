@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-02-01
+# v.2025-02-05
 
 # Funkcija za klic Perl skripte v notranjosti Bash
 api_pc() {
