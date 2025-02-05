@@ -61,8 +61,20 @@ jq . $CFAJL > $CJOSN
 
 # Preverba
 
-#    if ! pgrep -f 'ccminer' >/dev/null; then
+ip=$(ifconfig 2>/dev/null | grep -oP 'inet \K[\d.]+(?=\s)' | grep -v '127.0.0.1')
+#echo "$ip"
+RAW_POOL=$($home_dir/api_pc.pl -c pool -a $ip -p 4068 | tr -d '\0')
+POOL=$(echo "$RAW_POOL" | sed -n 's/POOL=\([^;]*\);.*/\1/p')
+#echo $POOL
 
+if [ "$NAME1" = "$POOL" ]; }; then
+    # pool je pravi
+    echo -e "\e[93m  Same pool:\e[92m $NAME1 = $obst_pool\e[0m"
+    screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
+else
+    if ! pgrep -f 'ccminer' >/dev/null; then
+
+#staro
 if screen -list | grep -q "CCminer" && { [ "$NAME1" = "$obst_pool" ]; }; then
   # pool je pravi
   echo -e "\e[93m  Same pool:\e[92m $NAME1 = $obst_pool\e[0m"
