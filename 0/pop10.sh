@@ -72,26 +72,30 @@ alias vipor='delavec=$(basename ~/*.ww .ww);rm ~/vipor.json;wget -q https://raw.
 
 echo "Screens:"
 screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
-# Preveri, ali obstaja katera koli 'Dead' screen seja
 
-# kontrola - če ccminer ni aktiven
-if ! pgrep -f 'ccminer' >/dev/null; then
-  printf "\n\e[91m CCminer not active -> RESTART! \e[0m"
-  xx
-  screen -wipe 1>/dev/null 2>&1
-  ~/start.sh
-fi
-if ! (screen -list | grep -q -i "ccminer"); then
-  echo -e "\n\e[0;91m There are no CCminer\n\e[0m"
-  xx
-  screen -wipe 1>/dev/null 2>&1
-  ~/start.sh
-fi
-if ! (screen -list | grep -q -i "update"); then
-  echo -e "\n\e[0;91m There are no Update\n\e[0m"
-  xx
-  screen -wipe 1>/dev/null 2>&1
-  ~/start.sh
+# kontrola ---------------------------------------------------------
+# Preveri, ali procesi ccminer in update.sh tečejo
+for process in "ccminer" "update.sh"; do
+    if ! pgrep -f "$process" >/dev/null; then
+        printf "\n\e[91m %s not active -> RESTART! \e[0m" "$process"
+        restart_needed=true
+    fi
+done
+
+# Preveri, ali obstajajo screen seje za CCminer in update
+for session in "CCminer" "update"; do
+    if ! screen -list | grep -q -i "$session"; then
+        echo -e "\n\e[0;91m There are no $session screen\n\e[0m"
+        restart_needed=true
+    fi
+done
+
+# Če katerikoli pogoj ni bil izpolnjen, naredi restart
+if [ "$restart_needed" = true ]; then
+    screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
+    screen -wipe 1>/dev/null 2>&1
+    sleep 0.5
+    ~/start.sh
 fi
 
 #hh
