@@ -37,6 +37,20 @@ api_pc() {
     '
 }
 
+# samo zagon ccminer brez update
+ccstart() {
+    echo -e "\n\n"
+    echo -e "\e[0m  Original pool :\e[96m $obst_pool\e[0m"
+    echo -e "\e[0m  API pool      :\e[91m $API_POOL\e[0m"
+    echo -e "\e[0;93m  Start NEW pool:\e[0;92m $NAME1\e[0m\n"
+    screen -X -S CCminer quit
+    screen -wipe 1>/dev/null 2>&1
+    sleep 0.5
+    screen -dmS CCminer 1>/dev/null 2>&1
+    screen -S CCminer -X stuff "~/ccminer -c $CJOSN\n" 1>/dev/null 2>&1
+    screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
+}
+
 cd ~/
 iter=1
 
@@ -49,7 +63,7 @@ while true; do
         # Preveri če je ccminer sploh aktiven 
         if ! pgrep -f 'ccminer' >/dev/null; then
             # če NI začene start.sh
-            source ./start.sh
+            ccstart
         else
             # če JE pa preveri če je pravi pool
             # Podatki iz naprave
@@ -125,11 +139,11 @@ while true; do
                 screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
             else
                 # zamenja pool
-                echo -e "\n\n"
-                echo -e "\e[0m  Original pool :\e[96m $obst_pool\e[0m"
-                echo -e "\e[0m  API pool      :\e[91m $API_POOL\e[0m"
-                echo -e "\e[0;93m  Start NEW pool:\e[0;92m $NAME1\e[0m\n"
-                source ./start.sh
+                ccstart
+                #echo -e "\n\n"
+                #echo -e "\e[0m  Original pool :\e[96m $obst_pool\e[0m"
+                #echo -e "\e[0m  API pool      :\e[91m $API_POOL\e[0m"
+                #echo -e "\e[0;93m  Start NEW pool:\e[0;92m $NAME1\e[0m\n"
                 #screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
                 #screen -wipe 1>/dev/null 2>&1
                 #sleep 1
