@@ -55,7 +55,7 @@ cd ~/
 iter=0
 
 while true; do
-    echo -n -e "\e[96m== $(date) == ($iter)         \r"
+    echo -n -e "\e[96m== $(date +'%d.%m.%Y %H:%M:%S') == ($iter)         \r"
     # Preverite, ali je trenutna minuta 00 (polna ura)  # sekunda +%S minuta +%M ura +%H)
     if [[ "$(date +%M)" =~ ^[0-5]?[05]$ ]]; then  # zadnjo 0 ali 5
     #if [[ "$(date +%M)" < "02" ]]; then
@@ -171,7 +171,7 @@ while true; do
         wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL
         chmod +x $FAJL
       fi
-      echo -e "\n\n\e[93m SW Update $(date) \e[0m"
+      echo -e "\n\n\e[93m SW Update $(date +'%d.%m.%Y %H:%M:%S') \e[0m"
       source ./update.sh
       if [[ "$need_restart" == "1" ]]; then
         screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
