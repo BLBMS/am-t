@@ -1,7 +1,8 @@
 #!/bin/bash
-# v.2024-10-08
+# v.2024-12-31
+# ##v.2024-10-08
 # by blbMS
-
+exit
 worker="$(basename ~/*.ww .ww)"
 pool="$(basename ~/*.pool .pool)"
 
