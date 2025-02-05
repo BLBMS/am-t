@@ -21,7 +21,7 @@ echo -e "\nIP ID= \e[92m$phone_ip\e[0m"
 # na novo nastavim .bashrc
 
 cd ~/
-# briše cel ~/.bashrc
+# briše cel ~/.bashrc  ---------------------------------------------------------
 cat << EOF > ~/.bashrc
 ### ______  MOJE _____
 sshd
@@ -100,9 +100,14 @@ fi
 
 #hh
 bash ./curr_hash.sh
+EOF
+# konec .bashrc  ---------------------------------------------------------
+rm -f update.sh
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/update.sh
+chmod +x update.sh
 
-
-
-
-
+rm -f start.sh
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/start.sh
+chmod +x ~/start.sh
+echo "all done"
 
