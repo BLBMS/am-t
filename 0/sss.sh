@@ -4,7 +4,10 @@
 #  ssh z uporabo dev.list
 #
 #  192.168.100.100  Name   wifiname
-#
+
+if ! ssh-add -l 2>/dev/null | grep -q "blb@blb"; then
+    ssh-add ~/.ssh/id_blb
+fi
 
 deviceslist="$HOME/dev.list"
 
