@@ -1,3 +1,6 @@
+#!/bin/bash
+# v.2025-02-14
+# by blbMS
 
 #  API based
 
@@ -58,3 +61,4 @@ else
     API_POOL=$(echo "$RAW_POOL" | sed -n 's/POOL=\([^;]*\);.*/\1/p')
 fi
 echo -e "\e[0m  Mining pool:\e[96m $API_POOL\e[0m"
+
