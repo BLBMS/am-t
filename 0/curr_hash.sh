@@ -55,10 +55,30 @@ obst_pool=${ime_iz_pool%.pool}
 echo -e "\e[0m  First pool :\e[96m $obst_pool\e[0m"
 
 RAW_POOL=$(api_pc "pool" "$ip" "4068" | tr -d '\0')
+RAW_KHS=$(api_pc "summary" "$ip" "4068" | tr -d '\0')
+RAW_PPING=$(api_pc "pool" "$ip" "4068" | tr -d '\0')
+
+echo "RAW POOL: $curr_POOL"
+echo "RAW KHS: $curr_KHS"
+echo "RAWPING: $curr_PING"sed -r 's/;/\",\"/g' | sed 's/|/"},/g')
+
+
 if [[ "$RAW_POOL" == *"No Connect"* ]]; then
-    API_POOL="\e[91mNo Connect"
+    curr_POOL="\e[91mNo Connect"
 else
-    API_POOL=$(echo "$RAW_POOL" | sed -n 's/POOL=\([^;]*\);.*/\1/p')
+    #API_POOL=$(echo "$RAW_POOL" | sed -n 's/POOL=\([^;]*\);.*/\1/p')
+    RESPONSE=$(printf "{\"PHONE\":\"$device\",\"HOST\":\"$ip\",\""; api_pc -c summary -a $ip -p 4068 | tr -d '\0' | sed -r \
+        's/=/":"/g; s/;/\",\"/g' | sed 's/|/",/g')$(printf "\""; api_pc -c pool -a $ip -p 4068 | tr -d \
+        '\0' | sed -r 's/=/":"/g' | # Pridobi vrednosti iz JSON odgovora
+    curr_POOL=$(echo "$RESPONSE" | jq -r '.POOL')
+    curr_KHS=$(echo "$RESPONSE" | jq -r '.KHS')
+    curr_PING=$(echo "$RESPONSE" | jq -r '.PING')
+    
+    # Izpiši spremenljivke
+    echo "POOL: $curr_POOL"
+    echo "KHS: $curr_KHS"
+    echo "PING: $curr_PING"sed -r 's/;/\",\"/g' | sed 's/|/"},/g')
+    
 fi
-echo -e "\e[0m  Mining pool:\e[96m $API_POOL\e[0m"
+#echo -e "\e[0m  Mining pool:\e[96m $API_POOL\e[0m"
 
