@@ -1,84 +1,57 @@
-#!/bin/bash
-# v.2025-02-14
+  GNU nano 8.0                                                                                                                     curr_hash.sh                                                                                                                     Modified  #!/bin/bash
+# v.2025-02-14 (simplified)
 # by blbMS
 
-#  API based
+cd ~
 
-cd ~/
-
-# Funkcija za klic Perl skripte v notranjosti Bash
+# API klic
 api_pc() {
-    local command=$1
-    local address=$2
-    local port=$3
-
-    perl -e '
-        use strict;
-        use warnings;
-        use IO::Socket::INET;
-        my $command = "'"$command"'" ;
-        my $address = "'"$address"'" ;
-        my $port = "'"$port"'" ;
-
-        my $sock = new IO::Socket::INET (
-            PeerAddr => $address,
-            PeerPort => $port,
-            Proto => "tcp",
-            ReuseAddr => 1,
-            Timeout => 2,
-        );
-
-        if ($sock) {
-            print $sock $command;
-            my $res = "";
-            while(<$sock>) {
-                $res .= $_;
-            }
-            close($sock);
-            print("$res\n");
-        } else {
-            print("No Connection\n");
-        }
-    '
+    perl -e 'use IO::Socket::INET;
+        my $sock = new IO::Socket::INET(PeerAddr => "'$2'", PeerPort => "'$3'", Proto => "tcp", Timeout => 2) or exit;
+        print $sock "'$1'";
+        print while <$sock>;
+        close($sock);' | tr -d '\0'
 }
 
-# Podatki iz naprave
 ip=$(ifconfig 2>/dev/null | grep -oP 'inet \K[\d.]+(?=\s)' | grep -v '127.0.0.1')
 echo -e "\e[0m  Device ip  :\e[96m $ip\e[0m"
 
-ime_iz_ww=$(basename ~/*.ww)
+# Pridobi ime delavca
+ime_iz_ww=$(basename ~/*.ww 2>/dev/null)
 DELAVEC=${ime_iz_ww%.ww}
-echo -e "\e[0m  Worker     :\e[96m $DELAVEC\e[0m"
+#echo -e "\e[0m  Worker     :\e[96m $DELAVEC\e[0m"
 
-ime_iz_pool=$(basename ~/*.pool)
+# Pridobi ime prvega poola
+ime_iz_pool=$(basename ~/*.pool 2>/dev/null)
 obst_pool=${ime_iz_pool%.pool}
-echo -e "\e[0m  First pool :\e[96m $obst_pool\e[0m"
+#echo -e "\e[0m  First pool :\e[96m $obst_pool\e[0m"
 
-RAW_POOL=$(api_pc "pool" "$ip" "4068" | tr -d '\0')
-RAW_KHS=$(api_pc "summary" "$ip" "4068" | tr -d '\0')
-RAW_PPING=$(api_pc "pool" "$ip" "4068" | tr -d '\0')
+# Klic API-jev
+RAW_S=$(api_pc "summary" "$ip" "4068" | tr -d '\0')
+RAW_P=$(api_pc "pool" "$ip" "4068" | tr -d '\0')
+#echo "RAW_S   : $RAW_S"
+#echo "RAW_P   : $RAW_P"
 
-echo "RAW POOL: $curr_POOL"
-echo "RAW KHS: $curr_KHS"
-echo "RAWPING: $curr_PING"sed -r 's/;/\",\"/g' | sed 's/|/"},/g')
-
-
-if [[ "$RAW_POOL" == *"No Connect"* ]]; then
-    curr_POOL="\e[91mNo Connect"
+# Preveri, če je prišlo do povezave
+if [[ "$RAW_S" == "No Connection" || "$RAW_P" == "No Connection" ]]; then
+    echo -e "\e[91mNo Connection to miner API.\e[0m"
 else
-    #API_POOL=$(echo "$RAW_POOL" | sed -n 's/POOL=\([^;]*\);.*/\1/p')
-    RESPONSE=$(printf "{\"PHONE\":\"$device\",\"HOST\":\"$ip\",\""; api_pc -c summary -a $ip -p 4068 | tr -d '\0' | sed -r \
-        's/=/":"/g; s/;/\",\"/g' | sed 's/|/",/g')$(printf "\""; api_pc -c pool -a $ip -p 4068 | tr -d \
-        '\0' | sed -r 's/=/":"/g' | # Pridobi vrednosti iz JSON odgovora
-    curr_POOL=$(echo "$RESPONSE" | jq -r '.POOL')
-    curr_KHS=$(echo "$RESPONSE" | jq -r '.KHS')
-    curr_PING=$(echo "$RESPONSE" | jq -r '.PING')
-    
-    # Izpiši spremenljivke
-    echo "POOL: $curr_POOL"
-    echo "KHS: $curr_KHS"
-    echo "PING: $curr_PING"sed -r 's/;/\",\"/g' | sed 's/|/"},/g')
-    
-fi
-#echo -e "\e[0m  Mining pool:\e[96m $API_POOL\e[0m"
+    # Izvedi parsing podatkov
+    RESPONSE=$(printf "{\"PHONE\":\"$DELAVEC\",\"HOST\":\"$ip\",\""; echo "$RAW_S" | sed -r \
+        's/=/":"/g; s/;/\",\"/g' | sed 's/|/",/g')$(printf "\""; echo "$RAW_P" | sed -r \
+        's/=/":"/g; s/;/\",\"/g' | sed 's/|/"},/g')
 
+    #echo -e "RESPONSE: \n$RESPONSE"
+
+    # Parsiranje JSON podatkov
+    curr_POOL=$(echo "$RESPONSE" | jq -r '.POOL' 2>/dev/null)
+    curr_KHS=$(echo "$RESPONSE" | jq -r '.KHS' 2>/dev/null)
+    curr_PING=$(echo "$RESPONSE" | jq -r '.PING' 2>/dev/null)
+
+    # Če je katera koli spremenljivka prazna, nastavi privzeto vrednost
+    [[ -z "$curr_POOL" || "$curr_POOL" == "null" ]] && curr_POOL="N/A"
+    [[ -z "$curr_KHS" || "$curr_KHS" == "null" ]] && curr_KHS="N/A"
+    [[ -z "$curr_PING" || "$curr_PING" == "null" ]] && curr_PING="N/A"
+
+    echo -e "\e[93mcPOOL:\e[92m $curr_POOL \e[93mcKHS: \e[92m$curr_KHS \e[93mcPING: \e[92m$curr_PING\e[0m"
+fi
