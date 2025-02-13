@@ -1,5 +1,5 @@
-  GNU nano 8.0                                                                                                                     curr_hash.sh                                                                                                                     Modified  #!/bin/bash
-# v.2025-02-14 (simplified)
+#!/bin/bash
+# v.2025-02-14
 # by blbMS
 
 cd ~
