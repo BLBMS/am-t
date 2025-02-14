@@ -20,9 +20,8 @@ RAW_P=$(api_pc "pool" "$ip" "4068" | tr -d '\0')
 if [[ "$RAW_S" == "No Connection" || "$RAW_P" == "No Connection" ]]; then
     echo -e "\e[91mNo Connection to miner API.\e[0m"
 else
-    RESPONSE=$(printf "{\"PHONE\":\"$DELAVEC\",\"HOST\":\"$ip\",\""; echo "$RAW_S" | sed -r \
-        's/=/":"/g; s/;/\",\"/g' | sed 's/|/",/g')$(printf "\""; echo "$RAW_P" | sed -r \
-        's/=/":"/g; s/;/\",\"/g' | sed 's/|/"},/g')
+    RESPONSE=$(printf "{\""; echo "$RAW_S" | sed -r 's/=/":"/g; s/;/\",\"/g' | sed 's/|/",/g') \
+        $(printf "\""; echo "$RAW_P" | sed -r 's/=/":"/g; s/;/\",\"/g' | sed 's/|/"},/g')
     curr_POOL=$(echo "$RESPONSE" | jq -r '.POOL' 2>/dev/null)
     curr_KHS=$(echo "$RESPONSE" | jq -r '.KHS' 2>/dev/null)
     curr_PING=$(echo "$RESPONSE" | jq -r '.PING' 2>/dev/null)
