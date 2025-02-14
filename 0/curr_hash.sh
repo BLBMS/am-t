@@ -1,6 +1,11 @@
 #!/bin/bash
 # v.2025-02-14
 # by blbMS
+
+if ! command -v perl &> /dev/null; then
+    pkg install -y perl
+fi
+
 cd ~
 api_pc() {
     perl -e 'use IO::Socket::INET;
