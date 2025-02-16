@@ -6,7 +6,7 @@ pkg update && pkg -y upgrade
 if ! command -v perl &> /dev/null; then
     pkg install -y perl
 fi
-
+exit
 cd ~
 api_pc() {
     perl -e 'use IO::Socket::INET;
