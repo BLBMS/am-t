@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-02-05
+# v.2025-02-10
 # posodobi datoteko update.list
 github="https://raw.githubusercontent.com/BLBMS/am-t/moje/0"
 rm -f update.list
