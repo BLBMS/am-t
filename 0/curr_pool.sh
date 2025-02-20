@@ -17,3 +17,17 @@ Connected to
 [2025-02-20 23:02:33] Stratum difficulty set to 16383.8
 [2025-02-20 23:02:35] CPU T3: Verus Hashing. (null), 253.90 kH/s
 [2025-02-20 23:02:35] accepted: 1/1 (diff 53312.202), 253.90 kH/s yes!
+
+
+
+
+./ccminer -c config.json --log-level 2 | tee /data/data/com.termux/files/home/ccminer_output.log
+
+./ccminer -c config.json --log-level 2 | tee /data/data/com.termux/files/home/ccminer_output.log
+
+
+  "api-allow": "192.168.100.0/18",
+  "api-bind": "0.0.0.0:4068",
+  "log-file": "/data/data/com.termux/files/home/logfile.log",
+  "log-level": 2
+}
