@@ -1,23 +1,15 @@
 #!/bin/bash
 # v.2025-02-20
 # by blbMS
-
 exit    ###########################################################
-
-pkg update && pkg -y upgrade
-if ! command -v perl &> /dev/null; then
-    pkg install -y perl
-fi
-exit
 cd ~
 api_pc() {
-    perl -e 'use IO::Socket::INET;
-        my $sock = new IO::Socket::INET(PeerAddr => "'$2'", PeerPort => "'$3'", Proto => "tcp", Timeout => 2) or exit;
-        print $sock "'$1'";
-        print while <$sock>;
-        close($sock);' | tr -d '\0'
+    exec 3<>/dev/tcp/"$2"/"$3"
+    echo -n "$1" >&3
+    cat <&3 | tr -d '\0'
+    exec 3<&-
+    exec 3>&-
 }
-
 ip=$(ifconfig 2>/dev/null | grep -oP 'inet \K[\d.]+(?=\s)' | grep -v '127.0.0.1')
 RAW_S=$(api_pc "summary" "$ip" "4068" | tr -d '\0')
 RAW_P=$(api_pc "pool" "$ip" "4068" | tr -d '\0')
