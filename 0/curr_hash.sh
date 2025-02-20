@@ -2,6 +2,8 @@
 # v.2025-02-14
 # by blbMS
 
+exit    ###########################################################
+
 pkg update && pkg -y upgrade
 if ! command -v perl &> /dev/null; then
     pkg install -y perl
