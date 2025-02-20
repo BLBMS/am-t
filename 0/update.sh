@@ -16,7 +16,7 @@ while IFS=' ' read -r file new_date; do
         # Preveri, če je datum v drugi vrstici
         current_date=$(sed -n '2p' "$file" | grep -oP '(?<=# v\.)\d{4}-\d{2}-\d{2}')
         #echo -e "\e[0;95m--current_date: $current_date--\e[0m"
-        
+
         if [ -z "$current_date" ]; then
             # Če ni datuma v drugi vrstici, posodobi datoteko
             echo -e "\e[0;94mUpdating \e[0;92m$file \e[0;94m- no date found in file.\e[0m"
