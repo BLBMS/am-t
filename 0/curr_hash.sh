@@ -24,6 +24,8 @@ if (screen -list | grep -q -i "ccminer"); then
         else
             echo -e "\e[93mNo data found!\e[0m"
         fi
+    else
+        echo -e "\e[91mNo WORKING ccminer in CCminer screen!\e[0m"
     fi
 else
     echo -e "\e[91mNo CCminer screen!\e[0m"
