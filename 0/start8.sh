@@ -5,14 +5,23 @@
 cd ~/
 sshd
 
-zamenja_pool() {
-    # zamenja pool
-    echo -e "\e[0;92m Starting CCminer on NEW POOL: $NAME1\e[0m\n"
+start_pool() {
     screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
-    killall screen
-    killall ccminer
-    screen -wipe 1>/dev/null 2>&1
-    rm -rf $HOME/.screen/*
+    if (screen -list | grep -q -i "CCminer"); then
+        killall ccminer
+        screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
+        screen -wipe 1>/dev/null 2>&1
+        if (screen -list | grep -q -i "CCminer"); then
+            killall screen
+            screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
+            screen -wipe 1>/dev/null 2>&1
+            if (screen -list | grep -q -i "CCminer"); then
+                rm -rf $HOME/.screen/*
+                screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
+                screen -wipe 1>/dev/null 2>&1
+            fi
+        fi
+    fi
     sleep 1
     screen -dmS CCminer 1>/dev/null 2>&1
     screen -S CCminer -X stuff "~/ccminer -c $CJOSN\n" 1>/dev/null 2>&1
@@ -32,21 +41,21 @@ current_hash() {
         FTIME=$(echo "$last_line" | awk '{print $1" "$2}')
         FTIME=$(echo "$FTIME" | tr -d '[]')
         FTIME_TIMESTAMP=$(date -d "$FTIME" +"%s" 2>/dev/null)
-        if [[ -z "$FTIME_TIMESTAMP" ]]; then
-            echo "Napaka pri pretvorbi datuma: $FTIME"
-            exit 1
-        fi
+        #if [[ -z "$FTIME_TIMESTAMP" ]]; then
+        #    echo "Napaka pri pretvorbi datuma: $FTIME"
+        #    exit 1
+        #fi
         CURRENT_TIMESTAMP=$(date +"%s")
         DIFF=$((CURRENT_TIMESTAMP - FTIME_TIMESTAMP))
         DIFF_H=$((DIFF / 3600))
         DIFF_M=$(( (DIFF % 3600) / 60 ))
         DIFF_S=$((DIFF % 60))
         echo -e "\e[93mcMHS:\e[92m $MHS \e[93mfound before: \e[92m$DIFF_H\e[93m h \e[92m$DIFF_M\e[93m m\e[92m $DIFF_S\e[93m s\e[0m"
-    else
-        echo -e "No data found!"
+    #else
+    #    echo -e "No data found!"
     fi
 }
-
+# Kontrola DEAD screen
 if screen -ls | grep -i 'dead'; then
   printf "\n\e[91m There are dead screen sessions -> STOP! \e[0m"
   screen -ls | grep -o "[0-9]\+\.Dead" | awk '{print }' | xargs -I {} screen -X -S {} quit
@@ -113,16 +122,18 @@ jq . $CFAJL > $CJOSN
 # na rabim (če ccminer ni aktiven): if ! pgrep -f 'ccminer' >/dev/null; then
 #  Če je prvi novi pool enak iz poll-u iz API
 if ! [ "$NAME1" = "$obst_pool" ]; then   # pool iz datoteke !!
-    zamenja_pool
-elif 
-    
+    # zamenja pool
+    echo -e "\e[0;92m Starting CCminer on NEW POOL: $NAME1\e[0m\n"
+    start_pool
+elif ! (screen -list | grep -q -i "CCminer"); then
+    echo -e "\n\e[0;91m There are no CCminer\n\e[0m"
+    start_pool
 else
     # pool je pravi
     echo -e "\e[93m  Same pool:\e[92m $NAME1 = $obst_pool\e[0m"
-    screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 fi
-
 # Izpis vseh zajetih vrednosti
 for ((i=1; i<=MAX_ORDER; i++)); do
         eval "echo -e \"\e[0;93m$i:\e[0;92m \${NAME$i} \e[0;93m/\e[0;94m \${POOL$i} \e[0m\""
 done
+screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
