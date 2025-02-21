@@ -1,47 +1,11 @@
 #!/bin/bash
-# v.2025-02-05
-# za pop10
+# v.2025-02-20
+# za pop
 # FAJL="start.sh";cd ~/;rm -f $FAJL;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL;chmod +x $FAJL
 
 sshd
 screen -wipe 1>/dev/null 2>&1
 cd ~/
-
-# Funkcija za klic Perl skripte v notranjosti Bash
-api_pc() {
-    local command=$1
-    local address=$2
-    local port=$3
-
-    perl -e '
-        use strict;
-        use warnings;
-        use IO::Socket::INET;
-        my $command = "'"$command"'" ;
-        my $address = "'"$address"'" ;
-        my $port = "'"$port"'" ;
-
-        my $sock = new IO::Socket::INET (
-            PeerAddr => $address,
-            PeerPort => $port,
-            Proto => "tcp",
-            ReuseAddr => 1,
-            Timeout => 2,
-        );
-
-        if ($sock) {
-            print $sock $command;
-            my $res = "";
-            while(<$sock>) {
-                $res .= $_;
-            }
-            close($sock);
-            print("$res\n");
-        } else {
-            print("No Connection\n");
-        }
-    '
-}
 
 # Podatki iz naprave
 ip=$(ifconfig 2>/dev/null | grep -oP 'inet \K[\d.]+(?=\s)' | grep -v '127.0.0.1')
@@ -54,14 +18,6 @@ echo -e "\e[0m  Worker     :\e[96m $DELAVEC\e[0m"
 ime_iz_pool=$(basename ~/*.pool)
 obst_pool=${ime_iz_pool%.pool}
 echo -e "\e[0m  First pool :\e[96m $obst_pool\e[0m"
-
-RAW_POOL=$(api_pc "pool" "$ip" "4068" | tr -d '\0')
-if [[ "$RAW_POOL" == *"No Connect"* ]]; then
-    API_POOL="\e[91mNo Connect"
-else
-    API_POOL=$(echo "$RAW_POOL" | sed -n 's/POOL=\([^;]*\);.*/\1/p')
-fi
-echo -e "\e[0m  Mining pool:\e[96m $API_POOL\e[0m"
 
 # config file
 CJOSN="config.json"
@@ -94,7 +50,7 @@ for ((i=1; i<=MAX_ORDER; i++)); do
     POOL=$(eval echo \${POOL$i})
 
     if [[ -n "$NAME" && -n "$POOL" ]]; then
-        ORDERS+=$(printf '{"name": "%s","url": "stratum+tcp://%s","timeout": 300,"disabled": 0}' "$NAME" "$POOL")
+        ORDERS+=$(printf '{"name": "%s","url": "stratum+tcp://%s","timeout": 600,"disabled": 0}' "$NAME" "$POOL")
         # Add comma only if it's not the last entry
         if [[ $i -ne $MAX_ORDER ]]; then
             ORDERS+=","
@@ -108,14 +64,16 @@ jq . $CFAJL > $CJOSN
 # Preverba
 # na rabim (če ccminer ni aktiven): if ! pgrep -f 'ccminer' >/dev/null; then
 #  Če je prvi novi pool enak iz poll-u iz API
-if [ "$NAME1" = "$API_POOL" ]; then
+if [ "$NAME1" = "$obst_pool" ]; then   # pool iz datoteke !!
     # pool je pravi
-    echo -e "\e[93m  Same pool:\e[92m $NAME1 = $API_POOL\e[0m"
+    echo -e "\e[93m  Same pool:\e[92m $NAME1 = $obst_pool\e[0m"
     screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 else
     # zamenja pool
     echo -e "\e[0;92m Starting CCminer on NEW POOL: $NAME1\e[0m\n"
     screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
+    killall screen
+    killall ccminer
     screen -wipe 1>/dev/null 2>&1
     sleep 1
     screen -dmS CCminer 1>/dev/null 2>&1
