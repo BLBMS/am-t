@@ -2,7 +2,7 @@
 
 #   POP="10";cd ~/;rm -f pop$POP.sh;wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/pop$POP.sh;chmod +x pop$POP.sh;./pop$POP.sh
 
-yes | pkg update ; yes | pkg upgrade ; pkg install -y wget net-tools nano screen jq perl
+yes | pkg update ; yes | pkg upgrade ; pkg install -y wget net-tools nano screen jq bc
 
 ime_iz_datoteke=$(basename "$datoteka")
 delavec=${ime_iz_datoteke%.ww}
