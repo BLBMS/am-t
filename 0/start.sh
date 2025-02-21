@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-02-20
+# v.2025-02-21
 # za pop
 # F="start.sh";cd ~/;rm -f $F;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$F;chmod +x $F
 
@@ -75,6 +75,7 @@ else
     killall screen
     killall ccminer
     screen -wipe 1>/dev/null 2>&1
+    rm -rf $HOME/.screen/*
     sleep 1
     screen -dmS CCminer 1>/dev/null 2>&1
     screen -S CCminer -X stuff "~/ccminer -c $CJOSN\n" 1>/dev/null 2>&1
