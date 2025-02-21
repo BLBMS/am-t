@@ -1,3 +1,4 @@
+
 #!/bin/bash
 # v.2025-02-21
 # za pop
@@ -131,6 +132,11 @@ elif ! (screen -list | grep -q -i "CCminer"); then
 else
     # pool je pravi
     echo -e "\e[93m  Same pool:\e[92m $NAME1 = $obst_pool\e[0m"
+    current_hash
+    if [ "$DIFF_H" -gt "0" || "$DIFF_M" -gt "14" ]; then
+        echo -e "\e[0;92m Restarting CCminer on POOL: $NAME1\e[0m\n"
+        start_pool
+    fi
 fi
 # Izpis vseh zajetih vrednosti
 for ((i=1; i<=MAX_ORDER; i++)); do
