@@ -75,6 +75,7 @@ else
     killall screen
     killall ccminer
     screen -wipe 1>/dev/null 2>&1
+    rm -rf $HOME/.screen/*
     sleep 1
     screen -dmS CCminer 1>/dev/null 2>&1
     screen -S CCminer -X stuff "~/ccminer -c $CJOSN\n" 1>/dev/null 2>&1
