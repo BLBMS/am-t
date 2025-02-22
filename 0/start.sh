@@ -24,11 +24,12 @@ start_pool() {
     fi
     sleep 1
     screen -dmS CCminer 1>/dev/null 2>&1
-    screen -S CCminer -X stuff "~/ccminer -c $CJOSN\n" 1>/dev/null 2>&1
+    screen -S CCminer -X stuff "~/ccminer -c ./config.json\n" 1>/dev/null 2>&1
     screen -dmS Update 1>/dev/null 2>&1
     screen -S Update -X stuff "~/ccupdate.sh\n" 1>/dev/null 2>&1
     rm -f *.pool
     echo "$NAME1" > ~/$NAME1.pool
+    sleep 1
     screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 }
 
