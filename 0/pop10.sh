@@ -2,7 +2,9 @@
 
 #   POP="10";cd ~/;rm -f pop$POP.sh;wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/pop$POP.sh;chmod +x pop$POP.sh;./pop$POP.sh
 
-#yes | pkg update ; yes | pkg upgrade ; pkg install -y wget net-tools nano screen jq bc
+yes | pkg update
+yes | pkg upgrade
+pkg install -y wget net-tools nano screen jq bc
 
 # briše Welcome to Termux!
 if [ -f /data/data/com.termux/files/usr/etc/motd ]; then
