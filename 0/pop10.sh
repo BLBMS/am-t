@@ -5,13 +5,13 @@
 #yes | pkg update ; yes | pkg upgrade ; pkg install -y wget net-tools nano screen jq bc
 
 for datoteka in ~/*.ww; do
-            if [ -e "$datoteka" ]; then
-                ime_iz_datoteke=$(basename "$datoteka")
-                delavec=${ime_iz_datoteke%.ww}
-                echo -e "\n\e[92m  Worker from .ww file: $delavec\e[0m"
-                ww_files_found=true
-            fi
-        done
+  if [ -e "$datoteka" ]; then
+    ime_iz_datoteke=$(basename "$datoteka")
+    delavec=${ime_iz_datoteke%.ww}
+    echo -e "\n\e[92m  Worker from .ww file: $delavec\e[0m"
+    ww_files_found=true
+  fi
+done
 
 # Nastavi IP - za 192.168.yyy.zzz
 ifconfig_out=$(ifconfig)
