@@ -36,7 +36,7 @@ cat << EOF > ~/.bashrc
 ### ______  MOJE _____
 sshd
 PS1='${debian_chroot:+($debian_chroot)}\[\033[0;93m\]${delavec}\[\033[0;91m\]@\[\033[0;93m\]${phone_ip}\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]\$ '
-if [[ ! -z "WINDOW" ]]; then PS1="\[\e[01;31m\][${PS1}\e[01;31m\]]\[\e[0m\]"; fi
+if [[ -n "STY" ]]; then PS1="\[\e[01;31m\]$PS1[\e[01;31m\]]\[\e[0m\]";fi
 alias ss='~/start.sh'
 alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit;if (screen -list | grep -q -i "ccminer\|Update"); then \
       killall ccminer;killall screen;if (screen -list | grep -q -i "ccminer\|Update"); then screen -wipe 1>/dev/null 2>&1;rm -rf $HOME/.screen/*;fi;fi;screen -ls'
@@ -82,14 +82,17 @@ _________________________________\e[0m"'
 alias vipor='delavec=$(basename ~/*.ww .ww);rm ~/vipor.json;wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/vipor.json; \
              sed -i "s#DELAVEC#$delavec#g" ~/vipor.json;screen -X -S Update quit;screen -S CCminer -X stuff "^C";screen -S CCminer -X stuff "~/ccminer -c ~/vipor.json\n"'
 
-echo "Screens:"
-screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
-
-# kontrola in prikaz hasha
-bash ./curr_hash.sh
+if [[ -z "STY" ]]; then
+    echo "Screens:"
+    screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
+    
+    # kontrola in prikaz hasha
+    bash ./curr_hash.sh
+fi
 EOF
 
-sed -i 's/WINDOW/$WINDOW/g' ~/.bashrc
+#sed -i 's/WINDOW/$WINDOW/g' ~/.bashrc
+sed -i 's/STY/$STY/g' ~/.bashrc
 # konec .bashrc  ---------------------------------------------------------
 
 rm -f update.sh
