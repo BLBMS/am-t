@@ -80,38 +80,7 @@ alias vipor='delavec=$(basename ~/*.ww .ww);rm ~/vipor.json;wget -q https://raw.
 echo "Screens:"
 screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 
-# kontrola ---------------------------------------------------------
-# Preveri, ali procesi ccminer in update.sh tečejo
-for process in "ccminer" "update.sh"; do
-    if ! pgrep -f "$process" >/dev/null; then
-        printf "\n\e[91m %s not active -> RESTART! \e[0m" "$process"
-        restart_needed=true
-    fi
-done
-# Preveri, ali obstajajo screen seje za CCminer in update
-for session in "CCminer" "update"; do
-    if ! screen -list | grep -q -i "$session"; then
-        echo -e "\n\e[0;91m There are no $session screen\n\e[0m"
-        restart_needed=true
-    fi
-done
-# Če katerikoli pogoj ni bil izpolnjen, naredi restart
-if [ "$restart_needed" = true ]; then
-
-    screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
-    if (screen -list | grep -q -i "ccminer\|Update"); then
-        killall ccminer
-        killall screen
-        if (screen -list | grep -q -i "ccminer\|Update"); then
-            screen -wipe 1>/dev/null 2>&1
-            rm -rf $HOME/.screen/*
-        fi
-    fi
-    sleep 1
-    ~/start.sh
-    sleep 5
-fi
-# prikaz hasha
+# kontrola in prikaz hasha
 bash ./curr_hash.sh
 EOF
 # konec .bashrc  ---------------------------------------------------------
