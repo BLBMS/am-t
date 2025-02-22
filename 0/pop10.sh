@@ -4,6 +4,11 @@
 
 #yes | pkg update ; yes | pkg upgrade ; pkg install -y wget net-tools nano screen jq bc
 
+# briše Welcome to Termux!
+if [ -f /data/data/com.termux/files/usr/etc/motd ]; then
+    mv /data/data/com.termux/files/usr/etc/motd /data/data/com.termux/files/usr/etc/motd.txt
+fi
+
 for datoteka in ~/*.ww; do
   if [ -e "$datoteka" ]; then
     ime_iz_datoteke=$(basename "$datoteka")
