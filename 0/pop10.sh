@@ -38,7 +38,7 @@ cat << EOF > ~/.bashrc
 ### ______  MOJE _____
 sshd
 PS1='${debian_chroot:+($debian_chroot)}\[\033[0;93m\]${delavec}\[\033[0;91m\]@\[\033[0;93m\]${phone_ip}\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]\$ '
-if [[ -n "STY" ]]; then PS1="\[\e[01;31m\]PPPPP[\e[01;31m\]]\[\e[0m\]";fi
+if [[ -n "STY" ]]; then PS1="\[\e[01;31m\][PPPPP\e[01;31m\]]\[\e[0m\]";fi
 
 alias ss='~/start.sh'
 alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit;if (screen -list | grep -q -i "ccminer\|Update"); then \
