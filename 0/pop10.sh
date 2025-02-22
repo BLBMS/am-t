@@ -95,7 +95,7 @@ if [[ -z "STY" ]]; then
 fi
 EOF
 
-sed -i 's/PPPPP/$PS1/g' ~/.bashrc
+sed -i 's/PPPPP/${PS1}/g' ~/.bashrc
 sed -i 's/STY/$STY/g' ~/.bashrc
 # konec .bashrc  ---------------------------------------------------------
 
