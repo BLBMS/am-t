@@ -4,9 +4,14 @@
 
 #yes | pkg update ; yes | pkg upgrade ; pkg install -y wget net-tools nano screen jq bc
 
-ime_iz_datoteke=$(basename "$datoteka")
-delavec=${ime_iz_datoteke%.ww}
-echo -e "\n\e[92m  Worker from .ww file: $delavec\e[0m"
+for datoteka in ~/*.ww; do
+            if [ -e "$datoteka" ]; then
+                ime_iz_datoteke=$(basename "$datoteka")
+                delavec=${ime_iz_datoteke%.ww}
+                echo -e "\n\e[92m  Worker from .ww file: $delavec\e[0m"
+                ww_files_found=true
+            fi
+        done
 
 # Nastavi IP - za 192.168.yyy.zzz
 ifconfig_out=$(ifconfig)
@@ -32,6 +37,7 @@ alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen
       killall ccminer;killall screen;if (screen -list | grep -q -i "ccminer\|Update"); then screen -wipe 1>/dev/null 2>&1;rm -rf $HOME/.screen/*;fi;fi;screen -ls'
 alias xc='screen screen -X -S CCminer quit'
 alias xu='screen screen -X -S Update quit'
+>>>>>>> 329bd61bce22eebc74226310e1fc51f3fe015f74
 alias sl='screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1'
 alias rr='screen -d -r CCminer'
 alias ru='screen -d -r Update'
