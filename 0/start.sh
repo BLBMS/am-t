@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-02-22
+# v.2025-02-21
 # za pop
 # # F="start.sh";cd ~/;rm -f $F;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$F;chmod +x $F
 cd ~/
@@ -132,7 +132,7 @@ else
     # pool je pravi
     echo -e "\e[93m  Same pool:\e[92m $NAME1 = $obst_pool\e[0m"
     current_hash
-    if [ "$DIFF_H" -gt "0" || "$DIFF_M" -gt "14" ]; then
+    if [[ "$DIFF_H" -gt "0" || "$DIFF_M" -gt "14" ]]; then
         echo -e "\e[0;92m Restarting CCminer on POOL: $NAME1\e[0m\n"
         start_pool
     fi
