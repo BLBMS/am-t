@@ -31,13 +31,12 @@ cat << EOF > ~/.bashrc
 ### ______  MOJE _____
 sshd
 PS1='${debian_chroot:+($debian_chroot)}\[\033[0;93m\]${delavec}\[\033[0;91m\]@\[\033[0;93m\]${phone_ip}\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]\$ '
-if [[ ! -z "${WINDOW}" ]]; then PS1="\[\e[01;31m\][${PS1}\e[01;31m\]]\[\e[0m\]"; fi
+if [[ ! -z "WINDOW" ]]; then PS1="\[\e[01;31m\][${PS1}\e[01;31m\]]\[\e[0m\]"; fi
 alias ss='~/start.sh'
 alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit;if (screen -list | grep -q -i "ccminer\|Update"); then \
       killall ccminer;killall screen;if (screen -list | grep -q -i "ccminer\|Update"); then screen -wipe 1>/dev/null 2>&1;rm -rf $HOME/.screen/*;fi;fi;screen -ls'
 alias xc='screen screen -X -S CCminer quit'
 alias xu='screen screen -X -S Update quit'
->>>>>>> 329bd61bce22eebc74226310e1fc51f3fe015f74
 alias sl='screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1'
 alias rr='screen -d -r CCminer'
 alias ru='screen -d -r Update'
