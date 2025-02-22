@@ -21,7 +21,7 @@ restart() {
     fi
     sleep 1
     screen -dmS CCminer 1>/dev/null 2>&1
-    screen -S CCminer -X stuff "~/ccminer -c $CJOSN\n" 1>/dev/null 2>&1
+    screen -S CCminer -X stuff "~/ccminer -c ./config.json\n" 1>/dev/null 2>&1
     screen -dmS Update 1>/dev/null 2>&1
     screen -S Update -X stuff "~/ccupdate.sh\n" 1>/dev/null 2>&1
     rm -f *.pool
