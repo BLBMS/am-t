@@ -110,3 +110,7 @@ wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/curr_hash.sh
 chmod +x ~/curr_hash.sh
 
 echo "all done"
+
+sleep 1
+screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
+~/start.sh
