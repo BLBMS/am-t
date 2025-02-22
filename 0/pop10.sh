@@ -115,4 +115,4 @@ echo "all done"
 
 sleep 1
 screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
-~/start.sh
+source ~/start.sh
