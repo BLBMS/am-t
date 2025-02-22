@@ -82,7 +82,10 @@ screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" 
 # kontrola in prikaz hasha
 bash ./curr_hash.sh
 EOF
+
+sed -i 's/WINDOW/$WINDOW/g' ~/.bashrc
 # konec .bashrc  ---------------------------------------------------------
+
 rm -f update.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/update.sh
 chmod +x update.sh
@@ -90,5 +93,9 @@ chmod +x update.sh
 rm -f start.sh
 wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/start.sh
 chmod +x ~/start.sh
+
+rm -f curr_hash.sh
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/curr_hash.sh
+chmod +x ~/curr_hash.sh
 
 echo "all done"
