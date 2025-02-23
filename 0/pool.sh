@@ -15,13 +15,13 @@
 #NAME="vipor_FR_SOLO";POOL="fr.vipor.net:5045";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""
 
 # pool.verus
-NAME="verus";POOL="pool.verus.io:9998";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""    #  merged
+#NAME="verus";POOL="pool.verus.io:9998";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""    #  merged
 
 # verus farm
 #NAME="farm";POOL="verus.farm:9999";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""    #  merged
 
 # luckpool
-#NAME="luckpool";POOL="eu.luckpool.net:3956";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC";PASS=""    #  merged
+NAME="luckpool";POOL="eu.luckpool.net:3956";USER="RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVECX";PASS=""    #  merged
 
 # MRR
 #NAME="MRR";POOL="eu-de01.miningrigrentals.com:51287";USER="BLB.295007";PASS="DELAVEC"
