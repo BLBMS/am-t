@@ -20,14 +20,13 @@ for datoteka in ~/*.ww; do
     fi
 done
 
-echo -e "\e[93m  Properties:[0m"
-echo -e "\nproduct.manufacturer : \e[0;92m$(getprop ro.product.manufacturer)\e[0m"
-echo -e "product.model        : \e[0;92m$(getprop ro.product.model)\e[0m"
-echo -e "product.cpu.abilist64: \e[0;92m$(getprop ro.product.cpu.abilist64)\e[0m"
-echo -e "arm64.variant        : \e[0;92m$(getprop dalvik.vm.isa.arm64.variant)\e[0m"
-echo -e "Android release:     : \e[0;92m$(getprop ro.build.version.release)\e[0m"
-echo -e "build version        : \e[0;92m$(getprop ro.build.version.incremental)\e[0m"
-echo -e "CSC / Bit            : \e[0;92m$(getprop ro.csc.sales_code)\e[0m / \e[0;92m$(getprop ro.build.version.incremental | cut -c9)\e[0m"
+echo -e "\e[93m  Properties :\e[0m\n"
+echo -e "product.manufacturer  : \e[0;92m$(getprop ro.product.manufacturer)\e[0m"
+echo -e "product.model         : \e[0;92m$(getprop ro.product.model)\e[0m"
+echo -e "product.cpu.abilist64 : \e[0;92m$(getprop ro.product.cpu.abilist64)\e[0m"
+echo -e "arm64.variant         : \e[0;92m$(getprop dalvik.vm.isa.arm64.variant)\e[0m"
+echo -e "Android release / Bit : \e[0;92m$(getprop ro.build.version.release)\e[0m / \e[0;92m$(getprop ro.build.version.incremental | cut -c9)\e[0m"
+echo -e "build version / CSC   : \e[0;92m$(getprop ro.build.version.incremental)\e[0m / \e[0;92m$(getprop ro.csc.sales_code)\e[0m"
 
 MTUNE=" a64fx ampere1 ampere1a apple-a10 apple-a11 apple-a12 apple-a13 apple-a14 apple-a15 apple-a16 apple-a7 apple-a8 apple-a9 apple-latest apple-m1 apple-m2 \
 apple-s4 apple-s5 carmel cortex-a34 cortex-a35 cortex-a510 cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 cortex-a73 \
