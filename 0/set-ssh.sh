@@ -24,10 +24,10 @@ echo "whoami=" $my_name
 #  Ustvari password
 #passwd $my_name - javlja napako v novem termux
 
-if ! passwd "$my_name" 2>&1 | grep -q "Run passwd without args"; then
-    echo "Napaka 'passwd $my_name'. Zagon brez argumenta"
+#if ! passwd "$my_name" 2>&1 | grep -q "Run passwd without args"; then
+#    echo "Napaka 'passwd $my_name'. Zagon brez argumenta"
     passwd
-fi
+#fi
 
 # Nastavi IP - za 192.168.100.xxx
 #ifconfig_out=$(ifconfig)
