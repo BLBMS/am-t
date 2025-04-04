@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-10-30
+# v.2025-04-04
 #   FAJL="set-ssh";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 # install vse potrebno
 cd ~/
