@@ -1,7 +1,7 @@
 start.sh  2025-02-22
 ccupdate.sh  2025-02-22
-set-cmp.sh  2024-07-16
-set-ssh.sh  2024-10-30
+set-cmp.sh  2025-04-04
+set-ssh.sh  2025-04-04
 posodobi.sh  2024-07-16
 changecc.sh  2024-09-25
 curr_hash.sh  2025-02-21
