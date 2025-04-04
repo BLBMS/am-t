@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-07-17
+# v.2025-04-04
 #   FAJL="set-cmp";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 # usage: ./set-cmp.sh -u -m -p5 -wName
 #    -u     - update / upgrade
@@ -343,11 +343,15 @@ esac
 chmod +x ccminer
 echo -e "\n\e[93m CCminer copied \e[0m" # -----------------------------------------------
 cd ~/
-# briše MOJE v ~/.bashrc, vse do konca (če obstaja)
-if ! [ -f ~/.bashrc ]; then
+# če ne obstaja jo ustvari
+if [ ! -f ~/.bashrc ]; then
+    touch ~/.bashrc
+fi
+# briše MOJE v ~/.bashrc, vse do konca
+if [ -f ~/.bashrc ]; then
     sed -i '/### ______  MOJE _/,$d' ~/.bashrc
 fi
-# MOJE v ~/.bashrc, če obstaja doda na koncu, če ne, pa ustvari
+# MOJE v ~/.bashrc, doda na koncu
 cat << EOF >> ~/.bashrc
 ### ______  MOJE _____
 sshd
