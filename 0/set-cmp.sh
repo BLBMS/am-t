@@ -411,14 +411,8 @@ if screen -ls | grep -i 'dead'; then
   screen -wipe 1>/dev/null 2>&1
   ~/start.sh
 fi
-if ! (screen -list | grep -q -i "ccminer"); then
-  echo -e "\n\e[0;91m There are no CCminer\n\e[0m"
-  xx
-  screen -wipe 1>/dev/null 2>&1
-  ~/start.sh
-fi
-if ! (screen -list | grep -q -i "update"); then
-  echo -e "\n\e[0;91m There are no Update\n\e[0m"
+if ! screen -list | grep -q -i "ccminer" || ! screen -list | grep -q -i "update"; then
+  echo -e "\n\e[0;91m There are no CCminer or no Update\n\e[0m"
   xx
   screen -wipe 1>/dev/null 2>&1
   ~/start.sh
