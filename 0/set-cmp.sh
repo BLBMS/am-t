@@ -56,6 +56,15 @@ fi
 if [ $(pkg list-installed | grep -c nano) -eq 0 ]; then
     pkg install -y nano
 fi
+if [[ -z "$(getprop ro.lineage.version)" ]]; then
+    if [ $(pkg list-installed | grep -c screen) -eq 0 ]; then
+        pkg install -y screen
+    fi
+else
+    if [ $(pkg list-installed | grep -c tmux) -eq 0 ]; then
+        pkg install -y tmux
+    fi
+fi
 if [ "$choice_update_update" = "1" ]; then
     yes | pkg update
     yes | pkg upgrade
@@ -64,13 +73,9 @@ if [ "$choice_update_update" = "1" ]; then
 fi
 
 # preveri če je že nastavljen pravi ssh
-rm -f ~/nastavi-cc-ssh.sh
-#if ! [ -f ~/set-ssh.sh ]; then
-    cd
-    rm -f set-ssh.sh
-    wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/set-ssh.sh
-    chmod +x set-ssh.sh
-#fi
+rm -f "$HOME/set-ssh.sh"
+wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/set-ssh.sh -O "$HOME/set-ssh.sh"
+chmod +x "$HOME/set-ssh.sh"
 
 ah_file="$HOME/.ssh/authorized_keys"
 comp_str="blb@blb"
@@ -94,18 +99,8 @@ else
     echo -e " Type EXIT after set up SSH"
     echo -e " --------------------------\e[0m\n"
     sleep 2
-    source ~/set-ssh.sh
+    source "$HOME/set-ssh.sh"
     # exit 0
-fi
-echo "done"
-
-# premik starega compilerja
-if [ -f ~/ccminer/configure.sh ]; then
-    echo -e "\n\e[93m Moving old ccminer\e[0m"
-    if [ ! -d ~/ccminer-old ]; then
-            mkdir ~/ccminer-old
-    fi
-    mv -f ~/ccminer ~/ccminer-old/
 fi
 echo "done"
 
@@ -152,10 +147,10 @@ echo "done"
 
 # auto boot
 echo -e "\n\e[93m Setting auto boot\e[0m" # -----------------------------------------------
-rm -rf ~/.termux/boot
-mkdir -p ~/.termux/boot
+rm -rf "$HOME/.termux/boot"
+mkdir -p "$HOME/.termux/boot"
 # nastavi ~/.termux/boot/start.sh
-cat << EOF > ~/.termux/boot/start.sh
+cat << EOF > "$HOME/.termux/boot/start.sh"
 #!/data/data/com.termux/files/usr/bin/sh
 termux-wake-lock
 sshd
@@ -166,17 +161,21 @@ am startservice --user 0 -n com.termux/com.termux.app.RunCommandService \
 --ez com.termux.RUN_COMMAND_BACKGROUND 'false' \
 --es com.termux.RUN_COMMAND_SESSION_ACTION '0'
 EOF
-chmod +x ~/.termux/boot/start.sh
+chmod +x "$HOME/.termux/boot/start.sh"
 # Auto boot ubuntu  (nano ~/.termux/termux.properties) __Zbriši # pred: # allow-external-apps = true
 sed -i 's/^# allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
 sed -i 's/^#allow-external-apps = true*/allow-external-apps = true/' ~/.termux/termux.properties
 echo "done"
 cd ~/
+
+
 if screen -ls | grep -Ei 'ccminer|update'; then
   printf "\n\e[91m CCminer or Update is running -> STOP! \e[0m"
   screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit
   screen -wipe 1>/dev/null 2>&1
 fi
+
+
 echo -e "\n\n\e[93m Phone info: \e[0m\n" # -----------------------------------------------
 MODEL=$(getprop ro.product.model)
 ANDROID=$(getprop ro.build.version.release)
