@@ -10,7 +10,7 @@ fi
 cd ~/
 sshd
 
-start_pool() {
+screen_start_pool() {
     screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
     if (screen -list | grep -q -i "CCminer"); then
         killall ccminer
@@ -38,7 +38,7 @@ start_pool() {
     screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
 }
 
-current_hash() {
+screen_current_hash() {
     rm -f hardcopy.*
     screen -S CCminer -X hardcopy
     last_line=$(tac hardcopy.0 | grep -m 1 "yes!" | head -n 1)
@@ -61,6 +61,7 @@ current_hash() {
     #    echo -e "No data found!"
     fi
 }
+
 # Kontrola DEAD screen
 if screen -ls | grep -i 'dead'; then
   printf "\n\e[91m There are dead screen sessions -> STOP! \e[0m"
@@ -130,14 +131,14 @@ jq . $CFAJL > $CJOSN
 if ! [ "$NAME1" = "$obst_pool" ]; then   # pool iz datoteke !!
     # zamenja pool
     echo -e "\e[0;92m Starting CCminer on NEW POOL: $NAME1\e[0m\n"
-    start_pool
+    screen_start_pool
 elif ! (screen -list | grep -q -i "CCminer"); then
     echo -e "\n\e[0;91m There are no CCminer\n\e[0m"
-    start_pool
+    screen_start_pool
 else
     # pool je pravi
     echo -e "\e[93m  Same pool:\e[92m $NAME1 = $obst_pool\e[0m"
-    current_hash
+    screen_current_hash
     if [[ "$DIFF_H" -gt "0" || "$DIFF_M" -gt "14" ]]; then
         echo -e "\e[0;92m Restarting CCminer on POOL: $NAME1\e[0m\n"
         start_pool
