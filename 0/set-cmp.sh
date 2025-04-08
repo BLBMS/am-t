@@ -168,17 +168,49 @@ sed -i 's/^#allow-external-apps = true*/allow-external-apps = true/' ~/.termux/t
 echo "done"
 cd ~/
 
-
-if screen -ls | grep -Ei 'ccminer|update'; then
-  printf "\n\e[91m CCminer or Update is running -> STOP! \e[0m"
-  screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit
-  screen -wipe 1>/dev/null 2>&1
+if [[ -z "$(getprop ro.lineage.version)" ]]; then
+    if screen -ls | grep -Ei 'ccminer|update'; then
+        printf "\n\e[91m CCminer or Update is running -> STOP! \e[0m"
+        screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit
+        screen -wipe 1>/dev/null 2>&1
+    fi
+else
+    if tmux list-sessions -F "#{session_name}" | grep -q -E "^(CCminer|Update)$"; the
+        printf "\n\e[91m CCminer or Update is running -> STOP! \e[0m"
+        tmux list-sessions -F "#{session_name}" | xargs -I {} tmux kill-session -t {}
+    fi
 fi
 
-
 echo -e "\n\n\e[93m Phone info: \e[0m\n" # -----------------------------------------------
+# Zazna OS
+MANUF=$(getprop ro.product.manufacturer | tr '[:upper:]' '[:lower:]')
+ROM=""
+lineage_version=$(getprop ro.lineage.version)
+if [[ -z "$lineage_version" ]]; then
+  build_id=$(getprop ro.build.display.id)
+  incremental=$(getprop ro.build.version.incremental)
+  if [[ "$build_id" == *lineage* ]]; then
+    lineage_version="$build_id"
+  elif [[ "$incremental" == *lineage* ]]; then
+    lineage_version="$incremental"
+  fi
+fi
+lineage_major=$(echo "$lineage_version" | grep -oE '^([0-9]+(\.[0-9]+)?)')
+if [[ -n "$lineage_major" ]]; then
+  ROM="LineageOS $lineage_major"
+elif [[ "$MANUF" == samsung || "$MANUF" == huawei || "$MANUF" == lg || "$MANUF" == xiaomi ]]; then
+  ROM="Stock ROM ($MANUF)"
+else
+  ROM="Unknown"
+fi
+BUILD_REL=$(getprop ro.build.version.release)
+BUILD_INC=$(getprop ro.build.version.incremental)
+CSC=$(getprop ro.csc.sales_code)
+LOCALE=$(getprop ro.product.locale)
 MODEL=$(getprop ro.product.model)
 ANDROID=$(getprop ro.build.version.release)
+echo -e "ROM - locale         : \e[0;93m$ROM - $LOCALE\e[0m"
+echo -e "build - CSC          : \e[0;93m$BUILD_REL/$BUILD_INC - $CSC\e[0m"
 echo -e "product.manufacturer : \e[0;93m$(getprop ro.product.manufacturer)\e[0m"
 echo -e "product.model        : \e[0;93m$(getprop ro.product.model)\e[0m"
 echo -e "product.cpu.abilist64: \e[0;93m$(getprop ro.product.cpu.abilist64)\e[0m"
