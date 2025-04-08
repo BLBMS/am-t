@@ -35,7 +35,8 @@ if [[ -z "$(getprop ro.lineage.version)" ]]; then
         screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
         exit
     }
-
+    # --------------------
+    
     if ! pgrep -f "ccminer|update.sh" >/dev/null; then
         restart
     fi
@@ -104,6 +105,7 @@ else
         tmux ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g"
         exit
     }
+    # --------------------
 
     if ! pgrep -f "ccminer|update.sh" >/dev/null; then
         restart
