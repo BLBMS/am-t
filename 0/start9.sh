@@ -26,12 +26,14 @@ tmux_start_pool() {
         fi
     fi
     sleep 1
-    tmux new-session -d -s CCminer "~/ccminer -c ./config.json"
-    tmux new-session -d -s Update "~/ccupdate.sh"
+    tmux new-session -d -s CCminer
+    tmux send-keys -t CCminer "~/ccminer -c ./config.json" C-m
+    tmux new-session -d -s Update
+    tmux send-keys -t CCminer "~/ccupdate.sh" C-m
     rm -f *.pool
     echo "$NAME1" > ~/$NAME1.pool
     sleep 1
-    tmux list-sessions | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g"
+    tmux ls -F "#{session_name}:#{session_id} [#{session_windows} windows] #{session_created}" | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g"
 }
 
 tmux_current_hash() {
@@ -54,18 +56,21 @@ tmux_current_hash() {
 
 tmux_dead() {
     # Kontrola DEAD tmux sessions
-    if tmux list-sessions | grep -i '(dead)'; then
-      printf "\n\e[91m There are dead tmux sessions -> STOP! \e[0m"
-      tmux list-sessions | grep -i '(dead)' | awk '{print $1}' | cut -d: -f1 | xargs -I {} tmux kill-session -t {}
+if tmux list-sessions | grep -i '(dead)'; then
+    echo "Obstajajo mrtve tmux seje"
+    # Pridobi ID-je mrtvih sej
+    dead_sessions=$(tmux list-sessions | grep -i '(dead)' | awk -F: '{print $1}')
 
-      if tmux list-sessions | grep -i '(dead)'; then
+    # Zapri vse mrtve seje
+    for session in $dead_sessions; do
+        tmux kill-session -t "$session"
+    done
+    # Dodatno čiščenje če je potrebno
+    if tmux list-sessions | grep -q -i '(dead)'; then
         killall tmux
-        if tmux list-sessions | grep -i '(dead)'; then
-          rm -rf /tmp/tmux-*
-        fi
-      fi
+        rm -rf /tmp/tmux-*
     fi
-}
+fi
 
 # screen -----------------------------------------------------------------------------------------
 
@@ -194,7 +199,6 @@ jq . $CFAJL > $CJOSN
 
 # PREVERI OS
 # na rabim (če ccminer ni aktiven): if ! pgrep -f 'ccminer' >/dev/null; then
-    
 lineage_version=$(getprop ro.lineage.version)
 if [[ -z "$lineage_version" ]]; then
     echo "stock OS"
@@ -239,7 +243,6 @@ else
             tmux_start_pool
         fi
     fi
-
 fi
 
 for ((i=1; i<=MAX_ORDER; i++)); do
