@@ -10,6 +10,65 @@ fi
 cd ~/
 sshd
 
+# tmux -----------------------------------------------------------------------------------------
+tmux_start_pool() {
+    tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
+    if (tmux list-sessions | grep -q -i "CCminer"); then
+        killall ccminer
+        tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
+        if (tmux list-sessions | grep -q -i "CCminer"); then
+            killall tmux
+            tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
+            if (tmux list-sessions | grep -q -i "CCminer"); then
+                rm -rf /tmp/tmux-*
+                tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
+            fi
+        fi
+    fi
+    sleep 1
+    tmux new-session -d -s CCminer "~/ccminer -c ./config.json"
+    tmux new-session -d -s Update "~/ccupdate.sh"
+    rm -f *.pool
+    echo "$NAME1" > ~/$NAME1.pool
+    sleep 1
+    tmux list-sessions | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g"
+}
+
+tmux_current_hash() {
+    tmux capture-pane -t CCminer -p -S - > /tmp/tmux_hardcopy
+    last_line=$(tac /tmp/tmux_hardcopy | grep -m 1 "yes!" | head -n 1)
+    if [[ -n "$last_line" ]]; then
+        MHS=$(echo "$last_line" | awk '{print $(NF-2)}' | awk '{print $1/1000}')
+        FTIME=$(echo "$last_line" | awk '{print $1" "$2}')
+        FTIME=$(echo "$FTIME" | tr -d '[]')
+        FTIME_TIMESTAMP=$(date -d "$FTIME" +"%s" 2>/dev/null)
+        CURRENT_TIMESTAMP=$(date +"%s")
+        DIFF=$((CURRENT_TIMESTAMP - FTIME_TIMESTAMP))
+        DIFF_H=$((DIFF / 3600))
+        DIFF_M=$(( (DIFF % 3600) / 60 ))
+        DIFF_S=$((DIFF % 60))
+        echo -e "\e[93mcMHS:\e[92m $MHS \e[93mfound before: \e[92m$DIFF_H\e[93m h \e[92m$DIFF_M\e[93m m\e[92m $DIFF_S\e[93m s\e[0m"
+    fi
+    rm -f /tmp/tmux_hardcopy
+}
+
+tmux_dead() {
+    # Kontrola DEAD tmux sessions
+    if tmux list-sessions | grep -i '(dead)'; then
+      printf "\n\e[91m There are dead tmux sessions -> STOP! \e[0m"
+      tmux list-sessions | grep -i '(dead)' | awk '{print $1}' | cut -d: -f1 | xargs -I {} tmux kill-session -t {}
+      
+      if tmux list-sessions | grep -i '(dead)'; then
+        killall tmux
+        if tmux list-sessions | grep -i '(dead)'; then
+          rm -rf /tmp/tmux-*
+        fi
+      fi
+    fi
+}
+
+# screen -----------------------------------------------------------------------------------------
+
 screen_start_pool() {
     screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
     if (screen -list | grep -q -i "CCminer"); then
@@ -62,18 +121,32 @@ screen_current_hash() {
     fi
 }
 
-# Kontrola DEAD screen
-if screen -ls | grep -i 'dead'; then
-  printf "\n\e[91m There are dead screen sessions -> STOP! \e[0m"
-  screen -ls | grep -o "[0-9]\+\.Dead" | awk '{print }' | xargs -I {} screen -X -S {} quit
-  screen -wipe 1>/dev/null 2>&1
+screen_dead() {
+    # Kontrola DEAD screen
     if screen -ls | grep -i 'dead'; then
-        killall screen
+      printf "\n\e[91m There are dead screen sessions -> STOP! \e[0m"
+      screen -ls | grep -o "[0-9]\+\.Dead" | awk '{print }' | xargs -I {} screen -X -S {} quit
+      screen -wipe 1>/dev/null 2>&1
         if screen -ls | grep -i 'dead'; then
-            rm -rf $HOME/.screen/*
+            killall screen
+            if screen -ls | grep -i 'dead'; then
+                rm -rf $HOME/.screen/*
+            fi
         fi
     fi
-fi
+}
+
+# -----------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
 # IP iz naprave
 ip=$(ifconfig 2>/dev/null | grep -oP 'inet \K[\d.]+(?=\s)' | grep -v '127.0.0.1')
 echo -e "\e[0m  Device ip  :\e[96m $ip\e[0m"
