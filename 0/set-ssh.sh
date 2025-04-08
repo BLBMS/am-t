@@ -8,9 +8,6 @@ echo -e "\n\e[93mnastavljam SSH\e[0m\n"
 rm -rf "$HOME/.ssh/"
 mkdir "$HOME/.ssh"
 chmod 0700 "$HOME/.ssh"
-#cat << EOF > ~/.ssh/authorized_keys
-#ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAe7mHnisRNUXZ8u5AaeKxm7/ixbaacLWk6S6bpqlEom blb@blb
-#EOF
 echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAe7mHnisRNUXZ8u5AaeKxm7/ixbaacLWk6S6bpqlEom blb@blb" > "$HOME/.ssh/authorized_keys"
 chmod 0600 "$HOME/.ssh/authorized_keys"
 # nastavi SSH
@@ -32,7 +29,7 @@ echo -e "\nIP ID= \e[92m$phone_ip\e[0m"
 rm -f "$HOME/*.ip"
 echo $phone_ip > "$HOME/$phone_ip.ip"
 
-# Nastavi SSH
+# Zaženi SSH
 echo -e "\n\e[93m CHECK IP !!\e[0m\n"
 ssh $my_name@$ip_line -p 8022
 echo -e " done SSH \n"
