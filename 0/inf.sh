@@ -19,8 +19,6 @@ for datoteka in ~/*.ww; do
 done
 
 # Detect LineageOS
-###!/data/data/com.termux/files/usr/bin/bash
-
 # Barve
 GRN='\e[0;92m'
 BLU='\e[1;94m'
@@ -31,13 +29,31 @@ MANUF=$(getprop ro.product.manufacturer | tr '[:upper:]' '[:lower:]')
 ROM=""
 CLR="$GRN"
 
-if getprop ro.lineage.version >/dev/null 2>&1 && [ -n "$(getprop ro.lineage.version)" ]; then
-  ROM="LineageOS"
+# Poskusi zaznati LineageOS
+lineage_version=$(getprop ro.lineage.version)
+
+if [[ -z "$lineage_version" ]]; then
+  build_id=$(getprop ro.build.display.id)
+  incremental=$(getprop ro.build.version.incremental)
+
+  if [[ "$build_id" == *lineage* ]]; then
+    lineage_version="$build_id"
+  elif [[ "$incremental" == *lineage* ]]; then
+    lineage_version="$incremental"
+  fi
+fi
+
+lineage_major=$(echo "$lineage_version" | grep -oE '^([0-9]+(\.[0-9]+)?)')
+
+if [[ -n "$lineage_major" ]]; then
+  ROM="LineageOS $lineage_major"
   CLR="$BLU"
 elif [[ "$MANUF" == samsung || "$MANUF" == huawei || "$MANUF" == lg || "$MANUF" == xiaomi ]]; then
   ROM="Stock ROM ($MANUF)"
+  CLR="$GRN"
 else
   ROM="Unknown"
+  CLR="$GRN"
 fi
 
 # Podatki
@@ -50,9 +66,9 @@ DEVICE=$(getprop ro.product.device)
 FINGERPRINT=$(getprop ro.build.fingerprint | cut -d'/' -f1)
 
 # Izpis
-echo -e "${CLR}=========================================${RST}"
-echo -e "${CLR}       Android System Information       ${RST}"
-echo -e "${CLR}=========================================${RST}"
+#echo -e "${CLR}=========================================${RST}"
+#echo -e "${CLR}       Android System Information       ${RST}"
+#echo -e "${CLR}=========================================${RST}"
 echo -e "ROM type     : ${CLR}${ROM}${RST}"
 echo -e "Build        : ${CLR}${BUILD_REL} (${BUILD_INC})${RST}"
 echo -e "CSC code     : ${CLR}${CSC:-"-"}${RST}"
@@ -61,14 +77,6 @@ echo -e "Device       : ${CLR}${MODEL}${RST}"
 echo -e "Codename     : ${CLR}${DEVICE}${RST}"
 echo -e "Build Finger : ${CLR}${FINGERPRINT}${RST}"
 echo -e "${CLR}=========================================${RST}"
-
-
-
-
-
-
-
-
 
 MTUNE=" a64fx ampere1 ampere1a apple-a10 apple-a11 apple-a12 apple-a13 apple-a14 apple-a15 apple-a16 apple-a7 apple-a8 apple-a9 apple-latest apple-m1 apple-m2 \
 apple-s4 apple-s5 carmel cortex-a34 cortex-a35 cortex-a510 cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 cortex-a73 \
