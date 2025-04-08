@@ -138,14 +138,7 @@ screen_dead() {
 
 # -----------------------------------------------------------------------------------------
 
-
-
-
-
-
-
-
-
+# PRIPRAVA
 
 # IP iz naprave
 ip=$(ifconfig 2>/dev/null | grep -oP 'inet \K[\d.]+(?=\s)' | grep -v '127.0.0.1')
@@ -198,27 +191,44 @@ done
 sed -i "s#ORDERS#$ORDERS#g; s#USER#$USER1#g; s#DELAVEC#$DELAVEC#g; s#PASS#$PASS1#g" $CFAJL
 rm -f $CJOSN
 jq . $CFAJL > $CJOSN
-# Preverba
-# na rabim (če ccminer ni aktiven): if ! pgrep -f 'ccminer' >/dev/null; then
-#  Če je prvi novi pool enak iz poll-u iz API
-if ! [ "$NAME1" = "$obst_pool" ]; then   # pool iz datoteke !!
-    # zamenja pool
-    echo -e "\e[0;92m Starting CCminer on NEW POOL: $NAME1\e[0m\n"
-    screen_start_pool
-elif ! (screen -list | grep -q -i "CCminer"); then
-    echo -e "\n\e[0;91m There are no CCminer\n\e[0m"
-    screen_start_pool
-else
-    # pool je pravi
-    echo -e "\e[93m  Same pool:\e[92m $NAME1 = $obst_pool\e[0m"
-    screen_current_hash
-    if [[ "$DIFF_H" -gt "0" || "$DIFF_M" -gt "14" ]]; then
-        echo -e "\e[0;92m Restarting CCminer on POOL: $NAME1\e[0m\n"
-        start_pool
+
+
+lineage_version=$(getprop ro.lineage.version)
+if [[ -z "$lineage_version" ]]; then
+    echo "stock ROM"
+    screen_dead    
+
+    # Preverba
+    # na rabim (če ccminer ni aktiven): if ! pgrep -f 'ccminer' >/dev/null; then
+    #  Če je prvi novi pool enak iz poll-u iz API
+    if ! [ "$NAME1" = "$obst_pool" ]; then   # pool iz datoteke !!
+        # zamenja pool
+        echo -e "\e[0;92m Starting CCminer on NEW POOL: $NAME1\e[0m\n"
+        screen_start_pool
+    elif ! (screen -list | grep -q -i "CCminer"); then
+        echo -e "\n\e[0;91m There are no CCminer\n\e[0m"
+        screen_start_pool
+    else
+        # pool je pravi
+        echo -e "\e[93m  Same pool:\e[92m $NAME1 = $obst_pool\e[0m"
+        screen_current_hash
+        if [[ "$DIFF_H" -gt "0" || "$DIFF_M" -gt "14" ]]; then
+            echo -e "\e[0;92m Restarting CCminer on POOL: $NAME1\e[0m\n"
+            screen_start_pool
+        fi
     fi
+
+else
+    echo "lineage"
+    tmux_dead
+
+
+
+
+
+
 fi
-# Izpis vseh zajetih vrednosti
+
 for ((i=1; i<=MAX_ORDER; i++)); do
         eval "echo -e \"\e[0;93m$i:\e[0;92m \${NAME$i} \e[0;93m/\e[0;94m \${POOL$i} \e[0m\""
 done
-#screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
