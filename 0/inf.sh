@@ -19,34 +19,56 @@ for datoteka in ~/*.ww; do
 done
 
 # Detect LineageOS
-local os_type
-if getprop ro.lineage.version >/dev/null 2>&1; then
-  os_type="lineage"
-  clr="\e[1;94m"   # light blue
+###!/data/data/com.termux/files/usr/bin/bash
+
+# Barve
+GRN='\e[0;92m'
+BLU='\e[1;94m'
+RST='\e[0m'
+
+# Zaznaj OS
+MANUF=$(getprop ro.product.manufacturer | tr '[:upper:]' '[:lower:]')
+ROM=""
+CLR="$GRN"
+
+if getprop ro.lineage.version >/dev/null 2>&1 && [ -n "$(getprop ro.lineage.version)" ]; then
+  ROM="LineageOS"
+  CLR="$BLU"
+elif [[ "$MANUF" == samsung || "$MANUF" == huawei || "$MANUF" == lg || "$MANUF" == xiaomi ]]; then
+  ROM="Stock ROM ($MANUF)"
 else
-  os_type="stock"
-  clr="\e[0;92m"   # green
+  ROM="Unknown"
 fi
-echo -e "${clr}=========================================\e[0m"
-echo -e "${clr}       Android System Information       \e[0m"
-echo -e "${clr}=========================================\e[0m"
 
-echo -e "ROM type     : ${clr}${os_type^}\e[0m"
-echo -e "Build        : ${clr}$(getprop ro.build.version.release) ($(getprop ro.build.version.incremental))\e[0m"
-echo -e "Lineage ver. : ${clr}$(getprop ro.lineage.version 2>/dev/null || echo '-')\e[0m"
-echo -e "Locale       : ${clr}$(getprop ro.product.locale)\e[0m"
-echo -e "Device       : ${clr}$(getprop ro.product.model)\e[0m"
-echo -e "Codename     : ${clr}$(getprop ro.product.device)\e[0m"
-echo -e "Build Finger : ${clr}$(getprop ro.build.fingerprint | cut -d'/' -f1)\e[0m"
-echo -e "${clr}=========================================\e[0m"
+# Podatki
+BUILD_REL=$(getprop ro.build.version.release)
+BUILD_INC=$(getprop ro.build.version.incremental)
+CSC=$(getprop ro.csc.sales_code)
+LOCALE=$(getprop ro.product.locale)
+MODEL=$(getprop ro.product.model)
+DEVICE=$(getprop ro.product.device)
+FINGERPRINT=$(getprop ro.build.fingerprint | cut -d'/' -f1)
 
-#    echo -e "\e[93m  Properties :\e[0m\n"
-#    echo -e "product.manufacturer  : \e[0;92m$(getprop ro.product.manufacturer)\e[0m"
-#    echo -e "product.model         : \e[0;92m$(getprop ro.product.model)\e[0m"
-#    echo -e "product.cpu.abilist64 : \e[0;92m$(getprop ro.product.cpu.abilist64)\e[0m"
-#    echo -e "arm64.variant         : \e[0;92m$(getprop dalvik.vm.isa.arm64.variant)\e[0m"
-#    echo -e "Android release / Bit : \e[0;92m$(getprop ro.build.version.release)\e[0m / \e[0;92m$(getprop ro.build.version.incremental | cut -c9)\e[0m"
-#    echo -e "build version / CSC   : \e[0;92m$(getprop ro.build.version.incremental)\e[0m / \e[0;92m$(getprop ro.csc.sales_code)\e[0m"
+# Izpis
+echo -e "${CLR}=========================================${RST}"
+echo -e "${CLR}       Android System Information       ${RST}"
+echo -e "${CLR}=========================================${RST}"
+echo -e "ROM type     : ${CLR}${ROM}${RST}"
+echo -e "Build        : ${CLR}${BUILD_REL} (${BUILD_INC})${RST}"
+echo -e "CSC code     : ${CLR}${CSC:-"-"}${RST}"
+echo -e "Locale       : ${CLR}${LOCALE}${RST}"
+echo -e "Device       : ${CLR}${MODEL}${RST}"
+echo -e "Codename     : ${CLR}${DEVICE}${RST}"
+echo -e "Build Finger : ${CLR}${FINGERPRINT}${RST}"
+echo -e "${CLR}=========================================${RST}"
+
+
+
+
+
+
+
+
 
 MTUNE=" a64fx ampere1 ampere1a apple-a10 apple-a11 apple-a12 apple-a13 apple-a14 apple-a15 apple-a16 apple-a7 apple-a8 apple-a9 apple-latest apple-m1 apple-m2 \
 apple-s4 apple-s5 carmel cortex-a34 cortex-a35 cortex-a510 cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 cortex-a73 \
