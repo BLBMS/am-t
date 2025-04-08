@@ -6,7 +6,7 @@ if ! command -v tmux &> /dev/null; then
     echo -e "---nameščam tmux---"
     pkg update && pkg install tmux -y
 fi
-        
+
 cd ~/
 sshd
 
@@ -57,7 +57,7 @@ tmux_dead() {
     if tmux list-sessions | grep -i '(dead)'; then
       printf "\n\e[91m There are dead tmux sessions -> STOP! \e[0m"
       tmux list-sessions | grep -i '(dead)' | awk '{print $1}' | cut -d: -f1 | xargs -I {} tmux kill-session -t {}
-      
+
       if tmux list-sessions | grep -i '(dead)'; then
         killall tmux
         if tmux list-sessions | grep -i '(dead)'; then
@@ -198,8 +198,8 @@ jq . $CFAJL > $CJOSN
 lineage_version=$(getprop ro.lineage.version)
 if [[ -z "$lineage_version" ]]; then
     echo "stock OS"
-    screen_dead    
-    
+    screen_dead
+
     #  Če je prvi novi pool enak iz poll-u iz API
     if ! [ "$NAME1" = "$obst_pool" ]; then   # pool iz datoteke !!
         # zamenja pool
@@ -221,7 +221,7 @@ if [[ -z "$lineage_version" ]]; then
 else
     echo "lineage OS"
     tmux_dead
-    
+
     #  Če je prvi novi pool enak iz poll-u iz API
     if ! [ "$NAME1" = "$obst_pool" ]; then   # pool iz datoteke !!
         # zamenja pool
