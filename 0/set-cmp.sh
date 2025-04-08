@@ -379,15 +379,15 @@ chmod +x ccminer
 echo -e "\n\e[93m CCminer copied \e[0m" # -----------------------------------------------
 cd ~/
 # če ne obstaja jo ustvari
-if [ ! -f ~/.bashrc ]; then
-    touch ~/.bashrc
+if [ ! -f "$HOME/.bashrc" ]; then
+    touch "$HOME/.bashrc"
 fi
 # briše MOJE v ~/.bashrc, vse do konca
-if [ -f ~/.bashrc ]; then
-    sed -i '/### ______  MOJE _/,$d' ~/.bashrc
+if [ -f "$HOME/.bashrc" ]; then
+    sed -i '/### ______  MOJE _/,$d' "$HOME/.bashrc"
 fi
 # MOJE v ~/.bashrc, doda na koncu
-cat << EOF >> ~/.bashrc
+cat << EOF >> "$HOME/.bashrc"
 ### ______  MOJE _____
 sshd
 
