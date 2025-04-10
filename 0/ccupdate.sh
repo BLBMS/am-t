@@ -10,8 +10,7 @@ if [[ -z "$(getprop ro.lineage.version)" ]]; then
     while true; do; sleep 99999999; done; exit
 else
     # ------------------------------------
-    # Funkcija za združevanje log vnosov
-
+    # Funkcija za združevanje log vnosov za kHs in stratum
     merge_log_entries() {
         awk '
         BEGIN { buffer = "" }
@@ -21,9 +20,9 @@ else
             next
         }
         { 
-            # Posebej obravnavamo vrstice s hash rate, da preprečimo dodajanje presledkov
-            if ($0 ~ /[0-9]+\.[0-9]+ [k]?H\/s/) {
-                buffer = buffer $0  # Brez presledka za hash rate vrednostmi
+            # Posebej obravnavamo vrstice s hash rate in stratum povezavami
+            if ($0 ~ /[0-9]+\.[0-9]+ [k]?H\/s/ || $0 ~ /stratum\+tcp:\/\//) {
+                buffer = buffer $0  # Brez presledka za temi vrsticami
             } else {
                 buffer = buffer " " $0  # Normalen presledek za druge vrstice
             }
