@@ -434,6 +434,7 @@ alias HH='hh'
 alias UU='uu'
 alias inf='~/inf.sh'
 alias posodobi='~/posodobi.sh'
+alias update='~/update.sh'
 alias uu='yes | pkg update ; yes | pkg upgrade ; pkg install -y wget net-tools nano screen jq'
 
 sl
