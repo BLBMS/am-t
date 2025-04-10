@@ -9,9 +9,10 @@ if [[ -z "$(getprop ro.lineage.version)" ]]; then
     # Stock ROM
     while true; do; sleep 99999999; done; exit
 else
-
+    # ------------------------------------
+    
     while true; do
-        need_restart=1
+        need_restart=0
         echo -n -e "\e[96m== $(date '+%Y.%m.%d %H:%M:%S') == ($iter)         \r"
         # Preverite, ali je trenutna minuta 00 (polna ura)
         if [[ "$(date +%M)" -eq "00" ]]; then
@@ -28,14 +29,35 @@ else
             
             if (tmux list-sessions | grep -q -i "CCminer"); then
                 rm -f "$hardcopy" "$merged_hardcopy"
-                tmux capture-pane -t CCminer -p -S -1000 > "$hardcopy"
+                tmux capture-pane -t CCminer -p -S - > "$hardcopy"
                 if [ -f "$hardcopy" ]; then
                     merge_log_entries "$hardcopy" "$merged_hardcopy"
                     last_line=$(get_last_share "$merged_hardcopy")
                     if [[ -n "$last_line" ]]; then
                         hash_rate=$(echo "$last_line" | grep -oE '[0-9]+[0-9]*\.[0-9]+[[:space:]]*[k]?H/s' | head -n 1 | tr -d ' ')
                         if [[ $hash_rate == *"kH/s"* ]]; then
-    
+                            MHS=$(echo "$hash_rate" | awk '{print $1/1000}')
+                        else
+                            MHS=$(echo "$hash_rate" | awk '{print $1/1000000}')
+                        fi
+                        FTIME=$(echo "$last_line" | grep -oE '\[[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}\]' | head -n 1 | tr -d '[]')
+                        if [[ -n "$FTIME" ]]; then
+                            FTIME_TIMESTAMP=$(date -d "$FTIME" +"%s" 2>/dev/null)
+                            CURRENT_TIMESTAMP=$(date +"%s")
+                            DIFF=$((CURRENT_TIMESTAMP - FTIME_TIMESTAMP))
+                            DIFF_H=$((DIFF / 3600))
+                            DIFF_M=$(( (DIFF % 3600) / 60 ))
+                            DIFF_S=$((DIFF % 60))
+                            echo -e "\e[93mcMHS:\e[92m ${MHS} \e[93mfound before: \e[92m${DIFF_H}\e[93m h \e[92m${DIFF_M}\e[93m m\e[92m ${DIFF_S}\e[93m s\e[0m"
+                        fi # time
+                    fi # last-line
+                fi # hardcopy
+            fi # list-sessions
+        fi # -eq "00"
+    done # while
+
+    # ------------------------------------
+fi
     
         
         # išče zadnji zapis POOL
