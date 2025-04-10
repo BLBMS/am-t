@@ -7,7 +7,7 @@ iter=1
 # Check for Stock OS or Lineage
 if [[ -z "$(getprop ro.lineage.version)" ]]; then
     # Stock ROM
-    while true; do; sleep 99999999; done; exit
+    while true; do sleep 99999999; done; exit
 else
     # ------------------------------------
     # Funkcija za združevanje log vnosov za kHs in stratum
