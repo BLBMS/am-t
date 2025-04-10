@@ -106,11 +106,11 @@ else
     if ! pgrep -f "ccminer|update.sh" >/dev/null; then
         restart_tmux
     fi
-    rm -f /tmp/tmux_hardcopy
+    rm -f tmux_hardcopy
     if (tmux list-sessions | grep -q -i "CCminer"); then
-        tmux capture-pane -t CCminer -p -S - > /tmp/tmux_hardcopy
+        tmux capture-pane -t CCminer -p -S - > tmux_hardcopy
         if [ -f "/tmp/tmux_hardcopy" ]; then
-            last_line=$(tac /tmp/tmux_hardcopy | grep -m 1 "yes!" | head -n 1)
+            last_line=$(tac tmux_hardcopy | grep -m 1 "yes!" | head -n 1)
             if [[ -n "$last_line" ]]; then
                 MHS=$(echo "$last_line" | awk '{print $(NF-2)}' | awk '{print $1/1000}')
                 FTIME=$(echo "$last_line" | awk '{print $1" "$2}')
