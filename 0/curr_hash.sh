@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-10.011
+# v.2025-04-10.012
 # loči stock rom / lineage  +  tmux
 cd
 # screen version
@@ -55,6 +55,11 @@ merge_log_entries() {
     }
     END { if (buffer != "") print buffer }
     ' "$1" > "$2"
+}
+
+# Poišči zadnji sprejeti share (brez opozoril)
+get_last_share() {
+    grep -E "accepted.*(yes|boooo)[[:space:]]*[\!]?" "$1" | tail -n 1
 }
 
 # Izboljšana funkcija za ponovni zagon tmux sej
@@ -139,29 +144,23 @@ else
         restart_tmux
     fi
     
-    # Preveri tmux sejo
+    # Preveri tmux sejo in izpis
     if (tmux list-sessions | grep -q -i "CCminer"); then
         rm -f "$hardcopy" "$merged_hardcopy"
-        # Zajemi več vrstic, da zagotovimo celotno izpis
         tmux capture-pane -t CCminer -p -S -1000 > "$hardcopy"
         
         if [ -f "$hardcopy" ]; then
-            # Združi log vnose
             merge_log_entries "$hardcopy" "$merged_hardcopy"
+            last_line=$(get_last_share "$merged_hardcopy")
             
-            # Poišči zadnji sprejeti share (bolj fleksibilno ujemanje)
-            last_line=$(grep -E "accepted.*(yes\!|boooo)" "$merged_hardcopy" | tail -n 1)
-
             if [[ -n "$last_line" ]]; then
-                # Popravljeno branje hash rate - zdaj upošteva morebitne presledke
-                hash_rate=$(echo "$last_line" | grep -oE '[0-9]+[ ]*[0-9]*\.[0-9]+ [k]?H/s' | head -n 1 | tr -d ' ')
+                hash_rate=$(echo "$last_line" | grep -oE '[0-9]+[0-9]*\.[0-9]+[[:space:]]*[k]?H/s' | head -n 1 | tr -d ' ')
                 if [[ $hash_rate == *"kH/s"* ]]; then
                     MHS=$(echo "$hash_rate" | awk '{print $1/1000}')
                 else
                     MHS=$(echo "$hash_rate" | awk '{print $1/1000000}')
                 fi
-
-                # Ekstrahiraj časovni žig (natančnejše ujemanje)
+                
                 FTIME=$(echo "$last_line" | grep -oE '\[[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}\]' | head -n 1 | tr -d '[]')
                 
                 if [[ -n "$FTIME" ]]; then
@@ -172,31 +171,10 @@ else
                     DIFF_M=$(( (DIFF % 3600) / 60 ))
                     DIFF_S=$((DIFF % 60))
                     
-                    echo -e "\e[92mZadnji share: ${MHS} MH/s \e[93m(pred ${DIFF_H}h ${DIFF_M}m ${DIFF_S}s)\e[0m"
-                    
-                    # Pogoji za ponovni zagon
-                    if [[ "$DIFF_H" -gt 0 || "$DIFF_M" -gt 14 ]]; then
-                        echo -e "\e[91mZastareli share-i - ponovni zagon...\e[0m"
-                        restart_tmux
-                    fi
-                else
-                    echo -e "\e[93mNajden share, vendar ne morem razčleniti časovnega žiga\e[0m"
-                    echo -e "\e[90m$last_line\e[0m"
+                    echo -e "\e[92mZadnji share: ${MHS} MH/s (pred ${DIFF_H}h ${DIFF_M}m ${DIFF_S}s)\e[0m"
                 fi
-            else
-                echo -e "\e[91mNi najdenih share-ov v izpisu!\e[0m"
-                echo -e "\e[93mZadnjih 5 vrstic:\e[0m"
-                tail -n 5 "$merged_hardcopy"
-                restart_tmux
             fi
-        else
-            echo -e "\e[91mNapaka pri zajemanju izpisa!\e[0m"
-            restart_tmux
         fi
-    else
-        echo -e "\e[91mNi CCminer seje!\e[0m"
-        restart_tmux
     fi
-
-# -----
+# --------
 fi
