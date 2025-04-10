@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-10.07
+# v.2025-04-10.08
 # loči stock rom / lineage  +  tmux
 cd
 #if [[ -z "$(getprop ro.lineage.version)" ]]; then
@@ -138,21 +138,28 @@ else
         tmux capture-pane -t CCminer -p -S - > "$hardcopy"
         
         if [ -f "$hardcopy" ]; then
-            # Find the last valid "accepted" line
+            # Clean the file by ensuring each log entry is on its own line
+            sed -i 's/\[/\n\[/g' "$hardcopy"
+            
+            # Find the last valid "accepted" line with "yes!"
             last_line=$(tac "$hardcopy" | grep -m 1 "accepted.*yes!" | head -n 1)
             
             if [[ -n "$last_line" ]]; then
-                # Extract hash rate
-                MHS=$(echo "$last_line" | awk '{print $(NF-2)}' | awk '{print $1/1000}')
+                # Extract hash rate (handle both kH/s and H/s)
+                hash_rate=$(echo "$last_line" | grep -oE '[0-9]+\.[0-9]+ [k]?H/s' | head -n 1)
+                if [[ $hash_rate == *"kH/s"* ]]; then
+                    MHS=$(echo "$hash_rate" | awk '{print $1/1000}')
+                else
+                    MHS=$(echo "$hash_rate" | awk '{print $1/1000000}')
+                fi
                 
                 # Extract and validate timestamp
-                FTIME=$(echo "$last_line" | awk '{print $1" "$2}' | tr -d '[]')
+                FTIME=$(echo "$last_line" | grep -oE '\[[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}\]' | tr -d '[]')
                 FTIME_TIMESTAMP=$(date -d "$FTIME" +"%s" 2>/dev/null)
                 
                 if [[ -z "$FTIME_TIMESTAMP" ]]; then
                     echo -e "\e[91mError parsing timestamp from: $FTIME\e[0m"
                     echo -e "\e[93mLast line was: $last_line\e[0m"
-                    # Don't exit, just restart
                     restart_tmux
                 else
                     CURRENT_TIMESTAMP=$(date +"%s")
@@ -161,7 +168,7 @@ else
                     DIFF_M=$(( (DIFF % 3600) / 60 ))
                     DIFF_S=$((DIFF % 60))
                     
-                    echo -e "\e[93mcMHS:\e[92m $MHS \e[93mfound before: \e[92m$DIFF_H\e[93m h \e[92m$DIFF_M\e[93m m\e[92m $DIFF_S\e[93m s\e[0m"
+                    echo -e "\e[93mLast share: \e[92m$MHS MH/s \e[93mfound \e[92m$DIFF_H\e[93m h \e[92m$DIFF_M\e[93m m\e[92m $DIFF_S\e[93m s ago\e[0m"
                     
                     # Restart if no new shares for too long
                     if [[ "$DIFF_H" -gt 0 || "$DIFF_M" -gt 14 ]]; then
@@ -171,6 +178,8 @@ else
                 fi
             else
                 echo -e "\e[93mNo accepted shares found in log!\e[0m"
+                echo -e "\e[93mLast 3 lines of output:\e[0m"
+                tail -n 3 "$hardcopy"
                 restart_tmux
             fi
         else
@@ -181,6 +190,8 @@ else
         echo -e "\e[91mNo CCminer session!\e[0m"
         restart_tmux
     fi
+    
+    
     # konec tmux
 fi
 
