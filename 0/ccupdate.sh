@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-10.004 - Popravljena verzija za enkratno izvajanje
+# v.2025-04-10.005
 
 iter=1
 
