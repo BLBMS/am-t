@@ -41,9 +41,10 @@ else
 
     while true; do
         need_restart=0
+        only1=0
         echo -n -e "\e[96m== $(date '+%Y.%m.%d %H:%M:%S') == ($iter)         \r"
         # Preverite, ali je trenutna minuta 00 (polna ura)
-        if [[ "$(date +%M)" -eq "00" ]]; then
+        if { [[ "$(date +%M)" -eq "00" ]] && [[ "$only1"  -eq "0" ]] }; then
     
             # kontrola če je tmux zablokiral
             if tmux ls 2>&1 | grep -q "^no server running on"; then
@@ -77,6 +78,7 @@ else
                             DIFF_M=$(( (DIFF % 3600) / 60 ))
                             DIFF_S=$((DIFF % 60))
                             echo -e "\e[93mcMHS:\e[92m ${MHS} \e[93mfound before: \e[92m${DIFF_H}\e[93m h \e[92m${DIFF_M}\e[93m m\e[92m ${DIFF_S}\e[93m s\e[0m"
+                            only1=1
                         fi # time
                     fi # last-line
 
