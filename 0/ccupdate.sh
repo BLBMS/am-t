@@ -10,7 +10,36 @@ if [[ -z "$(getprop ro.lineage.version)" ]]; then
     while true; do; sleep 99999999; done; exit
 else
     # ------------------------------------
-    
+    # Funkcija za združevanje log vnosov
+
+    merge_log_entries() {
+        awk '
+        BEGIN { buffer = "" }
+        /^\[[0-9]{4}-[0-9]{2}-[0-9]{2}/ {
+            if (buffer != "") print buffer
+            buffer = $0
+            next
+        }
+        { 
+            # Posebej obravnavamo vrstice s hash rate, da preprečimo dodajanje presledkov
+            if ($0 ~ /[0-9]+\.[0-9]+ [k]?H\/s/) {
+                buffer = buffer $0  # Brez presledka za hash rate vrednostmi
+            } else {
+                buffer = buffer " " $0  # Normalen presledek za druge vrstice
+            }
+        }
+        END { if (buffer != "") print buffer }
+        ' "$1" > "$2"
+    }
+
+    # Poišči zadnji sprejeti share (brez opozoril)
+    get_last_share() {
+        grep -E "accepted.*(yes|boooo)[[:space:]]*[\!]?" "$1" | tail -n 1
+    }
+
+    hardcopy="$HOME/tmux_hardcopy"
+    merged_hardcopy="$HOME/merged_tmux_hardcopy"
+
     while true; do
         need_restart=0
         echo -n -e "\e[96m== $(date '+%Y.%m.%d %H:%M:%S') == ($iter)         \r"
