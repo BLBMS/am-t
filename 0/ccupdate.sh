@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-10
+# v.2025-04-10.001
 
 # nova verzija screen - tmux in surr_hash
 iter=1
@@ -79,6 +79,13 @@ else
                             echo -e "\e[93mcMHS:\e[92m ${MHS} \e[93mfound before: \e[92m${DIFF_H}\e[93m h \e[92m${DIFF_M}\e[93m m\e[92m ${DIFF_S}\e[93m s\e[0m"
                         fi # time
                     fi # last-line
+
+                    # išče zadnji zapis POOL
+                    if grep -q "stratum+tcp://" "$merged_hardcopy"; then
+                        ccPOOL=$(grep -m 1 "stratum+tcp://" "$merged_hardcopy" | sed -n 's/.*stratum+tcp:\/\/\([^ ]*\).*/\1/p')
+                        echo -e "\e[92mNajden rudarski bazen: \e[93m$ccPOOL\e[0m"
+                    fi
+
                 fi # hardcopy
             fi # list-sessions
         fi # -eq "00"
@@ -88,8 +95,4 @@ else
 fi
     
         
-        # išče zadnji zapis POOL
-        if grep -q "stratum+tcp://" "$HOME/merged_tmux_hardcopy"; then
-            ccPOOL=$(grep -m 1 "stratum+tcp://" "$HOME/merged_tmux_hardcopy" | sed -n 's/.*stratum+tcp:\/\/\([^ ]*\).*/\1/p')
-            echo -e "\e[92mNajden rudarski bazen: \e[93m$ccPOOL\e[0m"
-        fi
+
