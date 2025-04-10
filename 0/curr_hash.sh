@@ -2,61 +2,62 @@
 # v.2025-04-10
 # loči stock rom / lineage  +  tmux
 
-restart_screen() {
-    screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
-    if (screen -list | grep -q -i "CCminer"); then
-        killall ccminer
+if [[ -z "$(getprop ro.lineage.version)" ]]; then
+    # screen version
+    restart_screen() {
         screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
-        screen -wipe 1>/dev/null 2>&1
         if (screen -list | grep -q -i "CCminer"); then
-            killall screen
+            killall ccminer
             screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
             screen -wipe 1>/dev/null 2>&1
             if (screen -list | grep -q -i "CCminer"); then
-                rm -rf $HOME/.screen/*
+                killall screen
                 screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
                 screen -wipe 1>/dev/null 2>&1
+                if (screen -list | grep -q -i "CCminer"); then
+                    rm -rf $HOME/.screen/*
+                    screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
+                    screen -wipe 1>/dev/null 2>&1
+                fi
             fi
         fi
-    fi
-    sleep 1
-    screen -dmS CCminer 1>/dev/null 2>&1
-    screen -S CCminer -X stuff "~/ccminer -c ./config.json\n" 1>/dev/null 2>&1
-    screen -dmS Update 1>/dev/null 2>&1
-    screen -S Update -X stuff "~/ccupdate.sh\n" 1>/dev/null 2>&1
-    rm -f *.pool
-    echo "$NAME1" > ~/$NAME1.pool
-    sleep 1
-    screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
-    exit
+        sleep 1
+        screen -dmS CCminer 1>/dev/null 2>&1
+        screen -S CCminer -X stuff "~/ccminer -c ./config.json\n" 1>/dev/null 2>&1
+        screen -dmS Update 1>/dev/null 2>&1
+        screen -S Update -X stuff "~/ccupdate.sh\n" 1>/dev/null 2>&1
+        rm -f *.pool
+        echo "$NAME1" > ~/$NAME1.pool
+        sleep 1
+        screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
+        exit
     }
-
-# --------------------
-
-restart_tmux() {
-    tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
-    if (tmux list-sessions | grep -q -i "CCminer"); then
-        killall ccminer
+else    
+    # tmux version
+    restart_tmux() {
         tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
         if (tmux list-sessions | grep -q -i "CCminer"); then
-            killall tmux
+            killall ccminer
             tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
             if (tmux list-sessions | grep -q -i "CCminer"); then
-                rm -rf /tmp/tmux-*
+                killall tmux
                 tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
+                if (tmux list-sessions | grep -q -i "CCminer"); then
+                    rm -rf /tmp/tmux-*
+                    tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
+                fi
             fi
         fi
-    fi
-    sleep 1
-    tmux new-session -d -s CCminer "~/ccminer -c ./config.json"
-    tmux new-session -d -s Update "~/ccupdate.sh"
-    rm -f *.pool
-    echo "$NAME1" > ~/$NAME1.pool
-    sleep 1
-    tmux ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g"
-    exit
-}
-
+        sleep 1
+        tmux new-session -d -s CCminer "~/ccminer -c ./config.json"
+        tmux new-session -d -s Update "~/ccupdate.sh"
+        rm -f *.pool
+        echo "$NAME1" > ~/$NAME1.pool
+        sleep 1
+        tmux ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g"
+        exit
+    }
+fi
 # --------------------
 # Check for Stock OS
 if [[ -z "$(getprop ro.lineage.version)" ]]; then
