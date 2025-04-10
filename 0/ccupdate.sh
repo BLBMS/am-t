@@ -2,7 +2,7 @@
 # v.2025-04-10.006
 
 current_minute=$(date +%M)
-cs1=(($current_minute + 1)) 
+cm1=(($current_minute + 1)) 
 
 iter=1
 
@@ -45,8 +45,7 @@ else
     while true; do
         current_minute=$(date +%M)
         current_second=$(date +%S)
-        cs1=(($current_minute + 1)) 
-        
+
         # Čakamo do 00 sekunde v 00 minuti
 #        if [[ "$current_minute" == "00" && "$current_second" == "00" ]]; then
         if [[ "$current_minute" == "$cm1" && "$current_second" == "00" ]]; then
@@ -93,8 +92,8 @@ else
                     # išče zadnji zapis POOL (samo enkrat)
                     if grep -q "stratum+tcp://" "$merged_hardcopy"; then
                         ccPOOL=$(grep -m 1 "stratum+tcp://" "$merged_hardcopy" | sed -n 's/.*stratum+tcp:\/\/\([^:]*\).*/\1/p')
-                        ccPOOLP=$(grep -m 1 "stratum+tcp://" "$merged_hardcopy" | sed -n 's/.*stratum+tcp:\/\/[^:]*:\([0-9]*\).*/\1/p')
-                        echo -e "\e[93mcurrent pool: \e[92m$ccPOOL\e[0m \e[93m/ \e[92m$ccPOOLP\e[0m"
+                        ccPORT=$(grep -m 1 "stratum+tcp://" "$merged_hardcopy" | sed -n 's/.*stratum+tcp:\/\/[^:]*:\([0-9]*\).*/\1/p')
+                        echo -e "\e[93mcurrent pool: \e[92m$ccPOOL\e[93m.\e[92m$ccPORT\e[0m"
                     fi
 
                     
