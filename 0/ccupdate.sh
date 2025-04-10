@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-10.002
+# v.2025-04-10.003
 
 # nova verzija screen - tmux in surr_hash
 iter=1
@@ -44,7 +44,7 @@ else
         only1=0
         echo -n -e "\e[96m== $(date '+%Y.%m.%d %H:%M:%S') == ($iter)         \r"
         # Preverite, ali je trenutna minuta 00 (polna ura)
-        if { [[ "$(date +%M)" -eq "00" ]] && [[ "$only1"  -eq "0" ]] }; then
+        if [[ "$(date +%M)" -eq "00" ]]; then
     
             # kontrola če je tmux zablokiral
             if tmux ls 2>&1 | grep -q "^no server running on"; then
@@ -62,7 +62,7 @@ else
                 if [ -f "$hardcopy" ]; then
                     merge_log_entries "$hardcopy" "$merged_hardcopy"
                     last_line=$(get_last_share "$merged_hardcopy")
-                    if [[ -n "$last_line" ]]; then
+                    if { [[ -n "$last_line" ]] && [[ "$only1" -eq "0" ]] }; then
                         hash_rate=$(echo "$last_line" | grep -oE '[0-9]+[0-9]*\.[0-9]+[[:space:]]*[k]?H/s' | head -n 1 | tr -d ' ')
                         if [[ $hash_rate == *"kH/s"* ]]; then
                             MHS=$(echo "$hash_rate" | awk '{print $1/1000}')
