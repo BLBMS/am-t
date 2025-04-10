@@ -4,6 +4,7 @@
 
 if [[ -z "$(getprop ro.lineage.version)" ]]; then
     # screen version
+    echo "func -> screen"
     restart_screen() {
         screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
         if (screen -list | grep -q -i "CCminer"); then
@@ -34,6 +35,7 @@ if [[ -z "$(getprop ro.lineage.version)" ]]; then
     }
 else    
     # tmux version
+    echo "func -> tmux"
     restart_tmux() {
         tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
         if (tmux list-sessions | grep -q -i "CCminer"); then
