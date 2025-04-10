@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-08
+# v.2025-04-10
 #   FAJL="set-cmp";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 # usage: ./set-cmp.sh -u -m -p5 -wName
 #    -u     - update / upgrade
@@ -56,14 +56,11 @@ fi
 if [ $(pkg list-installed | grep -c nano) -eq 0 ]; then
     pkg install -y nano
 fi
-if [[ -z "$(getprop ro.lineage.version)" ]]; then
-    if [ $(pkg list-installed | grep -c screen) -eq 0 ]; then
-        pkg install -y screen
-    fi
-else
-    if [ $(pkg list-installed | grep -c tmux) -eq 0 ]; then
-        pkg install -y tmux
-    fi
+if [ $(pkg list-installed | grep -c screen) -eq 0 ]; then
+    pkg install -y screen
+fi
+if [ $(pkg list-installed | grep -c tmux) -eq 0 ]; then
+    pkg install -y tmux
 fi
 if [ "$choice_update_update" = "1" ]; then
     yes | pkg update
