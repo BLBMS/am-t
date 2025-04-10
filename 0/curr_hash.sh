@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-08
+# v.2025-04-10
 # loči stock rom / lineage  +  tmux
 
 restart_screen() {
