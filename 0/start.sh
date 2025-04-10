@@ -64,7 +64,6 @@ tmux_dead() {
         echo "Obstajajo mrtve tmux seje"
         # Pridobi ID-je mrtvih sej
         dead_sessions=$(tmux list-sessions | grep -i '(dead)' | awk -F: '{print $1}')
-    
         # Zapri vse mrtve seje
         for session in $dead_sessions; do
             tmux kill-session -t "$session"
