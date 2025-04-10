@@ -38,10 +38,10 @@ else
     hardcopy="$HOME/tmux_hardcopy"
     merged_hardcopy="$HOME/merged_tmux_hardcopy"
 
+    echo -e "\e[96m== $(date '+%Y.%m.%d %H:%M:%S') == ($iter) ==\e[0m"
     while true; do
         current_minute=$(date +%M)
         current_second=$(date +%S)
-        echo -e "\e[96m== $(date '+%Y.%m.%d %H:%M:%S') == ($iter) ==\e[0m"
         
         # Čakamo do 00 sekunde v 00 minuti
         if [[ "$current_minute" == "00" && "$current_second" == "00" ]]; then
@@ -81,15 +81,20 @@ else
                             DIFF_H=$((DIFF / 3600))
                             DIFF_M=$(( (DIFF % 3600) / 60 ))
                             DIFF_S=$((DIFF % 60))
-                            echo -e "\e[93mcMHS:\e[92m ${MHS} \e[93mfound before: \e[92m${DIFF_H}\e[93m h \e[92m${DIFF_M}\e[93m m\e[92m ${DIFF_S}\e[93m s\e[0m"
+                            echo -e "\e[93mcurrent MHS:\e[92m ${MHS} \e[93mfound b4: \e[92m${DIFF_H}\e[93m h \e[92m${DIFF_M}\e[93m m\e[92m ${DIFF_S}\e[93m s\e[0m"
                         fi
                     fi
 
                     # išče zadnji zapis POOL (samo enkrat)
                     if grep -q "stratum+tcp://" "$merged_hardcopy"; then
-                        ccPOOL=$(grep -m 1 "stratum+tcp://" "$merged_hardcopy" | sed -n 's/.*stratum+tcp:\/\/\([^ ]*\).*/\1/p')
-                        echo -e "\e[92mNajden rudarski bazen: \e[93m$ccPOOL\e[0m"
+                        ccPOOL=$(grep -m 1 "stratum+tcp://" "$merged_hardcopy" | sed -n 's/.*stratum+tcp:\/\/\([^:]*\).*/\1/p')
+                        ccPOOLP=$(grep -m 1 "stratum+tcp://" "$merged_hardcopy" | sed -n 's/.*stratum+tcp:\/\/[^:]*:\([0-9]*\).*/\1/p')
+                        echo -e "\e[93mcurrent pool: \e[92m$ccPOOL\e[0m \e[93m/ \e[92m$ccPOOLP\e[0m"
                     fi
+
+                    
+                    
+                    (($iter++)
                 fi
             fi
             
