@@ -132,6 +132,11 @@ else
     
     # Preveri procese
     if ! pgrep -f "ccminer|ccupdate.sh" >/dev/null; then
+        if ! pgrep -f "ccminer" >/dev/null; then
+            echo -e "\e[91mNo WORKING ccminer program!\e[0m"
+        else
+            echo -e "\e[91mNo WORKING ccupdate program!\e[0m"
+        fi
         restart_tmux
     fi
     
