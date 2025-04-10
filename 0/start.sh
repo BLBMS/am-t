@@ -249,6 +249,8 @@ else
     fi
 fi
 
+rm -f all.pools
 for ((i=1; i<=MAX_ORDER; i++)); do
         eval "echo -e \"\e[0;93m$i:\e[0;92m \${NAME$i} \e[0;93m/\e[0;94m \${POOL$i} \e[0m\""
+        echo eval "echo \"\${NAME$i} \${POOL$i}\"" > all.pools
 done
