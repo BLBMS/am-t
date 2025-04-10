@@ -7,6 +7,10 @@ if ! command -v tmux &> /dev/null; then
     pkg update && pkg install tmux -y
 fi
 
+if ! command -v screen &> /dev/null; then
+    pkg install screen -y
+fi
+
 cd ~/
 sshd
 
