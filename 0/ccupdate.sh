@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-10.001
+# v.2025-04-10.002
 
 # nova verzija screen - tmux in surr_hash
 iter=1
