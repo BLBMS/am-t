@@ -1,5 +1,8 @@
 #!/bin/bash
-# v.2025-04-10.005
+# v.2025-04-10.006
+
+current_minute=$(date +%M)
+cs1=(($current_minute + 1)) 
 
 iter=1
 
@@ -42,9 +45,11 @@ else
     while true; do
         current_minute=$(date +%M)
         current_second=$(date +%S)
+        cs1=(($current_minute + 1)) 
         
         # Čakamo do 00 sekunde v 00 minuti
-        if [[ "$current_minute" == "00" && "$current_second" == "00" ]]; then
+#        if [[ "$current_minute" == "00" && "$current_second" == "00" ]]; then
+        if [[ "$current_minute" == "$cm1" && "$current_second" == "00" ]]; then
             need_restart=0
             only1=0
             echo -e "\e[96m== $(date '+%Y.%m.%d %H:%M:%S') == ($iter) ==\e[0m"
@@ -94,7 +99,7 @@ else
 
                     
                     
-                    (($iter++)
+
                 fi
             fi
             
