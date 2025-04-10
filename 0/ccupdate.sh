@@ -1,7 +1,6 @@
 #!/bin/bash
-# v.2025-04-10.003
+# v.2025-04-10.004 - Popravljena verzija za enkratno izvajanje
 
-# nova verzija screen - tmux in surr_hash
 iter=1
 
 # Check for Stock OS or Lineage
@@ -40,36 +39,40 @@ else
     merged_hardcopy="$HOME/merged_tmux_hardcopy"
 
     while true; do
-        need_restart=0
-        only1=0
-        echo -n -e "\e[96m== $(date '+%Y.%m.%d %H:%M:%S') == ($iter)         \r"
-        # Preverite, ali je trenutna minuta 00 (polna ura)
-        if [[ "$(date +%M)" -eq "00" ]]; then
-    
+        current_minute=$(date +%M)
+        current_second=$(date +%S)
+        
+        # Čakamo do 00 sekunde v 00 minuti
+        if [[ "$current_minute" == "00" && "$current_second" == "00" ]]; then
+            need_restart=0
+            only1=0
+            echo -e "\e[96m== $(date '+%Y.%m.%d %H:%M:%S') == ($iter) ==\e[0m"
+            
             # kontrola če je tmux zablokiral
             if tmux ls 2>&1 | grep -q "^no server running on"; then
                 pkill -9 tmux 2>/dev/null
                 rm -rf /tmp/tmux-* 2>/dev/null
                 need_restart=1
             fi
-    
-            hardcopy="$HOME/tmux_hardcopy"
-            merged_hardcopy="$HOME/merged_tmux_hardcopy"
             
             if (tmux list-sessions | grep -q -i "CCminer"); then
                 rm -f "$hardcopy" "$merged_hardcopy"
                 tmux capture-pane -t CCminer -p -S - > "$hardcopy"
+                
                 if [ -f "$hardcopy" ]; then
                     merge_log_entries "$hardcopy" "$merged_hardcopy"
                     last_line=$(get_last_share "$merged_hardcopy")
-                    if { [[ -n "$last_line" ]] && [[ "$only1" -eq "0" ]] }; then
+                    
+                    if [[ -n "$last_line" ]]; then
                         hash_rate=$(echo "$last_line" | grep -oE '[0-9]+[0-9]*\.[0-9]+[[:space:]]*[k]?H/s' | head -n 1 | tr -d ' ')
                         if [[ $hash_rate == *"kH/s"* ]]; then
                             MHS=$(echo "$hash_rate" | awk '{print $1/1000}')
                         else
                             MHS=$(echo "$hash_rate" | awk '{print $1/1000000}')
                         fi
+                        
                         FTIME=$(echo "$last_line" | grep -oE '\[[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}\]' | head -n 1 | tr -d '[]')
+                        
                         if [[ -n "$FTIME" ]]; then
                             FTIME_TIMESTAMP=$(date -d "$FTIME" +"%s" 2>/dev/null)
                             CURRENT_TIMESTAMP=$(date +"%s")
@@ -78,23 +81,24 @@ else
                             DIFF_M=$(( (DIFF % 3600) / 60 ))
                             DIFF_S=$((DIFF % 60))
                             echo -e "\e[93mcMHS:\e[92m ${MHS} \e[93mfound before: \e[92m${DIFF_H}\e[93m h \e[92m${DIFF_M}\e[93m m\e[92m ${DIFF_S}\e[93m s\e[0m"
-                            only1=1
-                        fi # time
-                    fi # last-line
+                        fi
+                    fi
 
-                    # išče zadnji zapis POOL
+                    # išče zadnji zapis POOL (samo enkrat)
                     if grep -q "stratum+tcp://" "$merged_hardcopy"; then
                         ccPOOL=$(grep -m 1 "stratum+tcp://" "$merged_hardcopy" | sed -n 's/.*stratum+tcp:\/\/\([^ ]*\).*/\1/p')
                         echo -e "\e[92mNajden rudarski bazen: \e[93m$ccPOOL\e[0m"
                     fi
-
-                fi # hardcopy
-            fi # list-sessions
-        fi # -eq "00"
-    done # while
-
-    # ------------------------------------
+                fi
+            fi
+            
+            ((iter++))
+            
+            # Počakamo 50 sekund, da preprečimo večkratno izvajanje v isti minuti
+            sleep 50
+        else
+            # Počakamo 1 sekundo preden ponovno preverimo čas
+            sleep 1
+        fi
+    done
 fi
-    
-        
-
