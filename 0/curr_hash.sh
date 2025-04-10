@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-10.012
+# v.2025-04-10.013
 # loči stock rom / lineage  +  tmux
 cd
 # screen version
@@ -133,7 +133,6 @@ else
     echo -e "\033[0;94mLineage OS\033[0m"
     hardcopy="$HOME/tmux_hardcopy"
     merged_hardcopy="$HOME/merged_tmux_hardcopy"
-    
     # Preveri procese
     if ! pgrep -f "ccminer|ccupdate.sh" >/dev/null; then
         if ! pgrep -f "ccminer" >/dev/null; then
@@ -143,16 +142,13 @@ else
         fi
         restart_tmux
     fi
-    
     # Preveri tmux sejo in izpis
     if (tmux list-sessions | grep -q -i "CCminer"); then
         rm -f "$hardcopy" "$merged_hardcopy"
         tmux capture-pane -t CCminer -p -S -1000 > "$hardcopy"
-        
         if [ -f "$hardcopy" ]; then
             merge_log_entries "$hardcopy" "$merged_hardcopy"
             last_line=$(get_last_share "$merged_hardcopy")
-            
             if [[ -n "$last_line" ]]; then
                 hash_rate=$(echo "$last_line" | grep -oE '[0-9]+[0-9]*\.[0-9]+[[:space:]]*[k]?H/s' | head -n 1 | tr -d ' ')
                 if [[ $hash_rate == *"kH/s"* ]]; then
@@ -160,9 +156,7 @@ else
                 else
                     MHS=$(echo "$hash_rate" | awk '{print $1/1000000}')
                 fi
-                
                 FTIME=$(echo "$last_line" | grep -oE '\[[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}\]' | head -n 1 | tr -d '[]')
-                
                 if [[ -n "$FTIME" ]]; then
                     FTIME_TIMESTAMP=$(date -d "$FTIME" +"%s" 2>/dev/null)
                     CURRENT_TIMESTAMP=$(date +"%s")
@@ -171,10 +165,11 @@ else
                     DIFF_M=$(( (DIFF % 3600) / 60 ))
                     DIFF_S=$((DIFF % 60))
                     echo -e "\e[93mcMHS:\e[92m ${MHS} \e[93mfound before: \e[92m${DIFF_H}\e[93m h \e[92m${DIFF_M}\e[93m m\e[92m ${DIFF_S}\e[93m s\e[0m"
-                    #echo -e "\e[92mZadnji share: ${MHS} MH/s (pred ${DIFF_H}h ${DIFF_M}m ${DIFF_S}s)\e[0m"
                 fi
             fi
         fi
     fi
 # --------
 fi
+echo "DIFF: $DIFF"
+echo "MHS : $MHS"
