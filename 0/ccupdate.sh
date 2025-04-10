@@ -1,7 +1,10 @@
 #!/bin/bash
-# v.2025-02-22
+# v.2025-04-10
 #  najprej preveri če je ccminer DEAD ali ne dela
 
+while true; do
+  sleep 99999999
+done
 exit
 
 if screen -ls | grep -i 'dead'; then
