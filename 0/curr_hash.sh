@@ -170,8 +170,8 @@ else
                     DIFF_H=$((DIFF / 3600))
                     DIFF_M=$(( (DIFF % 3600) / 60 ))
                     DIFF_S=$((DIFF % 60))
-                    
-                    echo -e "\e[92mZadnji share: ${MHS} MH/s (pred ${DIFF_H}h ${DIFF_M}m ${DIFF_S}s)\e[0m"
+                    echo -e "\e[93mcMHS:\e[92m ${MHS} \e[93mfound before: \e[92m${DIFF_H}\e[93m h \e[92m${DIFF_M}\e[93m m\e[92m ${DIFF_S}\e[93m s\e[0m"
+                    #echo -e "\e[92mZadnji share: ${MHS} MH/s (pred ${DIFF_H}h ${DIFF_M}m ${DIFF_S}s)\e[0m"
                 fi
             fi
         fi
