@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-10.03
+# v.2025-04-10.04
 # loči stock rom / lineage  +  tmux
 
 #if [[ -z "$(getprop ro.lineage.version)" ]]; then
