@@ -1,10 +1,10 @@
 #!/bin/bash
-# v.2025-04-10.02
+# v.2025-04-10.03
 # loči stock rom / lineage  +  tmux
 
-if [[ -z "$(getprop ro.lineage.version)" ]]; then
+#if [[ -z "$(getprop ro.lineage.version)" ]]; then
     # screen version
-    echo "func -> screen"
+#    echo "func -> screen"
     restart_screen() {
         screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
         if (screen -list | grep -q -i "CCminer"); then
@@ -33,9 +33,9 @@ if [[ -z "$(getprop ro.lineage.version)" ]]; then
         screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
         exit
     }
-else    
+#else    
     # tmux version
-    echo "func -> tmux"
+#    echo "func -> tmux"
     restart_tmux() {
         tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
         if (tmux list-sessions | grep -q -i "CCminer"); then
@@ -59,7 +59,7 @@ else
         tmux ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g"
         exit
     }
-fi
+#fi
 # --------------------
 # Check for Stock OS
 if [[ -z "$(getprop ro.lineage.version)" ]]; then
@@ -93,15 +93,11 @@ if [[ -z "$(getprop ro.lineage.version)" ]]; then
                 restart_screen
             fi
         else
-                echo -e "\e[93mNo data found!\e[0m"
-                restart_screen
-            fi
-        else
-            echo -e "\e[91mNo WORKING ccminer in CCminer screen!\e[0m"
+            echo -e "\e[93mNo data found!\e[0m"
             restart_screen
         fi
     else
-        echo -e "\e[91mNo CCminer screen!\e[0m"
+        echo -e "\e[91mNo WORKING ccminer in CCminer screen!\e[0m"
         restart_screen
     fi
 else
