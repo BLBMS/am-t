@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-10.04
+# v.2025-04-10.05
 # loči stock rom / lineage  +  tmux
 
 #if [[ -z "$(getprop ro.lineage.version)" ]]; then
@@ -44,10 +44,10 @@
             if (tmux list-sessions | grep -q -i "CCminer"); then
                 killall tmux
                 tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
-                if (tmux list-sessions | grep -q -i "CCminer"); then
-                    rm -rf /tmp/tmux-*
-                    tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
-                fi
+#                if (tmux list-sessions | grep -q -i "CCminer"); then
+#                    rm -rf /tmp/tmux-*
+#                    tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
+#                fi
             fi
         fi
         sleep 1
@@ -56,7 +56,7 @@
         rm -f *.pool
         echo "$NAME1" > ~/$NAME1.pool
         sleep 1
-        tmux ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g"
+        tmux ls -F "#{session_name}:#{session_id} [#{session_windows} windows] #{session_created}" | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g"
         exit
     }
 #fi
