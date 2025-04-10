@@ -41,6 +41,7 @@ else
     while true; do
         current_minute=$(date +%M)
         current_second=$(date +%S)
+        echo -e "\e[96m== $(date '+%Y.%m.%d %H:%M:%S') == ($iter) ==\e[0m"
         
         # Čakamo do 00 sekunde v 00 minuti
         if [[ "$current_minute" == "00" && "$current_second" == "00" ]]; then
