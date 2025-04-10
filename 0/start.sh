@@ -56,22 +56,22 @@ tmux_current_hash() {
 
 tmux_dead() {
     # Kontrola DEAD tmux sessions
-if tmux list-sessions | grep -i '(dead)'; then
-    echo "Obstajajo mrtve tmux seje"
-    # Pridobi ID-je mrtvih sej
-    dead_sessions=$(tmux list-sessions | grep -i '(dead)' | awk -F: '{print $1}')
-
-    # Zapri vse mrtve seje
-    for session in $dead_sessions; do
-        tmux kill-session -t "$session"
-    done
-    # Dodatno čiščenje če je potrebno
-    if tmux list-sessions | grep -q -i '(dead)'; then
-        killall tmux
-        rm -rf /tmp/tmux-*
+    if tmux list-sessions | grep -i '(dead)'; then
+        echo "Obstajajo mrtve tmux seje"
+        # Pridobi ID-je mrtvih sej
+        dead_sessions=$(tmux list-sessions | grep -i '(dead)' | awk -F: '{print $1}')
+    
+        # Zapri vse mrtve seje
+        for session in $dead_sessions; do
+            tmux kill-session -t "$session"
+        done
+        # Dodatno čiščenje če je potrebno
+        if tmux list-sessions | grep -q -i '(dead)'; then
+            killall tmux
+            rm -rf /tmp/tmux-*
+        fi
     fi
-fi
-
+}
 # screen -----------------------------------------------------------------------------------------
 
 screen_start_pool() {
