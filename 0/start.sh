@@ -161,7 +161,7 @@ ime_iz_pool=$(basename ~/*.pool)
 obst_pool=${ime_iz_pool%.pool}
 echo -e "\e[0m  First pool :\e[96m $obst_pool\e[0m"
 # config file
-CJOSN="config.json"
+CJSON="config.json"
 # Potatki iz github
 CFAJL="config_orders.json"
 rm -f $CFAJL
@@ -198,8 +198,8 @@ for ((i=1; i<=MAX_ORDER; i++)); do
     fi
 done
 sed -i "s#ORDERS#$ORDERS#g; s#USER#$USER1#g; s#DELAVEC#$DELAVEC#g; s#PASS#$PASS1#g" $CFAJL
-rm -f $CJOSN
-jq . $CFAJL > $CJOSN
+rm -f $CJSON
+jq . $CFAJL > $CJSON
 
 # PREVERI OS
 # na rabim (če ccminer ni aktiven): if ! pgrep -f 'ccminer' >/dev/null; then
