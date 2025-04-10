@@ -19,7 +19,7 @@ else
             buffer = $0
             next
         }
-        { 
+        {
             # Posebej obravnavamo vrstice s hash rate in stratum povezavami
             if ($0 ~ /[0-9]+\.[0-9]+ [k]?H\/s/ || $0 ~ /stratum\+tcp:\/\//) {
                 buffer = buffer $0  # Brez presledka za temi vrsticami
