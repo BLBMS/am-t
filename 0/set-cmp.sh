@@ -393,7 +393,7 @@ if [[ -z "$(getprop ro.lineage.version)" ]]; then
     echo -e "\033[0;91mSTOCK OS\033[0m"
     PS1='${debian_chroot:+($debian_chroot)}\[\033[0;93m\]$delavec\[\033[0;91m\]@\[\033[0;92m\]$phone_ip\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
     if [[ ! -z "$WINDOW" ]]; then PS1="\[\e[01;31m\][${PS1}\e[01;31m\]]\[\e[0m\]"; fi
-    
+
     alias ss='~/start.sh'
     alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit && screen -ls'
     alias sl='screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1'
