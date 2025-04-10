@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-10.009
+# v.2025-04-10.010
 # loči stock rom / lineage  +  tmux
 cd
 # screen version
@@ -38,14 +38,6 @@ restart_screen() {
 
 # Funkcija za združevanje log vnosov
 merge_log_entries() {
-    local input_file="$1"
-    local output_file="$2"
-    
-    # Pripravi začasno datoteko
-    rm -f "$output_file"
-    touch "$output_file"
-    
-    # Združi vrstice, ki pripadajo istemu log vnosu
     awk '
     BEGIN { buffer = "" }
     /^\[[0-9]{4}-[0-9]{2}-[0-9]{2}/ {
@@ -53,9 +45,16 @@ merge_log_entries() {
         buffer = $0
         next
     }
-    { buffer = buffer " " $0 }
+    { 
+        # Posebej obravnavamo vrstice s hash rate, da preprečimo dodajanje presledkov
+        if ($0 ~ /[0-9]+\.[0-9]+ [k]?H\/s/) {
+            buffer = buffer $0  # Brez presledka za hash rate vrednostmi
+        } else {
+            buffer = buffer " " $0  # Normalen presledek za druge vrstice
+        }
+    }
     END { if (buffer != "") print buffer }
-    ' "$input_file" > "$output_file"
+    ' "$1" > "$2"
 }
 
 # Izboljšana funkcija za ponovni zagon tmux sej
@@ -152,16 +151,16 @@ else
             
             # Poišči zadnji sprejeti share (bolj fleksibilno ujemanje)
             last_line=$(grep -E "accepted.*(yes\!|boooo)" "$merged_hardcopy" | tail -n 1)
-            
+
             if [[ -n "$last_line" ]]; then
-                # Ekstrahiraj hash rate (bolj robustno razčlenjevanje)
-                hash_rate=$(echo "$last_line" | grep -oE '[0-9]+\.[0-9]+ [k]?H/s' | head -n 1)
+                # Popravljeno branje hash rate - zdaj upošteva morebitne presledke
+                hash_rate=$(echo "$last_line" | grep -oE '[0-9]+[ ]*[0-9]*\.[0-9]+ [k]?H/s' | head -n 1 | tr -d ' ')
                 if [[ $hash_rate == *"kH/s"* ]]; then
                     MHS=$(echo "$hash_rate" | awk '{print $1/1000}')
                 else
                     MHS=$(echo "$hash_rate" | awk '{print $1/1000000}')
                 fi
-                
+
                 # Ekstrahiraj časovni žig (natančnejše ujemanje)
                 FTIME=$(echo "$last_line" | grep -oE '\[[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}\]' | head -n 1 | tr -d '[]')
                 
