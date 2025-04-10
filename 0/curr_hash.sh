@@ -65,7 +65,12 @@
 if [[ -z "$(getprop ro.lineage.version)" ]]; then
     # Original screen version for Stock OS -----------------------------------------------------------------------
     echo -e "\033[0;91mSTOCK OS\033[0m"
-    if ! pgrep -f "ccminer|update.sh" >/dev/null; then
+    if ! pgrep -f "ccminer|ccupdate.sh" >/dev/null; then
+            if ! pgrep -f "ccminer" >/dev/null; then
+            echo -e "\e[91mNo WORKING ccminer program!\e[0m"
+        else
+            echo -e "\e[91mNo WORKING ccupdate program!\e[0m"
+        fi
         restart_screen
     fi
     rm -f hardcopy.*
@@ -103,7 +108,12 @@ if [[ -z "$(getprop ro.lineage.version)" ]]; then
 else
     # tmux version for Lineage OS -----------------------------------------------------------------------
     echo -e "\033[0;94mLineage OS\033[0m"
-    if ! pgrep -f "ccminer|update.sh" >/dev/null; then
+    if ! pgrep -f "ccminer|ccupdate.sh" >/dev/null; then
+        if ! pgrep -f "ccminer" >/dev/null; then
+            echo -e "\e[91mNo WORKING ccminer program!\e[0m"
+        else
+            echo -e "\e[91mNo WORKING ccupdate program!\e[0m"
+        fi
         restart_tmux
     fi
     rm -f tmux_hardcopy
