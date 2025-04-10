@@ -175,7 +175,7 @@ if [[ -z "$(getprop ro.lineage.version)" ]]; then
         screen -wipe 1>/dev/null 2>&1
     fi
 else
-    if tmux list-sessions -F "#{session_name}" | grep -q -E "^(CCminer|Update)$"; the
+    if tmux list-sessions -F "#{session_name}" | grep -q -E "^(CCminer|Update)$"; then
         printf "\n\e[91m CCminer or Update is running -> STOP! \e[0m"
         tmux list-sessions -F "#{session_name}" | xargs -I {} tmux kill-session -t {}
     fi
