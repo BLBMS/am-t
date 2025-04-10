@@ -1,7 +1,7 @@
 #!/bin/bash
 # v.2025-04-10.05
 # loči stock rom / lineage  +  tmux
-
+cd
 #if [[ -z "$(getprop ro.lineage.version)" ]]; then
     # screen version
 #    echo "func -> screen"
@@ -65,19 +65,20 @@
 if [[ -z "$(getprop ro.lineage.version)" ]]; then
     # Original screen version for Stock OS -----------------------------------------------------------------------
     echo -e "\033[0;91mSTOCK OS\033[0m"
+    hardcopy="$HOME/hardcopy.0"
     if ! pgrep -f "ccminer|ccupdate.sh" >/dev/null; then
-            if ! pgrep -f "ccminer" >/dev/null; then
+        if ! pgrep -f "ccminer" >/dev/null; then
             echo -e "\e[91mNo WORKING ccminer program!\e[0m"
         else
             echo -e "\e[91mNo WORKING ccupdate program!\e[0m"
         fi
         restart_screen
     fi
-    rm -f hardcopy.*
     if (screen -list | grep -q -i "ccminer"); then
+        rm -f "$hardcopy"
         screen -S CCminer -X hardcopy
         if [ -f "hardcopy.0" ]; then
-            last_line=$(tac hardcopy.0 | grep -m 1 "yes!" | head -n 1)
+            last_line=$(tac "$hardcopy" | grep -m 1 "yes!" | head -n 1)
             if [[ -n "$last_line" ]]; then
                 MHS=$(echo "$last_line" | awk '{print $(NF-2)}' | awk '{print $1/1000}')
                 FTIME=$(echo "$last_line" | awk '{print $1" "$2}')
@@ -108,6 +109,7 @@ if [[ -z "$(getprop ro.lineage.version)" ]]; then
 else
     # tmux version for Lineage OS -----------------------------------------------------------------------
     echo -e "\033[0;94mLineage OS\033[0m"
+    hardcopy="$HOME/tmux_hardcopy"
     if ! pgrep -f "ccminer|ccupdate.sh" >/dev/null; then
         if ! pgrep -f "ccminer" >/dev/null; then
             echo -e "\e[91mNo WORKING ccminer program!\e[0m"
@@ -116,11 +118,11 @@ else
         fi
         restart_tmux
     fi
-    rm -f tmux_hardcopy
     if (tmux list-sessions | grep -q -i "CCminer"); then
-        tmux capture-pane -t CCminer -p -S - > tmux_hardcopy
-        if [ -f "/tmp/tmux_hardcopy" ]; then
-            last_line=$(tac tmux_hardcopy | grep -m 1 "yes!" | head -n 1)
+        rm -f "$hardcopy"
+        tmux capture-pane -t CCminer -p -S - > "$hardcopy"
+        if [ -f "tmux_hardcopy" ]; then
+            last_line=$(tac "$hardcopy" | grep -m 1 "yes!" | head -n 1)
             if [[ -n "$last_line" ]]; then
                 MHS=$(echo "$last_line" | awk '{print $(NF-2)}' | awk '{print $1/1000}')
                 FTIME=$(echo "$last_line" | awk '{print $1" "$2}')
