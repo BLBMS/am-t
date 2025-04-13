@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-13.002
+# v.2025-04-13.003
 
 iter=1
 
@@ -39,6 +39,10 @@ else
     merged_hardcopy="$HOME/merged_tmux_hardcopy"
 
     echo -e "\e[96m== $(date '+%Y.%m.%d %H:%M:%S') == ($iter) ==\e[0m"
+
+#    za TEST
+    cm1=$(( ($(date +%M) + 1) % 60 ))
+    
     while true; do
         current_minute=$(date +%M)
         current_second=$(date +%S)
@@ -47,7 +51,7 @@ else
 #        if [[ "$current_minute" == "00" && "$current_second" == "00" ]]; then
 
 #        za TEST - naslednja polna minuta
-        cm1=$(( (current_minute + 1) % 60 ))
+
         echo "čakam minuto: $cm1"
         if [[ "$current_minute" == "$cm1" && "$current_second" -le "3" ]]; then
             echo "dočakal: $cm1 v sekundi: $(date +%S)"
