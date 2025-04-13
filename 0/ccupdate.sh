@@ -1,7 +1,8 @@
 #!/bin/bash
-# v.2025-04-13.003
+# v.2025-04-13.006
 
 iter=1
+MAX_DIFF_M=5    # nastavitev max. minut od zadnjega hasha
 
 # Check for Stock OS or Lineage
 if [[ -z "$(getprop ro.lineage.version)" ]]; then
@@ -35,6 +36,13 @@ else
         grep -E "accepted.*(yes|boooo)[[:space:]]*[\!]?" "$1" | tail -n 1
     }
 
+    # funkcija za restart
+    restart_ccminer_tmux() {
+        tmux kill-session -t CCminer 
+        tmux new-session -d -s CCminer
+        tmux send-keys -t CCminer "~/ccminer -c ~/config.json" C-m
+    }
+
     hardcopy="$HOME/tmux_hardcopy"
     merged_hardcopy="$HOME/merged_tmux_hardcopy"
 
@@ -51,8 +59,9 @@ else
 #        if [[ "$current_minute" == "00" && "$current_second" == "00" ]]; then
 
 #        za TEST - naslednja polna minuta
-
         echo "čakam minuto: $cm1"
+        sleep $((60 - $(date +%s) % 60))
+
         if [[ "$current_minute" == "$cm1" && "$current_second" -le "3" ]]; then
             echo "dočakal: $cm1 v sekundi: $(date +%S)"
         
@@ -97,7 +106,7 @@ else
                             echo -e "\e[93mcurrent MHS:\e[92m ${MHS} \e[93mfound b4: \e[92m${DIFF_H}\e[93m h \e[92m${DIFF_M}\e[93m m\e[92m ${DIFF_S}\e[93m s\e[0m"
                         fi
                     else
-                        echo "ni nobenega zapisa hasha"
+                        echo -e "\e[93mno hasha found\e[0m"
                         need_restart=1
                     fi
 
@@ -108,9 +117,21 @@ else
                         echo -e "\e[93mcurrent pool: \e[92m$ccPOOL\e[93m.\e[92m$ccPORT\e[0m"
                     fi
 
-                    
-                    
+                    # UKREPI
 
+                    if [ $need_restart = 1 ]; then
+                        need_restart=0
+                        restart_ccminer_tmux
+                    else
+                        # predolgo od zadnjega hasha
+                        MAX_DIFF=$(( MAX_DIFF_M * 60 ))
+                        if [ $MAX_DIFF -lt $DIFF ]; then
+                            echo -e "\e[93mhash time limit exceeded: \e[91m$((DIFF / 60))\e[93m > \e[92m$MAX_DIFF_M\e[0m"
+                            need_restart=0
+                            restart_ccminer_tmux
+                        fi
+                    fi
+                    # konec UKREPOV
                 fi
             fi
             
