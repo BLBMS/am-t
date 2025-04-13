@@ -1,6 +1,6 @@
 #!/bin/bash
-# v.2025-04-11
-# loči stock rom / lineage  +  tmux
+# v.2025-04-13.001
+# loči stock rom / lineage  +  tmux + zapiše v all.pools
 
 if ! command -v tmux &> /dev/null; then
     echo -e "---nameščam tmux---"
@@ -179,6 +179,7 @@ for ((i=1; i<=MAX_ORDER; i++)); do
     eval PASS$i='$(jq -r ".[] | select(.order==\"'$i'\") | .pass" "$PFAJL")'
 done
 # Sestavi podatke od 1 do MAX_ORDER
+rm -f all.pools
 ORDERS=""
 for ((i=1; i<=MAX_ORDER; i++)); do
     NAME=$(eval echo \${NAME$i})
@@ -190,6 +191,12 @@ for ((i=1; i<=MAX_ORDER; i++)); do
         else
             ORDERS+=$(printf '{"name": "%s","url": "stratum+tcp://%s","timeout": 600, "time-limit": 600,"disabled": 0}' "$NAME" "$POOL")
         fi
+
+        eval "echo -e \"\e[0;93m$i:\e[0;92m \${NAME$i} \e[0;93m/\e[0;94m \${POOL$i} \e[0m\""
+        pool_host=${!pool_addr_var%:*}
+        echo "$pool_host" >> all.pools
+
+        
         # Add comma only if it's not the last entry
         if [[ $i -ne $MAX_ORDER ]]; then
             ORDERS+=","
@@ -248,9 +255,9 @@ else
     fi
 fi
 
-rm -f all.pools
-for ((i=1; i<=MAX_ORDER; i++)); do
-        eval "echo -e \"\e[0;93m$i:\e[0;92m \${NAME$i} \e[0;93m/\e[0;94m \${POOL$i} \e[0m\""
-        pool_host=${!pool_addr_var%:*}
-        echo "$pool_host" >> all.pools
-done
+#rm -f all.pools
+#for ((i=1; i<=MAX_ORDER; i++)); do
+#        eval "echo -e \"\e[0;93m$i:\e[0;92m \${NAME$i} \e[0;93m/\e[0;94m \${POOL$i} \e[0m\""
+#        pool_host=${!pool_addr_var%:*}
+#        echo "$pool_host" >> all.pools
+#done
