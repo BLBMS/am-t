@@ -1,9 +1,6 @@
 #!/bin/bash
 # v.2025-04-10.007
 
-#current_minute=$(date +%M)
-#cm1=(($current_minute + 1)) 
-
 iter=1
 
 # Check for Stock OS or Lineage
@@ -47,8 +44,12 @@ else
         current_second=$(date +%S)
 
         # Čakamo do 00 sekunde v 00 minuti
-        if [[ "$current_minute" == "00" && "$current_second" == "00" ]]; then
-#        if [[ "$current_minute" == "$cm1" && "$current_second" == "00" ]]; then
+#        if [[ "$current_minute" == "00" && "$current_second" == "00" ]]; then
+
+#        za TEST - naslednja polna minuta
+        cm1=$(( (current_minute + 1) % 60 ))
+        if [[ "$current_minute" == "$cm1" && "$current_second" -le "3" ]]; then
+
             need_restart=0
             only1=0
             echo -e "\e[96m== $(date '+%Y.%m.%d %H:%M:%S') == ($iter) ==\e[0m"
