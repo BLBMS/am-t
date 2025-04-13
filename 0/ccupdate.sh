@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-13.001
+# v.2025-04-13.002
 
 iter=1
 
@@ -48,8 +48,10 @@ else
 
 #        za TEST - naslednja polna minuta
         cm1=$(( (current_minute + 1) % 60 ))
+        echo "čakam minuto: $cm1"
         if [[ "$current_minute" == "$cm1" && "$current_second" -le "3" ]]; then
-
+            echo "dočakal: $cm1 v sekundi: $(date +%S)"
+        
             need_restart=0
             only1=0
             echo -e "\e[96m== $(date '+%Y.%m.%d %H:%M:%S') == ($iter) ==\e[0m"
