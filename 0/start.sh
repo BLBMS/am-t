@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-13.002
+# v.2025-04-13.003
 # loči stock rom / lineage  +  tmux + zapiše v all.pools
 
 if ! command -v tmux &> /dev/null; then
@@ -192,7 +192,7 @@ for ((i=1; i<=MAX_ORDER; i++)); do
             ORDERS+=$(printf '{"name": "%s","url": "stratum+tcp://%s","timeout": 600, "time-limit": 600,"disabled": 0}' "$NAME" "$POOL")
         fi
 
-        pool_host=${!POOL%:*}
+        pool_host=${POOL%:*}
         echo -e "\e[0;93m$i:\e[0;92m \${NAME} \e[0;93m/\e[0;94m \${POOL} \e[0m: pool host:\e[0;92m $pool_host\e[0m"
         echo "$pool_host" >> all.pools
 
