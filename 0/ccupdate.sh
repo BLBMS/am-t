@@ -55,20 +55,22 @@ else
             echo -e "\e[96m== $(date '+%Y.%m.%d %H:%M:%S') == ($iter) ==\e[0m"
             
             # kontrola če je tmux zablokiral
-            if tmux ls 2>&1 | grep -q "^no server running on"; then
+            if tmux ls 2>&1 | grep -q "^no server running"; then
                 pkill -9 tmux 2>/dev/null
                 rm -rf /tmp/tmux-* 2>/dev/null
                 need_restart=1
-            fi
-            
-            if (tmux list-sessions | grep -q -i "CCminer"); then
+            # kontrola če delujočega ccminer v tmux
+            elif (tmux list-sessions | grep -q -i "CCminer"); then
                 rm -f "$hardcopy" "$merged_hardcopy"
+                # naredi kopijo vsebine tmux
                 tmux capture-pane -t CCminer -p -S - > "$hardcopy"
-                
+                # če obstaja zapis vsebine v datoteki
                 if [ -f "$hardcopy" ]; then
+                    # združi prelomljene vrstice
                     merge_log_entries "$hardcopy" "$merged_hardcopy"
+                    # kliče funkcijo get_last_share
                     last_line=$(get_last_share "$merged_hardcopy")
-                    
+                    # išče zadnji hash
                     if [[ -n "$last_line" ]]; then
                         hash_rate=$(echo "$last_line" | grep -oE '[0-9]+[0-9]*\.[0-9]+[[:space:]]*[k]?H/s' | head -n 1 | tr -d ' ')
                         if [[ $hash_rate == *"kH/s"* ]]; then
@@ -88,6 +90,9 @@ else
                             DIFF_S=$((DIFF % 60))
                             echo -e "\e[93mcurrent MHS:\e[92m ${MHS} \e[93mfound b4: \e[92m${DIFF_H}\e[93m h \e[92m${DIFF_M}\e[93m m\e[92m ${DIFF_S}\e[93m s\e[0m"
                         fi
+                    else
+                        echo "ni nobenega zapisa hasha"
+                        need_restart=1
                     fi
 
                     # išče zadnji zapis POOL (samo enkrat)
