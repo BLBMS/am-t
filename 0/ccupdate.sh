@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-13.006
+# v.2025-04-13.007
 
 iter=1
 MAX_DIFF_M=5    # nastavitev max. minut od zadnjega hasha
@@ -49,21 +49,21 @@ else
     echo -e "\e[96m== $(date '+%Y.%m.%d %H:%M:%S') == ($iter) ==\e[0m"
 
 #    za TEST
-    cm1=$(( ($(date +%M) + 1) % 60 ))
-    
+#    cm1=$(( ($(date +%M) + 1) % 60 ))
+
+
     while true; do
+        sleep $((60 - $(date +%s) % 60))
         current_minute=$(date +%M)
         current_second=$(date +%S)
 
         # Čakamo do 00 sekunde v 00 minuti
-#        if [[ "$current_minute" == "00" && "$current_second" == "00" ]]; then
+        if [[ "$current_minute" == "00" && "$current_second" -le "3" ]]; then
 
 #        za TEST - naslednja polna minuta
-        echo "čakam minuto: $cm1"
-        sleep $((60 - $(date +%s) % 60))
-
-        if [[ "$current_minute" == "$cm1" && "$current_second" -le "3" ]]; then
-            echo "dočakal: $cm1 v sekundi: $(date +%S)"
+#        echo "čakam minuto: $cm1"
+#        if [[ "$current_minute" == "$cm1" && "$current_second" -le "3" ]]; then
+#            echo "dočakal: $cm1 v sekundi: $(date +%S)"
         
             need_restart=0
             only1=0
@@ -130,18 +130,12 @@ else
                             need_restart=0
                             restart_ccminer_tmux
                         fi
-                    fi
-                    # konec UKREPOV
-                fi
-            fi
-            
-            ((iter++))
-            
-            # Počakamo 50 sekund, da preprečimo večkratno izvajanje v isti minuti
-            sleep 50
-        else
-            # Počakamo 1 sekundo preden ponovno preverimo čas
-            sleep 1
-        fi
-    done
-fi
+                    fi    # konec UKREPOV
+                fi    # če obstaja zapis vsebine v datoteki
+            fi    # kontrola če je tmux zablokiral
+        fi    # na točno uro
+        ((iter++))
+        # Počakamo do naslednje polne ure preden ponovno preverimo
+        sleep $(( (60 - 10#$(date +%M)) * 60 - 10#$(date +%S) ))
+    done    # ponavlja neskončno
+fi    # Check for Stock OS or Lineage
