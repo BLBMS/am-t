@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-15.001
+# v.2025-04-15.002
 # loči stock rom / lineage  +  tmux + zapiše v all.pools
 
 if ! command -v tmux &> /dev/null; then
@@ -31,9 +31,9 @@ tmux_start_pool() {
     fi
     sleep 1
     tmux new-session -d -s CCminer
-    tmux send-keys -t CCminer "~/ccminer -c ./config.json" C-m
+    tmux send-keys -t CCminer "~/ccminer -c ~/config.json" C-m
     tmux new-session -d -s Update
-    tmux send-keys -t CCminer "~/ccupdate.sh" C-m
+    tmux send-keys -t Update "~/ccupdate.sh" C-m
     rm -f *.pool
     echo "$NAME1" > ~/$NAME1.pool
     sleep 1
