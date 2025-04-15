@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-13.003
+# v.2025-04-15.001
 # loči stock rom / lineage  +  tmux + zapiše v all.pools
 
 if ! command -v tmux &> /dev/null; then
@@ -24,7 +24,7 @@ tmux_start_pool() {
             killall tmux
             tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
             if (tmux list-sessions | grep -q -i "CCminer"); then
-                rm -rf /tmp/tmux-*
+                rm -rf tmux-*
                 tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
             fi
         fi
@@ -41,8 +41,8 @@ tmux_start_pool() {
 }
 
 tmux_current_hash() {
-    tmux capture-pane -t CCminer -p -S - > /tmp/tmux_hardcopy
-    last_line=$(tac /tmp/tmux_hardcopy | grep -m 1 "yes!" | head -n 1)
+    tmux capture-pane -t CCminer -p -S - > tmux_hardcopy
+    last_line=$(tac tmux_hardcopy | grep -m 1 "yes!" | head -n 1)
     if [[ -n "$last_line" ]]; then
         MHS=$(echo "$last_line" | awk '{print $(NF-2)}' | awk '{print $1/1000}')
         FTIME=$(echo "$last_line" | awk '{print $1" "$2}')
@@ -55,7 +55,7 @@ tmux_current_hash() {
         DIFF_S=$((DIFF % 60))
         echo -e "\e[93mcMHS:\e[92m $MHS \e[93mfound before: \e[92m$DIFF_H\e[93m h \e[92m$DIFF_M\e[93m m\e[92m $DIFF_S\e[93m s\e[0m"
     fi
-    rm -f /tmp/tmux_hardcopy
+    rm -f tmux_hardcopy
 }
 
 tmux_dead() {
