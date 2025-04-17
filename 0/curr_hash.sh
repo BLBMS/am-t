@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-17.002
+# v.2025-04-17.003
 # loči stock rom / lineage  +  tmux
 cd
 # screen version
