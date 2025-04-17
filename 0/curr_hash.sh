@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-17.001
+# v.2025-04-17.002
 # loči stock rom / lineage  +  tmux
 cd
 # screen version
@@ -92,7 +92,7 @@ if [[ -z "$(getprop ro.lineage.version)" ]]; then
         if ! pgrep -f "ccminer" >/dev/null; then
             echo -e "\e[91mNo WORKING ccminer program!\e[0m"
         fi
-        if ! pgrep -f "ccupdate.sh" >/dev/null; the
+        if ! pgrep -f "ccupdate.sh" >/dev/null; then
             echo -e "\e[91mNo WORKING ccupdate program!\e[0m"
         fi
         restart_screen
@@ -139,7 +139,7 @@ else
         if ! pgrep -f "ccminer" >/dev/null; then
             echo -e "\e[91mNo WORKING ccminer program!\e[0m"
         fi
-        if ! pgrep -f "ccupdate.sh" >/dev/null; the
+        if ! pgrep -f "ccupdate.sh" >/dev/null; then
             echo -e "\e[91mNo WORKING ccupdate program!\e[0m"
         fi
         echo "go to restart ..."
