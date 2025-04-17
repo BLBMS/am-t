@@ -91,7 +91,8 @@ if [[ -z "$(getprop ro.lineage.version)" ]]; then
     if ! pgrep -f "ccminer|ccupdate.sh" >/dev/null; then
         if ! pgrep -f "ccminer" >/dev/null; then
             echo -e "\e[91mNo WORKING ccminer program!\e[0m"
-        else
+        fi
+        if ! pgrep -f "ccupdate.sh" >/dev/null; the
             echo -e "\e[91mNo WORKING ccupdate program!\e[0m"
         fi
         restart_screen
@@ -137,9 +138,11 @@ else
     if ! pgrep -f "ccminer|ccupdate.sh" >/dev/null; then
         if ! pgrep -f "ccminer" >/dev/null; then
             echo -e "\e[91mNo WORKING ccminer program!\e[0m"
-        else
+        fi
+        if ! pgrep -f "ccupdate.sh" >/dev/null; the
             echo -e "\e[91mNo WORKING ccupdate program!\e[0m"
         fi
+        echo "go to restart ..."
         restart_tmux
     fi
     # Preveri tmux sejo in izpis
