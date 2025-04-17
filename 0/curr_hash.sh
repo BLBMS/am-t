@@ -69,17 +69,17 @@ restart_tmux() {
     tmux list-sessions | awk -F: '{print $1}' | xargs -I {} tmux kill-session -t {}
     sleep 1
     # Preveri, ali so seje res ustavljene
-    if ! tmux list-sessions | grep -q "CCminer\|Update"; then
+    #if ! tmux list-sessions | grep -q "CCminer\|Update"; then
         tmux new-session -d -s CCminer
         tmux send-keys -t CCminer "~/ccminer -c ./config.json" C-m
         tmux new-session -d -s Update
         tmux send-keys -t Update "~/ccupdate.sh" C-m
-    else
-        echo -e "\e[91mNapaka pri ustavljanju obstoječih sej!\e[0m"
-        tmux kill-server
-        sleep 2
-        restart_tmux
-    fi
+    #else
+    #    echo -e "\e[91mNapaka pri ustavljanju obstoječih sej!\e[0m"
+    #    tmux kill-server
+    #    sleep 2
+    #    restart_tmux
+    #fi
 }
 
 # --------------------
@@ -174,5 +174,5 @@ else
     fi
 # --------
 fi
-echo "DIFF: $DIFF"
-echo "MHS : $MHS"
+#echo "DIFF: $DIFF"
+#echo "MHS : $MHS"
