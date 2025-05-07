@@ -1,5 +1,6 @@
 #!/bin/bash
 # v.2024-12-10
+# start 6
 #   FAJL="start";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 sshd
 screen -wipe 1>/dev/null 2>&1
