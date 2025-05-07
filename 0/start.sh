@@ -1,6 +1,10 @@
 #!/bin/bash
-# v.2025-04-15.002
+# v.2025-05-07.001
+# start 11
 # loči stock rom / lineage  +  tmux + zapiše v all.pools
+# izjemo samo za S8a in S8b
+
+IZJEMA="S8a S8b"
 
 if ! command -v tmux &> /dev/null; then
     echo -e "---nameščam tmux---"
