@@ -1,5 +1,6 @@
 #!/bin/bash
 # v.2025-04-08
+# start 9
 # loči stock rom / lineage  +  tmux
 
 if ! command -v tmux &> /dev/null; then
