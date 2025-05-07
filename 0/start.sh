@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-05-07.002
+# v.2025-05-07.003
 # start 11
 # loči stock rom / lineage  +  tmux + zapiše v all.pools
 # izjemo samo za S8a in S8b
