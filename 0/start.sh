@@ -213,9 +213,12 @@ jq . $CFAJL > $CJSON
 
 # preveri IZJEMO
 IZJEMA=0
-if grep -q "$DELAVEC" "$IZJEME"; then
-    IZJEMA=1
-fi
+for izjema in $IZJEME; do
+    if [[ "$DELAVEC" == "$izjema" ]]; then
+        IZJEMA=1
+        break
+    fi
+done
 
 # PREVERI OS
 # na rabim (če ccminer ni aktiven): if ! pgrep -f 'ccminer' >/dev/null; then
