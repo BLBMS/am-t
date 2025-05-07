@@ -1,6 +1,7 @@
 #!/bin/bash
 # v.2025-02-21
 # za pop
+# start 8
 # # F="start.sh";cd ~/;rm -f $F;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$F;chmod +x $F
 cd ~/
 sshd
