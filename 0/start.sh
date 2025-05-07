@@ -211,10 +211,17 @@ sed -i "s#ORDERS#$ORDERS#g; s#USER#$USER1#g; s#DELAVEC#$DELAVEC#g; s#PASS#$PASS1
 rm -f $CJSON
 jq . $CFAJL > $CJSON
 
+# preveri IZJEMO
+IZJEMA=0
+if grep -q "$DELAVEC" "$IZJEME"; then
+    IZJEMA=1
+fi
+
 # PREVERI OS
 # na rabim (če ccminer ni aktiven): if ! pgrep -f 'ccminer' >/dev/null; then
 lineage_version=$(getprop ro.lineage.version)
-if [[ -z "$lineage_version" ]]; then
+#if [[ -z "$lineage_version" ]]; then
+if [[ -z "$lineage_version" ]] && [[ "$IZJEMA" == "1" ]]; then
     echo "stock OS"
     screen_dead
 
