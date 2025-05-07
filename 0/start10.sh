@@ -1,5 +1,6 @@
 #!/bin/bash
 # v.2025-04-15.002
+# start 10
 # loči stock rom / lineage  +  tmux + zapiše v all.pools
 
 if ! command -v tmux &> /dev/null; then
