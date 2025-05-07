@@ -1,6 +1,7 @@
 #!/bin/bash
 # v.2025-02-05
 # za pop10
+# start 7
 # FAJL="start.sh";cd ~/;rm -f $FAJL;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL;chmod +x $FAJL
 
 sshd
