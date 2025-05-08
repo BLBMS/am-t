@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-04-17.003
+# v.2025-05-09.001
 # loči stock rom / lineage  +  tmux
 cd
 # screen version
@@ -86,7 +86,7 @@ restart_tmux() {
 # Check for Stock OS
 if [[ -z "$(getprop ro.lineage.version)" ]]; then
     # Original screen version for Stock OS -----------------------------------------------------------------------
-    echo -e "\033[0;91mSTOCK OS\033[0m"
+    #echo -e "\033[0;91mSTOCK OS\033[0m"
     hardcopy="$HOME/hardcopy.0"
     if ! pgrep -f "ccminer|ccupdate.sh" >/dev/null; then
         if ! pgrep -f "ccminer" >/dev/null; then
