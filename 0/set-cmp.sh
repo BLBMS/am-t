@@ -165,17 +165,10 @@ sed -i 's/^#allow-external-apps = true*/allow-external-apps = true/' ~/.termux/t
 echo "done"
 cd ~/
 
-if [[ -z "$(getprop ro.lineage.version)" ]]; then
-    if screen -ls | grep -Ei 'ccminer|update'; then
-        printf "\n\e[91m CCminer or Update is running -> STOP! \e[0m"
-        screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit
-        screen -wipe 1>/dev/null 2>&1
-    fi
-else
-    if tmux list-sessions -F "#{session_name}" | grep -q -E "^(CCminer|Update)$"; then
-        printf "\n\e[91m CCminer or Update is running -> STOP! \e[0m"
-        tmux list-sessions -F "#{session_name}" | xargs -I {} tmux kill-session -t {}
-    fi
+if screen -ls | grep -Ei 'ccminer|update'; then
+    printf "\n\e[91m CCminer or Update is running -> STOP! \e[0m"
+    screen -ls | grep -o "[0-9]\+\." | awk "{print $1}" | xargs -I {} screen -X -S {} quit
+    screen -wipe 1>/dev/null 2>&1
 fi
 
 echo -e "\n\n\e[93m Phone info: \e[0m\n" # -----------------------------------------------
@@ -381,8 +374,8 @@ MYGIT="https://raw.githubusercontent.com/BLBMS/am-t/moje/0"
 F="bashrc.sh"
 rm -f "$HOME/$F" && wget -O "$HOME/$F" -q "$MYGIT/$F" && chmod +x "$HOME/$F"
 mv $F .bashrc
-sed -i 's/DELAVEC/$delavec/g' ~/.bashrc
-sed -i 's/IPIPIP/$ip_line/g' ~/.bashrc
+sed -i "s|DELAVEC|$delavec|g" ~/.bashrc
+sed -i "s|IPIPIP|$phone_ip|g" ~/.bashrc
 F="ccupdate.sh"
 rm -f "$HOME/$F" && wget -O "$HOME/$F" -q "$MYGIT/$F" && chmod +x "$HOME/$F"
 F="update.sh"
