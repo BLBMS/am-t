@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-05-13.001
+# v.2025-05-13.002
 
 cd
 restart_screen() {
