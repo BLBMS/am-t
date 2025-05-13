@@ -7,11 +7,12 @@ MAX_DIFF_M=5    # nastavitev max. minut od zadnjega hasha
 
 # IP iz naprave
 ip=$(ifconfig 2>/dev/null | grep -oP 'inet \K[\d.]+(?=\s)' | grep -v '127.0.0.1')
-echo -e "\e[0m  Device ip  :\e[96m $ip\e[0m"
+#echo -e "\e[0m  Device ip  :\e[96m $ip\e[0m"
+
 # DELAVEC iz naprave
 ime_iz_ww=$(basename ~/*.ww)
 DELAVEC=${ime_iz_ww%.ww}
-echo -e "\e[0m  Worker     :\e[96m $DELAVEC\e[0m"
+#echo -e "\e[0m  Worker     :\e[96m $DELAVEC\e[0m"
 
 # Preveri podatke za pool
 get_new_pool_data() {
