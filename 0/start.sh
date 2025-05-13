@@ -1,8 +1,7 @@
 #!/bin/bash
 # v.2025-05-13.001
 # start 13
-# loči stock rom / lineage  + NEGA VEČ tmux
-
+# NEGA VEČ tmux
 
 if  command -v tmux &> /dev/null; then
     echo -e "---uninstall tmux---"
@@ -15,69 +14,6 @@ fi
 
 cd ~/
 sshd
-
-# tmux -----------------------------------------------------------------------------------------
-tmux_start_pool() {
-    tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
-    if (tmux list-sessions | grep -q -i "CCminer"); then
-        killall ccminer
-        tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
-        if (tmux list-sessions | grep -q -i "CCminer"); then
-            killall tmux
-            tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
-            if (tmux list-sessions | grep -q -i "CCminer"); then
-                rm -rf tmux-*
-                tmux list-sessions | grep -o "^[0-9]\+" | xargs -I {} tmux kill-session -t {}
-            fi
-        fi
-    fi
-    sleep 1
-    tmux new-session -d -s CCminer
-    tmux send-keys -t CCminer "~/ccminer -c ~/config.json" C-m
-    tmux new-session -d -s Update
-    tmux send-keys -t Update "~/ccupdate.sh" C-m
-    rm -f *.pool
-    echo "$NAME1" > ~/$NAME1.pool
-    sleep 1
-    tmux ls -F "#{session_name}:#{session_id} [#{session_windows} windows] #{session_created}" | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g"
-}
-
-tmux_current_hash() {
-    tmux capture-pane -t CCminer -p -S - > tmux_hardcopy
-    last_line=$(tac tmux_hardcopy | grep -m 1 "yes!" | head -n 1)
-    if [[ -n "$last_line" ]]; then
-        MHS=$(echo "$last_line" | awk '{print $(NF-2)}' | awk '{print $1/1000}')
-        FTIME=$(echo "$last_line" | awk '{print $1" "$2}')
-        FTIME=$(echo "$FTIME" | tr -d '[]')
-        FTIME_TIMESTAMP=$(date -d "$FTIME" +"%s" 2>/dev/null)
-        CURRENT_TIMESTAMP=$(date +"%s")
-        DIFF=$((CURRENT_TIMESTAMP - FTIME_TIMESTAMP))
-        DIFF_H=$((DIFF / 3600))
-        DIFF_M=$(( (DIFF % 3600) / 60 ))
-        DIFF_S=$((DIFF % 60))
-        echo -e "\e[93mcMHS:\e[92m $MHS \e[93mfound before: \e[92m$DIFF_H\e[93m h \e[92m$DIFF_M\e[93m m\e[92m $DIFF_S\e[93m s\e[0m"
-    fi
-    rm -f tmux_hardcopy
-}
-
-tmux_dead() {
-    # Kontrola DEAD tmux sessions
-    if tmux list-sessions | grep -i '(dead)'; then
-        echo "Obstajajo mrtve tmux seje"
-        # Pridobi ID-je mrtvih sej
-        dead_sessions=$(tmux list-sessions | grep -i '(dead)' | awk -F: '{print $1}')
-        # Zapri vse mrtve seje
-        for session in $dead_sessions; do
-            tmux kill-session -t "$session"
-        done
-        # Dodatno čiščenje če je potrebno
-        if tmux list-sessions | grep -q -i '(dead)'; then
-            killall tmux
-            rm -rf /tmp/tmux-*
-        fi
-    fi
-}
-# screen -----------------------------------------------------------------------------------------
 
 screen_start_pool() {
     screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
@@ -147,9 +83,6 @@ screen_dead() {
 }
 
 # -----------------------------------------------------------------------------------------
-
-# PRIPRAVA - za oba
-
 # IP iz naprave
 ip=$(ifconfig 2>/dev/null | grep -oP 'inet \K[\d.]+(?=\s)' | grep -v '127.0.0.1')
 echo -e "\e[0m  Device ip  :\e[96m $ip\e[0m"
@@ -209,67 +142,23 @@ sed -i "s#ORDERS#$ORDERS#g; s#USER#$USER1#g; s#DELAVEC#$DELAVEC#g; s#PASS#$PASS1
 rm -f $CJSON
 jq . $CFAJL > $CJSON
 
-# preveri IZJEMO
-#IZJEMA=0
-#for izjema in $IZJEME; do
-#    if [[ "$DELAVEC" == "$izjema" ]]; then
-#        IZJEMA=1
-#        break
-#    fi
-#done
+#echo "stock OS"
+screen_dead
 
-# PREVERI OS
-# na rabim (če ccminer ni aktiven): if ! pgrep -f 'ccminer' >/dev/null; then
-lineage_version=$(getprop ro.lineage.version)
-if [[ -z "$lineage_version" ]]; then
-#if [[ -z "$lineage_version" ]] && [[ "$IZJEMA" == "1" ]]; then
-    #echo "stock OS"
-    screen_dead
-
-    #  Če je prvi novi pool enak iz poll-u iz API
-    if ! [ "$NAME1" = "$obst_pool" ]; then   # pool iz datoteke !!
-        # zamenja pool
-        echo -e "\e[0;92m Starting CCminer on NEW POOL: $NAME1\e[0m\n"
-        screen_start_pool
-    elif ! (screen -list | grep -q -i "CCminer"); then
-        echo -e "\n\e[0;91m There are no CCminer\n\e[0m"
-        screen_start_pool
-    else
-        # pool je pravi
-        echo -e "\e[93m  Same pool:\e[92m $NAME1 = $obst_pool\e[0m"
-        screen_current_hash
-        if [[ "$DIFF_H" -gt "0" || "$DIFF_M" -gt "14" ]]; then
-            echo -e "\e[0;92m Restarting CCminer on POOL: $NAME1\e[0m\n"
-            screen_start_pool
-        fi
-    fi
-
+#  Če je prvi novi pool enak iz poll-u iz API
+if ! [ "$NAME1" = "$obst_pool" ]; then   # pool iz datoteke !!
+    # zamenja pool
+    echo -e "\e[0;92m Starting CCminer on NEW POOL: $NAME1\e[0m\n"
+    screen_start_pool
+elif ! (screen -list | grep -q -i "CCminer"); then
+    echo -e "\n\e[0;91m There are no CCminer\n\e[0m"
+    screen_start_pool
 else
-    echo "lineage OS"
-    tmux_dead
-
-    #  Če je prvi novi pool enak iz poll-u iz API
-    if ! [ "$NAME1" = "$obst_pool" ]; then   # pool iz datoteke !!
-        # zamenja pool
-        echo -e "\e[0;92m Starting CCminer on NEW POOL: $NAME1\e[0m\n"
-        tmux_start_pool
-    elif ! (tmux list-sessions | grep -q -i "CCminer"); then
-        echo -e "\n\e[0;91m There are no CCminer\n\e[0m"
-        tmux_start_pool
-    else
-        # pool je pravi
-        echo -e "\e[93m  Same pool:\e[92m $NAME1 = $obst_pool\e[0m"
-        tmux_current_hash
-        if [[ "$DIFF_H" -gt "0" || "$DIFF_M" -gt "14" ]]; then
-            echo -e "\e[0;92m Restarting CCminer on POOL: $NAME1\e[0m\n"
-            tmux_start_pool
-        fi
+    # pool je pravi
+    echo -e "\e[93m  Same pool:\e[92m $NAME1 = $obst_pool\e[0m"
+    screen_current_hash
+    if [[ "$DIFF_H" -gt "0" || "$DIFF_M" -gt "14" ]]; then
+        echo -e "\e[0;92m Restarting CCminer on POOL: $NAME1\e[0m\n"
+        screen_start_pool
     fi
 fi
-
-#rm -f all.pools
-#for ((i=1; i<=MAX_ORDER; i++)); do
-#        eval "echo -e \"\e[0;93m$i:\e[0;92m \${NAME$i} \e[0;93m/\e[0;94m \${POOL$i} \e[0m\""
-#        pool_host=${!pool_addr_var%:*}
-#        echo "$pool_host" >> all.pools
-#done
