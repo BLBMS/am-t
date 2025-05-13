@@ -53,7 +53,7 @@ while true; do
         only1=0
         echo -e "\e[96m== $(date '+%Y.%m.%d %H:%M:%S') == ($iter) ==\e[0m"
         
-        # kontrola če je screen zablokiral
+        # kontrola če ni screen-a
         if ! screen -list | grep -q "CCminer"; then
             pkill -9 screen 2>/dev/null
             rm -f /var/run/screen/S-*
