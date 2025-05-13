@@ -5,6 +5,68 @@
 iter=1
 MAX_DIFF_M=5    # nastavitev max. minut od zadnjega hasha
 
+# Preveri podatke za pool
+get_new_pool_data() {
+    # IP iz naprave
+    ip=$(ifconfig 2>/dev/null | grep -oP 'inet \K[\d.]+(?=\s)' | grep -v '127.0.0.1')
+    echo -e "\e[0m  Device ip  :\e[96m $ip\e[0m"
+    # DELAVEC iz naprave
+    ime_iz_ww=$(basename ~/*.ww)
+    DELAVEC=${ime_iz_ww%.ww}
+    echo -e "\e[0m  Worker     :\e[96m $DELAVEC\e[0m"
+    # POOL iz naprave
+    ime_iz_pool=$(basename ~/*.pool)
+    obst_pool=${ime_iz_pool%.pool}
+    echo -e "\e[0m  First pool :\e[96m $obst_pool\e[0m"
+    # config file
+    CJSON="config.json"
+    # Potatki iz github
+    CFAJL="config_orders.json"
+    rm -f $CFAJL
+    wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$CFAJL
+    # Novi podatki za pool v JSON obliki
+    PFAJL="pool.json"
+    rm -f $PFAJL
+    wget -q https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$PFAJL
+    # Najdi največjo številko pod "order"
+    MAX_ORDER=$(jq -r '.[].order' "$PFAJL" | sort -n | tail -1)
+    # Preberi podatke za vse order vrednosti od 1 do MAX_ORDER
+    for ((i=1; i<=MAX_ORDER; i++)); do
+        eval NAME$i='$(jq -r ".[] | select(.order==\"'$i'\") | .name" "$PFAJL")'
+        eval POOL$i='$(jq -r ".[] | select(.order==\"'$i'\") | .pool" "$PFAJL")'
+        eval USER$i='$(jq -r ".[] | select(.order==\"'$i'\") | .user" "$PFAJL")'
+        eval PASS$i='$(jq -r ".[] | select(.order==\"'$i'\") | .pass" "$PFAJL")'
+    done
+    # Sestavi podatke od 1 do MAX_ORDER
+    rm -f all.pools
+    ORDERS=""
+    for ((i=1; i<=MAX_ORDER; i++)); do
+        NAME=$(eval echo \${NAME$i})
+        POOL=$(eval echo \${POOL$i})
+    
+        if [[ -n "$NAME" && -n "$POOL" ]]; then
+            if [[ $i -eq 1 ]]; then
+                ORDERS+=$(printf '{"name": "%s","url": "stratum+tcp://%s","timeout": 600,"disabled": 0}' "$NAME" "$POOL")
+            else
+                ORDERS+=$(printf '{"name": "%s","url": "stratum+tcp://%s","timeout": 600, "time-limit": 600,"disabled": 0}' "$NAME" "$POOL")
+            fi
+    
+            pool_host=${POOL%:*}
+            echo -e "\e[0;93m$i:\e[0;92m \${NAME} \e[0;93m/\e[0;94m \${POOL} \e[0m: pool host:\e[0;92m $pool_host\e[0m"
+            echo "$pool_host" >> all.pools
+    
+            
+            # Add comma only if it's not the last entry
+            if [[ $i -ne $MAX_ORDER ]]; then
+                ORDERS+=","
+            fi
+        fi
+    done
+    sed -i "s#ORDERS#$ORDERS#g; s#USER#$USER1#g; s#DELAVEC#$DELAVEC#g; s#PASS#$PASS1#g" $CFAJL
+    rm -f $CJSON
+    jq . $CFAJL > $CJSON
+}
+
 # Funkcija za združevanje log vnosov za kHs in stratum
 merge_log_entries() {
     awk '
