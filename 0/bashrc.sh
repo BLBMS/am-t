@@ -13,7 +13,7 @@ else
   alias sl='screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1'
   alias rr='screen -d -r CCminer'
   alias ru='screen -d -r Update'
-  alias posodobi='~/posodobi.sh'
+  alias pop='~/posodobi.sh'
   alias uu='yes | pkg update ; yes | pkg upgrade ; pkg install -y wget net-tools nano screen jq bc'
   alias ch='~/curr_hash.sh'
   alias sb='source .bashrc'
