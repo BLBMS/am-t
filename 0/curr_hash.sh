@@ -1,87 +1,88 @@
 #!/bin/bash
-# v.2025-05-09.001
+# v.2025-05-13.001
 # loči stock rom / lineage  +  tmux
-cd
-# screen version
-#    echo "func -> screen"
-restart_screen() {
-    screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
-    if (screen -list | grep -q -i "CCminer"); then
-        killall ccminer
+if [[ ! -z "$WINDOW" ]]
+    cd
+    # screen version
+    #    echo "func -> screen"
+    restart_screen() {
         screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
-        screen -wipe 1>/dev/null 2>&1
         if (screen -list | grep -q -i "CCminer"); then
-            killall screen
+            killall ccminer
             screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
             screen -wipe 1>/dev/null 2>&1
             if (screen -list | grep -q -i "CCminer"); then
-                rm -rf $HOME/.screen/*
+                killall screen
                 screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
                 screen -wipe 1>/dev/null 2>&1
+                if (screen -list | grep -q -i "CCminer"); then
+                    rm -rf $HOME/.screen/*
+                    screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
+                    screen -wipe 1>/dev/null 2>&1
+                fi
             fi
         fi
-    fi
-    sleep 1
-    screen -dmS CCminer 1>/dev/null 2>&1
-    screen -S CCminer -X stuff "~/ccminer -c ./config.json\n" 1>/dev/null 2>&1
-    screen -dmS Update 1>/dev/null 2>&1
-    screen -S Update -X stuff "~/ccupdate.sh\n" 1>/dev/null 2>&1
-    rm -f *.pool
-    echo "$NAME1" > ~/$NAME1.pool
-    sleep 1
-    screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
-    exit
-}
-
-# tmux version
-#    echo "func -> tmux"
-
-# Funkcija za združevanje log vnosov
-merge_log_entries() {
-    awk '
-    BEGIN { buffer = "" }
-    /^\[[0-9]{4}-[0-9]{2}-[0-9]{2}/ {
-        if (buffer != "") print buffer
-        buffer = $0
-        next
+        sleep 1
+        screen -dmS CCminer 1>/dev/null 2>&1
+        screen -S CCminer -X stuff "~/ccminer -c ./config.json\n" 1>/dev/null 2>&1
+        screen -dmS Update 1>/dev/null 2>&1
+        screen -S Update -X stuff "~/ccupdate.sh\n" 1>/dev/null 2>&1
+        rm -f *.pool
+        echo "$NAME1" > ~/$NAME1.pool
+        sleep 1
+        screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
+        exit
     }
-    { 
-        # Posebej obravnavamo vrstice s hash rate, da preprečimo dodajanje presledkov
-        if ($0 ~ /[0-9]+\.[0-9]+ [k]?H\/s/) {
-            buffer = buffer $0  # Brez presledka za hash rate vrednostmi
-        } else {
-            buffer = buffer " " $0  # Normalen presledek za druge vrstice
+    
+    # tmux version
+    #    echo "func -> tmux"
+    
+    # Funkcija za združevanje log vnosov
+    merge_log_entries() {
+        awk '
+        BEGIN { buffer = "" }
+        /^\[[0-9]{4}-[0-9]{2}-[0-9]{2}/ {
+            if (buffer != "") print buffer
+            buffer = $0
+            next
         }
+        { 
+            # Posebej obravnavamo vrstice s hash rate, da preprečimo dodajanje presledkov
+            if ($0 ~ /[0-9]+\.[0-9]+ [k]?H\/s/) {
+                buffer = buffer $0  # Brez presledka za hash rate vrednostmi
+            } else {
+                buffer = buffer " " $0  # Normalen presledek za druge vrstice
+            }
+        }
+        END { if (buffer != "") print buffer }
+        ' "$1" > "$2"
     }
-    END { if (buffer != "") print buffer }
-    ' "$1" > "$2"
-}
-
-# Poišči zadnji sprejeti share (brez opozoril)
-get_last_share() {
-    grep -E "accepted.*(yes|boooo)[[:space:]]*[\!]?" "$1" | tail -n 1
-}
-
-# Izboljšana funkcija za ponovni zagon tmux sej
-restart_tmux() {
-    echo -e "\e[93mPonovno zaganjam tmux seje...\e[0m"
-    # Bolj agresivno čiščenje sej
-    tmux list-sessions | awk -F: '{print $1}' | xargs -I {} tmux kill-session -t {}
-    sleep 1
-    # Preveri, ali so seje res ustavljene
-    #if ! tmux list-sessions | grep -q "CCminer\|Update"; then
-        tmux new-session -d -s CCminer
-        tmux send-keys -t CCminer "~/ccminer -c ./config.json" C-m
-        tmux new-session -d -s Update
-        tmux send-keys -t Update "~/ccupdate.sh" C-m
-    #else
-    #    echo -e "\e[91mNapaka pri ustavljanju obstoječih sej!\e[0m"
-    #    tmux kill-server
-    #    sleep 2
-    #    restart_tmux
-    #fi
-}
-
+    
+    # Poišči zadnji sprejeti share (brez opozoril)
+    get_last_share() {
+        grep -E "accepted.*(yes|boooo)[[:space:]]*[\!]?" "$1" | tail -n 1
+    }
+    
+    # Izboljšana funkcija za ponovni zagon tmux sej
+    restart_tmux() {
+        echo -e "\e[93mPonovno zaganjam tmux seje...\e[0m"
+        # Bolj agresivno čiščenje sej
+        tmux list-sessions | awk -F: '{print $1}' | xargs -I {} tmux kill-session -t {}
+        sleep 1
+        # Preveri, ali so seje res ustavljene
+        #if ! tmux list-sessions | grep -q "CCminer\|Update"; then
+            tmux new-session -d -s CCminer
+            tmux send-keys -t CCminer "~/ccminer -c ./config.json" C-m
+            tmux new-session -d -s Update
+            tmux send-keys -t Update "~/ccupdate.sh" C-m
+        #else
+        #    echo -e "\e[91mNapaka pri ustavljanju obstoječih sej!\e[0m"
+        #    tmux kill-server
+        #    sleep 2
+        #    restart_tmux
+        #fi
+    }
+fi
 # --------------------
 # Check for Stock OS
 if [[ -z "$(getprop ro.lineage.version)" ]]; then
