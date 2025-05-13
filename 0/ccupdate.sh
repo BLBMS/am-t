@@ -1,5 +1,6 @@
 #!/bin/bash
-# v.2025-05-14.001 - modified for screen instead of tmux
+# v.2025-05-14.001
+# modified for screen instead of tmux
 
 iter=1
 MAX_DIFF_M=5    # nastavitev max. minut od zadnjega hasha
