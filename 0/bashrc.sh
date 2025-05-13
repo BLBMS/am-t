@@ -7,12 +7,14 @@ if [[ -n "$STY" ]]; then
 else
   # se izvese ko ni v screen
   alias ss='~/start.sh'
-  alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit;if (screen -list | grep -q -i "ccminer\|Update"); then killall ccminer;killall screen;if (screen -list | grep -q -i "ccminer\|Update"); then screen -w>alias xc='screen screen -X -S CCminer quit'
+  alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit;if (screen -list | grep -q -i "ccminer\|Update"); then killall ccminer;killall screen;fi'
+  alias xc='screen screen -X -S CCminer quit'
   alias xu='screen screen -X -S Update quit'
   alias sl='screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1'
   alias rr='screen -d -r CCminer'
   alias ru='screen -d -r Update'
   alias posodobi='~/posodobi.sh'
+  alias uu='yes | pkg update ; yes | pkg upgrade ; pkg install -y wget net-tools nano screen jq bc'
   alias ch='~/curr_hash.sh'
   alias sb='source .bashrc'
   alias nb='nano .bashrc'
@@ -24,9 +26,7 @@ else
   alias RR='rr'
   alias RU='ru'
   alias CH='ch'
-  alias HH='hh'
   alias UU='uu'
-  alias uu='yes | pkg update ; yes | pkg upgrade ; pkg install -y wget net-tools nano screen jq bc'
   alias n='nano'
 
   echo "Screens:"
