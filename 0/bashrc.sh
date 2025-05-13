@@ -5,6 +5,7 @@ PS1='\[\033[0;93m\]DELAVEC\[\033[0;91m\]@\[\033[0;93m\]IPIPIP\[\033[00m\]:\[\033
 if [[ -n "$STY" ]]; then
   PS1="\[\e[01;31m\][${PS1}\e[01;31m\]]\[\e[0m\]"
 else
+  # se izvese ko ni v screen
   alias ss='~/start.sh'
   alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit;if (screen -list | grep -q -i "ccminer\|Update"); then killall ccminer;killall screen;if (screen -list | grep -q -i "ccminer\|Update"); then screen -w>alias xc='screen screen -X -S CCminer quit'
   alias xu='screen screen -X -S Update quit'
@@ -27,8 +28,7 @@ else
   alias UU='uu'
   alias uu='yes | pkg update ; yes | pkg upgrade ; pkg install -y wget net-tools nano screen jq bc'
   alias n='nano'
-  
-  # se izvese ko ni v screen
+
   echo "Screens:"
   screen -ls | sed -E "s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
   # kontrola in prikaz hasha
