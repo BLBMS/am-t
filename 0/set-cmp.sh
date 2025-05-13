@@ -381,7 +381,8 @@ MYGIT="https://raw.githubusercontent.com/BLBMS/am-t/moje/0"
 F="bashrc.sh"
 rm -f "$HOME/$F" && wget -O "$HOME/$F" -q "$MYGIT/$F" && chmod +x "$HOME/$F"
 mv $F .bashrc
-
+sed -i 's/DELAVEC/$delavec/g' ~/.bashrc
+sed -i 's/IPIPIP/$ip_line/g' ~/.bashrc
 F="ccupdate.sh"
 rm -f "$HOME/$F" && wget -O "$HOME/$F" -q "$MYGIT/$F" && chmod +x "$HOME/$F"
 F="update.sh"
