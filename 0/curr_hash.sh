@@ -125,7 +125,7 @@ if (screen -list | grep -q -i "ccminer"); then
                 DIFF_M=$(( (DIFF % 3600) / 60 ))
                 DIFF_S=$((DIFF % 60))
                 
-                echo -e "\e[93mcMHS:\e[92m none \e[93mmining started: \e[92m$DIFF_H\e[93m h \e[92m$DIFF_M\e[93m m\e[92m $DIFF_S\e[93m s ago\e[0m"
+                echo -e "\e[93mcMHS:\e[91m none \e[93mmining started: \e[92m$DIFF_H\e[93m h \e[92m$DIFF_M\e[93m m\e[92m $DIFF_S\e[93m s ago\e[0m"
             else
                 echo -e "\e[93mNo mining data found!\e[0m"
             fi
