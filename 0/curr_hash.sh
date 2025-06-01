@@ -68,63 +68,50 @@ if ! pgrep -f "ccminer|ccupdate.sh" >/dev/null; then
     fi
     restart_screen
 fi
-
 if (screen -list | grep -q -i "ccminer"); then
     rm -f "$hardcopy"
     screen -S CCminer -X hardcopy
     if [ -f "hardcopy.0" ]; then
         # Try to find the last accepted share
         last_line=$(tac "$hardcopy" | grep -m 1 -E "accepted.*(yes|boooo)[[:space:]]*[\!]?" | head -n 1)
-        
         if [[ -n "$last_line" ]]; then
             # We have an accepted share - process it
             MHS=$(echo "$last_line" | awk -F'kH/s' '{print $1}' | awk '{print $(NF)}' | awk '{print $1/1000}')
             FTIME=$(echo "$last_line" | grep -o '\[[^]]*\]' | tr -d '[]')
-            
             if [[ -z "$FTIME" ]]; then
                 echo "Napaka pri ekstrakciji datuma iz vrstice: $last_line"
                 exit 1
             fi
-            
             FTIME_TIMESTAMP=$(date -d "$FTIME" +"%s" 2>/dev/null || date +"%s" -d "$(echo "$FTIME" | sed 's/:/ /')" 2>/dev/null)
-
             if [[ -z "$FTIME_TIMESTAMP" ]]; then
                 echo "Napaka pri pretvorbi datuma: '$FTIME' iz vrstice: $last_line"
                 exit 1
             fi
-            
             CURRENT_TIMESTAMP=$(date +"%s")
             DIFF=$((CURRENT_TIMESTAMP - FTIME_TIMESTAMP))
             DIFF_H=$((DIFF / 3600))
             DIFF_M=$(( (DIFF % 3600) / 60 ))
             DIFF_S=$((DIFF % 60))
-            
             echo -e "\e[93mcMHS:\e[92m $MHS \e[93mfound before: \e[92m$DIFF_H\e[93m h \e[92m$DIFF_M\e[93m m\e[92m $DIFF_S\e[93m s\e[0m"
         else
             # No accepted shares found - get the startup time
             startup_line=$(grep -m 1 "Starting on" "$hardcopy" || grep -m 1 "API open" "$hardcopy")
-            
             if [[ -n "$startup_line" ]]; then
                 FTIME=$(echo "$startup_line" | grep -o '\[[^]]*\]' | tr -d '[]')
-                
                 if [[ -z "$FTIME" ]]; then
                     echo "Napaka pri ekstrakciji datuma iz vrstice: $startup_line"
                     exit 1
                 fi
-                
                 FTIME_TIMESTAMP=$(date -d "$FTIME" +"%s" 2>/dev/null || date +"%s" -d "$(echo "$FTIME" | sed 's/:/ /')" 2>/dev/null)
-
                 if [[ -z "$FTIME_TIMESTAMP" ]]; then
                     echo "Napaka pri pretvorbi datuma: '$FTIME' iz vrstice: $startup_line"
                     exit 1
                 fi
-                
                 CURRENT_TIMESTAMP=$(date +"%s")
                 DIFF=$((CURRENT_TIMESTAMP - FTIME_TIMESTAMP))
                 DIFF_H=$((DIFF / 3600))
                 DIFF_M=$(( (DIFF % 3600) / 60 ))
                 DIFF_S=$((DIFF % 60))
-                
                 echo -e "\e[93mcMHS:\e[91m none \e[93mmining started: \e[92m$DIFF_H\e[93m h \e[92m$DIFF_M\e[93m m\e[92m $DIFF_S\e[93m s ago\e[0m"
             else
                 echo -e "\e[93mNo mining data found!\e[0m"
