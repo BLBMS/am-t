@@ -4,7 +4,7 @@ set-cmp.sh  2025-04-10
 set-ssh.sh  2025-04-08
 posodobi.sh  2024-07-16
 changecc.sh  2024-09-25
-curr_hash.sh  2025-05-09
+curr_hash.sh  2025-06-01
 inf.sh  2025-04-08
 load.sh  2025-04-13
 update.sh  2025-02-10
