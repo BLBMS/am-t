@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-06-02.001
+# v.2025-06-02.002
 # start 14
 # popravek NAME in POOL izpisa
 
@@ -113,9 +113,13 @@ for ((i=1; i<=MAX_ORDER; i++)); do
     eval USER$i='$(jq -r ".[] | select(.order==\"'$i'\") | .user" "$PFAJL")'
     eval PASS$i='$(jq -r ".[] | select(.order==\"'$i'\") | .pass" "$PFAJL")'
 done
+
+# Preberi podatke za vse order vrednosti od 1 do MAX_ORDER
 for ((i=1; i<=MAX_ORDER; i++)); do
     NAME=$(eval echo \${NAME$i})
     POOL=$(eval echo \${POOL$i})
+    USER=$(eval echo \${USER$i})
+    PASS=$(eval echo \${PASS$i})
 
     if [[ -n "$NAME" && -n "$POOL" ]]; then
         if [[ $i -eq 1 ]]; then
@@ -125,15 +129,17 @@ for ((i=1; i<=MAX_ORDER; i++)); do
         fi
 
         pool_host=${POOL%:*}
+        # POPRAVLJEN IZPIS - prikaže dejanske vrednosti namesto ${NAME} in ${POOL}
         echo -e "\e[0;93m$i:\e[0;92m $NAME \e[0;93m/\e[0;94m $POOL \e[0m: pool host:\e[0;92m $pool_host\e[0m"
         echo "$pool_host" >> all.pools
-
+        
         # Add comma only if it's not the last entry
         if [[ $i -ne $MAX_ORDER ]]; then
             ORDERS+=","
         fi
     fi
 done
+
 # Sestavi podatke od 1 do MAX_ORDER
 rm -f all.pools
 ORDERS=""
