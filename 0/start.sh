@@ -1,7 +1,7 @@
 #!/bin/bash
-# v.2025-05-13.001
-# start 13
-# NEGA VEČ tmux
+# v.2025-06-02.001
+# start 14
+# popravek NAME in POOL izpisa
 
 if  command -v tmux &> /dev/null; then
     echo -e "---uninstall tmux---"
@@ -113,9 +113,6 @@ for ((i=1; i<=MAX_ORDER; i++)); do
     eval USER$i='$(jq -r ".[] | select(.order==\"'$i'\") | .user" "$PFAJL")'
     eval PASS$i='$(jq -r ".[] | select(.order==\"'$i'\") | .pass" "$PFAJL")'
 done
-# Sestavi podatke od 1 do MAX_ORDER
-rm -f all.pools
-ORDERS=""
 for ((i=1; i<=MAX_ORDER; i++)); do
     NAME=$(eval echo \${NAME$i})
     POOL=$(eval echo \${POOL$i})
@@ -128,16 +125,18 @@ for ((i=1; i<=MAX_ORDER; i++)); do
         fi
 
         pool_host=${POOL%:*}
-        echo -e "\e[0;93m$i:\e[0;92m \${NAME} \e[0;93m/\e[0;94m \${POOL} \e[0m: pool host:\e[0;92m $pool_host\e[0m"
+        echo -e "\e[0;93m$i:\e[0;92m $NAME \e[0;93m/\e[0;94m $POOL \e[0m: pool host:\e[0;92m $pool_host\e[0m"
         echo "$pool_host" >> all.pools
 
-        
         # Add comma only if it's not the last entry
         if [[ $i -ne $MAX_ORDER ]]; then
             ORDERS+=","
         fi
     fi
 done
+# Sestavi podatke od 1 do MAX_ORDER
+rm -f all.pools
+ORDERS=""
 sed -i "s#ORDERS#$ORDERS#g; s#USER#$USER1#g; s#DELAVEC#$DELAVEC#g; s#PASS#$PASS1#g" $CFAJL
 rm -f $CJSON
 jq . $CFAJL > $CJSON
