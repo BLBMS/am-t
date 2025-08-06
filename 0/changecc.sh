@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2024-09-25
+# v.2025-08-07
 # change ccminer - prenese pravilen ccminer glede na CPU
 
 #   FAJL="changecc";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
@@ -110,6 +110,10 @@ case $MODEL in
         ;;
     "SM-A505FN")
         echo "$MODEL Samsung Galaxy A50 FN"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a53/ccminer
+        ;;
+    "SM-A515F")
+        echo "$MODEL Samsung Galaxy A51 F"
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a53/ccminer
         ;;
     "SM-A705FN")
