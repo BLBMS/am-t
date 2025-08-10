@@ -7,7 +7,8 @@
 #
 #   FAJL="ukaz";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh
 
-deviceslist="dev.list"
+#deviceslist="dev.list"
+deviceslist="$HOME/api-ccminer/dev.list"
 
 HELP="Send SCRIPT to miners, script in 1st attribute\n\
 and IP or range or all in next attributes\n \
