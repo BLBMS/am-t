@@ -1,6 +1,6 @@
 #!/bin/bash
-# v.2025-05-13.001
-# start 13
+# v.2025-08-10.001
+# start 13 pop
 # NEGA VEČ tmux
 
 if  command -v tmux &> /dev/null; then
@@ -151,7 +151,7 @@ else
     echo -e "\e[93m  Same pool:\e[92m $NAME1 = $obst_pool\e[0m"
     screen_current_hash
     if [[ "$DIFF_H" -gt "0" || "$DIFF_M" -gt "14" ]]; then
-        echo -e "\e[0;92m Restarting CCminer on POOL: $NAME1\e[0m\n"
+        echo -e "\e[0;92m Restarting CCminer on POOL: $NAME1 time: $DIFF_H:$DIFF_M\e[0m\n"
         screen_start_pool
     fi
 fi
