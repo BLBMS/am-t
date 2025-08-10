@@ -18,6 +18,7 @@ else
   alias ch='~/curr_hash.sh'
   alias sb='source .bashrc'
   alias nb='nano .bashrc'
+  alias cj='nano config.json'
   alias load='~/load.sh'
   alias inf='~/inf.sh'
   alias ll='ls -alF'
