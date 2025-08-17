@@ -1,7 +1,8 @@
 #!/bin/bash
-# v.2025-08-10.001
+# v.2025-08-17.001
 # start 13 pop
 # NEGA VEČ tmux
+# dodan timeout
 
 if  command -v tmux &> /dev/null; then
     echo -e "---uninstall tmux---"
@@ -14,7 +15,10 @@ fi
 
 cd ~/
 sshd
+timeout="1000"
+$timelimit="1000"
 
+# -----------------------------------------------------------------------------------------
 screen_start_pool() {
     screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit
     if (screen -list | grep -q -i "CCminer"); then
@@ -82,6 +86,8 @@ screen_dead() {
 }
 
 # -----------------------------------------------------------------------------------------
+# program
+# -----------------------------------------------------------------------------------------
 # IP iz naprave
 ip=$(ifconfig 2>/dev/null | grep -oP 'inet \K[\d.]+(?=\s)' | grep -v '127.0.0.1')
 echo -e "\e[0m  Device ip  :\e[96m $ip\e[0m"
@@ -120,10 +126,15 @@ for ((i=1; i<=MAX_ORDER; i++)); do
     POOL=$(eval echo \${POOL$i})
     if [[ -n "$NAME" && -n "$POOL" ]]; then
         if [[ $i -eq 1 ]]; then
-            ORDERS+=$(printf '{"name": "%s","url": "stratum+tcp://%s","timeout": 600,"disabled": 0}' "$NAME" "$POOL")
+            ORDERS+=$(printf '{"name": "%s","url": "stratum+tcp://%s","timeout": %s,"disabled": 0}' "$NAME" "$POOL" "$timeout")
         else
-            ORDERS+=$(printf '{"name": "%s","url": "stratum+tcp://%s","timeout": 600, "time-limit": 600,"disabled": 0}' "$NAME" "$POOL")
+            ORDERS+=$(printf '{"name": "%s","url": "stratum+tcp://%s","timeout": %s, "time-limit": %s,"disabled": 0}' "$NAME" "$POOL" "$timeout" "$timelimit")
         fi
+#        if [[ $i -eq 1 ]]; then
+#            ORDERS+=$(printf '{"name": "%s","url": "stratum+tcp://%s","timeout": 600,"disabled": 0}' "$NAME" "$POOL")
+#        else
+#            ORDERS+=$(printf '{"name": "%s","url": "stratum+tcp://%s","timeout": 600, "time-limit": 600,"disabled": 0}' "$NAME" "$POOL")
+#        fi
         pool_host=${POOL%:*}
         echo -e "\e[0;93m$i:\e[0;92m \${NAME} \e[0;93m/\e[0;94m \${POOL} \e[0m: pool host:\e[0;92m $pool_host\e[0m"
         echo "$pool_host" >> all.pools
