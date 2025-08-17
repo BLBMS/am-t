@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-08-17.002
+# v.2025-08-17.003
 # start 13 pop
 # NEGA VEČ tmux
 # dodan timeout
@@ -15,7 +15,8 @@ fi
 
 cd ~/
 sshd
-timeout="1000"
+timeout1="1000"
+timeout2="500"
 timelimit="1000"
 
 # -----------------------------------------------------------------------------------------
@@ -126,9 +127,9 @@ for ((i=1; i<=MAX_ORDER; i++)); do
     POOL=$(eval echo \${POOL$i})
     if [[ -n "$NAME" && -n "$POOL" ]]; then
         if [[ $i -eq 1 ]]; then
-            ORDERS+=$(printf '{"name": "%s","url": "stratum+tcp://%s","timeout": %s,"disabled": 0}' "$NAME" "$POOL" "$timeout")
+            ORDERS+=$(printf '{"name": "%s","url": "stratum+tcp://%s","timeout": %s,"disabled": 0}' "$NAME" "$POOL" "$timeout1")
         else
-            ORDERS+=$(printf '{"name": "%s","url": "stratum+tcp://%s","timeout": %s, "time-limit": %s,"disabled": 0}' "$NAME" "$POOL" "$timeout" "$timelimit")
+            ORDERS+=$(printf '{"name": "%s","url": "stratum+tcp://%s","timeout": %s, "time-limit": %s,"disabled": 0}' "$NAME" "$POOL" "$timeout2" "$timelimit")
         fi
 #        if [[ $i -eq 1 ]]; then
 #            ORDERS+=$(printf '{"name": "%s","url": "stratum+tcp://%s","timeout": 600,"disabled": 0}' "$NAME" "$POOL")
