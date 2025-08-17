@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-08-17.001
+# v.2025-08-17.002
 # start 13 pop
 # NEGA VEČ tmux
 # dodan timeout
