@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-05-13.001
+# v.2025-08-19.001
 #   FAJL="set-cmp";cd ~/;rm -f $FAJL.sh;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/$FAJL.sh;chmod +x $FAJL.sh;./$FAJL.sh
 # usage: ./set-cmp.sh -u -m -p5 -wName
 #    -u     - update / upgrade
@@ -315,9 +315,9 @@ case $MODEL in
         echo "$MODEL Samsung Galaxy A8 (2018)"
         wget https://raw.githubusercontent.com/Darktron/pre-compiled/a73-a53/ccminer
         ;;
-    "SM-A")
-        echo "$MODEL Samsung Galaxy A"
-        wget https://raw.githubusercontent.com/Darktron/pre-compiled/em3-a55/ccminer
+    "SM-A037G")
+        echo "$MODEL Samsung Galaxy A03s"
+        wget https://raw.githubusercontent.com/Darktron/pre-compiled/a53/ccminer
         ;;
     "EML-L29")
         echo "$MODEL Huawei P20"
