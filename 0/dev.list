@@ -34,12 +34,11 @@
 192.168.100.138     A5b  mygoldmine
 192.168.100.139     A5c  mygoldmine
 192.168.100.140     A5d  mygoldmine
+192.168.100.147     A5e  mygoldmine
 #192.168.100.141     A40a  mygoldmine # vklop
 192.168.100.142     A8a  mygoldmine
 192.168.100.143     A8b  mygoldmine
 192.168.100.144     A8c  mygoldmine
-192.168.100.147     A5e  mygoldmine
-192.168.100.148     S10j  mygoldmine
 192.168.100.149     S7a  mygoldmine
 192.168.100.150     S10a  mygoldmine
 192.168.100.151     S10b  mygoldmine
@@ -130,14 +129,14 @@
 192.168.102.8     A30h  102
 192.168.102.30     A02sa  mygoldmine
 192.168.102.31     A02sb  mygoldmine
-192.168.102.51     A41a  102 # ex ACU
-192.168.102.52     A41b  102 # ACU
-192.168.102.53     A41c  102 # ACU
-192.168.102.54     A41d  102 # ACU
-192.168.102.55     A41e  102 # ACU
-192.168.102.56     A41f  102 # ex ACU
-192.168.102.57     A41g  102 # ACU
-192.168.102.58     A41h  102 # ACU
+192.168.102.51     A41a  mygoldmine
+192.168.102.52     A41b  mygoldmine
+192.168.102.53     A41c  mygoldmine
+192.168.102.54     A41d  mygoldmine
+192.168.102.55     A41e  mygoldmine
+192.168.102.56     A41f  mygoldmine
+192.168.102.57     A41g  mygoldmine
+192.168.102.58     A41h  mygoldmine
 192.168.102.80     A03sa  mygoldmine
 192.168.102.81     A03sb  mygoldmine
 192.168.102.101     A50a  102
