@@ -1,8 +1,8 @@
 [
-    {"order": "1", "name": "tazch", "pool": "pool.tazmining.ch:7182", "user": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC", "pass": ""},
-    {"order": "2", "name": "vipor_DE", "pool": "de.vipor.net:5040", "user": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC", "pass": ""},
-    {"order": "0", "name": "vipor_FR", "pool": "fr.vipor.net:5040", "user": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC", "pass": ""},
-    {"order": "0", "name": "vipor_RO", "pool": "ro.vipor.net:5040", "user": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC", "pass": ""},
+    {"order": "0", "name": "tazch", "pool": "pool.tazmining.ch:7182", "user": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC", "pass": ""},
+    {"order": "1", "name": "vipor_DE", "pool": "de.vipor.net:5040", "user": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC", "pass": ""},
+    {"order": "2", "name": "vipor_FR", "pool": "fr.vipor.net:5040", "user": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC", "pass": ""},
+    {"order": "3", "name": "vipor_RO", "pool": "ro.vipor.net:5040", "user": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC", "pass": ""},
     {"order": "0", "name": "vipor_KZ", "pool": "kz.vipor.net:5040", "user": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC", "pass": ""},
     {"order": "0", "name": "vipor_PL", "pool": "pl.vipor.net:5040", "user": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC", "pass": ""},
     {"order": "0", "name": "vipor_FI", "pool": "fi.vipor.net:5040", "user": "RMHY5CQBAMRhtirgwtsxv6GZT512SYs4wc.DELAVEC", "pass": ""},
