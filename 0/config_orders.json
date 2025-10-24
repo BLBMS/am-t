@@ -8,6 +8,6 @@ ORDERS
   "threads": 8,
   "cpu-priority": 4,
   "retry-pause": 5,
-  "api-allow": "192.168.100.0/18",
+  "api-allow": "192.168.100.0/22",
   "api-bind": "0.0.0.0:4068"
 }
