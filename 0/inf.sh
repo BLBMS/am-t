@@ -67,11 +67,11 @@ LOCALE=$(getprop ro.product.locale)
 MODEL=$(getprop ro.product.model)
 DEVICE=$(getprop ro.product.device)
 FINGERPRINT=$(getprop ro.build.fingerprint | cut -d'/' -f1)
+
 mem_total=$(free -h | grep Mem | awk '{print $2}')
 mem_used=$(free -h | grep Mem | awk '{print $3}')
 mem_free=$(free -h | grep Mem | awk '{print $4}')
 mem_available=$(free -h | grep Mem | awk '{print $7}')
-
 
 # Izpis
 echo -e "${CLR}=============================================${RST}"
