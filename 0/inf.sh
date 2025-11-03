@@ -73,6 +73,11 @@ mem_used=$(free -h | grep Mem | awk '{print $3}')
 mem_free=$(free -h | grep Mem | awk '{print $4}')
 mem_available=$(free -h | grep Mem | awk '{print $7}')
 
+disk_total=$(df -h /data | awk 'NR==2 {print $2}')
+disk_used=$(df -h /data | awk 'NR==2 {print $3}')
+disk_free=$(df -h /data | awk 'NR==2 {print $4}')
+disk_usage=$(df -h /data | awk 'NR==2 {print $5}')
+
 # Izpis
 echo -e "${CLR}=============================================${RST}"
 echo -e "ROM type     : ${CLR}${ROM}${RST}"
@@ -82,6 +87,11 @@ echo -e "Locale       : ${CLR}${LOCALE}${RST}"
 echo -e "Device       : ${CLR}${MODEL}${RST}"
 echo -e "Codename     : ${CLR}${DEVICE}${RST}"
 echo -e "Build Finger : ${CLR}${FINGERPRINT}${RST}"
+echo -e "${CLR}=============================================${RST}"
+echo -e "DISK Total   : ${CLR}${disk_total}${RST}"
+echo -e "DISK Used    : ${CLR}${disk_used}${RST}"
+echo -e "DISK Free    : ${CLR}${disk_free}${RST}"
+echo -e "DISK Usage   : ${CLR}${disk_usage}${RST}"
 echo -e "${CLR}=============================================${RST}"
 echo -e "MEM Total    : ${CLR}${mem_total}${RST}"
 echo -e "MEM Used     : ${CLR}${mem_used}${RST}"
