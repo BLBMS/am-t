@@ -1,6 +1,7 @@
 #!/bin/bash
 # v.2025-11-03.001
 # by blbMS
+# F="inf_xmr.sh";cd ~/;rm -f $F;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/x/$F;chmod +x $F
 
 ifconfig_out=$(ifconfig)
 ip_line=$(echo "$ifconfig_out" | grep 'inet 192' | awk '{print $2}')
