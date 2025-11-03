@@ -3,6 +3,15 @@
 # by blbMS
 
 cd ~/
+
+# Samo libmicrohttpd (dovolj za XMRig)
+if ! pkg list-installed | grep -q "libmicrohttpd"; then
+    echo "Nameščam libmicrohttpd..."
+    pkg install libmicrohttpd -y
+else
+    echo "libmicrohttpd je že nameščen"
+fi
+
 #ip_line="192.168.102.81"
 #phone_ip="2.81"
 #delavec="A03sb"
@@ -45,7 +54,14 @@ echo -e "\n\e[92m-> Worker's name is: $delavec\e[0m"
 
 
 echo "set tabsize 4" > ~/.nanorc
+
 mv ~/.bashrc bashrc.verus
+
+# Preveri če bashrc.verus že obstaja
+if ! [ -f ~/bashrc.verus ]; then
+    echo "✅ bashrc.verus NE obstaja, premikam..."
+    mv ~/.bashrc bashrc.verus
+fi
 
 # prenos na PC - narejen na S10f
 # scp -i ~/.ssh/id_blb -P 8022 blb@192.168.100.155:/data/data/com.termux/files/home/xmrig-xmr .
