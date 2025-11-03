@@ -48,10 +48,9 @@ if ! [ -f ~/bashrc.verus ]; then
     echo "✅ bashrc.verus NE obstaja, premikam..."
     mv ~/.bashrc bashrc.verus
 fi
-rm -f .bashrc
-
-mv ~/bashrc .bashrc
-
+# prenos bashrc
+F="bashrc.xmr";cd ~/;rm -f $F;wget https://raw.githubusercontent.com/BLBMS/am-t/moje/0/x/$F
+cp $F .bashrc
 
 sed -i "s|DELAVEC|$delavec|g" ~/.bashrc
 sed -i "s|IPIPIP|$phone_ip|g" ~/.bashrc
@@ -72,7 +71,7 @@ sed -i "s|DELAVEC|$delavec|g" ~/hashvault.json
 #pkg install libuv openssl libmicrohttpd -y
 #scp -i ~/.ssh/id_blb -P 8022 xmrig-xmr hv-start.sh bashrc hashvault.json inf_xmr.sh blb@$ip_line:/data/data/com.termux/files/home/
 
-
+exit
 -------------
 # v.2025-10-30.002
 # by blbMS
