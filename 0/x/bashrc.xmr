@@ -1,0 +1,26 @@
+### ______  MOJE _____
+sshd
+PS1='\[\033[0;96m\]xmr_DELAVEC\[\033[0;91m\]@\[\033[0;93m\]IPIPIP\[\033[00m\]:\[\033[01;32m\]\w\[\033[00m\]$ '
+if [[ -n "$STY" ]]; then PS1="\[\e[01;31m\][${PS1}\e[01;31m\]]\[\e[0m\]";fi
+
+alias sb='source .bashrc'
+alias nb='nano .bashrc'
+alias load='~/load.sh'
+alias inf='~/inf.sh'
+alias ll='ls -alF'
+alias uu='yes | pkg update ; yes | pkg upgrade ; pkg install -y wget net-tools nano screen jq bc'
+alias n='nano'
+
+alias ss='~/hv-start.sh'
+alias rr='screen -d -r XMR'
+alias xx='screen -ls | grep -o "[0-9]\+\." | awk "{print }" | xargs -I {} screen -X -S {} quit;if (screen -list | grep -q -i "ccminer\|Update\|XMR"); then \
+        killall ccminer;killall screen;killall xmrig-xmr;if (screen -list | grep -q -i "ccminer\|Update\|XMR"); then \
+        screen -wipe 1>/dev/null 2>&1;rm -rf /data/data/com.termux/files/home/.screen/*;fi;fi;screen -ls'
+alias sl='screen -ls | sed -E "s/XMR/\x1b[36m&\x1b[0m/g; s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1'
+
+
+# se izvede ko ni v screen
+if [[ -z "$STY" ]]; then
+    echo "Screens:"
+    screen -ls | sed -E "s/XMR/\x1b[36m&\x1b[0m/g; s/CCminer/\x1b[32m&\x1b[0m/g; s/Update/\x1b[36m&\x1b[0m/g" | tail -n +2 | head -n -1
+fi
