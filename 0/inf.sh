@@ -84,12 +84,12 @@ disk_usage=$(df -h /data | awk 'NR==2 {print $5}')
 
 # Izpis
 echo -e "${CLR}=============================================${RST}"
-echo -e "ROM type       : ${CLR}${ROM}${RST}"
-echo -e "Android/Build  : ${CLR}${BUILD_REL} / ${BUILD_INC}${RST}"
-echo -e "CSC/Country    : ${CLR}${CSC:-"-"} / ${COUNTRY}${RST}"
-echo -e "Local/Operator : ${CLR}${LOCALE} / ${OPERATOR}${RST}"
-echo -e "Codename/Device: ${CLR}${DEVICE} / ${MODEL}${RST}"
-echo -e "Build Finger   : ${CLR}${FINGERPRINT}${RST}"
+echo -e "ROM type        : ${CLR}${ROM}${RST}"
+echo -e "Android/Build   : ${CLR}${BUILD_REL} / ${BUILD_INC}${RST}"
+echo -e "CSC/Country     : ${CLR}${CSC:-"-"} / ${COUNTRY}${RST}"
+echo -e "Local/Operator  : ${CLR}${LOCALE} / ${OPERATOR}${RST}"
+echo -e "Codename/Device : ${CLR}${DEVICE} / ${MODEL}${RST}"
+echo -e "Build Finger    : ${CLR}${FINGERPRINT}${RST}"
 echo -e "${CLR}=============================================${RST}"
 echo -e "DISK Total/Free : ${CLR}${disk_total} / ${disk_free}${RST}"
 echo -e "DISK Used/Usage : ${CLR}${disk_used} / ${disk_usage}${RST}"
