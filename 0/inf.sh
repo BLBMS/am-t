@@ -98,6 +98,16 @@ echo -e "MEM Total/Free  : ${CLR}${mem_total} / ${mem_free}${RST}"
 echo -e "MEM Used/Avalbl : ${CLR}${mem_used} / ${mem_available}${RST}"
 echo -e "${CLR}=============================================${RST}"
 
+lscpu | awk -v a55_cores=6 -v a75_cores=2 '
+/CPU max MHz:/ {
+    if (!a55_done) {
+        printf "Cortex-A55: %dx %.1f MHz\n", a55_cores, $4
+        a55_done = 1
+    } else {
+        printf "Cortex-A75: %dx %.1f MHz\n", a75_cores, $4
+    }
+}'
+
 MTUNE=" a64fx ampere1 ampere1a apple-a10 apple-a11 apple-a12 apple-a13 apple-a14 apple-a15 apple-a16 apple-a7 apple-a8 apple-a9 apple-latest apple-m1 apple-m2 \
 apple-s4 apple-s5 carmel cortex-a34 cortex-a35 cortex-a510 cortex-a53 cortex-a55 cortex-a57 cortex-a65 cortex-a65ae cortex-a710 cortex-a715 cortex-a72 cortex-a73 \
 cortex-a75 cortex-a76 cortex-a76ae cortex-a77 cortex-a78 cortex-a78c cortex-r82 cortex-x1 cortex-x1c cortex-x2 cortex-x3 cyclone exynos-m3 exynos-m4 exynos-m5 \
