@@ -1,5 +1,5 @@
 #!/bin/bash
-# v.2025-11-03
+# v.2025-11-04
 # by blbMS
 
 ifconfig_out=$(ifconfig)
@@ -63,10 +63,14 @@ fi
 BUILD_REL=$(getprop ro.build.version.release)
 BUILD_INC=$(getprop ro.build.version.incremental)
 CSC=$(getprop ro.csc.sales_code)
+COUNTRY=$(getprop ro.csc.country_code)
+OPERATOR=$(getprop ro.csc.operator)
 LOCALE=$(getprop ro.product.locale)
 MODEL=$(getprop ro.product.model)
 DEVICE=$(getprop ro.product.device)
 FINGERPRINT=$(getprop ro.build.fingerprint | cut -d'/' -f1)
+
+
 
 mem_total=$(free -h | grep Mem | awk '{print $2}')
 mem_used=$(free -h | grep Mem | awk '{print $3}')
@@ -80,23 +84,23 @@ disk_usage=$(df -h /data | awk 'NR==2 {print $5}')
 
 # Izpis
 echo -e "${CLR}=============================================${RST}"
-echo -e "ROM type     : ${CLR}${ROM}${RST}"
-echo -e "Build        : ${CLR}${BUILD_REL} (${BUILD_INC})${RST}"
-echo -e "CSC code     : ${CLR}${CSC:-"-"}${RST}"
-echo -e "Locale       : ${CLR}${LOCALE}${RST}"
-echo -e "Device       : ${CLR}${MODEL}${RST}"
-echo -e "Codename     : ${CLR}${DEVICE}${RST}"
-echo -e "Build Finger : ${CLR}${FINGERPRINT}${RST}"
+echo -e "ROM type      : ${CLR}${ROM}${RST}"
+echo -e "Build         : ${CLR}${BUILD_REL} (${BUILD_INC})${RST}"
+echo -e "CSC/Country   : ${CLR}${CSC:-"-"} / ${COUNTRY}${RST}"
+echo -e "Local/Operator: ${CLR}${LOCALE} / ${OPERATOR}${RST}"
+echo -e "Device        : ${CLR}${MODEL}${RST}"
+echo -e "Codename      : ${CLR}${DEVICE}${RST}"
+echo -e "Build Finger  : ${CLR}${FINGERPRINT}${RST}"
 echo -e "${CLR}=============================================${RST}"
-echo -e "DISK Total   : ${CLR}${disk_total}${RST}"
-echo -e "DISK Used    : ${CLR}${disk_used}${RST}"
-echo -e "DISK Free    : ${CLR}${disk_free}${RST}"
-echo -e "DISK Usage   : ${CLR}${disk_usage}${RST}"
+echo -e "DISK Total    : ${CLR}${disk_total}${RST}"
+echo -e "DISK Used     : ${CLR}${disk_used}${RST}"
+echo -e "DISK Free     : ${CLR}${disk_free}${RST}"
+echo -e "DISK Usage    : ${CLR}${disk_usage}${RST}"
 echo -e "${CLR}=============================================${RST}"
-echo -e "MEM Total    : ${CLR}${mem_total}${RST}"
-echo -e "MEM Used     : ${CLR}${mem_used}${RST}"
-echo -e "MEM Free     : ${CLR}${mem_free}${RST}"
-echo -e "MEM Available: ${CLR}${mem_available}${RST}"
+echo -e "MEM Total     : ${CLR}${mem_total}${RST}"
+echo -e "MEM Used      : ${CLR}${mem_used}${RST}"
+echo -e "MEM Free      : ${CLR}${mem_free}${RST}"
+echo -e "MEM Available : ${CLR}${mem_available}${RST}"
 echo -e "${CLR}=============================================${RST}"
 
 MTUNE=" a64fx ampere1 ampere1a apple-a10 apple-a11 apple-a12 apple-a13 apple-a14 apple-a15 apple-a16 apple-a7 apple-a8 apple-a9 apple-latest apple-m1 apple-m2 \
