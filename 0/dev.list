@@ -120,13 +120,13 @@
 #192.168.100.248     PXa  mygoldmine # v škatli
 192.168.100.249     LGa  mygoldmine
 #192.168.102.1     A30a  102 # hin tipka
-192.168.102.2     A30b  102
-192.168.102.3     A30c  102
-192.168.102.4     A30d  102
-192.168.102.5     A30e  102
-192.168.102.6     A30f  102
-192.168.102.7     A30g  102
-192.168.102.8     A30h  102
+192.168.102.2     A30b  mygoldmine
+192.168.102.3     A30c  mygoldmine
+192.168.102.4     A30d  mygoldmine
+192.168.102.5     A30e  mygoldmine
+192.168.102.6     A30f  mygoldmine
+192.168.102.7     A30g  mygoldmine
+192.168.102.8     A30h  mygoldmine
 #192.168.102.30     A02sa  mygoldmine # x32 OS
 #192.168.102.31     A02sb  mygoldmine # x32 OS
 192.168.102.51     A41a  mygoldmine
@@ -139,27 +139,28 @@
 192.168.102.58     A41h  mygoldmine
 192.168.102.80     A03sa  mygoldmine
 192.168.102.81     A03sb  mygoldmine
-192.168.102.101     A50a  102
-192.168.102.102     A50b  102
-192.168.102.103     A50c  102
-192.168.102.104     A50d  102
-192.168.102.105     A50e  102
-192.168.102.106     A50f  102
-192.168.102.107     A50g  102
-192.168.102.108     A50h  102
-192.168.102.109     A50i  102
-192.168.102.110     A50j  102
-192.168.102.111     A50k  102
-192.168.102.112     A50l  102
+192.168.102.101     A50a  mygoldmine
+192.168.102.102     A50b  mygoldmine
+192.168.102.103     A50c  mygoldmine
+192.168.102.104     A50d  mygoldmine
+192.168.102.105     A50e  mygoldmine
+192.168.102.106     A50f  mygoldmine
+192.168.102.107     A50g  mygoldmine
+192.168.102.108     A50h  mygoldmine
+192.168.102.109     A50i  mygoldmine
+192.168.102.110     A50j  mygoldmine
+192.168.102.111     A50k  mygoldmine
+192.168.102.112     A50l  mygoldmine
 192.168.102.150     A51a  mygoldmine
 192.168.102.151     A51b  mygoldmine
 192.168.102.201     A70a  mygoldmine
-192.168.102.202     A70b  102
+192.168.102.202     A70b  mygoldmine
 192.168.102.203     A70c  mygoldmine
-192.168.102.204     A70d  102
+192.168.102.204     A70d  mygoldmine
 192.168.102.205     A70e  mygoldmine
 #192.168.102.206     A70f  102 # WIFI hin
-192.168.102.207     A70g  102
-192.168.102.208     A70h  102
+192.168.102.207     A70g  mygoldmine
+192.168.102.208     A70h  mygoldmine
 192.168.102.209     A70i  mygoldmine
 192.168.102.210     A70j  mygoldmine
+192.168.100.105     A52a  A52s 5G Tanja mygoldmine
