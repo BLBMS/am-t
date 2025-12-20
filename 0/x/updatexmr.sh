@@ -3,7 +3,7 @@
 # by blbMS
 
 # Poimenujte program, ki ga želite zagnati
-PROGRAM="$HOME/xstart.sh"
+PROGRAM="$HOME/start.sh"
 
 # Preverite, če program obstaja
 if [ ! -f "$PROGRAM" ] && [ ! -x "$PROGRAM" ]; then
