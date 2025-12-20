@@ -11,7 +11,7 @@ alias ll='ls -alF'
 alias uu='yes | pkg update ; yes | pkg upgrade ; pkg install -y wget net-tools nano screen jq bc'
 alias n='nano'
 
-alias ss='~/xstart.sh'
+alias ss='~/start.sh'
 alias rr='screen -d -r XMR'
 alias ru='screen -d -r UPD'
 
